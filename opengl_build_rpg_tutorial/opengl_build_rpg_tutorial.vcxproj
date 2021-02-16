@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{7D1C0B5A-C758-42C1-9432-2CC5E70D8F25}</ProjectGuid>
-    <RootNamespace>IntelligenceQuest</RootNamespace>
+    <ProjectGuid>{80570F46-F5CC-4311-9B08-EAC03A29B230}</ProjectGuid>
+    <RootNamespace>openglbuildrpgtutorial</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

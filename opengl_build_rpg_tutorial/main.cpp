@@ -10,16 +10,15 @@ int main()
 		return -1;
 	}
 
-	// opengl version setting, major.minor
+	// gl version
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
-	// use the deprecated functions? (CORE_PROFILE = no, COMPATABILITY = yes)
+	// turn off depricated functions
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	auto window = glfwCreateWindow(800, 640, "Window", nullptr, nullptr);
+	auto window = glfwCreateWindow(800, 600, "rpg tutorial", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
-
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -33,8 +32,8 @@ int main()
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
-		// exit on escape key press
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		// exit on escape press
+		if (glfwGetKey(window, GLFW_KEY_ESCAPE))
 			glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 
