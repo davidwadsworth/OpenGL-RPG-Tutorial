@@ -1,12 +1,12 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <fstream>
-#include <sstream>
 #include <string>
+#include "shader.h"
+#include "texture.h"
 
 /*
-Source code for episode 2 of Build Your Own RPG series
+Source code for episode 3 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -35,103 +35,40 @@ int main()
         return -1;
     }
 
-    auto vs_file_name = "resources/shaders/triangle.vs";
-    auto fs_file_name = "resources/shaders/triangle.fs";
+    // load in used shaders
+    auto vs_file_name = "resources/shaders/sprite.vs";
+    auto fs_file_name = "resources/shaders/sprite.fs";
 
-    // load shaders from file
-    std::string vs_code;
-    std::string fs_code;
+    auto shader = Shader();
+    shader.load(vs_file_name, fs_file_name);
 
-    try
-    {
-        // open files
-        std::ifstream vs_file(vs_file_name);
-        std::ifstream fs_file(fs_file_name);
-        std::stringstream vs_stream, fs_stream;
+    // load in used textures
+    auto tex_file_name = "resources/images/flesh_child_full_1.png";
 
-        // read into temp string streams
-        vs_stream << vs_file.rdbuf();
-        fs_stream << fs_file.rdbuf();
-
-        // close file streams
-        vs_file.close();
-        fs_file.close();
-
-        // convert streams into strings
-        vs_code = vs_stream.str();
-        fs_code = fs_stream.str();
-    }
-    catch (std::exception e)
-    {
-        std::cerr << "Failed to read shader files!" << std::endl;
-        return -1;
-    }
-
-    // compile debug flags
-    GLint success;
-    GLchar info_log[512];
-
-    // compile shaders
-    GLuint vs, fs, program;
-
-    auto vs_code_c_str = vs_code.c_str();
-    auto fs_code_c_str = fs_code.c_str();
-
-    // vertex shader
-    vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vs_code_c_str, nullptr);
-    glCompileShader(vs);
-
-    // check for compile errors
-    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vs, 512, nullptr, info_log);
-        std::cerr << "Vertex shader compilation failure: vs = " << vs_file_name << std::endl;
-        return -1;
-    }
-
-    // fragment shader
-    fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &fs_code_c_str, nullptr);
-    glCompileShader(fs);
-
-    // compile errors
-    glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fs, 512, nullptr, info_log);
-        std::cerr << "Fragment shader compilation failure: fs = " << fs_file_name << std::endl;
-        return -1;
-    }
-
-    // shader program init
-    program = glCreateProgram();
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-
-    // linking errors
-    glGetProgramiv(program, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        glGetProgramInfoLog(program, 512, nullptr, info_log);
-        std::cerr << "Program linking failure: vs = " << vs_file_name << "fs = " << fs_file_name << std::endl;
-        return -1;
-    }
-
-    // delete orphaned shader files
-    glDeleteShader(vs);
-    glDeleteShader(fs);
+    auto texture = Texture();
+    texture.load(tex_file_name);
 
     // use program for drawing
-    glUseProgram(program);
+    shader.use();
+    
+    // set up the tex unit to the correct value
+    shader.set_int("image", 0);
 
-    // set up vertex data for vs
+    // bind texture for drawing
+    texture.bind();
+
+    // set up vertex data
     GLfloat vertices[] = {
-        -1.0f, -1.0f, // left
-         1.0f, -1.0f, // right
-         0.0f,  1.0f  // top
+    // first triangle
+        // pos         // coords
+        -0.5f, -0.5f,   0.0f,  0.0f, // bot left 
+         0.5f,  0.5f,   1.0f,  1.0f, // top right 
+        -0.5f,  0.5f,   0.0f,  1.0f, // top left 
+    // second triangle
+        // pos         // coords
+        -0.5f, -0.5f,   0.0f,  0.0f, // bot left 
+         0.5f, -0.5f,   1.0f,  0.0f, // bot right 
+         0.5f,  0.5f,   1.0f,  1.0f  // top right 
     };
 
     GLuint vbo, vao;
@@ -147,8 +84,13 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // set up attributes to decipher vbo in gpu
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (GLvoid*)0);
+    
+    // position
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (GLvoid*)0);
     glEnableVertexAttribArray(0);
+    // coords
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (GLvoid*)(2* sizeof(float)));
+    glEnableVertexAttribArray(1);
 
     // game loop
     while (!glfwWindowShouldClose(window))
@@ -157,8 +99,8 @@ int main()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // draw triangle
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // draw image
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
