@@ -28,9 +28,6 @@ void Texture::load(const GLchar* tex_file_name)
 	// Load image
 	int width, height, nr_channels;
 
-	// flip texture on y axis. By default images are upside down
-	stbi_set_flip_vertically_on_load(true);
-
 	unsigned char* image = stbi_load(tex_file_name, &width, &height, &nr_channels, STBI_rgb_alpha);
 
 	if (!image)

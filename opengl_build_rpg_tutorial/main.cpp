@@ -4,12 +4,20 @@
 #include <string>
 #include "shader.h"
 #include "texture.h"
+#include <glm/ext/matrix_clip_space.hpp>
+#include "renderer.h"
 
 /*
-Source code for episode 3 of Build Your Own RPG series
+Source code for episode 4 of Build Your Own RPG series
 
 @author David Wadsworth
 */
+
+void processInput(GLFWwindow* window);
+Rect dest = { 400 - 32, 300 - 32, 64, 64 };
+Rect src = { 0,0,1,1 };
+constexpr auto SPEED = 4.0f;
+
 
 int main()
 {
@@ -54,53 +62,31 @@ int main()
     // set up the tex unit to the correct value
     shader.set_int("image", 0);
 
+    // set up 2d camera
+    auto projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
+    shader.set_mat4("projection", projection);
+
     // bind texture for drawing
     texture.bind();
 
-    // set up vertex data
-    GLfloat vertices[] = {
-    // first triangle
-        // pos         // coords
-        -0.5f, -0.5f,   0.0f,  0.0f, // bot left 
-         0.5f,  0.5f,   1.0f,  1.0f, // top right 
-        -0.5f,  0.5f,   0.0f,  1.0f, // top left 
-    // second triangle
-        // pos         // coords
-        -0.5f, -0.5f,   0.0f,  0.0f, // bot left 
-         0.5f, -0.5f,   1.0f,  0.0f, // bot right 
-         0.5f,  0.5f,   1.0f,  1.0f  // top right 
-    };
-
-    GLuint vbo, vao;
-
-    // create storage in gpu
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
-
-    glBindVertexArray(vao);
-
-    // set up vbo data inside gpu
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // set up attributes to decipher vbo in gpu
-    
-    // position
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
-    // coords
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (GLvoid*)(2* sizeof(float)));
-    glEnableVertexAttribArray(1);
+    // create a renderer object and input appropriate attribute sizes
+    // 2 = pos, 2 = coords
+    auto renderer = Renderer({2, 2});
 
     // game loop
     while (!glfwWindowShouldClose(window))
     {
+        processInput(window);
+
         // clear screen to black
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // draw image
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        // draw rects
+        renderer.draw(dest, src);
+
+        // flush draw calls
+        renderer.flush();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -113,4 +99,18 @@ int main()
     glfwTerminate();
 
     return 0;
+}
+
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+        dest.y-= SPEED;
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        dest.y+= SPEED;
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        dest.x+= SPEED;
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+        dest.x-= SPEED;
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
 }
