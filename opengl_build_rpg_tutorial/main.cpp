@@ -46,10 +46,10 @@ int main()
         return -1;
     }
 
-    // OpenGL configuration
+    // normalize window to work on other devices
     glViewport(0, 0, 800, 600);
-    glEnable(GL_CULL_FACE);
 
+    // set up alpha channel to display images beneath it.
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
