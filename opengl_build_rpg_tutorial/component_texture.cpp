@@ -1,9 +1,9 @@
-#include "texture.h"
+#include "component_texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include <iostream>
 
-void Texture::load(const GLchar* tex_file_name)
+void Component::Texture::load(const GLchar* tex_file_name)
 {
 	// Load image
 	int width, height, nr_channels;
@@ -39,7 +39,7 @@ void Texture::load(const GLchar* tex_file_name)
 	stbi_image_free(image);
 }
 
-void Texture::bind()
+void Component::Texture::bind()
 {
 	glBindTexture(GL_TEXTURE_2D, id_);
 }

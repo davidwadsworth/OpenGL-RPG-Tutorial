@@ -67,7 +67,7 @@ void Renderer::begin()
 	current_mat_ = nullptr;
 }
 
-void Renderer::draw(Rect dest_rect, Rect src_rect, Material& mat)
+void Renderer::draw(Rect src, Rect dest, Material& mat)
 {
 	// checks if buffer is over sprite limit or current material isn't set
 	// finally checks if the current material has a different id from the new material
@@ -82,42 +82,47 @@ void Renderer::draw(Rect dest_rect, Rect src_rect, Material& mat)
 	// first triangle
 
 	// bot left
-	buffer_.push_back(dest_rect.x);
-	buffer_.push_back(dest_rect.y + dest_rect.h);
-	buffer_.push_back(src_rect.x);
-	buffer_.push_back(src_rect.y + src_rect.h);
+	buffer_.push_back(dest.x);
+	buffer_.push_back(dest.y + dest.h);
+	buffer_.push_back(src.x);
+	buffer_.push_back(src.y + src.h);
 
 	// top right
-	buffer_.push_back(dest_rect.x + dest_rect.w);
-	buffer_.push_back(dest_rect.y);
-	buffer_.push_back(src_rect.x + src_rect.w);
-	buffer_.push_back(src_rect.y);
+	buffer_.push_back(dest.x + dest.w);
+	buffer_.push_back(dest.y);
+	buffer_.push_back(src.x + src.w);
+	buffer_.push_back(src.y);
 
 	// top left
-	buffer_.push_back(dest_rect.x);
-	buffer_.push_back(dest_rect.y);
-	buffer_.push_back(src_rect.x);
-	buffer_.push_back(src_rect.y);
+	buffer_.push_back(dest.x);
+	buffer_.push_back(dest.y);
+	buffer_.push_back(src.x);
+	buffer_.push_back(src.y);
 
 	// second triangle
 
 	// bot left
-	buffer_.push_back(dest_rect.x);
-	buffer_.push_back(dest_rect.y + dest_rect.h);
-	buffer_.push_back(src_rect.x);
-	buffer_.push_back(src_rect.y + src_rect.h);
+	buffer_.push_back(dest.x);
+	buffer_.push_back(dest.y + dest.h);
+	buffer_.push_back(src.x);
+	buffer_.push_back(src.y + src.h);
 
 	// bot right
-	buffer_.push_back(dest_rect.x + dest_rect.w);
-	buffer_.push_back(dest_rect.y + dest_rect.h);
-	buffer_.push_back(src_rect.x + src_rect.w);
-	buffer_.push_back(src_rect.y + src_rect.h);
+	buffer_.push_back(dest.x + dest.w);
+	buffer_.push_back(dest.y + dest.h);
+	buffer_.push_back(src.x + src.w);
+	buffer_.push_back(src.y + src.h);
 
 	// top right
-	buffer_.push_back(dest_rect.x + dest_rect.w);
-	buffer_.push_back(dest_rect.y);
-	buffer_.push_back(src_rect.x + src_rect.w);
-	buffer_.push_back(src_rect.y);
+	buffer_.push_back(dest.x + dest.w);
+	buffer_.push_back(dest.y);
+	buffer_.push_back(src.x + src.w);
+	buffer_.push_back(src.y);
+}
+
+void Renderer::draw(Component::Render render, Material& mat)
+{
+	Renderer::draw(render.src, render.dest, mat);
 }
 
 void Renderer::flush()

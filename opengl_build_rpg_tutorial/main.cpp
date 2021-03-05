@@ -2,11 +2,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
-#include "shader.h"
-#include "texture.h"
+#include "component_shader.h"
+#include "component_texture.h"
 #include <glm/ext/matrix_clip_space.hpp>
-#include "renderer.h"
-#include "material.h"
+#include "component_renderer.h"
+#include "component_material.h"
+#include "game.h"
 
 /*
 Source code for episode 5 of Build Your Own RPG series
@@ -14,11 +15,8 @@ Source code for episode 5 of Build Your Own RPG series
 @author David Wadsworth
 */
 
-void processInput(GLFWwindow* window);
 
-Rect flesh_dest = { 5, 5, 64, 64 };
-Rect flesh_dest2 = { 800 - 69, 600 - 69, 64, 64 };
-Rect src = { 0,0,1,1 };
+void processInput(GLFWwindow* window);
 
 constexpr auto SPEED = 4.0f;
 
@@ -37,7 +35,7 @@ int main()
     // use the deprecated functions? (CORE_PROFILE = yes, COMPATABILITY = no)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    auto window = glfwCreateWindow(800, 600, "Build Your Own RPG", nullptr, nullptr);
+    auto window = glfwCreateWindow(Game::width, Game::height, "Build Your Own RPG", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -47,7 +45,7 @@ int main()
     }
 
     // normalize window to work on other devices
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, Game::width, Game::height);
 
     // set up alpha channel to display images beneath it.
     glEnable(GL_BLEND);
@@ -60,6 +58,11 @@ int main()
     auto shader = Shader();
     shader.load(vs_file_name, fs_file_name);
 
+    // set up camera
+    shader.use();
+    auto projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
+    shader.set_mat4("projection", projection);
+
     // load in used textures
     auto flesh_tex_name = "resources/images/flesh.png";
     auto grass_tex_name = "resources/images/grass.png";
@@ -69,11 +72,6 @@ int main()
 
     auto grass_tex = Texture();
     grass_tex.load(grass_tex_name);
-
-    // set up camera
-    shader.use();
-    auto projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
-    shader.set_mat4("projection", projection);
 
     // set up materials
 
