@@ -15,7 +15,7 @@
 #include "component_system_update_camera.h"
 
 /*
-Source code for episode 5 of Build Your Own RPG series
+Source code for episode 7 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -26,7 +26,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity,
     GLsizei length, const char* message, const void* userParam);
 
-constexpr Rect SRC{ 0.0f,0.0f,64.0f,64.0f };
+constexpr Rect SRC{ 0.0f, 0.0f, 64.0f, 64.0f };
 constexpr GLfloat SPEED = 4.0f;
 constexpr GLint COLS = 32;
 constexpr GLint ROWS = 32;
