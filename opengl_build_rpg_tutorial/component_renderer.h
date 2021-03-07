@@ -3,7 +3,7 @@
 #include <vector>
 #include <glm/vec4.hpp>
 #include "component_material.h"
-#include "component_render.h"
+#include "rect.h"
 
 /*
 Simple batch renderer for drawing sprites from the same image and shader
@@ -31,7 +31,6 @@ namespace Component
 
 		void begin();
 		void draw(Rect src, Rect dest, Component::Material& mat);
-		void draw(Component::Render render, Component::Material& mat);
 		void flush();
 		void end();
 	};

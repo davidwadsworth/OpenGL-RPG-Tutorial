@@ -122,5 +122,10 @@ public:
 	std::vector<Comp*> get_component_list()
 	{
 		return components_.get_ordered_list();
-	}	
+	}
+
+	GLuint component_size()
+	{
+		return components_.size();
+	}
 };

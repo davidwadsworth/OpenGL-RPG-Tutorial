@@ -141,21 +141,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="component_renderer.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="component_material.cpp" />
-    <ClCompile Include="component_renderer.cpp" />
     <ClCompile Include="component_shader.cpp" />
     <ClCompile Include="component_texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h" />
-    <ClInclude Include="component_render.h" />
-    <ClInclude Include="component_system.h" />
-    <ClInclude Include="component_system_render_dynamic_draw.h" />
-    <ClInclude Include="component_system_update_camera.h" />
-    <ClInclude Include="component_transform.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="component_material.h" />
     <ClInclude Include="component_renderer.h" />

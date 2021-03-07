@@ -130,11 +130,6 @@ void Component::Renderer::draw(Rect src, Rect dest, Material& mat)
 	buffer_.push_back(norm_src.y);
 }
 
-void Component::Renderer::draw(Component::Render render, Material& mat)
-{
-	Component::Renderer::draw(render.src, render.dest, mat);
-}
-
 void Component::Renderer::flush()
 {
 	if (this->buffer_.empty()) return;

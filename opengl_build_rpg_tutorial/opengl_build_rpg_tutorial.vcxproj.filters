@@ -19,15 +19,6 @@
     <Filter Include="EC\Component">
       <UniqueIdentifier>{4b71e735-bdbe-40a5-aa4e-b4d2ecd68a5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\System">
-      <UniqueIdentifier>{0d16eb6b-3dbc-449e-839e-6a7d36518083}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\System\Render">
-      <UniqueIdentifier>{b28cdf7b-d0aa-4a5c-b4be-79e317e913c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\System\Update">
-      <UniqueIdentifier>{f38c53a0-73a2-4851-acc7-31e05b4a2fe9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,9 +30,6 @@
     <ClCompile Include="component_material.cpp">
       <Filter>EC\Component</Filter>
     </ClCompile>
-    <ClCompile Include="component_renderer.cpp">
-      <Filter>EC\Component</Filter>
-    </ClCompile>
     <ClCompile Include="component_shader.cpp">
       <Filter>EC\Component</Filter>
     </ClCompile>
@@ -50,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="component_renderer.cpp">
+      <Filter>EC\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,15 +56,6 @@
     <ClInclude Include="component.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_system.h">
-      <Filter>EC\Component\System</Filter>
-    </ClInclude>
-    <ClInclude Include="component_transform.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_render.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="component_material.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
@@ -85,12 +67,6 @@
     </ClInclude>
     <ClInclude Include="component_texture.h">
       <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_render_dynamic_draw.h">
-      <Filter>EC\Component\System\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_update_camera.h">
-      <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
