@@ -8,6 +8,11 @@
 #include "component_renderer.h"
 #include "component_material.h"
 #include "game.h"
+#include "entity.h"
+#include "component_transform.h"
+#include "component_system.h"
+#include "component_system_render_dynamic_draw.h"
+#include "component_system_update_camera.h"
 
 /*
 Source code for episode 5 of Build Your Own RPG series
@@ -16,9 +21,13 @@ Source code for episode 5 of Build Your Own RPG series
 */
 
 
-void processInput(GLFWwindow* window);
+void processInput(GLFWwindow* window, Component::Transform& transform);
 
-constexpr auto SPEED = 4.0f;
+constexpr Rect SRC{ 0.0f,0.0f,64.0f,64.0f };
+constexpr GLfloat SPEED = 4.0f;
+constexpr GLint COLS = 32;
+constexpr GLint ROWS = 32;
+constexpr GLuint MAX_SPRITES = 255u;
 
 int main()
 {
@@ -51,11 +60,17 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // set up engine, will be its own thing soon enough
+    std::vector<Component::System*> render_systems;
+    std::vector<Component::System*> update_systems;
+
+    // set up entities and their components
+    
     // load in used shaders
     auto vs_file_name = "resources/shaders/sprite.vs";
     auto fs_file_name = "resources/shaders/sprite.fs";
 
-    auto shader = Shader();
+    auto shader = Component::Shader();
     shader.load(vs_file_name, fs_file_name);
 
     // set up camera
@@ -67,59 +82,82 @@ int main()
     auto flesh_tex_name = "resources/images/flesh.png";
     auto grass_tex_name = "resources/images/grass.png";
 
-    auto flesh_tex = Texture();
+    auto flesh_tex = Component::Texture();
     flesh_tex.load(flesh_tex_name);
 
-    auto grass_tex = Texture();
+    auto grass_tex = Component::Texture();
     grass_tex.load(grass_tex_name);
-
-    // set up materials
-
-    // flesh child material
-    auto flesh_mat = Material(flesh_tex, shader, 0);
-    // grass material
-    auto grass_mat = Material(grass_tex, shader, 1);
 
     // create a renderer object and input appropriate attribute sizes and max amount of sprites on screen at once
     // 2 = pos, 2 = coords
-    auto renderer = Renderer({2, 2}, 255);
+    auto renderer = Component::Renderer({ 2, 2 }, MAX_SPRITES);
+
+    // set up camera
+    auto camera = new Entity();
+    auto& c_cam_transform = *camera->add_component<Component::Transform>(0.0f, 0.0f, (GLfloat)ROWS * 64.0f); // position = (0, 0) width/height = 32 tiles * 64 length of tile
+
+    // set up tile map
+    auto tile_map = new Entity();
+
+    auto& c_tmap_material = *tile_map->add_component<Component::Material>(grass_tex, shader, 1);
 
     // how many columns of grass
-    auto grass_cols = (int)std::ceilf(800.0f / 64.0f);
-    
+    auto grass_cols = COLS;
+
     // how many rows of grass
-    auto grass_rows = (int)std::ceilf(600.0f / 64.0f);
+    auto grass_rows = ROWS;
 
     // how many total grass to draw
     auto total_grass = grass_cols * grass_rows;
 
+    auto tiles = new Entity();
+    tile_map->push_back_child(tiles);
+
+    // set up tiles
+    for (auto i = 0; i < total_grass; ++i)
+    {
+        Rect grass_dest
+        {
+            (i % grass_cols) * 64.0f,  // finds place in column and multiplies by sprite width
+            (i / grass_cols) * 64.0f,  // finds place in row and multiples by sprite height
+            64.0f, 64.0f
+        };
+        auto& c_tile_transform = *tiles->push_back_component<Component::Transform>(grass_dest);
+        auto& c_tile_render = *tiles->push_back_component<Component::Render>(SRC);
+        auto csr_tile_dynamic_draw = tiles->push_back_component<ComponentSystemRender::DynamicDraw>(renderer, c_tile_render, c_tmap_material, c_tile_transform, c_cam_transform);
+        render_systems.push_back(csr_tile_dynamic_draw);
+    }
+
+    // set up player and it's components
+    auto player = new Entity();
+
+    auto& c_pla_transform = *player->add_component<Component::Transform>((GLfloat)Game::width, (GLfloat)Game::height, 64.0f);
+    auto& c_pla_render = *player->add_component<Component::Render>(SRC); // src is full image, dest is set up during dynamic draw
+    auto& c_pla_material = *player->add_component<Component::Material>(flesh_tex, shader, 0);
+    auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::DynamicDraw>(renderer, c_pla_render, c_pla_material, c_pla_transform, c_cam_transform);
+    auto csu_pla_camera = player->add_component<ComponentSystemUpdate::Camera>(c_pla_transform, c_cam_transform);
+
+    render_systems.push_back(csr_pla_dynamic_draw);
+    update_systems.push_back(csu_pla_camera);
+
     // game loop
     while (!glfwWindowShouldClose(window))
     {
-        processInput(window);
+        processInput(window, c_pla_transform);
 
         // clear screen to black
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // make updates to live entities
+        for (auto u : update_systems)
+            u->execute();
+
         renderer.begin();
 
-        // draw grass
-        for (auto i = 0; i < total_grass; ++i)
-        {
-            Rect grass_dest
-            { 
-                (i % grass_cols) * 64.0f,  // finds place in column and multiplies by sprite width
-                (i / grass_cols) * 64.0f,  // finds place in row and multiples by sprite height
-                64.0f, 64.0f 
-            };
-
-            renderer.draw(grass_dest, src, grass_mat);
-        }
-
-        // draw flesh children
-        renderer.draw(flesh_dest, src, flesh_mat);
-        renderer.draw(flesh_dest2, src, flesh_mat);
+        // make draw calls to renderer
+        for (auto r : render_systems)
+            r->execute();
 
         renderer.end();
 
@@ -127,22 +165,27 @@ int main()
         glfwPollEvents();
     }
 
+    delete player;
+    delete camera;
+    delete tile_map;
     glfwTerminate();
 
     return 0;
 }
 
-void processInput(GLFWwindow* window)
-{
+void processInput(GLFWwindow* window, Component::Transform& transform)
+{ 
+    auto& rect = transform.rect;
+
     // move character around screen
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        flesh_dest.y-= SPEED;
+        rect.y-= SPEED;
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        flesh_dest.y+= SPEED;
+        rect.y+= SPEED;
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        flesh_dest.x+= SPEED;
+        rect.x+= SPEED;
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        flesh_dest.x-= SPEED;
+        rect.x-= SPEED;
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 

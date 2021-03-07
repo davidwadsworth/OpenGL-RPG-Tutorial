@@ -8,8 +8,9 @@
 
 namespace Component
 {
-	struct System : Comp
+	struct System : public Comp
 	{
+		~System() = default;
 		virtual void execute() = 0;
 	};
 }

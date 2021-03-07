@@ -1,8 +1,8 @@
-#include "renderer.h"
+#include "component_renderer.h"
 
 constexpr auto VERTICES = 6u;
 
-Renderer::Renderer(std::vector<GLuint> attributes, GLuint max_sprites)
+Component::Renderer::Renderer(std::vector<GLuint> attributes, GLuint max_sprites)
 	: vbo_(0), vao_(0), current_mat_(nullptr), max_sprites_(max_sprites)
 {
 	// calculate total attribute size for attrib pointer arithmatic
@@ -28,7 +28,7 @@ Renderer::Renderer(std::vector<GLuint> attributes, GLuint max_sprites)
 	}
 }
 
-Renderer::Renderer(Renderer&& other) noexcept
+Component::Renderer::Renderer(Renderer&& other) noexcept
 	: vbo_(other.vbo_), vao_(other.vao_), current_mat_(nullptr), att_size_(other.att_size_), max_sprites_(other.max_sprites_)
 {
 	// make the assigning renderer useless
@@ -36,7 +36,7 @@ Renderer::Renderer(Renderer&& other) noexcept
 	other.vao_ = 0;
 }
 
-Renderer& Renderer::operator=(Renderer&& other) noexcept
+Component::Renderer& Component::Renderer::operator=(Renderer&& other) noexcept
 {
 	// check for self-assignment
 	if (this != &other)
@@ -52,7 +52,7 @@ Renderer& Renderer::operator=(Renderer&& other) noexcept
 	return *this;
 }
 
-void Renderer::release()
+void Component::Renderer::release()
 {
 	// delete buffers if they exist
 	if (vbo_)
@@ -61,13 +61,13 @@ void Renderer::release()
 		glDeleteBuffers(1, &vao_);
 }
 
-void Renderer::begin()
+void Component::Renderer::begin()
 {
 	// make sure we aren't batching with previous material
 	current_mat_ = nullptr;
 }
 
-void Renderer::draw(Rect src, Rect dest, Material& mat)
+void Component::Renderer::draw(Rect src, Rect dest, Material& mat)
 {
 	// checks if buffer is over sprite limit or current material isn't set
 	// finally checks if the current material has a different id from the new material
@@ -79,53 +79,63 @@ void Renderer::draw(Rect src, Rect dest, Material& mat)
 		this->current_mat_ = &mat;
 	}
 
+	// translate src to fractions of the image dimensions
+	auto norm_src = src;
+	auto img_w = mat.texture.width;
+	auto img_h = mat.texture.height;
+	
+	norm_src.x /= img_w;
+	norm_src.y /= img_h;
+	norm_src.w /= img_w;
+	norm_src.h /= img_h;
+
 	// first triangle
 
 	// bot left
 	buffer_.push_back(dest.x);
 	buffer_.push_back(dest.y + dest.h);
-	buffer_.push_back(src.x);
-	buffer_.push_back(src.y + src.h);
+	buffer_.push_back(norm_src.x);
+	buffer_.push_back(norm_src.y + norm_src.h);
 
 	// top right
 	buffer_.push_back(dest.x + dest.w);
 	buffer_.push_back(dest.y);
-	buffer_.push_back(src.x + src.w);
-	buffer_.push_back(src.y);
+	buffer_.push_back(norm_src.x + norm_src.w);
+	buffer_.push_back(norm_src.y);
 
 	// top left
 	buffer_.push_back(dest.x);
 	buffer_.push_back(dest.y);
-	buffer_.push_back(src.x);
-	buffer_.push_back(src.y);
+	buffer_.push_back(norm_src.x);
+	buffer_.push_back(norm_src.y);
 
 	// second triangle
 
 	// bot left
 	buffer_.push_back(dest.x);
 	buffer_.push_back(dest.y + dest.h);
-	buffer_.push_back(src.x);
-	buffer_.push_back(src.y + src.h);
+	buffer_.push_back(norm_src.x);
+	buffer_.push_back(norm_src.y + norm_src.h);
 
 	// bot right
 	buffer_.push_back(dest.x + dest.w);
 	buffer_.push_back(dest.y + dest.h);
-	buffer_.push_back(src.x + src.w);
-	buffer_.push_back(src.y + src.h);
+	buffer_.push_back(norm_src.x + norm_src.w);
+	buffer_.push_back(norm_src.y + norm_src.h);
 
 	// top right
 	buffer_.push_back(dest.x + dest.w);
 	buffer_.push_back(dest.y);
-	buffer_.push_back(src.x + src.w);
-	buffer_.push_back(src.y);
+	buffer_.push_back(norm_src.x + norm_src.w);
+	buffer_.push_back(norm_src.y);
 }
 
-void Renderer::draw(Component::Render render, Material& mat)
+void Component::Renderer::draw(Component::Render render, Material& mat)
 {
-	Renderer::draw(render.src, render.dest, mat);
+	Component::Renderer::draw(render.src, render.dest, mat);
 }
 
-void Renderer::flush()
+void Component::Renderer::flush()
 {
 	if (this->buffer_.empty()) return;
 
@@ -152,7 +162,7 @@ void Renderer::flush()
 	this->buffer_.clear();
 }
 
-void Renderer::end()
+void Component::Renderer::end()
 {
 	// flush everything out
 	this->flush();

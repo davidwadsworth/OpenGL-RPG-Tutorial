@@ -161,6 +161,7 @@
     <ClInclude Include="component_renderer.h" />
     <ClInclude Include="component_shader.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="rect.h" />
     <ClInclude Include="splay_tree.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="component_texture.h" />

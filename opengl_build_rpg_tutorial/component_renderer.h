@@ -10,27 +10,29 @@ Simple batch renderer for drawing sprites from the same image and shader
 
 @author David Wadsworth
 */
-
-class Renderer
+namespace Component
 {
-	GLuint vbo_, vao_, att_size_, max_sprites_;
-	std::vector<GLfloat> buffer_;
-	Component::Material* current_mat_;
-public:
-	Renderer(std::vector<GLuint> attributes, GLuint max_sprites);
-	Renderer(const Renderer&) = delete;
-	Renderer(Renderer&& other) noexcept;
+	class Renderer : public Comp
+	{
+		GLuint vbo_, vao_, att_size_, max_sprites_;
+		std::vector<GLfloat> buffer_;
+		Component::Material* current_mat_;
+	public:
+		Renderer(std::vector<GLuint> attributes, GLuint max_sprites);
+		Renderer(const Renderer&) = delete;
+		Renderer(Renderer&& other) noexcept;
 
-	Renderer& operator=(const Renderer&) = delete;
-	Renderer& operator=(Renderer&& other) noexcept;
+		Renderer& operator=(const Renderer&) = delete;
+		Renderer& operator=(Renderer&& other) noexcept;
 
-	~Renderer() { release(); }
+		~Renderer() { release(); }
 
-	void release();
+		void release();
 
-	void begin();
-	void draw(Rect src, Rect dest, Component::Material& mat);
-	void draw(Component::Render render, Component::Material& mat);
-	void flush();
-	void end();
-};
+		void begin();
+		void draw(Rect src, Rect dest, Component::Material& mat);
+		void draw(Component::Render render, Component::Material& mat);
+		void flush();
+		void end();
+	};
+}

@@ -8,7 +8,7 @@
 */
 namespace Component
 {
-	class Material : Comp
+	class Material : public Comp
 	{
 		static GLuint id_gen;
 		GLint tex_unit_;

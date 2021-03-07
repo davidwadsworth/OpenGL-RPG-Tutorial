@@ -1,27 +1,36 @@
 #pragma once
 #include "component_system.h"
 #include "component_transform.h"
+#include "game.h"
 
 namespace ComponentSystemUpdate
 {
-	class Camera : Component::System
+	class Camera : public Component::System
 	{
+		Component::Transform& follower_, &camera_;
 	public:
 		Camera(Component::Transform& follower, Component::Transform& camera)
+			: follower_(follower), camera_(camera)
+		{}
+
+		void execute() override
 		{
-			auto& camera_pos = camera_transform_.position;
+			auto& cam_x = camera_.rect.x;
+			auto& cam_y = camera_.rect.y;
 
-			camera_pos.x = follow_transform_.position.x - static_cast<float>(Game::width / 2) + follow_transform_.width * follow_transform_.scale / 2;
-			camera_pos.y = follow_transform_.position.y - static_cast<float>(Game::height / 2) + follow_transform_.height * follow_transform_.scale / 2;
+			// set camera position so the follower is always at the center
+			cam_x = follower_.rect.x - static_cast<float>(Game::width / 2) + follower_.rect.w * follower_.scale / 2;
+			cam_y = follower_.rect.y - static_cast<float>(Game::height / 2) + follower_.rect.h * follower_.scale / 2;
 
-			if (camera_pos.x < 0)
-				camera_pos.x = 0;
-			if (camera_pos.y < 0)
-				camera_pos.y = 0;
-			if (camera_pos.x > camera_transform_.width * camera_transform_.scale - Game::width)
-				camera_pos.x = camera_transform_.width * camera_transform_.scale - Game::width;
-			if (camera_pos.y > camera_transform_.height * camera_transform_.scale - Game::height)
-				camera_pos.y = camera_transform_.height * camera_transform_.scale - Game::height;
+			// if reaches one of the lower or upper bounds make it so the camera doesn't follow past
+			if (cam_x < 0)
+				cam_x = 0;
+			if (cam_y < 0)
+				cam_y = 0;
+			if (cam_x > camera_.rect.w * camera_.scale - Game::width)
+				cam_x = camera_.rect.w * camera_.scale - Game::width;
+			if (cam_y > camera_.rect.w * camera_.scale - Game::height)
+				cam_y = camera_.rect.h * camera_.scale - Game::height;
 		}
 	};
 }

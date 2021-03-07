@@ -54,7 +54,7 @@ public:
 
 	Entity* get_child(std::string str)
 	{
-		return children_.search(std::hash<std::string>{}(str));
+		return children_.search((int)std::hash<std::string>{}(str));
 	}
 
 	std::vector<Entity*> get_child_list()

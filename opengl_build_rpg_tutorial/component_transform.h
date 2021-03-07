@@ -1,31 +1,29 @@
 #pragma once
 #include "component.h"
-#include <glm/vec2.hpp>
-#include <glad/glad.h>
+#include "rect.h"
 
 /*
-Locally bound transformational information. Not where the entity is located but rather located relative to an invible plane
+Locally bound transformational information. Not where the entity is located but rather located relative to an invisible plane
 @author David Wadsworth
 */
 
 namespace Component
 {
-	struct Transform : Comp
+	struct Transform : public Comp
 	{
-		Transform(glm::vec2 position, GLint width, GLint height, GLfloat scale)
-			: position(position), width(width), height(height), scale(scale)
+		Transform(Rect rect, GLfloat scale)
+			: rect(rect), scale(scale)
 		{}
 
-		Transform(glm::vec2 position, GLint width, GLint height)
-			: Transform(position, width, height, 1.0f)
+		Transform(Rect rect)
+			: Transform(rect, 1.0f)
 		{}
 
-		Transform(glm::vec2 position, GLint length)
-			: Transform(position, length, length, 1.0f)
+		Transform(GLfloat x, GLfloat y, GLfloat length)
+			: Transform(Rect{ x, y, length, length }, 1.0f)
 		{}
 
-		glm::vec2 position;
-		GLint width, height;
+		Rect rect;
 		GLfloat scale;
 	};
 }

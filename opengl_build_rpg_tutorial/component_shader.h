@@ -15,7 +15,7 @@ Loads, operates and updates to held shader id.
 
 namespace Component
 {
-	class Shader : Comp
+	class Shader : public Comp
 	{
 		GLuint id_;
 		std::string vs_file_name_, fs_file_name_;
