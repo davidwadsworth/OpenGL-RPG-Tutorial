@@ -154,9 +154,9 @@ void Component::Renderer::flush()
 
 	// rebuffer changes to data
 	glBufferData(GL_ARRAY_BUFFER, this->buffer_.size() * sizeof(GLfloat), this->buffer_.data(), GL_STATIC_DRAW);
-
+	
 	// draw triangles
-	glDrawArrays(GL_TRIANGLES, 0, (GLsizei)(this->buffer_.size() / att_size_));
+	glDrawArrays(GL_TRIANGLES, 0, (GLsizei)(this->buffer_.size() / att_size_ ));
 
 	// clear buffer for next cycle
 	this->buffer_.clear();
