@@ -51,6 +51,12 @@
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="component.cpp">
+      <Filter>EC\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="entity.cpp">
+      <Filter>EC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">

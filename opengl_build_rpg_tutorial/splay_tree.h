@@ -21,6 +21,11 @@ namespace DataStructures
                 : key(key), value(value), left(nullptr), right(right)
             {}
 
+            ~Node()
+            {
+                delete value;
+            }
+
             GLint key;
             T* value;
             Node* left, * right;

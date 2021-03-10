@@ -36,15 +36,20 @@ private:
 	DataStructures::SplayTree<Comp> components_;
 	DataStructures::SplayTree<Entity> children_;
 public:	
+
+	static long long entity_count;
 	
 	Entity()
 		: components_(), children_()
-	{}
+	{
+		entity_count++;
+	}
 
 	~Entity()
 	{
 		components_.~SplayTree();
 		children_.~SplayTree();
+		entity_count--;
 	}
 
 	Entity* get_child(GLuint pos)

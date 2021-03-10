@@ -80,7 +80,7 @@ void Component::Renderer::draw(Component::Src& src, Component::Dest& dest, Compo
 	}
 
 	// translate src to fractions of the image dimensions
-	auto norm_src = src;
+	Rect norm_src = src;
 	auto img_w = mat.texture.width;
 	auto img_h = mat.texture.height;
 
