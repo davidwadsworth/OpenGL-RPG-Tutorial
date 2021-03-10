@@ -9,13 +9,13 @@ Locally bound transformational information. Not where the entity is located but 
 
 namespace Component
 {
-	struct Transform : public Comp
+	struct Transform : public Comp, public Rect
 	{
-		Transform(Rect rect, GLfloat scale)
-			: rect(rect), scale(scale)
+		Transform(const Rect& rect, GLfloat sc)
+			: Rect(rect), sc(sc)
 		{}
 
-		Transform(Rect rect)
+		Transform(const Rect& rect)
 			: Transform(rect, 1.0f)
 		{}
 
@@ -23,8 +23,11 @@ namespace Component
 			: Transform(Rect{ x, y, length, length }, 1.0f)
 		{}
 
-		Rect rect;
-		GLfloat scale;
+		Transform(GLfloat x, GLfloat y, GLfloat length, GLfloat sc)
+			: Transform(Rect{ x, y, length, length }, sc)
+		{}
+
+		GLfloat sc;
 	};
 }
 

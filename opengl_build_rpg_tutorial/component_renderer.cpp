@@ -67,11 +67,11 @@ void Component::Renderer::begin()
 	current_mat_ = nullptr;
 }
 
-void Component::Renderer::draw(Rect src, Rect dest, Material& mat)
+void Component::Renderer::draw(Component::Src& src, Component::Dest& dest, Component::Material& mat)
 {
 	// checks if buffer is over sprite limit or current material isn't set
 	// finally checks if the current material has a different id from the new material
-	if ((this->buffer_.size() >= static_cast<std::size_t>(this->max_sprites_) * this->max_sprites_ * VERTICES || !this->current_mat_) 
+	if ((this->buffer_.size() >= static_cast<std::size_t>(this->max_sprites_) * this->max_sprites_ * VERTICES || !this->current_mat_)
 		|| this->current_mat_->id != mat.id)
 	{
 		// flush out current batch and start on the next one
@@ -83,7 +83,7 @@ void Component::Renderer::draw(Rect src, Rect dest, Material& mat)
 	auto norm_src = src;
 	auto img_w = mat.texture.width;
 	auto img_h = mat.texture.height;
-	
+
 	norm_src.x /= img_w;
 	norm_src.y /= img_h;
 	norm_src.w /= img_w;
@@ -128,11 +128,6 @@ void Component::Renderer::draw(Rect src, Rect dest, Material& mat)
 	buffer_.push_back(dest.y);
 	buffer_.push_back(norm_src.x + norm_src.w);
 	buffer_.push_back(norm_src.y);
-}
-
-void Component::Renderer::draw(Component::Render render, Material& mat)
-{
-	Component::Renderer::draw(render.src, render.dest, mat);
 }
 
 void Component::Renderer::flush()

@@ -30,8 +30,7 @@ namespace Component
 		void release();
 
 		void begin();
-		void draw(Rect src, Rect dest, Component::Material& mat);
-		void draw(Component::Render render, Component::Material& mat);
+		void draw(Component::Src& src, Component::Dest& dest, Component::Material& mat);
 		void flush();
 		void end();
 	};

@@ -10,7 +10,6 @@ namespace Component
 {
 	struct System : public Comp
 	{
-		~System() = default;
 		virtual void execute() = 0;
 	};
 }

@@ -142,18 +142,20 @@ int main()
             64.0f, 64.0f
         };
         auto& c_tile_transform = *tiles->push_back_component<Component::Transform>(grass_dest);
-        auto& c_tile_render = *tiles->push_back_component<Component::Render>(SRC);
-        auto csr_tile_dynamic_draw = tiles->push_back_component<ComponentSystemRender::DynamicDraw>(renderer, c_tile_render, c_tmap_material, c_tile_transform, c_cam_transform);
+        auto& c_tile_src = *tiles->push_back_component<Component::Src>(SRC);
+        auto& c_tile_dest = *tiles->push_back_component<Component::Dest>();
+        auto csr_tile_dynamic_draw = tiles->push_back_component<ComponentSystemRender::DynamicDraw>(renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
         render_systems.push_back(csr_tile_dynamic_draw);
     }
 
     // set up player and it's components
     auto player = new Entity();
 
-    auto& c_pla_transform = *player->add_component<Component::Transform>((GLfloat)Game::width, (GLfloat)Game::height, 64.0f);
-    auto& c_pla_render = *player->add_component<Component::Render>(SRC); // src is full image, dest is set up during dynamic draw
+    auto& c_pla_transform = *player->add_component<Component::Transform>((GLfloat)Game::width, (GLfloat)Game::height, 64.0f, 2.0f);
+    auto& c_pla_src = *player->add_component<Component::Src>(SRC); // src is full image, dest is set up during dynamic draw
+    auto& c_pla_dest = *player->add_component<Component::Dest>(); 
     auto& c_pla_material = *player->add_component<Component::Material>(flesh_tex, shader, 0);
-    auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::DynamicDraw>(renderer, c_pla_render, c_pla_material, c_pla_transform, c_cam_transform);
+    auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::DynamicDraw>(renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
     auto csu_pla_camera = player->add_component<ComponentSystemUpdate::Camera>(c_pla_transform, c_cam_transform);
 
     render_systems.push_back(csr_pla_dynamic_draw);
@@ -194,17 +196,16 @@ int main()
 
 void processInput(GLFWwindow* window, Component::Transform& transform)
 { 
-    auto& rect = transform.rect;
 
     // move character around screen
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        rect.y-= SPEED;
+        transform.y-= SPEED;
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        rect.y+= SPEED;
+        transform.y+= SPEED;
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        rect.x+= SPEED;
+        transform.x+= SPEED;
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        rect.x-= SPEED;
+        transform.x-= SPEED;
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 

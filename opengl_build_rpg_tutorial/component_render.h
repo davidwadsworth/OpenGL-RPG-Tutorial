@@ -9,18 +9,18 @@ Stores all components used to render a rect on the window
 
 namespace Component
 {
-	struct Render : public Comp
-	{
-		Render(Rect src, Rect dest)
-			: src(src), dest(dest)
+	struct Src : public Comp, public Rect {
+		Src() = default;
+		Src(const Rect& rect)
+			: Rect(rect)
 		{}
+	};
 
-		Render(Rect src)
-			: src(src), dest{}
+	struct Dest : public Comp, public Rect {
+		Dest() = default;
+		Dest(const Rect& rect)
+			: Rect(rect)
 		{}
-
-		Rect src, // src postion for image
-			dest; // actual position on the screen
 	};
 }
 

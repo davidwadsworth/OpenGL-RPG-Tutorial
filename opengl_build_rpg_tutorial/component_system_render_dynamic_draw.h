@@ -9,24 +9,25 @@ namespace ComponentSystemRender
 	class DynamicDraw : public Component::System
 	{
 		Component::Renderer& renderer_;
-		Component::Render& render_;
+		Component::Src& src_;
+		Component::Dest& dest_;
 		Component::Material& material_;
 		Component::Transform& transform_, &camera_transform;
 	public:
-		DynamicDraw(Component::Renderer& renderer, Component::Render& render, Component::Material& material, 
+		DynamicDraw(Component::Renderer& renderer, Component::Src& src, Component::Dest& dest, Component::Material& material, 
 			Component::Transform& transform, Component::Transform& camera_transform)
-			: renderer_(renderer), render_(render), material_(material), transform_(transform), camera_transform(camera_transform)
+			: renderer_(renderer), src_(src), dest_(dest), material_(material), transform_(transform), camera_transform(camera_transform)
 		{}
 
 		void execute() override
 		{
 			// update render dest by camera and local transforms
-			render_.dest.x = transform_.rect.x - camera_transform.rect.x;
-			render_.dest.y = transform_.rect.y - camera_transform.rect.y;
-			render_.dest.w = transform_.rect.w * transform_.scale;
-			render_.dest.h = transform_.rect.h * transform_.scale;
+			dest_.x = transform_.x - camera_transform.x;
+			dest_.y = transform_.y - camera_transform.y;
+			dest_.w = transform_.w * transform_.sc;
+			dest_.h = transform_.h * transform_.sc;
 
-			renderer_.draw(render_, material_);
+			renderer_.draw(src_, dest_, material_);
 		}
 	};
 }
