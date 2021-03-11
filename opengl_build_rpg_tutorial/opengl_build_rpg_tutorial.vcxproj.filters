@@ -51,9 +51,6 @@
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="entity.cpp">
-      <Filter>EC</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -74,9 +71,6 @@
     <ClInclude Include="component_transform.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_render.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="component_material.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
@@ -89,9 +83,6 @@
     <ClInclude Include="component_texture.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_render_dynamic_draw.h">
-      <Filter>EC\Component\System\Render</Filter>
-    </ClInclude>
     <ClInclude Include="component_system_update_camera.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
@@ -100,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="rect.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="component_src.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_dest.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_render_camera_draw.h">
+      <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

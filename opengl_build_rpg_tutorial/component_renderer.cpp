@@ -28,30 +28,6 @@ Component::Renderer::Renderer(std::vector<GLuint> attributes, GLuint max_sprites
 	}
 }
 
-Component::Renderer::Renderer(Renderer&& other) noexcept
-	: vbo_(other.vbo_), vao_(other.vao_), current_mat_(nullptr), att_size_(other.att_size_), max_sprites_(other.max_sprites_)
-{
-	// make the assigning renderer useless
-	other.vbo_ = 0;
-	other.vao_ = 0;
-}
-
-Component::Renderer& Component::Renderer::operator=(Renderer&& other) noexcept
-{
-	// check for self-assignment
-	if (this != &other)
-	{
-		// destroy and replace
-		release();
-		vbo_ = other.vbo_;
-		vao_ = other.vao_;
-		other.vbo_ = 0;
-		other.vao_ = 0;
-	}
-
-	return *this;
-}
-
 void Component::Renderer::release()
 {
 	// delete buffers if they exist

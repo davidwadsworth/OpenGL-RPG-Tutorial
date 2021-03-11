@@ -4,7 +4,7 @@
 #include "component.h"
 
 /*
-image handling class. Responsible for loading and binding textures to tex slots.
+Image handling class. Responsible for loading and binding textures to tex slots.
 
 @author David Wadsworth
 */

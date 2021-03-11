@@ -3,6 +3,13 @@
 #include "component_transform.h"
 #include "game.h"
 
+/*
+Sets up camera position with respect to the target its follwing, such that it is within the center of the screen, 
+however if object is out of boundary camera will not follow
+
+@author David Wadsworth
+*/
+
 namespace ComponentSystemUpdate
 {
 	class Camera : public Component::System

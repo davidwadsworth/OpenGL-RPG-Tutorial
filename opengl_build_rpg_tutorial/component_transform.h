@@ -3,7 +3,8 @@
 #include "rect.h"
 
 /*
-Locally bound transformational information. Not where the entity is located but rather located relative to an invisible plane
+Rect storing coordinates with respect to the origin
+
 @author David Wadsworth
 */
 

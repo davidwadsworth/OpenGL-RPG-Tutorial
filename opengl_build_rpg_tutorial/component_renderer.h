@@ -3,10 +3,11 @@
 #include <vector>
 #include <glm/vec4.hpp>
 #include "component_material.h"
-#include "component_render.h"
+#include "component_src.h"
+#include "component_dest.h"
 
 /*
-Simple batch renderer for drawing sprites from the same image and shader
+Simple batch renderer for drawing sprites 
 
 @author David Wadsworth
 */
@@ -19,12 +20,6 @@ namespace Component
 		Component::Material* current_mat_;
 	public:
 		Renderer(std::vector<GLuint> attributes, GLuint max_sprites);
-		Renderer(const Renderer&) = delete;
-		Renderer(Renderer&& other) noexcept;
-
-		Renderer& operator=(const Renderer&) = delete;
-		Renderer& operator=(Renderer&& other) noexcept;
-
 		~Renderer() { release(); }
 
 		void release();

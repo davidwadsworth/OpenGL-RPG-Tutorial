@@ -3,7 +3,7 @@
 #include <iostream>
 
 /*
-copy and pasted (mostly) verbatim from geeks for geeks. Simple one class templated splay tree solution
+Copy and pasted (mostly) verbatim from geeks for geeks. Simple one class templated splay tree solution
    * https://www.geeksforgeeks.org/splay-tree-set-1-insert/ // right_rotate, left_rotate, splay, pre_order, and search functions
    * https://www.geeksforgeeks.org/splay-tree-set-2-insert-delete/ // insert function
 @author GeeksForGeeks, David Wadsworth

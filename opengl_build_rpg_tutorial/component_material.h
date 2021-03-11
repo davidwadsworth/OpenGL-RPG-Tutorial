@@ -3,8 +3,9 @@
 #include "component_shader.h"
 
 /*
-* Abstract holding class for texture shader combinations used for rendering
-* @author David Wadsworth
+Abstract holding class for texture shader combinations used in component_renderer
+
+@author David Wadsworth
 */
 namespace Component
 {

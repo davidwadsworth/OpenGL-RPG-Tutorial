@@ -36,22 +36,26 @@ private:
 	DataStructures::SplayTree<Comp> components_;
 	DataStructures::SplayTree<Entity> children_;
 public:	
-	static long long entity_count;
-	static long long comp_count;
+	static long long count; // count entity references
 	
 	Entity()
 		: components_(), children_()
 	{
-		++entity_count;
+		++count;
 	}
 
 	~Entity()
 	{
-		comp_count -= components_.size();
 		components_.~SplayTree();
 		children_.~SplayTree();
-		--entity_count;
+		--count;
 	}
+
+	// delete all functions that could possibly copy one entity onto another
+	Entity(const Entity&) = delete;
+	Entity(Entity&&) = delete;
+	Entity& operator=(const Entity&) = delete;
+	Entity& operator=(Entity&&) = delete;
 
 	Entity* get_child(GLuint pos)
 	{
@@ -112,7 +116,6 @@ public:
 	template <typename T, typename... TArgs> T* add_component(TArgs&&... m_args)
 	{
 		T* c(new T(std::forward<TArgs>(m_args)...));
-		++comp_count;
 		return static_cast<T*>(components_.insert(get_component_type_id<T>(), c));
 	}
 
@@ -120,7 +123,6 @@ public:
 	template <typename T, typename... TArgs> T* push_back_component(TArgs&&... m_args)
 	{
 		T* c(new T(std::forward<TArgs>(m_args)...));
-		++comp_count;
 		return static_cast<T*>(components_.insert(c));
 	}
 

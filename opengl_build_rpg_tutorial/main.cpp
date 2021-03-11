@@ -11,7 +11,7 @@
 #include "entity.h"
 #include "component_transform.h"
 #include "component_system.h"
-#include "component_system_render_dynamic_draw.h"
+#include "component_system_render_camera_draw.h"
 #include "component_system_update_camera.h"
 
 /*
@@ -19,7 +19,6 @@ Source code for episode 8 of Build Your Own RPG series
 
 @author David Wadsworth
 */
-
 
 void processInput(GLFWwindow* window, Component::Transform& transform);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -90,7 +89,9 @@ int main()
     auto vs_file_name = "resources/shaders/sprite.vs";
     auto fs_file_name = "resources/shaders/sprite.fs";
 
-    auto c_shader = Component::Shader();
+    auto shaders = new Entity();
+
+    auto& c_shader = *shaders->add_component<Component::Shader>();
     c_shader.load(vs_file_name, fs_file_name);
 
     // set up camera
@@ -99,18 +100,22 @@ int main()
     c_shader.set_mat4("projection", projection);
 
     // load in used textures
+    auto textures = new Entity();
+
     auto flesh_tex_name = "resources/images/flesh.png";
     auto grass_tex_name = "resources/images/grass.png";
 
-    auto c_flesh_tex = Component::Texture();
+    auto& c_flesh_tex = *textures->push_back_component<Component::Texture>();
     c_flesh_tex.load(flesh_tex_name);
 
-    auto c_grass_tex = Component::Texture();
+    auto& c_grass_tex = *textures->push_back_component<Component::Texture>();
     c_grass_tex.load(grass_tex_name);
 
     // create a renderer object and input appropriate attribute sizes and max amount of sprites on screen at once
     // 2 = pos, 2 = coords
-    auto c_renderer = Component::Renderer({ 2, 2 }, MAX_SPRITES);
+
+    auto renderer = new Entity();
+    auto& c_renderer = *renderer->add_component<Component::Renderer>(std::vector<GLuint>{ 2,2 }, MAX_SPRITES);
 
     // set up camera
     auto camera = new Entity();
@@ -145,7 +150,7 @@ int main()
         auto& c_tile_transform = *tiles->push_back_component<Component::Transform>(grass_dest);
         auto& c_tile_src = *tiles->push_back_component<Component::Src>(SRC);
         auto& c_tile_dest = *tiles->push_back_component<Component::Dest>();
-        auto csr_tile_dynamic_draw = tiles->push_back_component<ComponentSystemRender::DynamicDraw>(c_renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
+        auto csr_tile_dynamic_draw = tiles->push_back_component<ComponentSystemRender::CameraDraw>(c_renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
         render_systems.push_back(csr_tile_dynamic_draw);
     }
 
@@ -157,14 +162,14 @@ int main()
     auto& c_pla_dest = *player->add_component<Component::Dest>(); 
     auto& c_pla_material = *player->add_component<Component::Material>(c_flesh_tex, c_shader, 0);
 
-    auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::DynamicDraw>(c_renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
+    auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::CameraDraw>(c_renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
     auto csu_pla_camera = player->add_component<ComponentSystemUpdate::Camera>(c_pla_transform, c_cam_transform);
 
     render_systems.push_back(csr_pla_dynamic_draw);
     update_systems.push_back(csu_pla_camera);
 
-    std::cout << "Entities Created: " << Entity::entity_count << std::endl;
-    std::cout << "Components Created: " << Entity::comp_count << std::endl;
+    std::cout << "Entities Created: " << Entity::count << std::endl;
+    std::cout << "Components Created: " << Comp::count << std::endl;
 
     // game loop
     while (!glfwWindowShouldClose(window))
@@ -198,18 +203,21 @@ int main()
     delete player;
     delete camera;
     delete tile_map;
+    delete shaders;
+    delete textures;
+    delete renderer;
 
     glfwTerminate();
 
-    if (Entity::entity_count)
+    if (Entity::count)
     {
-        std::cerr << "Entity Memory Leak: " << Entity::entity_count << std::endl;
+        std::cerr << "Entity Memory Leak: " << Entity::count << std::endl;
         return -1;
     }
 
-    if (Entity::comp_count)
+    if (Comp::count)
     {
-        std::cerr << "Component Memory Leak: " << Entity::comp_count << std::endl;
+        std::cerr << "Component Memory Leak: " << Comp::count << std::endl;
         return -1;
     }
 

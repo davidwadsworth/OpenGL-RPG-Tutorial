@@ -1,12 +1,19 @@
 #pragma once
-#include "component_render.h"
+#include "component_src.h"
+#include "component_dest.h"
 #include "component_transform.h"
 #include "component_system.h"
 #include "component_renderer.h"
 
+/*
+Draw sprites on screen with respect to where the camera is located
+
+@author David Wadsworth
+*/
+
 namespace ComponentSystemRender
 {
-	class DynamicDraw : public Component::System
+	class CameraDraw : public Component::System
 	{
 		Component::Renderer& renderer_;
 		Component::Src& src_;
@@ -14,7 +21,7 @@ namespace ComponentSystemRender
 		Component::Material& material_;
 		Component::Transform& transform_, &camera_transform;
 	public:
-		DynamicDraw(Component::Renderer& renderer, Component::Src& src, Component::Dest& dest, Component::Material& material, 
+		CameraDraw(Component::Renderer& renderer, Component::Src& src, Component::Dest& dest, Component::Material& material,
 			Component::Transform& transform, Component::Transform& camera_transform)
 			: renderer_(renderer), src_(src), dest_(dest), material_(material), transform_(transform), camera_transform(camera_transform)
 		{}
