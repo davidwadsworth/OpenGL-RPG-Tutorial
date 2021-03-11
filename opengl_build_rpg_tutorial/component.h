@@ -7,15 +7,6 @@
 
 struct Comp
 {
-	static long long component_count;
-
-	Comp()
-	{
-		component_count++;
-	}
-	
 	virtual ~Comp()
-	{
-		component_count--;
-	}
+	{}
 };

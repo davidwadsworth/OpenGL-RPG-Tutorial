@@ -15,7 +15,7 @@
 #include "component_system_update_camera.h"
 
 /*
-Source code for episode 7 of Build Your Own RPG series
+Source code for episode 8 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -58,6 +58,7 @@ int main()
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cerr << "failed to initialize glad!" << std::endl;
+        glfwTerminate();
         return -1;
     }
 
@@ -89,27 +90,27 @@ int main()
     auto vs_file_name = "resources/shaders/sprite.vs";
     auto fs_file_name = "resources/shaders/sprite.fs";
 
-    auto shader = new Component::Shader();
-    shader->load(vs_file_name, fs_file_name);
+    auto c_shader = Component::Shader();
+    c_shader.load(vs_file_name, fs_file_name);
 
     // set up camera
-    shader->use();
+    c_shader.use();
     auto projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
-    shader->set_mat4("projection", projection);
+    c_shader.set_mat4("projection", projection);
 
     // load in used textures
     auto flesh_tex_name = "resources/images/flesh.png";
     auto grass_tex_name = "resources/images/grass.png";
 
-    auto flesh_tex = new Component::Texture();
-    flesh_tex->load(flesh_tex_name);
+    auto c_flesh_tex = Component::Texture();
+    c_flesh_tex.load(flesh_tex_name);
 
-    auto grass_tex = new Component::Texture();
-    grass_tex->load(grass_tex_name);
+    auto c_grass_tex = Component::Texture();
+    c_grass_tex.load(grass_tex_name);
 
     // create a renderer object and input appropriate attribute sizes and max amount of sprites on screen at once
     // 2 = pos, 2 = coords
-    auto renderer = new Component::Renderer({ 2, 2 }, MAX_SPRITES);
+    auto c_renderer = Component::Renderer({ 2, 2 }, MAX_SPRITES);
 
     // set up camera
     auto camera = new Entity();
@@ -118,7 +119,7 @@ int main()
     // set up tile map
     auto tile_map = new Entity();
 
-    auto& c_tmap_material = *tile_map->add_component<Component::Material>(*grass_tex, *shader, 1);
+    auto& c_tmap_material = *tile_map->add_component<Component::Material>(c_grass_tex, c_shader, 1);
 
     // how many columns of grass
     auto grass_cols = COLS;
@@ -144,7 +145,7 @@ int main()
         auto& c_tile_transform = *tiles->push_back_component<Component::Transform>(grass_dest);
         auto& c_tile_src = *tiles->push_back_component<Component::Src>(SRC);
         auto& c_tile_dest = *tiles->push_back_component<Component::Dest>();
-        auto csr_tile_dynamic_draw = tiles->push_back_component<ComponentSystemRender::DynamicDraw>(*renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
+        auto csr_tile_dynamic_draw = tiles->push_back_component<ComponentSystemRender::DynamicDraw>(c_renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
         render_systems.push_back(csr_tile_dynamic_draw);
     }
 
@@ -154,15 +155,16 @@ int main()
     auto& c_pla_transform = *player->add_component<Component::Transform>((GLfloat)Game::width, (GLfloat)Game::height, 64.0f, 2.0f);
     auto& c_pla_src = *player->add_component<Component::Src>(SRC); // src is full image, dest is set up during dynamic draw
     auto& c_pla_dest = *player->add_component<Component::Dest>(); 
-    auto& c_pla_material = *player->add_component<Component::Material>(*flesh_tex, *shader, 0);
-    auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::DynamicDraw>(*renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
+    auto& c_pla_material = *player->add_component<Component::Material>(c_flesh_tex, c_shader, 0);
+
+    auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::DynamicDraw>(c_renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
     auto csu_pla_camera = player->add_component<ComponentSystemUpdate::Camera>(c_pla_transform, c_cam_transform);
 
     render_systems.push_back(csr_pla_dynamic_draw);
     update_systems.push_back(csu_pla_camera);
 
-    std::cout << "Start Entity Count: " << Entity::entity_count << std::endl;
-    std::cout << "Start Component Count: " << Comp::component_count << std::endl;
+    std::cout << "Entities Created: " << Entity::entity_count << std::endl;
+    std::cout << "Components Created: " << Entity::comp_count << std::endl;
 
     // game loop
     while (!glfwWindowShouldClose(window))
@@ -177,13 +179,13 @@ int main()
         for (auto u : update_systems)
             u->execute();
 
-        renderer->begin();
+        c_renderer.begin();
         
         // make draw calls to renderer
         for (auto r : render_systems)
             r->execute();
             
-        renderer->end();
+        c_renderer.end();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -197,16 +199,19 @@ int main()
     delete camera;
     delete tile_map;
 
-    // delete remaining used components
-    delete renderer;
-    delete flesh_tex;
-    delete grass_tex;
-    delete shader;
-
-    assert(!Entity::entity_count);
-    assert(!Comp::component_count);
-
     glfwTerminate();
+
+    if (Entity::entity_count)
+    {
+        std::cerr << "Entity Memory Leak: " << Entity::entity_count << std::endl;
+        return -1;
+    }
+
+    if (Entity::comp_count)
+    {
+        std::cerr << "Component Memory Leak: " << Entity::comp_count << std::endl;
+        return -1;
+    }
 
     return 0;
 }
