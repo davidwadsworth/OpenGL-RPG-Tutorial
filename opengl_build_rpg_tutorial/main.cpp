@@ -18,7 +18,7 @@
 
 
 /*
-Source code for episode 8 of Build Your Own RPG series
+Source code for episode 9 of Build Your Own RPG series
 
 @author David Wadsworth
 */
