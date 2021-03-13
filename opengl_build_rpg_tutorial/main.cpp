@@ -15,6 +15,7 @@
 #include "component_system_update_camera.h"
 #include "component_controller_keyboard.h"
 #include "component_system_update_move.h"
+#include "component_system_update_animation.h"
 
 
 /*
@@ -106,10 +107,10 @@ int main()
     // load in used textures
     auto textures = new Entity();
 
-    auto flesh_tex_name = "resources/images/flesh.png";
+    auto flesh_tex_name = "resources/images/flesh_full.png";
     auto grass_tex_name = "resources/images/grass.png";
 
-    auto& c_flesh_tex = *textures->push_back_component<Component::Texture>();
+    auto& c_flesh_tex = *textures->add_component<Component::Texture>();
     c_flesh_tex.load(flesh_tex_name);
 
     auto& c_grass_tex = *textures->push_back_component<Component::Texture>();
@@ -166,6 +167,24 @@ int main()
     auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::CameraDraw>(c_renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
     auto csu_pla_camera = player->add_component<ComponentSystemUpdate::Camera>(c_pla_transform, c_cam_transform);
     auto csu_pla_move = player->add_component<ComponentSystemUpdate::Move>(c_pla_transform, c_cont_keyboard);
+
+    auto csu_pla_animation = player->add_component<ComponentSystemUpdate::Animation>(4, c_pla_src);
+
+    // set up flesh animations
+    std::string anims[] = {
+        "idle down",
+        "idle up",
+        "idle right",
+        "idle left",
+        "walk down",
+        "walk up",
+        "walk right",
+        "walk left"
+    };
+
+    auto anim_i = 0u;
+    auto flesh_anim = new Entity();
+
 
     render_systems.push_back(csr_pla_dynamic_draw);
     update_systems.push_back(csu_pla_move);
