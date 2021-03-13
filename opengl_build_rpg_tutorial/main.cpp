@@ -13,6 +13,9 @@
 #include "component_system.h"
 #include "component_system_render_camera_draw.h"
 #include "component_system_update_camera.h"
+#include "component_controller_keyboard.h"
+#include "component_system_update_move.h"
+
 
 /*
 Source code for episode 8 of Build Your Own RPG series
@@ -20,13 +23,12 @@ Source code for episode 8 of Build Your Own RPG series
 @author David Wadsworth
 */
 
-void processInput(GLFWwindow* window, Component::Transform& transform);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity,
+void APIENTRY gl_debug_output(GLenum source, GLenum type, unsigned int id, GLenum severity,
     GLsizei length, const char* message, const void* userParam);
+void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mode);
 
 constexpr Rect SRC{ 0.0f, 0.0f, 64.0f, 64.0f };
-constexpr GLfloat SPEED = 4.0f;
 constexpr GLint COLS = 32;
 constexpr GLint ROWS = 32;
 constexpr GLuint MAX_SPRITES = 255u;
@@ -53,6 +55,8 @@ int main()
     glfwMakeContextCurrent(window);
     // make the window resizable and scale the renderer
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    // set up so keyboard can interact with window
+    glfwSetKeyCallback(window, key_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -68,7 +72,7 @@ int main()
     {
         glEnable(GL_DEBUG_OUTPUT);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-        glDebugMessageCallback(glDebugOutput, nullptr);
+        glDebugMessageCallback(gl_debug_output, nullptr);
         glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
     }
 
@@ -113,9 +117,12 @@ int main()
 
     // create a renderer object and input appropriate attribute sizes and max amount of sprites on screen at once
     // 2 = pos, 2 = coords
-
     auto renderer = new Entity();
     auto& c_renderer = *renderer->add_component<Component::Renderer>(std::vector<GLuint>{ 2,2 }, MAX_SPRITES);
+
+    // set up controller
+    auto controller = new Entity();
+    auto& c_cont_keyboard = *controller->add_component<ComponentController::Keyboard>();
 
     // set up camera
     auto camera = new Entity();
@@ -126,14 +133,8 @@ int main()
 
     auto& c_tmap_material = *tile_map->add_component<Component::Material>(c_grass_tex, c_shader, 1);
 
-    // how many columns of grass
-    auto grass_cols = COLS;
-
-    // how many rows of grass
-    auto grass_rows = ROWS;
-
     // how many total grass to draw
-    auto total_grass = grass_cols * grass_rows;
+    auto total_grass = COLS * ROWS;
 
     auto tiles = new Entity();
     tile_map->push_back_child(tiles);
@@ -143,8 +144,8 @@ int main()
     {
         Rect grass_dest
         {
-            (i % grass_cols) * 64.0f,  // finds place in column and multiplies by sprite width
-            (i / grass_cols) * 64.0f,  // finds place in row and multiples by sprite height
+            (i % COLS) * 64.0f,  // finds place in column and multiplies by sprite width
+            (i / COLS) * 64.0f,  // finds place in row and multiples by sprite height
             64.0f, 64.0f
         };
         auto& c_tile_transform = *tiles->push_back_component<Component::Transform>(grass_dest);
@@ -158,14 +159,16 @@ int main()
     auto player = new Entity();
 
     auto& c_pla_transform = *player->add_component<Component::Transform>((GLfloat)Game::width, (GLfloat)Game::height, 64.0f, 2.0f);
-    auto& c_pla_src = *player->add_component<Component::Src>(SRC); // src is full image, dest is set up during dynamic draw
+    auto& c_pla_src = *player->add_component<Component::Src>(SRC);
     auto& c_pla_dest = *player->add_component<Component::Dest>(); 
     auto& c_pla_material = *player->add_component<Component::Material>(c_flesh_tex, c_shader, 0);
 
     auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::CameraDraw>(c_renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
     auto csu_pla_camera = player->add_component<ComponentSystemUpdate::Camera>(c_pla_transform, c_cam_transform);
+    auto csu_pla_move = player->add_component<ComponentSystemUpdate::Move>(c_pla_transform, c_cont_keyboard);
 
     render_systems.push_back(csr_pla_dynamic_draw);
+    update_systems.push_back(csu_pla_move);
     update_systems.push_back(csu_pla_camera);
 
     std::cout << "Entities Created: " << Entity::count << std::endl;
@@ -174,8 +177,6 @@ int main()
     // game loop
     while (!glfwWindowShouldClose(window))
     {
-        processInput(window, c_pla_transform);
-
         // clear screen to black
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -206,6 +207,7 @@ int main()
     delete shaders;
     delete textures;
     delete renderer;
+    delete controller;
 
     glfwTerminate();
 
@@ -224,29 +226,28 @@ int main()
     return 0;
 }
 
-void processInput(GLFWwindow* window, Component::Transform& transform)
-{ 
-    // move character around screen
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        transform.y-= SPEED;
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        transform.y+= SPEED;
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        transform.x+= SPEED;
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        transform.x-= SPEED;
-
-    // exit on escape key press
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mode)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
+    if (key >= 0 && key < MAX_KEYS)
+    {
+        // update our global keyboard object
+        if (action == GLFW_PRESS)
+            Game::keys[key] = GL_TRUE;
+        else if (action == GLFW_RELEASE)
+            Game::keys[key] = GL_FALSE;
+    }
 }
+
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
 
-void APIENTRY glDebugOutput(GLenum source,
+void APIENTRY gl_debug_output(GLenum source,
     GLenum type,
     unsigned int id,
     GLenum severity,
