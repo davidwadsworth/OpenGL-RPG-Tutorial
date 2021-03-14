@@ -16,10 +16,10 @@
 #include "component_controller_keyboard.h"
 #include "component_system_update_move.h"
 #include "component_system_update_animation.h"
-
+#include "component_system_update_animate_move.h"
 
 /*
-Source code for episode 9 of Build Your Own RPG series
+Source code for episode 10 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -159,7 +159,7 @@ int main()
     // set up player and it's components
     auto player = new Entity();
 
-    auto& c_pla_transform = *player->add_component<Component::Transform>((GLfloat)Game::width, (GLfloat)Game::height, 64.0f, 2.0f);
+    auto& c_pla_transform = *player->add_component<Component::Transform>((GLfloat)Game::width, (GLfloat)Game::height, 64.0f);
     auto& c_pla_src = *player->add_component<Component::Src>(SRC);
     auto& c_pla_dest = *player->add_component<Component::Dest>(); 
     auto& c_pla_material = *player->add_component<Component::Material>(c_flesh_tex, c_shader, 0);
@@ -169,6 +169,7 @@ int main()
     auto csu_pla_move = player->add_component<ComponentSystemUpdate::Move>(c_pla_transform, c_cont_keyboard);
 
     auto csu_pla_animation = player->add_component<ComponentSystemUpdate::Animation>(4, c_pla_src);
+    auto csu_pla_animate_move = player->add_component<ComponentSystemUpdate::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
 
     // set up flesh animations
     std::string anims[] = {
@@ -183,12 +184,49 @@ int main()
     };
 
     auto anim_i = 0u;
-    auto flesh_anim = new Entity();
+    auto animation = new Entity();
 
+    auto flesh_tex_cols = c_flesh_tex.width / 64u;
+
+    for (auto i = 0; i < 4; ++i)
+    {
+        Rect rect{
+            (GLfloat)(anim_i % flesh_tex_cols) * 64.0f,
+            (GLfloat)(anim_i / flesh_tex_cols) * 64.0f,
+            64.0f,
+            64.0f
+        };
+
+        auto idle = animation->push_back_component<Component::Src>(rect);
+        csu_pla_animation->add(anims[anim_i++], Anim{idle});
+    }
+
+    for (auto i = 0; i < 4; ++i)
+    {
+        Rect rect{
+            (GLfloat)((anim_i + i) % flesh_tex_cols) * 64.0f,
+            (GLfloat)((anim_i + i) / flesh_tex_cols) * 64.0f,
+            64.0f,
+            64.0f
+        };
+
+        Rect rect2{
+            (GLfloat)((anim_i + i + 1) % flesh_tex_cols) * 64.0f,
+            (GLfloat)((anim_i + i + 1) / flesh_tex_cols) * 64.0f,
+            64.0f,
+            64.0f
+        };
+
+        auto walk_1 = animation->push_back_component<Component::Src>(rect);
+        auto walk_2 = animation->push_back_component<Component::Src>(rect2);
+        csu_pla_animation->add(anims[anim_i++], Anim{ walk_1, walk_2 });
+    }
 
     render_systems.push_back(csr_pla_dynamic_draw);
     update_systems.push_back(csu_pla_move);
     update_systems.push_back(csu_pla_camera);
+    update_systems.push_back(csu_pla_animate_move);
+    update_systems.push_back(csu_pla_animation);
 
     std::cout << "Entities Created: " << Entity::count << std::endl;
     std::cout << "Components Created: " << Comp::count << std::endl;
@@ -227,6 +265,7 @@ int main()
     delete textures;
     delete renderer;
     delete controller;
+    delete animation;
 
     glfwTerminate();
 

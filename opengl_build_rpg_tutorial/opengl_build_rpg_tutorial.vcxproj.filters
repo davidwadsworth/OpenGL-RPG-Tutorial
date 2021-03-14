@@ -116,6 +116,9 @@
     <ClInclude Include="component_controller_keyboard.h">
       <Filter>EC\Component\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="component_system_update_animate_move.h">
+      <Filter>EC\Component\System\Update</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">
