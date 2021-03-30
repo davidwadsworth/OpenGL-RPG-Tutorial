@@ -270,24 +270,15 @@ int main()
     glfwTerminate();
 
     if (Entity::count)
-    {
         std::cerr << "Entity Memory Leak: " << Entity::count << std::endl;
-        return -1;
-    }
-
     if (Comp::count)
-    {
         std::cerr << "Component Memory Leak: " << Comp::count << std::endl;
-        return -1;
-    }
 
     return 0;
 }
 
 void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mode)
 {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
     if (key >= 0 && key < MAX_KEYS)
     {
         // update our global keyboard object

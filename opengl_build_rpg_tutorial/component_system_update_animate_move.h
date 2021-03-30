@@ -24,9 +24,11 @@ namespace ComponentSystemUpdate
 
 		void execute() override
 		{
+			// get the current state of movement for our character
 			auto curr = glm::ivec2{ (int)controller_.key_down_right() - (int)controller_.key_down_left(),
 			(int)controller_.key_down_down() - (int)controller_.key_down_up()};
 
+			// if curr.x and curr.y is not 0 then its moving, else its idling
 			if (curr.x || curr.y)
 			{
 				prev_ = curr;

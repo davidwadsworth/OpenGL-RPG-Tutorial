@@ -30,7 +30,7 @@ namespace ComponentSystemUpdate
 		void execute() override
 		{
 			auto time = static_cast<float>(glfwGetTime());
-			auto anim_pos = static_cast<std::size_t>(time * speed_) % current_->size();
+			auto anim_pos = static_cast<std::size_t>(time * speed_) % current_->size(); // find next frame to animate
 			auto anim_src = current_->at(anim_pos);
 
 			src_.x = anim_src->x;
