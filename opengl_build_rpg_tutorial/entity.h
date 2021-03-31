@@ -113,10 +113,15 @@ public:
 	}
 
 	// adds component to splay tree and gives it a uniquely id, can't have two of the same component per entity
-	template <typename T, typename... TArgs> T* add_component(TArgs&&... m_args)
+	template <typename T, typename... TArgs> T* add_component(TArgs&&... args)
 	{
-		T* c(new T(std::forward<TArgs>(m_args)...));
+		T* c(new T(std::forward<TArgs>(args)...));
 		return static_cast<T*>(components_.insert(get_component_type_id<T>(), c));
+	}
+
+	template <typename T, typename... TArgs> T* add_component(TArgs&&... args, std::string str)
+	{
+
 	}
 
 	// adds component to splay tree and treats it like an array, can have two of the same component in an entity
