@@ -31,11 +31,14 @@
     <Filter Include="EC\Component\Controller">
       <UniqueIdentifier>{7785d3a9-fb05-49f3-84b0-6ee5774cd4ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\System\Data">
-      <UniqueIdentifier>{4fe4881a-27cc-4ad4-815d-0f196f351db7}</UniqueIdentifier>
+    <Filter Include="EC\Component\Trigger">
+      <UniqueIdentifier>{a080096e-ac5f-4b4f-a70d-723d5eb62022}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\System\Data\In">
+    <Filter Include="EC\Component\Trigger\Input">
       <UniqueIdentifier>{2f1fc7ba-149b-4e8e-b2a0-62fcb82612ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\Trigger\Input\GameState">
+      <UniqueIdentifier>{9fb5bef0-c526-4b9e-9db6-515c6f2c5c21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -125,35 +128,41 @@
     <ClInclude Include="component_system_update_animate_move.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_data_in_camera.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_data_in_controller.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_data_in_player.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_data_in_shader.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_data_in_texture.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_data_in_tilemap.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_data_in_renderer.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_data_in.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_data_in_engine.h">
-      <Filter>EC\Component\System\Data\In</Filter>
-    </ClInclude>
     <ClInclude Include="component_vector.h">
       <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger.h">
+      <Filter>EC\Component\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_camera.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_controller.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_engine.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_player.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_renderer.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_shader.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_texture.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_tilemap.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_gamestate_overworld.h">
+      <Filter>EC\Component\Trigger\Input\GameState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,21 +2,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
-#include "component_shader.h"
-#include "component_texture.h"
-#include <glm/ext/matrix_clip_space.hpp>
-#include "component_renderer.h"
-#include "component_material.h"
 #include "game.h"
-#include "entity.h"
-#include "component_transform.h"
 #include "component_system.h"
-#include "component_system_render_camera_draw.h"
-#include "component_system_update_camera.h"
-#include "component_controller_keyboard.h"
-#include "component_system_update_move.h"
-#include "component_system_update_animation.h"
-#include "component_system_update_animate_move.h"
+#include "component_trigger_input.h"
+#include "component_vector.h"
+#include "component_renderer.h"
 
 /*
 Source code for episode 10 of Build Your Own RPG series
@@ -28,11 +18,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void APIENTRY gl_debug_output(GLenum source, GLenum type, unsigned int id, GLenum severity,
     GLsizei length, const char* message, const void* userParam);
 void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mode);
-
-constexpr Rect SRC{ 0.0f, 0.0f, 64.0f, 64.0f };
-constexpr GLint COLS = 32;
-constexpr GLint ROWS = 32;
-constexpr GLuint MAX_SPRITES = 255u;
 
 int main()
 {
@@ -84,149 +69,22 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // set up engine, will be its own thing soon enough
-    std::vector<Component::System*> render_systems;
-    std::vector<Component::System*> update_systems;
+    // init game
+    Game::init();
 
-    // set up entities and their components
-    
-    // load in used shaders
-    auto vs_file_name = "resources/shaders/sprite.vs";
-    auto fs_file_name = "resources/shaders/sprite.fs";
+    EntityMap local_objects;
 
-    auto shaders = new Entity();
+    auto overworld_game_objs = Game::global_objects["overworld"]->get_component_list();
 
-    auto& c_shader = *shaders->add_component<Component::Shader>();
-    c_shader.load(vs_file_name, fs_file_name);
+    for (auto obj : overworld_game_objs)
+        static_cast<Component::Trigger::In*>(obj)->execute(local_objects);
 
-    // set up camera
-    c_shader.use();
-    auto projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
-    c_shader.set_mat4("projection", projection);
+    // set up used game objects
+    auto engine = local_objects["engine"].get();
+    auto& render_systems = *engine->get_component<Component::Vector<Component::Sys*>>("render");
+    auto& update_systems = *engine->get_component<Component::Vector<Component::Sys*>>("update");
 
-    // load in used textures
-    auto textures = new Entity();
-
-    auto flesh_tex_name = "resources/images/flesh_full.png";
-    auto grass_tex_name = "resources/images/grass.png";
-
-    auto& c_flesh_tex = *textures->add_component<Component::Texture>();
-    c_flesh_tex.load(flesh_tex_name);
-
-    auto& c_grass_tex = *textures->push_back_component<Component::Texture>();
-    c_grass_tex.load(grass_tex_name);
-
-    // create a renderer object and input appropriate attribute sizes and max amount of sprites on screen at once
-    // 2 = pos, 2 = coords
-    auto renderer = new Entity();
-    auto& c_renderer = *renderer->add_component<Component::Renderer>(std::vector<GLuint>{ 2,2 }, MAX_SPRITES);
-
-    // set up controller
-    auto controller = new Entity();
-    auto& c_cont_keyboard = *controller->add_component<ComponentController::Keyboard>();
-
-    // set up camera
-    auto camera = new Entity();
-    auto& c_cam_transform = *camera->add_component<Component::Transform>(0.0f, 0.0f, (GLfloat)ROWS * 64.0f); // position = (0, 0) width/height = 32 tiles * 64 length of tile
-
-    // set up tile map
-    auto tile_map = new Entity();
-
-    auto& c_tmap_material = *tile_map->add_component<Component::Material>(c_grass_tex, c_shader, 1);
-
-    // how many total grass to draw
-    auto total_grass = COLS * ROWS;
-
-    auto tiles = new Entity();
-    tile_map->push_back_child(tiles);
-
-    // set up tiles
-    for (auto i = 0; i < total_grass; ++i)
-    {
-        Rect grass_dest
-        {
-            (i % COLS) * 64.0f,  // finds place in column and multiplies by sprite width
-            (i / COLS) * 64.0f,  // finds place in row and multiples by sprite height
-            64.0f, 64.0f
-        };
-        auto& c_tile_transform = *tiles->push_back_component<Component::Transform>(grass_dest);
-        auto& c_tile_src = *tiles->push_back_component<Component::Src>(SRC);
-        auto& c_tile_dest = *tiles->push_back_component<Component::Dest>();
-        auto csr_tile_dynamic_draw = tiles->push_back_component<ComponentSystemRender::CameraDraw>(c_renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
-        render_systems.push_back(csr_tile_dynamic_draw);
-    }
-
-    // set up player and it's components
-    auto player = new Entity();
-
-    auto& c_pla_transform = *player->add_component<Component::Transform>((GLfloat)Game::width, (GLfloat)Game::height, 64.0f);
-    auto& c_pla_src = *player->add_component<Component::Src>(SRC);
-    auto& c_pla_dest = *player->add_component<Component::Dest>(); 
-    auto& c_pla_material = *player->add_component<Component::Material>(c_flesh_tex, c_shader, 0);
-
-    auto csr_pla_dynamic_draw = player->add_component<ComponentSystemRender::CameraDraw>(c_renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
-    auto csu_pla_camera = player->add_component<ComponentSystemUpdate::Camera>(c_pla_transform, c_cam_transform);
-    auto csu_pla_move = player->add_component<ComponentSystemUpdate::Move>(c_pla_transform, c_cont_keyboard);
-
-    auto csu_pla_animation = player->add_component<ComponentSystemUpdate::Animation>(4, c_pla_src);
-    auto csu_pla_animate_move = player->add_component<ComponentSystemUpdate::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
-
-    // set up flesh animations
-    std::string anims[] = {
-        "idle down",
-        "idle up",
-        "idle right",
-        "idle left",
-        "walk down",
-        "walk up",
-        "walk right",
-        "walk left"
-    };
-
-    auto anim_i = 0u;
-    auto animation = new Entity();
-
-    auto flesh_tex_cols = c_flesh_tex.width / 64u;
-
-    for (auto i = 0; i < 4; ++i)
-    {
-        Rect rect{
-            (GLfloat)(anim_i % flesh_tex_cols) * 64.0f,
-            (GLfloat)(anim_i / flesh_tex_cols) * 64.0f,
-            64.0f,
-            64.0f
-        };
-
-        auto idle = animation->push_back_component<Component::Src>(rect);
-        csu_pla_animation->add(anims[anim_i++], Anim{idle});
-    }
-
-    for (auto i = 0; i < 4; ++i)
-    {
-        Rect rect{
-            (GLfloat)((anim_i + i) % flesh_tex_cols) * 64.0f,
-            (GLfloat)((anim_i + i) / flesh_tex_cols) * 64.0f,
-            64.0f,
-            64.0f
-        };
-
-        Rect rect2{
-            (GLfloat)((anim_i + i + 1) % flesh_tex_cols) * 64.0f,
-            (GLfloat)((anim_i + i + 1) / flesh_tex_cols) * 64.0f,
-            64.0f,
-            64.0f
-        };
-
-        auto walk_1 = animation->push_back_component<Component::Src>(rect);
-        auto walk_2 = animation->push_back_component<Component::Src>(rect2);
-        csu_pla_animation->add(anims[anim_i++], Anim{ walk_1, walk_2 });
-    }
-
-    render_systems.push_back(csr_pla_dynamic_draw);
-    update_systems.push_back(csu_pla_move);
-    update_systems.push_back(csu_pla_camera);
-    update_systems.push_back(csu_pla_animate_move);
-    update_systems.push_back(csu_pla_animation);
+    auto& c_renderer = *local_objects["renderer"]->get_component<Component::Renderer>();
 
     std::cout << "Entities Created: " << Entity::count << std::endl;
     std::cout << "Components Created: " << Comp::count << std::endl;
@@ -258,15 +116,10 @@ int main()
     update_systems.clear();
 
     // delete entities and their components
-    delete player;
-    delete camera;
-    delete tile_map;
-    delete shaders;
-    delete textures;
-    delete renderer;
-    delete controller;
-    delete animation;
-
+    local_objects.clear();
+    Game::global_objects.clear();
+    delete Game::game;
+    
     glfwTerminate();
 
     if (Entity::count)
@@ -288,8 +141,6 @@ void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mo
             Game::keys[key] = GL_FALSE;
     }
 }
-
-
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {

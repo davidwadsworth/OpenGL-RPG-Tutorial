@@ -106,6 +106,12 @@ public:
 		return static_cast<T*>(components_.search(pos));
 	}
 
+	// searches component tree for specific component of hashed string
+	template<typename T> T* get_component(std::string str)
+	{
+		return static_cast<T*>(components_.search(std::hash<std::string>{}(str)));
+	}
+
 	// checks if unique id of component is located in component tree
 	template <typename T> bool has_component()
 	{
@@ -119,9 +125,11 @@ public:
 		return static_cast<T*>(components_.insert(get_component_type_id<T>(), c));
 	}
 
-	template <typename T, typename... TArgs> T* add_component(TArgs&&... args, std::string str)
+	// adds component to splay tree using a hashed string
+	template <typename T, typename... TArgs> T* add_component_str_id(std::string str, TArgs&&... args)
 	{
-
+		T* c(new T(std::forward<TArgs>(args)...));
+		return static_cast<T*>(components_.insert(std::hash<std::string>{}(str), c));
 	}
 
 	// adds component to splay tree and treats it like an array, can have two of the same component in an entity

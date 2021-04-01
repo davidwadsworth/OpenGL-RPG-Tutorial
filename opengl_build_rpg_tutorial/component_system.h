@@ -9,7 +9,7 @@ Abstract class for executing updates on components and the window
 
 namespace Component
 {
-	struct System : public Comp
+	struct Sys : public Comp
 	{
 		virtual void execute() = 0;
 	};

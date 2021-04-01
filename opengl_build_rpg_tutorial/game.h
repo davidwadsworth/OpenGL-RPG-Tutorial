@@ -17,8 +17,11 @@ constexpr auto MAX_KEYS = 1024u;
 class Game
 {
 public:
-	Game() = default;
+	Game() = delete;
 	static GLuint width, height;
 	static std::array<bool, MAX_KEYS> keys;
 	static EntityMap global_objects;
+	static Entity* game;
+
+	static void init();
 };
