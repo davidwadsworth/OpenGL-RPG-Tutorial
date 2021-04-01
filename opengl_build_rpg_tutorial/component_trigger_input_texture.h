@@ -2,6 +2,12 @@
 #include "component_trigger_input.h"
 #include "component_texture.h"
 
+/*
+Loads and stores Textures for overworld
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Trigger {
 		namespace Input

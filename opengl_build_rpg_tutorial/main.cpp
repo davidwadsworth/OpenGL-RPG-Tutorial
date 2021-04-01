@@ -9,7 +9,7 @@
 #include "component_renderer.h"
 
 /*
-Source code for episode 10 of Build Your Own RPG series
+Source code for episode 11 of Build Your Own RPG series
 
 @author David Wadsworth
 */

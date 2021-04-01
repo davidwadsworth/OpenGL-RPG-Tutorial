@@ -13,6 +13,12 @@
 #include "component_controller_keyboard.h"
 #include "component_vector.h"
 
+/*
+Creates our player object to move around in the overworld.
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Trigger {
 		namespace Input {

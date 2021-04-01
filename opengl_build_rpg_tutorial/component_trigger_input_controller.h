@@ -2,6 +2,12 @@
 #include "component_trigger_input.h"
 #include "component_controller_keyboard.h"
 
+/*
+Sets up our keyboard controller for our game.
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Trigger {
 		namespace Input 

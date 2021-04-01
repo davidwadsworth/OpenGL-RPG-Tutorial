@@ -6,6 +6,12 @@
 #include "component_vector.h"
 #include "component_system_render_camera_draw.h"
 
+/*
+Creates tile map for our player to move around in
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Trigger {
 		namespace Input

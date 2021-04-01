@@ -3,6 +3,11 @@
 #include "component_trigger_input.h"
 #include "component_system.h"
 
+/*
+Holds our render and update queues for our game engine
+
+@author David Wadsworth
+*/
 
 namespace Component {
 	namespace Trigger {

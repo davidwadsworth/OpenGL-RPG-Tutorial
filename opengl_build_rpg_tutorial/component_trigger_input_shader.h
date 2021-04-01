@@ -1,6 +1,13 @@
 #pragma once
 #include "component_trigger_input.h"
 #include "component_shader.h"
+#include <glm/ext/matrix_clip_space.hpp>
+
+/*
+Loads and stores Shader information for use in 
+
+@author David Wadsworth
+*/
 
 namespace Component {
 	namespace Trigger {
@@ -22,6 +29,11 @@ namespace Component {
 
 					auto& c_shader = *entity_->add_component_str_id<Component::Shader>("sprite");
 					c_shader.load(vs_file_name, fs_file_name);
+
+					// set up orthographic projection
+					c_shader.use();
+					auto projection = glm::ortho(0.0f, (GLfloat)Game::width, (GLfloat)Game::height, 0.0f, -1.0f, 1.0f);
+					c_shader.set_mat4("projection", projection);
 				}
 			};
 		}

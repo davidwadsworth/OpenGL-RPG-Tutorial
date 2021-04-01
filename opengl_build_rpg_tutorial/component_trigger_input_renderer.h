@@ -2,6 +2,13 @@
 #include "component_trigger_input.h"
 #include "component_renderer.h"
 
+/*
+Basic batch renderer to draw multiple rectangular images.
+
+@author David Wadsworth
+*/
+
+
 constexpr GLuint MAX_SPRITES = 255u;
 
 namespace Component {

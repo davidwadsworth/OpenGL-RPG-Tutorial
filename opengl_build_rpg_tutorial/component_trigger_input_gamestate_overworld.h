@@ -10,6 +10,8 @@
 #include "component_trigger_input_player.h"
 
 /*
+Set up class for all game object creation within the overworld state
+
 @author David Wadsworth
 */
 

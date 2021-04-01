@@ -7,7 +7,6 @@ Rect storing image coordinates
 @author David Wadsworth
 */
 
-
 namespace Component
 {
 	struct Src : public Comp, public Rect {

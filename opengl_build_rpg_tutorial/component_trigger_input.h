@@ -3,7 +3,7 @@
 #include "game.h"
 
 /*
-Handles all game object creation related operations, generally from data classes. And adds the game object into 
+Handles all game object creation related operations, generally from data classes. And adds the game object into the executed map
 
 @author David Wadsworth
 */

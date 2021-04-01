@@ -18,7 +18,8 @@ class Game
 {
 public:
 	Game() = delete;
-	static GLuint width, height;
+	static GLuint width;
+	static GLuint height;
 	static std::array<bool, MAX_KEYS> keys;
 	static EntityMap global_objects;
 	static Entity* game;
