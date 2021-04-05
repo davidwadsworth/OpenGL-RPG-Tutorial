@@ -164,6 +164,12 @@
     <ClInclude Include="component_trigger_input_gamestate_overworld.h">
       <Filter>EC\Component\Trigger\Input\GameState</Filter>
     </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="delimiter_split.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">

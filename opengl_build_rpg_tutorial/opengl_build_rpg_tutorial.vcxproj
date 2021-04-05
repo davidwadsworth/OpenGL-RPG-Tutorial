@@ -173,11 +173,13 @@
     <ClInclude Include="component_trigger_input_tilemap.h" />
     <ClInclude Include="component_trigger.h" />
     <ClInclude Include="component_vector.h" />
+    <ClInclude Include="delimiter_split.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="component_material.h" />
     <ClInclude Include="component_renderer.h" />
     <ClInclude Include="component_shader.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="component_trigger_input_renderer.h" />
     <ClInclude Include="splay_tree.h" />
