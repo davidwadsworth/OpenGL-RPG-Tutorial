@@ -170,6 +170,9 @@
     <ClInclude Include="delimiter_split.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="component_trigger_input_tileset.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">

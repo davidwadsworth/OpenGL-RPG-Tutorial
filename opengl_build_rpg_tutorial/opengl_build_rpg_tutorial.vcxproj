@@ -172,6 +172,7 @@
     <ClInclude Include="component_trigger_input_texture.h" />
     <ClInclude Include="component_trigger_input_tilemap.h" />
     <ClInclude Include="component_trigger.h" />
+    <ClInclude Include="component_trigger_input_tileset.h" />
     <ClInclude Include="component_vector.h" />
     <ClInclude Include="delimiter_split.h" />
     <ClInclude Include="entity.h" />

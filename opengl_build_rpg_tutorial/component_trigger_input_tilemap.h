@@ -5,6 +5,10 @@
 #include "component_material.h"
 #include "component_vector.h"
 #include "component_system_render_camera_draw.h"
+#include "json.hpp"
+#include <fstream>
+#include <sstream>
+#include "delimiter_split.h"
 
 /*
 Creates tile map for our player to move around in
@@ -18,15 +22,58 @@ namespace Component {
 		{
 			class TileMap : public Component::Trigger::In
 			{
-				GLuint rows_, cols_;
+				std::string path_;
 			public:
-				TileMap(std::string name, GLuint rows, GLuint cols)
-					: Component::Trigger::In(name), rows_(rows), cols_(cols)
+				TileMap(std::string name, std::string path)
+					: Component::Trigger::In(name), path_(path)
 				{}
 
 			private:
 				void create(EntityMap& map) override final
 				{
+					// load shaders from file
+					std::stringstream tm_stream;
+					
+					try
+					{
+						// open files
+						std::ifstream tm_file(path_);
+
+						// read into temp string streams
+						tm_stream << tm_file.rdbuf();
+
+						// close file streams
+						tm_file.close();
+					}
+					catch (std::exception e)
+					{
+						std::cerr << "Failed to read shader files!" << std::endl;
+						throw;
+					}
+
+					auto tilemap_json = nlohmann::json::parse(tm_stream);
+
+					int tilemap_w = tilemap_json["width"]; // legal?
+					int tilemap_h = tilemap_json["height"]; 
+
+					std::vector<int> tiles = tilemap_json["layers"][0]["data"]; // legal?
+
+					auto tilesets = tilemap_json["tilesets"];
+					std::vector<Component::Src*> tile_srcs;
+
+					for (auto set : tilesets) // legal?
+					{
+						// legal?
+						std::string source = set["source"];
+						auto name = delimiter_split(source.c_str(), '.').front();
+
+						if (map.find(name) == map.end())
+						{
+							auto tileset = new Entity();
+							tileset->add_component<Component::Trigger::Input::TileSet>(name, source);
+						}
+					}
+
 					auto& c_grass_tex = *map["texture manager"]->get_component<Component::Texture>("grass");
 					auto& c_sprite_shader = *map["shader manager"]->get_component<Component::Shader>("sprite");
 
