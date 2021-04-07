@@ -9,6 +9,7 @@
 #include <fstream>
 #include <sstream>
 #include "delimiter_split.h"
+#include "component_trigger_input_tileset.h"
 
 /*
 Creates tile map for our player to move around in
@@ -58,20 +59,23 @@ namespace Component {
 
 					std::vector<int> tiles = tilemap_json["layers"][0]["data"]; // legal?
 
-					auto tilesets = tilemap_json["tilesets"];
+					auto& tilesets = tilemap_json["tilesets"];
 					std::vector<Component::Src*> tile_srcs;
 
-					for (auto set : tilesets) // legal?
+					for (auto& set : tilesets) // legal?
 					{
 						// legal?
 						std::string source = set["source"];
-						auto name = delimiter_split(source.c_str(), '.').front();
+						auto set_name = delimiter_split(source.c_str(), '.').front();
 
-						if (map.find(name) == map.end())
+						if (map.find(set_name) == map.end())
 						{
-							auto tileset = new Entity();
-							tileset->add_component<Component::Trigger::Input::TileSet>(name, source);
+							auto& cti_tileset = *Game::global_objects["overworld"]->add_component<Component::Trigger::Input::TileSet>(set_name, source); // legal?
+							cti_tileset.execute(map);
 						}
+
+						auto curr_srcs = map[set_name]->get_component_list();
+						tile_srcs.insert(tile_srcs.end(), curr_srcs.begin(), curr_srcs.end()); // legal?
 					}
 
 					auto& c_grass_tex = *map["texture manager"]->get_component<Component::Texture>("grass");
@@ -81,29 +85,26 @@ namespace Component {
 
 					auto& c_tmap_material = *entity_->add_component<Component::Material>(c_grass_tex, c_sprite_shader, 1);
 
-					// how many total grass to draw
-					auto total_grass = cols_ * rows_;
-
-					auto tiles = new Entity();
-					entity_->push_back_child(tiles);
+					auto map_tiles = new Entity();
+					entity_->push_back_child(map_tiles);
 
 					auto& render_systems = *map["engine"]->get_component<Component::Vector<Component::Sys*>>("render");
 
 					auto& c_renderer = *map["renderer"]->get_component<Component::Renderer>();
 
 					// set up tiles
-					for (auto i = 0; i < total_grass; ++i)
+					for (auto i = 0; i < tiles.size(); ++i)
 					{
 						Rect grass_dest
 						{
-							(i % cols_) * 64.0f,  // finds place in column and multiplies by sprite width
-							(i / cols_) * 64.0f,  // finds place in row and multiples by sprite height
+							(i % tilemap_w) * 64.0f,  // finds place in column and multiplies by sprite width
+							(i / tilemap_w) * 64.0f,  // finds place in row and multiples by sprite height
 							64.0f, 64.0f
 						};
-						auto& c_tile_transform = *tiles->push_back_component<Component::Transform>(grass_dest);
-						auto& c_tile_src = *tiles->push_back_component<Component::Src>(Rect{ 0.0f, 0.0f, 64.0f, 64.0f });
-						auto& c_tile_dest = *tiles->push_back_component<Component::Dest>();
-						auto csr_tile_dynamic_draw = tiles->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
+						auto& c_tile_transform = *map_tiles->push_back_component<Component::Transform>(grass_dest);
+						auto& c_tile_src = *tile_srcs[tiles[i]];
+						auto& c_tile_dest = *map_tiles->push_back_component<Component::Dest>();
+						auto csr_tile_dynamic_draw = map_tiles->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
 						render_systems.push_back(csr_tile_dynamic_draw);
 					}
 				}
