@@ -23,7 +23,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"TestTileset.tsx"
+         "source":"Resources/Data/TestTileset.tsx"
         }],
  "tilewidth":32,
  "type":"map",

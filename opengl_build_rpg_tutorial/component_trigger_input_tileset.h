@@ -39,30 +39,24 @@ namespace Component {
 
 					auto tileset_json = nlohmann::json::parse(ts_stream);
 
-					int margin = tileset_json["margin"];
-					int spacing = tileset_json["spacing"];
+					float margin = tileset_json["margin"];
+					float spacing = tileset_json["spacing"];
 
 					std::string image_src = tileset_json["image"];
 
-					int tile_size = tileset_json["tilewidth"];
-					int tileset_w = tileset_json["imagewidth"];
-					int tileset_h = tileset_json["imageheight"];
+					float tile_size = tileset_json["tilewidth"];
+					float tileset_w = tileset_json["imagewidth"];
+					float tileset_h = tileset_json["imageheight"];
 
 					for (auto y = margin; y < tileset_h; y += tile_size + spacing)
 					{
 						for (auto x = margin; x < tileset_w; x += tile_size + spacing)
 						{
-							auto tile(new Entity());
-
-							auto src = tile->add_component<Component::Src>(
-								Rect{ x / (GLfloat)tileset_w, y / (GLfloat)tileset_h,
-									(x + tile_size) / (GLfloat)tileset_w, (y + tile_size) / (GLfloat)tileset_h }
-							);
-
-							entity_->push_back_child(tile);
+							auto src_rect = Rect{ x, y, tile_size, tile_size };
+							std::cout << "rect: " << x << ", " << y << std::endl;
+							entity_->push_back_component<Component::Src>(src_rect);
 						}
 					}
-
 				}
 			};
 		}

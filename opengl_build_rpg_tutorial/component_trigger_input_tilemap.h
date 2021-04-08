@@ -54,28 +54,27 @@ namespace Component {
 
 					auto tilemap_json = nlohmann::json::parse(tm_stream);
 
-					int tilemap_w = tilemap_json["width"]; // legal?
-					int tilemap_h = tilemap_json["height"]; 
+					int tilemap_w = tilemap_json["width"];
 
-					std::vector<int> tiles = tilemap_json["layers"][0]["data"]; // legal?
+					std::vector<int> tiles = tilemap_json["layers"][0]["data"];
 
 					auto& tilesets = tilemap_json["tilesets"];
 					std::vector<Comp*> tile_srcs;
 
-					for (auto& set : tilesets) // legal?
+					for (auto& set : tilesets)
 					{
-						std::string source = set["source"]; // legal?
+						std::string source = set["source"];
 						auto set_name = delimiter_split(source.c_str(), '.').front();
 
 						if (map.find(set_name) == map.end())
 						{
 							auto& cti_tileset = *Game::global_objects["overworld"]->
-								add_component<Component::Trigger::Input::TileSet>(set_name, source); // legal?
+								push_back_component<Component::Trigger::Input::TileSet>(set_name, source);
 							cti_tileset.execute(map);
 						}
 
 						auto curr_srcs = map[set_name]->get_component_list();
-						tile_srcs.insert(tile_srcs.end(), curr_srcs.begin(), curr_srcs.end()); // legal?
+						tile_srcs.insert(tile_srcs.end(), curr_srcs.begin(), curr_srcs.end());
 					}
 
 					auto& c_grass_tex = *map["texture manager"]->get_component<Component::Texture>("grass");
@@ -102,7 +101,7 @@ namespace Component {
 							64.0f, 64.0f
 						};
 						auto& c_tile_transform = *map_tiles->push_back_component<Component::Transform>(grass_dest);
-						auto& c_tile_src = *static_cast<Component::Src*>(tile_srcs[tiles[i]]);
+						auto& c_tile_src = *static_cast<Component::Src*>(tile_srcs[tiles[i] - 1]);
 						auto& c_tile_dest = *map_tiles->push_back_component<Component::Dest>();
 						auto csr_tile_dynamic_draw = map_tiles->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
 						render_systems.push_back(csr_tile_dynamic_draw);
