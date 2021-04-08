@@ -17,7 +17,7 @@ namespace DataStructures
         class Node
         {
         public:
-            Node(GLint key, T* value)
+            Node(std::size_t key, T* value)
                 : key(key), value(value), left(nullptr), right(right)
             {}
 
@@ -26,9 +26,9 @@ namespace DataStructures
                 delete value;
             }
 
-            GLint key;
+            std::size_t key;
             T* value;
-            Node* left, * right;
+            Node* left, *right;
         };
 
         // A utility function to right  
@@ -59,7 +59,7 @@ namespace DataStructures
         // brings the last accessed item at  
         // root. This function modifies the 
         // tree and returns the new root  
-        Node* splay(Node* root, int key)
+        Node* splay(Node* root, std::size_t key)
         {
             // Base cases: root is NULL or 
             // key is present at root  
@@ -163,7 +163,7 @@ namespace DataStructures
             root_ = nullptr;
         }
 
-        T* insert(int key, T* value)
+        T* insert(std::size_t key, T* value)
         {
             ++size_;
 
@@ -221,7 +221,7 @@ namespace DataStructures
         // Note that this function returns the  
         // new root of Splay Tree. If key is  
         // present in tree then, it is moved to root.  
-        T* search(int key)
+        T* search(std::size_t key)
         {
             root_ = splay(root_, key);
 

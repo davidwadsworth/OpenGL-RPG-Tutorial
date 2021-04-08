@@ -60,17 +60,17 @@ namespace Component {
 					std::vector<int> tiles = tilemap_json["layers"][0]["data"]; // legal?
 
 					auto& tilesets = tilemap_json["tilesets"];
-					std::vector<Component::Src*> tile_srcs;
+					std::vector<Comp*> tile_srcs;
 
 					for (auto& set : tilesets) // legal?
 					{
-						// legal?
-						std::string source = set["source"];
+						std::string source = set["source"]; // legal?
 						auto set_name = delimiter_split(source.c_str(), '.').front();
 
 						if (map.find(set_name) == map.end())
 						{
-							auto& cti_tileset = *Game::global_objects["overworld"]->add_component<Component::Trigger::Input::TileSet>(set_name, source); // legal?
+							auto& cti_tileset = *Game::global_objects["overworld"]->
+								add_component<Component::Trigger::Input::TileSet>(set_name, source); // legal?
 							cti_tileset.execute(map);
 						}
 
@@ -102,7 +102,7 @@ namespace Component {
 							64.0f, 64.0f
 						};
 						auto& c_tile_transform = *map_tiles->push_back_component<Component::Transform>(grass_dest);
-						auto& c_tile_src = *tile_srcs[tiles[i]];
+						auto& c_tile_src = *static_cast<Component::Src*>(tile_srcs[tiles[i]]);
 						auto& c_tile_dest = *map_tiles->push_back_component<Component::Dest>();
 						auto csr_tile_dynamic_draw = map_tiles->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_tile_src, c_tile_dest, c_tmap_material, c_tile_transform, c_cam_transform);
 						render_systems.push_back(csr_tile_dynamic_draw);

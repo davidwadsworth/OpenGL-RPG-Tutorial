@@ -1,4 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.3" name="TestTileset" tilewidth="32" tileheight="32" spacing="3" margin="1" tilecount="72" columns="23" objectalignment="topleft">
- <image source="iq_shape_padding.png" width="804" height="104"/>
-</tileset>
+{
+ "columns":25,
+ "image":"Resources/Images/iq_shape_padding.png",
+ "imageheight":104,
+ "imagewidth":804,
+ "margin":1,
+ "name":"TestTileset",
+ "spacing":3,
+ "tilecount":75,
+ "tiledversion":"1.2.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":1.2
+}
