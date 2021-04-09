@@ -34,7 +34,7 @@ namespace Component {
                 void create(EntityMap& map) override final
                 {
                     // get player shader and textures
-                    auto& c_flesh_tex = *map["texture manager"]->get_component<Component::Texture>("flesh");
+                    auto& c_flesh_tex = *map["texture manager"]->get_component<Component::Texture>("flesh_full");
                     auto& c_sprite_shader = *map["shader manager"]->get_component<Component::Shader>("sprite");
 
                     // get renderer

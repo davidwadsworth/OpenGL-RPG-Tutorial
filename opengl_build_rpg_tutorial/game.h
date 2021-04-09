@@ -20,6 +20,7 @@ public:
 	Game() = delete;
 	static GLuint width;
 	static GLuint height;
+	static GLfloat delta_time;
 	static std::array<bool, MAX_KEYS> keys;
 	static EntityMap global_objects;
 	static Entity* game;

@@ -6,8 +6,8 @@
 // game global variables
 GLuint Game::width = 800u;
 GLuint Game::height = 600u;
+GLfloat Game::delta_time = 0.0f;
 std::array<bool, MAX_KEYS> Game::keys{0};
-
 EntityMap Game::global_objects;
 Entity* Game::game = new Entity();
 

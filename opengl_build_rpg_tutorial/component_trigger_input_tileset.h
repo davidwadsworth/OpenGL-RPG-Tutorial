@@ -2,6 +2,12 @@
 #include "component_trigger_input.h"
 #include "json.hpp"
 
+/*
+Tileset game object from loaded in json
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Trigger {
 		namespace Input
@@ -33,7 +39,7 @@ namespace Component {
 					}
 					catch (std::exception e)
 					{
-						std::cerr << "Failed to read shader files!" << std::endl;
+						std::cerr << "Failed to read tileset file!" << std::endl;
 						throw;
 					}
 
@@ -44,17 +50,28 @@ namespace Component {
 
 					std::string image_src = tileset_json["image"];
 
+					// splits the src getting the last element of 
+					auto image_name = delimiter_split(delimiter_split(image_src.c_str(), '/').back().c_str(), '.')[0];
+
 					float tile_size = tileset_json["tilewidth"];
 					float tileset_w = tileset_json["imagewidth"];
 					float tileset_h = tileset_json["imageheight"];
 
+					if (!map["texture manager"]->has_component<Component::Texture>(image_name))
+						map["texture manager"]->add_component_str_id<Component::Texture>(image_name)->load(image_src.c_str());
+					
+					auto& c_tileset_tex = *map["texture manager"]->get_component<Component::Texture>(image_name);
+					auto& c_sprite_shader = *map["shader manager"]->get_component<Component::Shader>("sprite");
+
+					// set up tile map material
+					auto& c_tset_material = *entity_->push_back_component<Component::Material>(c_tileset_tex, c_sprite_shader, 1);
+
+					// set up tile srcs starting at the margin and incrementing with tile size and spacing
 					for (auto y = margin; y < tileset_h; y += tile_size + spacing)
 					{
 						for (auto x = margin; x < tileset_w; x += tile_size + spacing)
 						{
-							auto src_rect = Rect{ x, y, tile_size, tile_size };
-							std::cout << "rect: " << x << ", " << y << std::endl;
-							entity_->push_back_component<Component::Src>(src_rect);
+							entity_->push_back_component<Component::Src>(Rect{ x, y, tile_size, tile_size });
 						}
 					}
 				}

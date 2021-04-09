@@ -15,7 +15,7 @@ namespace Component {
 		namespace Update 
 		{
 			constexpr auto ONE_OVER_SQRT_TWO = 0.70710678118f;
-			constexpr GLfloat SPEED = 4.0f;
+			constexpr GLfloat SPEED = 240.0f;
 
 			class Move : public Component::Sys
 			{
@@ -42,8 +42,8 @@ namespace Component {
 						y *= ONE_OVER_SQRT_TWO;
 					}
 
-					transform_.x += x * SPEED;
-					transform_.y += y * SPEED;
+					transform_.x += x * SPEED * Game::delta_time;
+					transform_.y += y * SPEED * Game::delta_time;
 				}
 			};
 		}

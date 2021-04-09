@@ -37,7 +37,7 @@ namespace Component {
 						entity_->push_back_component<Component::Trigger::Input::Renderer>("renderer");
 						entity_->push_back_component<Component::Trigger::Input::Shader>("shader manager");
 						entity_->push_back_component<Component::Trigger::Input::Texture>("texture manager");
-						entity_->push_back_component<Component::Trigger::Input::TileMap>("tilemap", "Resources/Data/testTileMap.json");
+						entity_->push_back_component<Component::Trigger::Input::TileMap>("tilemap", "resources/data/testTileMap.json");
 						entity_->push_back_component<Component::Trigger::Input::Player>("player", (GLfloat)Game::width, (GLfloat)Game::height);
 					}
 				};

@@ -1,6 +1,6 @@
 {
  "columns":25,
- "image":"Resources/Images/iq_shape_padding.png",
+ "image":"resources/images/iq_shape_padding.png",
  "imageheight":104,
  "imagewidth":804,
  "margin":1,

@@ -57,7 +57,7 @@ public:
 	Entity& operator=(const Entity&) = delete;
 	Entity& operator=(Entity&&) = delete;
 
-	Entity* get_child(GLuint pos)
+	Entity* get_child(std::size_t pos)
 	{
 		return children_.search(pos);
 	}
@@ -101,7 +101,7 @@ public:
 	}
 
 	// searches component tree for templated component at pos
-	template<typename T> T* get_component(int pos)
+	template<typename T> T* get_component(std::size_t pos)
 	{
 		return static_cast<T*>(components_.search(pos));
 	}
@@ -116,6 +116,18 @@ public:
 	template <typename T> bool has_component()
 	{
 		return components_.search(get_component_type_id<T>());
+	}
+
+	// checks if string id of component is located in component tree
+	template <typename T> bool has_component(std::string str)
+	{
+		return components_.search(std::hash<std::string>{}(str));
+	}
+
+	// checks if id of component is located in component tree
+	template <typename T> bool has_component(std::size_t pos)
+	{
+		return components_.search(pos);
 	}
 
 	// adds component to splay tree and gives it a uniquely id, can't have two of the same component per entity

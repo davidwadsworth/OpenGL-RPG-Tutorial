@@ -1,0 +1,15 @@
+{ 
+ "columns":23,
+ "image":"resources/images/iq_no_shape_padding.png",
+ "imageheight":102,
+ "imagewidth":782,
+ "margin":1,
+ "name":"TestTilesetNSP",
+ "spacing":2,
+ "tilecount":72,
+ "tiledversion":"1.4.3",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":1.4
+}

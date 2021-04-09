@@ -9,7 +9,7 @@
 #include "component_renderer.h"
 
 /*
-Source code for episode 11 of Build Your Own RPG series
+Source code for episode 12 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -89,9 +89,16 @@ int main()
     std::cout << "Entities Created: " << Entity::count << std::endl;
     std::cout << "Components Created: " << Comp::count << std::endl;
 
+    GLfloat last_frame = 0.0f;
+
     // game loop
     while (!glfwWindowShouldClose(window))
     {
+        // calculate delta time
+        auto current_frame = static_cast<GLfloat>(glfwGetTime());
+        Game::delta_time = current_frame - last_frame;
+        last_frame = current_frame;
+
         // clear screen to black
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
