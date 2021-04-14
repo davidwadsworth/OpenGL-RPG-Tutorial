@@ -18,8 +18,13 @@ namespace Component {
 
 
 
-				return (rect_a.x < rect_b.x + rect_b.w && this->x + this->w * this->sc > rectB->x) &&
-					(this->y < rectB->y + rectB->h * rectB->sc && this->y + this->h * this->sc > rectB->y);
+				return (rect_a.x < rect_b.x + rect_b.w && rect_a.x + rect_a.w > rect_b.x) &&
+					(rect_a.y < rect_b.y + rect_b.h && rect_a.y + rect_a.h > rect_b.y);
+			}
+
+			glm::vec2 get_center(Component::Transform& transform)
+			{
+				return glm::vec2(transform.x + this->x + this->w / 2.0f * this->sc, transform.y + this->y + this->h / 2.0f * this->sc);
 			}
 
 		};
