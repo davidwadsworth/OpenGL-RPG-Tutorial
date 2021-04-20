@@ -15,7 +15,6 @@ Update the next frame to be drawn of our sprite sheet to give the illusion of mo
 namespace Component {
 	namespace System {
 		namespace Update {
-
 			class Animation : public Component::Sys
 			{
 #define Anim std::vector<Component::Src*>

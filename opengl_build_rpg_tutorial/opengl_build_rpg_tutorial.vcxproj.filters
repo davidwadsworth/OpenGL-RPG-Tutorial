@@ -40,6 +40,12 @@
     <Filter Include="EC\Component\Trigger\Input\GameState">
       <UniqueIdentifier>{9fb5bef0-c526-4b9e-9db6-515c6f2c5c21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EC\Component\Collider">
+      <UniqueIdentifier>{c8de2752-f01a-4bee-93e1-9fa4605fa087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\Collider\Physics">
+      <UniqueIdentifier>{b5f88663-a61f-40c9-8756-d5c2471d3c98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -172,6 +178,24 @@
     </ClInclude>
     <ClInclude Include="component_trigger_input_tileset.h">
       <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_movement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider.h">
+      <Filter>EC\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_aabb.h">
+      <Filter>EC\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_update_check_collision_aabb.h">
+      <Filter>EC\Component\System\Update</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_physics_aabb.h">
+      <Filter>EC\Component\Collider\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics.h">
+      <Filter>EC\Component\Collider\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

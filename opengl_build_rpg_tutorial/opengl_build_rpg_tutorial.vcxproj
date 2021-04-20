@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -151,8 +151,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h" />
+    <ClInclude Include="component_collider.h" />
+    <ClInclude Include="component_collider_aabb.h" />
+    <ClInclude Include="component_collider_physics_aabb.h" />
+    <ClInclude Include="physics.h" />
     <ClInclude Include="component_controller.h" />
     <ClInclude Include="component_controller_keyboard.h" />
+    <ClInclude Include="component_movement.h" />
+    <ClInclude Include="component_system_update_check_collision_aabb.h" />
     <ClInclude Include="component_trigger_input_engine.h" />
     <ClInclude Include="component_dest.h" />
     <ClInclude Include="component_src.h" />

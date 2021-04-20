@@ -4,6 +4,6 @@
 
 struct Phys
 {
-	virtual glm::vec2 perpendicular_bisector(Component::Col& col) = 0;
+	virtual glm::vec2 perpendicular_bisector(Component::Col& col, Component::Transform& pos_a, Component::Transform& pos_b) = 0;
 };
 
