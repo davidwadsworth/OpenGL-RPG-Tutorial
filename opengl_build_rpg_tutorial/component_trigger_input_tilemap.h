@@ -80,7 +80,7 @@ namespace Component {
 					
 					// get used game objects
 					auto& c_cam_transform = *map["camera"]->get_component<Component::Transform>();
-					auto& render_systems = *map["engine"]->get_component<Component::Vector<Component::Sys*>>("render");
+					auto& render_systems = *map["engine"]->get_component<Component::SystemVector>("render");
 					auto& c_renderer = *map["renderer"]->get_component<Component::Renderer>();
 
 					// set up tiles

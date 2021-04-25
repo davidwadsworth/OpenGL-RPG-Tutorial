@@ -81,8 +81,8 @@ int main()
 
     // set up used game objects
     auto engine = local_objects["engine"].get();
-    auto& render_systems = *engine->get_component<Component::Vector<Component::Sys*>>("render");
-    auto& update_systems = *engine->get_component<Component::Vector<Component::Sys*>>("update");
+    auto& render_systems = *engine->get_component<Component::SystemVector>("render");
+    auto& update_systems = *engine->get_component<Component::SystemVector>("update");
 
     auto& c_renderer = *local_objects["renderer"]->get_component<Component::Renderer>();
 

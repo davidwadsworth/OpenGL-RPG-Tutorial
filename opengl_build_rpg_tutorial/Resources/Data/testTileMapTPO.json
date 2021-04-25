@@ -23,7 +23,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"resources/data/texturepackeronline.json"
+         "source":"resources/data/TestTilesetTPO.json"
         }],
  "tilewidth":32,
  "type":"map",

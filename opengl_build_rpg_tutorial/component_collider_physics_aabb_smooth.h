@@ -1,5 +1,5 @@
 #pragma once
-#include "physics.h"
+#include "component_collider_physics.h"
 #include "component_collider_aabb.h"
 #include <glm\geometric.hpp>
 
@@ -7,16 +7,19 @@ namespace Component {
 	namespace Collider {
 		namespace Physics
 		{
-			class AABB : public Component::Collider::AABB, public Phys
+			class AABBSmooth : public Component::Collider::AABB, public Phys
 			{
 			public:
 				using Component::Collider::AABB::AABB;
 
-				glm::vec2 perpendicular_bisector(Component::Col& col, Component::Transform& pos_a, Component::Transform& pos_b) override
+				void resolve(Component::Col& col, Component::Movement& movement) override
 				{
+					auto pos_a = glm::vec2{ this->transform.x, this->transform.y };
+					auto pos_b = glm::vec2{ col.transform.x, col.transform.y };
+
 					auto aabb_2 = static_cast<AABB*>(&col);
 
-					auto col_a_center = this->get_center(pos_a);
+					auto col_a_center = this->get_center();
 
 					Rect rect_a{ this->x + pos_a.x, this->y + pos_a.y, this->w * this->sc, this->h * this->sc };
 					Rect rect_b{ aabb_2->x + pos_b.x, aabb_2->y + pos_b.y, aabb_2->w * aabb_2->sc, aabb_2->h * aabb_2->sc };
@@ -50,7 +53,8 @@ namespace Component {
 						bisector = glm::vec2(-1.0f, 0.0f);
 					}
 
-					return bisector;
+					this->transform.x += bisector.x * movement.speed;
+					this->transform.y += bisector.y * movement.speed;
 				}
 			};
 		}

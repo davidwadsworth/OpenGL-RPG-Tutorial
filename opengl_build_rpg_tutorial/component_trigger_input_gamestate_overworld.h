@@ -8,6 +8,8 @@
 #include "component_trigger_input_texture.h"
 #include "component_trigger_input_tilemap.h"
 #include "component_trigger_input_player.h"
+#include "component_trigger_input_collision_world.h"
+#include "component_trigger_input_collider_map.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -37,8 +39,10 @@ namespace Component {
 						entity_->push_back_component<Component::Trigger::Input::Renderer>("renderer");
 						entity_->push_back_component<Component::Trigger::Input::Shader>("shader manager");
 						entity_->push_back_component<Component::Trigger::Input::Texture>("texture manager");
-						entity_->push_back_component<Component::Trigger::Input::TileMap>("tilemap", "resources/data/testTileMapTPO.json");
+						entity_->push_back_component<Component::Trigger::Input::CollisionWorld>("collision world");
+						entity_->push_back_component<Component::Trigger::Input::TileMap>("tilemap", "resources/data/TestTileMap.json");
 						entity_->push_back_component<Component::Trigger::Input::Player>("player", (GLfloat)Game::width, (GLfloat)Game::height);
+						entity_->push_back_component<Component::Trigger::Input::ColliderMap>("collider map");
 					}
 				};
 			}

@@ -130,7 +130,7 @@ public:
 		return components_.search(pos);
 	}
 
-	// adds component to splay tree and gives it a uniquely id, can't have two of the same component per entity
+	// adds component to splay tree and gives it a unique id, can't have two of the same component per entity
 	template <typename T, typename... TArgs> T* add_component(TArgs&&... args)
 	{
 		T* c(new T(std::forward<TArgs>(args)...));
