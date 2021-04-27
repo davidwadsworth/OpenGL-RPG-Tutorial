@@ -153,7 +153,7 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
-    <ClInclude Include="component_collider_physics_aabb_previous.h" />
+    <ClInclude Include="component_collider_physics_aabb_sticky.h" />
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_collider_physics.h" />
     <ClInclude Include="component_controller.h" />

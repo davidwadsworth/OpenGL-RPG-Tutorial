@@ -3,6 +3,12 @@
 #include "component_vector.h"
 #include "component_collider.h"
 
+/*
+List of all active colliding objects in game world.
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Trigger {
 		namespace Input

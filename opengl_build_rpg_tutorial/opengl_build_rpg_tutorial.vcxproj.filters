@@ -200,11 +200,11 @@
     <ClInclude Include="component_collider_physics_aabb_smooth.h">
       <Filter>EC\Component\Collider\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="component_collider_physics_aabb_previous.h">
-      <Filter>EC\Component\Collider\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_input_collider_map.h">
       <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_physics_aabb_sticky.h">
+      <Filter>EC\Component\Collider\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

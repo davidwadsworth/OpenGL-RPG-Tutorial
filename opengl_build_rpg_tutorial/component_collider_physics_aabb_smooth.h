@@ -1,7 +1,13 @@
-#pragma once
+﻿#pragma once
 #include "component_collider_physics.h"
 #include "component_collider_aabb.h"
 #include <glm\geometric.hpp>
+
+/*
+Calculates the shortest distance between rect side and the center of the  
+ 
+@author David Wadsworth
+*/
 
 namespace Component {
 	namespace Collider {
@@ -11,24 +17,36 @@ namespace Component {
 			{
 			public:
 				using Component::Collider::AABB::AABB;
+				
+				/* eg.
+				                        *col_center (displaces speed * {1,0})
+
+							  e1
+					 p1	_______________ p2
+					   |               |
+					   |               |
+					   |               |
+					e4 |               | e2
+					   |               |
+					   |               |
+					 p4 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾ p3
+							   e3
+				*/	
 
 				void resolve(Component::Col& col, Component::Movement& movement) override
 				{
-					auto pos_a = glm::vec2{ this->transform.x, this->transform.y };
-					auto pos_b = glm::vec2{ col.transform.x, col.transform.y };
+					auto aabb_1 = static_cast<AABB*>(&col);
+					auto aabb_2 = this;
 
-					auto aabb_2 = static_cast<AABB*>(&col);
+					auto col_a_center = this->get_center() - col.get_center();
 
-					auto col_a_center = this->get_center();
+					// calculate point set up
+					glm::vec2 p1{ aabb_2->x, aabb_2->y };
+					glm::vec2 p2{ aabb_2->x + aabb_2->w, aabb_2->y };
+					glm::vec2 p3{ aabb_2->x + aabb_2->w, aabb_2->y + aabb_2->h };
+					glm::vec2 p4{ aabb_2->x, aabb_2->y + aabb_2->h };
 
-					Rect rect_a{ this->x + pos_a.x, this->y + pos_a.y, this->w * this->sc, this->h * this->sc };
-					Rect rect_b{ aabb_2->x + pos_b.x, aabb_2->y + pos_b.y, aabb_2->w * aabb_2->sc, aabb_2->h * aabb_2->sc };
-
-					glm::vec2 p1{ rect_b.x, rect_b.y };
-					glm::vec2 p2{ rect_b.x + rect_b.w, rect_b.y };
-					glm::vec2 p3{ rect_b.x + rect_b.w, rect_b.y + rect_b.h };
-					glm::vec2 p4{ rect_b.x, rect_b.y };
-
+					// calculate the distance between the center of the collder and the edge
 					auto e1_distance = glm::dot(p2, col_a_center) + glm::dot(p1, col_a_center);
 					auto e2_distance = glm::dot(p3, col_a_center) + glm::dot(p2, col_a_center);
 					auto e3_distance = glm::dot(p4, col_a_center) + glm::dot(p3, col_a_center);
@@ -53,8 +71,8 @@ namespace Component {
 						bisector = glm::vec2(-1.0f, 0.0f);
 					}
 
-					this->transform.x += bisector.x * movement.speed;
-					this->transform.y += bisector.y * movement.speed;
+					aabb_1->transform.x += bisector.x * movement.speed * Game::delta_time;
+					aabb_1->transform.y += bisector.y * movement.speed * Game::delta_time;
 				}
 			};
 		}

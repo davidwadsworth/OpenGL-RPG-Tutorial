@@ -2,6 +2,12 @@
 #include <glm/vec2.hpp>
 #include "component_transform.h"
 
+/*
+abstract class used to define collision objects in the game world.
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 	class Col : public Comp
@@ -17,4 +23,6 @@ namespace Component
 		virtual glm::vec2 get_center() = 0;
 	};
 }
+
+
 

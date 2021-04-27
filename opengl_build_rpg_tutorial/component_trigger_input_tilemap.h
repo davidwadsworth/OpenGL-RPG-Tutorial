@@ -64,7 +64,7 @@ namespace Component {
 					// however for now we are going to stick with just one
 					std::string tileset_source = tilemap_json["tilesets"][0]["source"];
 
-					auto set_name = delimiter_split(tileset_source.c_str(), '.').front();
+					auto set_name = delimiter_split(delimiter_split(tileset_source.c_str(), '/').back().c_str(), '.').front();
 
 					// if not set up already add tileset to overworld gamobjects
 					if (map.find(set_name) == map.end())

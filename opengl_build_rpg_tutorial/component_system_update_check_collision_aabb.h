@@ -5,6 +5,12 @@
 #include "component_vector.h"
 #include "component_collider_physics.h"
 
+/*
+System used for checking for and resolving collisions, in general space around the specified object
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace System {
 		namespace Update
@@ -23,9 +29,9 @@ namespace Component {
 				{
 					for (auto col : col_list_)
 					{
-						if (collider_.collide(*col))
+						if (col->collide(collider_))
 						{
-							dynamic_cast<Phys*>(&collider_)->resolve(*col, movement_);
+							dynamic_cast<Phys*>(col)->resolve(collider_, movement_);
 							break;
 						}
 					}
