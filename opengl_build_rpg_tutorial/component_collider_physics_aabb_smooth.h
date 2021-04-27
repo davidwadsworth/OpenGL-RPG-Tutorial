@@ -4,7 +4,8 @@
 #include <glm\geometric.hpp>
 
 /*
-Calculates the shortest distance between rect side and the center of the  
+Calculates the shortest distance between rect side and the difference in centers of the colliders
+displaces the perpendicular bisector of the edge multiplied by object speed.
  
 @author David Wadsworth
 */
