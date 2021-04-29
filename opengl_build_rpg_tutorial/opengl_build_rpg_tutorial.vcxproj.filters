@@ -69,6 +69,9 @@
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="component_collider.cpp">
+      <Filter>EC\Component\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -204,6 +207,27 @@
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_physics_aabb_sticky.h">
+      <Filter>EC\Component\Collider\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_circle.h">
+      <Filter>EC\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_polygon.h">
+      <Filter>EC\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_boundary.h">
+      <Filter>EC\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_update_check_collision_gjk.h">
+      <Filter>EC\Component\System\Update</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_physics_circle.h">
+      <Filter>EC\Component\Collider\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_physics_boundary.h">
+      <Filter>EC\Component\Collider\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_physics_polygon.h">
       <Filter>EC\Component\Collider\Physics</Filter>
     </ClInclude>
   </ItemGroup>

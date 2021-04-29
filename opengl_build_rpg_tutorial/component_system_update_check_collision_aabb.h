@@ -18,20 +18,20 @@ namespace Component {
 			class CheckCollisionAABB : public Component::Sys
 			{
 				Component::Movement& movement_;
-				Component::Col& collider_;
-				Component::ColliderVector& col_list_;
+				Component::Collider::AABB& aabb_;
+				Component::AABBVector& aabb_list_;
 			public:
-				CheckCollisionAABB(Component::Movement& movement, Component::Col& collider, Component::ColliderVector& col_list)
-					: movement_(movement), collider_(collider), col_list_(col_list)
+				CheckCollisionAABB(Component::Movement& movement, Component::Collider::AABB& aabb, Component::AABBVector& col_list)
+					: movement_(movement), aabb_(aabb), aabb_list_(col_list)
 				{}
 
 				void execute() override
 				{
-					for (auto col : col_list_)
+					for (auto rect : aabb_list_)
 					{
-						if (col->collide(collider_))
+						if (rect->collide(aabb_))
 						{
-							dynamic_cast<Phys*>(col)->resolve(collider_, movement_);
+							dynamic_cast<Phys*>(rect)->resolve(aabb_, movement_);
 							break;
 						}
 					}

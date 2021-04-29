@@ -19,13 +19,13 @@ namespace Component {
 			public:
 				using Component::Collider::AABB::AABB;
 
-				bool collide(Component::Col& col) override
+				bool collide(Component::Collider::AABB& aabb) override
 				{
-					if (Component::Collider::AABB::collide(col))
+					if (Component::Collider::AABB::collide(aabb))
 						return true;
 
-					previous_.x = col.transform.x;
-					previous_.y = col.transform.y;
+					previous_.x = aabb.transform.x;
+					previous_.y = aabb.transform.y;
 					return false;
 				}
 

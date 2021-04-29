@@ -26,14 +26,13 @@ namespace Component {
 				: Col(transform), Rect{ 0.0f, 0.0f, s, s }
 			{}
 
-			bool collide(Col& col) override
+			virtual bool collide(AABB& other)
 			{
 				auto pos_a = glm::vec2{ this->transform.x, this->transform.y };
-				auto pos_b = glm::vec2{col.transform.x, col.transform.y };
+				auto pos_b = glm::vec2{ other.transform.x, other.transform.y };
 
-				auto aabb_2 = static_cast<AABB*>(&col);
 				Rect rect_a{ this->x + pos_a.x, this->y + pos_a.y, this->w, this->h};
-				Rect rect_b{ aabb_2->x + pos_b.x, aabb_2->y + pos_b.y, aabb_2->w, aabb_2->h};
+				Rect rect_b{ other.x + pos_b.x, other.y + pos_b.y, other.w, other.h};
 
 				return (rect_a.x < rect_b.x + rect_b.w && rect_a.x + rect_a.w > rect_b.x) &&
 					(rect_a.y < rect_b.y + rect_b.h && rect_a.y + rect_a.h > rect_b.y);
