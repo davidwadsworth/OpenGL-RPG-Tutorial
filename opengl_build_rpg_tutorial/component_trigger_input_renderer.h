@@ -24,7 +24,7 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override final
+				void create(Entity* gamestate) override final
 				{
 					// create a renderer object and input appropriate attribute sizes and max amount of sprites on screen at once
 					// 2 = pos, 2 = coords

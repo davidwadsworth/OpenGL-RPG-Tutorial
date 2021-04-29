@@ -232,6 +232,16 @@ namespace DataStructures
             return nullptr;
         }
 
+        void remove(std::size_t key)
+        {
+            for (auto i = 0; i < nodes_.size(); ++i)
+                if (nodes_[i]->key == key)
+                {
+                    nodes_.erase(nodes_.begin() + i);
+                    break;
+                }
+        }
+
         // returns an array of ordered values in the binary tree
         std::vector<T*> get_ordered_list()
         {

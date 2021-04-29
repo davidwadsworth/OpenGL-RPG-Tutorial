@@ -21,7 +21,7 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override final
+				void create(Entity* gamestate) override final
 				{
 					// load in used shaders
 					auto vs_file_name = "resources/shaders/sprite.vs";

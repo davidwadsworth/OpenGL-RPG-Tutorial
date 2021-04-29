@@ -23,18 +23,18 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override
+				void create(Entity* gamestate) override
 				{
 					// get collider tile info
-					auto& c_tset_material = *map["TestTileset"]->get_component<Component::Material>(0);
-					auto& c_tset_col_tile_src = *map["TestTileset"]->get_component<Component::Src>(46);
+					auto& c_tset_material = *gamestate->get_child("TestTileset")->get_component<Component::Material>(0);
+					auto& c_tset_col_tile_src = *gamestate->get_child("TestTileset")->get_component<Component::Src>(46);
 
 					// get map objects
-					auto& c_renderer = *map["renderer"]->get_component<Component::Renderer>();
+					auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
-					auto& c_cworld_col_vec = *map["collision world"]->get_component<Component::ColliderVector>();
-					auto& c_engine_render_systems = *map["engine"]->get_component<Component::SystemVector>("render");
-					auto& c_cam_transform = *map["camera"]->get_component<Component::Transform>();
+					auto& c_cworld_col_vec = *gamestate->get_child("collision world")->get_component<Component::ColliderVector>();
+					auto& c_engine_render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
+					auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
 
 					// test colliders here
 

@@ -30,7 +30,7 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override final
+				void create(Entity* gamestate) override final
 				{
 					// load shaders from file
 					std::stringstream tm_stream;
@@ -67,21 +67,23 @@ namespace Component {
 					auto set_name = delimiter_split(delimiter_split(tileset_source.c_str(), '/').back().c_str(), '.').front();
 
 					// if not set up already add tileset to overworld gamobjects
-					if (map.find(set_name) == map.end())
+					if (!gamestate->has_child(set_name))
 					{
-						auto& cti_tileset = *Game::global_objects["overworld"]->
-							push_back_component<Component::Trigger::Input::TileSet>(set_name, tileset_source);
-						cti_tileset.execute(map);
+						auto tileset = new Entity();
+						auto& cti_tileset = *tileset->add_component_str_id<Component::Trigger::Input::TileSet>(set_name, set_name, tileset_source);
+						cti_tileset.execute(gamestate);
+
+						entity_->push_back_child(tileset);
 					}
 
 					// get a list of all srcs used
-					auto tile_srcs = map[set_name]->get_component_list();
+					auto tile_srcs = gamestate->get_child(set_name)->get_component_list();
 					auto& c_tset_material = *static_cast<Component::Material*>(tile_srcs[0]);
 					
 					// get used game objects
-					auto& c_cam_transform = *map["camera"]->get_component<Component::Transform>();
-					auto& render_systems = *map["engine"]->get_component<Component::SystemVector>("render");
-					auto& c_renderer = *map["renderer"]->get_component<Component::Renderer>();
+					auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
+					auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
+					auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
 					// set up tiles
 					for (auto i = 0; i < tiles.size(); ++i)

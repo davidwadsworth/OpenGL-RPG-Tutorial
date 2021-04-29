@@ -197,7 +197,6 @@
     <ClInclude Include="component_texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="cpp.hint" />
     <None Include="Resources\Shaders\sprite.fs" />
     <None Include="Resources\Shaders\sprite.vs" />
   </ItemGroup>

@@ -20,7 +20,7 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override final
+				void create(Entity* gamestate) override final
 				{
 					entity_->add_component<Component::Controller::Keyboard>();
 				}

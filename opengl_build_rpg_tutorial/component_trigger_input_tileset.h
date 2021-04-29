@@ -21,7 +21,7 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override final
+				void create(Entity* gamestate) override final
 				{
 					// load shaders from file
 					std::stringstream ts_stream;
@@ -57,11 +57,11 @@ namespace Component {
 					float tileset_w = tileset_json["imagewidth"];
 					float tileset_h = tileset_json["imageheight"];
 
-					if (!map["texture manager"]->has_component<Component::Texture>(image_name))
-						map["texture manager"]->add_component_str_id<Component::Texture>(image_name)->load(image_src.c_str());
+					if (!gamestate->get_child("texture manager")->has_component<Component::Texture>(image_name))
+						gamestate->get_child("texture manager")->add_component_str_id<Component::Texture>(image_name)->load(image_src.c_str());
 					
-					auto& c_tileset_tex = *map["texture manager"]->get_component<Component::Texture>(image_name);
-					auto& c_sprite_shader = *map["shader manager"]->get_component<Component::Shader>("sprite");
+					auto& c_tileset_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>(image_name);
+					auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
 
 					// set up tile map material
 					auto& c_tset_material = *entity_->push_back_component<Component::Material>(c_tileset_tex, c_sprite_shader, 1);

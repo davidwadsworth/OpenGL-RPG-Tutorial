@@ -16,24 +16,24 @@ namespace Component {
 			Entity* entity_;
 		private:
 			std::string name_;
-			virtual void create(EntityMap& map) = 0;
+			virtual void create(Entity* gamestate) = 0;
 		public:
 
 			In(std::string name)
 				: entity_(nullptr), name_(name)
 			{}
 
-			void execute(EntityMap& map) override final
+			void execute(Entity* gamestate) override final
 			{
 				// if this game object is already in the map 
-				if (map.find(name_) != map.end())
-					map.erase(name_);
+				if (gamestate->has_child(name_))
+					gamestate->remove_child(name_);
 
 				// set up entity and add into our passed through map
 				entity_ = new Entity();
-				map.emplace(name_, std::unique_ptr<Entity>(entity_));
+				gamestate->add_child(entity_, name_);
 
-				create(map);
+				create(gamestate);
 			}
 		};
 	}

@@ -12,8 +12,6 @@ defines key characteristics of the game and its state.
 
 constexpr auto MAX_KEYS = 1024u;
 
-#define EntityMap std::unordered_map<std::string, std::unique_ptr<Entity>>
-
 class Game
 {
 public:
@@ -22,8 +20,7 @@ public:
 	static GLuint height;
 	static GLfloat delta_time;
 	static std::array<bool, MAX_KEYS> keys;
-	static EntityMap global_objects;
-	static Entity* game;
+	static Entity* global;
 
-	static void init();
+	static void init(Entity* game);
 };

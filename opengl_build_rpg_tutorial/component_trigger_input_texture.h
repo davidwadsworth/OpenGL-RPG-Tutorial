@@ -20,7 +20,7 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override final
+				void create(Entity* gamestate) override final
 				{
 					auto flesh_tex_name = "resources/images/flesh_full.png";
 

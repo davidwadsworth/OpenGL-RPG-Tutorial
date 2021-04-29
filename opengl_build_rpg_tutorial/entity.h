@@ -64,7 +64,7 @@ public:
 
 	Entity* get_child(std::string str)
 	{
-		return children_.search((int)std::hash<std::string>{}(str));
+		return children_.search(std::hash<std::string>{}(str));
 	}
 
 	std::vector<Entity*> get_child_list()
@@ -75,6 +75,11 @@ public:
 	bool has_child(std::string str)
 	{
 		return get_child(str);
+	}
+
+	void remove_child(std::string str)
+	{
+		children_.remove(std::hash<std::string>{}(str));
 	}
 
 	GLuint children_size()

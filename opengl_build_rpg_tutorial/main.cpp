@@ -69,22 +69,24 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    auto game = new Entity();
+
     // init game
-    Game::init();
+    Game::init(game);
 
-    EntityMap local_objects;
+    auto current_state = game->get_child("overworld");
 
-    auto overworld_game_objs = Game::global_objects["overworld"]->get_component_list();
+    auto overworld_game_objs = current_state->get_component_list();
 
     for (auto obj : overworld_game_objs)
-        static_cast<Component::Trigger::In*>(obj)->execute(local_objects);
+        static_cast<Component::Trigger::In*>(obj)->execute(current_state);
 
     // set up used game objects
-    auto engine = local_objects["engine"].get();
+    auto engine = current_state->get_child("engine");
     auto& render_systems = *engine->get_component<Component::SystemVector>("render");
     auto& update_systems = *engine->get_component<Component::SystemVector>("update");
 
-    auto& c_renderer = *local_objects["renderer"]->get_component<Component::Renderer>();
+    auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
 
     std::cout << "Entities Created: " << Entity::count << std::endl;
     std::cout << "Components Created: " << Comp::count << std::endl;
@@ -123,9 +125,8 @@ int main()
     update_systems.clear();
 
     // delete entities and their components
-    local_objects.clear();
-    Game::global_objects.clear();
-    delete Game::game;
+    delete Game::global;
+    delete game;
     
     glfwTerminate();
 

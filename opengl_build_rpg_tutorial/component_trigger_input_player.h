@@ -33,23 +33,23 @@ namespace Component {
 				{}
 
             private:
-                void create(EntityMap& map) override final
+                void create(Entity* gamestate) override final
                 {
                     // get player shader and textures
-                    auto& c_flesh_tex = *map["texture manager"]->get_component<Component::Texture>("flesh_full");
-                    auto& c_sprite_shader = *map["shader manager"]->get_component<Component::Shader>("sprite");
+                    auto& c_flesh_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("flesh_full");
+                    auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
 
                     // get renderer
-                    auto& c_renderer = *map["renderer"]->get_component<Component::Renderer>();
+                    auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
                     // get controller 
-                    auto& c_cont_keyboard = *map["controller"]->get_component<Component::Controller::Keyboard>();
+                    auto& c_cont_keyboard = *gamestate->get_child("controller")->get_component<Component::Controller::Keyboard>();
 
                     // get camera
-                    auto& c_cam_transform = *map["camera"]->get_component<Component::Transform>();
+                    auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
 
                     // get collision world
-                    auto& c_colw_col_vec = *map["collision world"]->get_component<Component::ColliderVector>();
+                    auto& c_colw_col_vec = *gamestate->get_child("collision world")->get_component<Component::ColliderVector>();
 
                     auto& c_pla_transform = *entity_->add_component<Component::Transform>(x_, y_, 64.0f);
                     auto& c_pla_src = *entity_->add_component<Component::Src>(Rect{ 0.0f, 0.0f, 64.0f, 64.0f });
@@ -118,8 +118,8 @@ namespace Component {
                         csu_pla_animation->add(anims[anim_i++], Anim{ walk_1, walk_2 });
                     }
 
-                    auto& render_systems = *map["engine"]->get_component<Component::SystemVector>("render");
-                    auto& update_systems = *map["engine"]->get_component<Component::SystemVector>("update");
+                    auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
+                    auto& update_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("update");
 
                     update_systems.push_back(csu_pla_move);
                     update_systems.push_back(csu_check_collision_aabb);

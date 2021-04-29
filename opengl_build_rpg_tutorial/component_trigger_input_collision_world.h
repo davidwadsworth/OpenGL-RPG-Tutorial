@@ -21,7 +21,7 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override
+				void create(Entity* gamestate) override
 				{
 					this->entity_->add_component<Component::ColliderVector>();
 				}

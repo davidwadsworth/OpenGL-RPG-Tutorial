@@ -12,6 +12,6 @@ namespace Component
 {
 	struct Trig : public Comp
 	{
-		virtual void execute(EntityMap& map) = 0;
+		virtual void execute(Entity* gamestate) = 0;
 	};
 }

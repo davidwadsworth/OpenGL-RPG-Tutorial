@@ -30,9 +30,8 @@ namespace Component {
 					{}
 
 				private:
-					void create(EntityMap& map) override final
+					void create(Entity* gamestate) override final
 					{
-						// eventually all these values will be set up with xml
 						entity_->push_back_component<Component::Trigger::Input::Engine>("engine");
 						entity_->push_back_component<Component::Trigger::Input::Camera>("camera", 64.0f * 32.0f);
 						entity_->push_back_component<Component::Trigger::Input::Controller>("controller");

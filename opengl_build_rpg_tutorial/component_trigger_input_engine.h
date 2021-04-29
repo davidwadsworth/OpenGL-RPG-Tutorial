@@ -21,7 +21,7 @@ namespace Component {
 				{}
 
 			private:
-				void create(EntityMap& map) override final
+				void create(Entity* gamestate) override final
 				{
 					entity_->add_component_str_id<Component::SystemVector>("update");
 					entity_->add_component_str_id<Component::SystemVector>("render");

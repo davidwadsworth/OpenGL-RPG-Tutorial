@@ -8,15 +8,14 @@ GLuint Game::width = 800u;
 GLuint Game::height = 600u;
 GLfloat Game::delta_time = 0.0f;
 std::array<bool, MAX_KEYS> Game::keys{0};
-EntityMap Game::global_objects;
-Entity* Game::game = new Entity();
+Entity* Game::global = new Entity();
 
 // EC reference counting
 long long Comp::count = 0ll;
 long long Entity::count = 0ll;
 
-void Game::init()
+void Game::init(Entity* game)
 {
 	auto& ctigs_overworld = *game->add_component<Component::Trigger::Input::GameState::Overworld>("overworld");
-	ctigs_overworld.execute(global_objects);
+	ctigs_overworld.execute(game);
 }
