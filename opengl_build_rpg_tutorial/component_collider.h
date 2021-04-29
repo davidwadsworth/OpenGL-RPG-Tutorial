@@ -17,7 +17,6 @@ namespace Component
 	{
 	protected:
 		std::array<glm::vec2, MAX_SIMPLEX> simplex_;
-		virtual glm::vec2 get_center() = 0;
 		virtual glm::vec2 support(glm::vec2 direction) = 0;
 	public:
 		Component::Transform& transform;
@@ -26,6 +25,7 @@ namespace Component
 			: transform(transform), simplex_{}
 		{}
 		bool collide(Component::Col& col);
+		virtual glm::vec2 get_center() = 0;
 	};
 }
 

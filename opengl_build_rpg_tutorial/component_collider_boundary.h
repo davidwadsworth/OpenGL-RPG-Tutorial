@@ -25,16 +25,15 @@ namespace Component {
 					return p2;
 			}
 
-			glm::vec2 get_center()
-			{
-				return glm::vec2(this->transform.x, this->transform.y) + (vertices_[0] + vertices_[1]) / 2.0f;
-			}
-
 		public:
 			Boundary(Component::Transform& transform, std::array<glm::vec2, MAX_BOUNDARY> vertices)
 				: Col(transform), vertices_(vertices)
 			{}
 
+			glm::vec2 get_center()
+			{
+				return glm::vec2(this->transform.x, this->transform.y) + (vertices_[0] + vertices_[1]) / 2.0f;
+			}
 		};
 
 	}
