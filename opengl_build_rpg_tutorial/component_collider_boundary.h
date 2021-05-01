@@ -9,8 +9,9 @@ namespace Component {
 	{
 		class Boundary : public Component::Col
 		{
-			std::array<glm::vec2, MAX_BOUNDARY> vertices_;
 		protected:
+			std::array<glm::vec2, MAX_BOUNDARY> vertices_;
+
 			glm::vec2 support(glm::vec2 direction) override
 			{
 				auto p1 = vertices_[0] + get_center();

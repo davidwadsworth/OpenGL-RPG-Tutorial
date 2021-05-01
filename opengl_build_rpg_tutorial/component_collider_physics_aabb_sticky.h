@@ -19,7 +19,7 @@ namespace Component {
 			public:
 				using Component::Collider::AABB::AABB;
 
-				bool collide(Component::Collider::AABB& aabb) override
+				bool collide_aabb(Component::Collider::AABB& aabb) override
 				{
 					if (Component::Collider::AABB::collide(aabb))
 						return true;

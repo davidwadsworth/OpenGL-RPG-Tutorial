@@ -9,19 +9,19 @@ namespace Component {
 	{
 		class Circle : public Component::Col
 		{
+		protected:	
 			GLfloat radius_;
 			glm::vec2 center_;
-		protected:	
-		
-		glm::vec2 support(glm::vec2 direction) override
-		{
-			return get_center() + radius_ * glm::normalize(direction);
-		}
 
-		glm::vec2 get_center()
-		{
-			return center_;
-		}
+			glm::vec2 support(glm::vec2 direction) override
+			{
+				return get_center() + radius_ * glm::normalize(direction);
+			}
+
+			glm::vec2 get_center()
+			{
+				return center_;
+			}
 
 		public:
 			Circle(Component::Transform& transform, GLfloat radius, glm::vec2 center)

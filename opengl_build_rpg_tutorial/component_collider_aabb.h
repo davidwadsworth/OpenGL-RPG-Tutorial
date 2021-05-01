@@ -13,6 +13,12 @@ namespace Component {
 	{
 		class AABB : public Rect, public Col
 		{
+		protected:
+			glm::vec2 support(glm::vec2 direction) override
+			{
+				
+			}
+
 		public:
 			AABB(Component::Transform& transform, GLfloat x, GLfloat y, GLfloat w, GLfloat h)
 				: Col(transform), Rect{ x, y, w, h }
@@ -26,7 +32,7 @@ namespace Component {
 				: Col(transform), Rect{ 0.0f, 0.0f, s, s }
 			{}
 
-			virtual bool collide(AABB& other)
+			virtual bool collide_aabb(AABB& other)
 			{
 				auto pos_a = glm::vec2{ this->transform.x, this->transform.y };
 				auto pos_b = glm::vec2{ other.transform.x, other.transform.y };

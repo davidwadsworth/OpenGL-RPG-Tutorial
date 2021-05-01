@@ -10,9 +10,9 @@ namespace Component {
 	{
 		class Polygon : public Component::Col
 		{
+		protected:
 			std::vector<glm::vec2> vertices_;
 
-		protected:
 			glm::vec2 get_center() override
 			{
 				glm::vec2 temp_center = glm::vec2();
@@ -42,9 +42,6 @@ namespace Component {
 			Polygon(Component::Transform& transform, std::vector<glm::vec2> vertices)
 				: Component::Col(transform), vertices_(vertices)
 			{}
-
-
-
 		};
 	}
 }

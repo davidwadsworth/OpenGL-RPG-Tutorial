@@ -29,7 +29,7 @@ namespace Component {
 				{
 					for (auto rect : aabb_list_)
 					{
-						if (rect->collide(aabb_))
+						if (rect->collide_aabb(aabb_))
 						{
 							dynamic_cast<Phys*>(rect)->resolve(aabb_, movement_);
 							break;
