@@ -11,30 +11,32 @@ Physics implementation of AABB collider, which resolves collisions by resetting 
 
 namespace Component {
 	namespace Collider {
-		namespace Physics
-		{
-			class AABBSticky : public Component::Collider::AABB, public Phys
+		namespace Physics {
+			namespace AABB
 			{
-				glm::vec2 previous_{};
-			public:
-				using Component::Collider::AABB::AABB;
-
-				bool collide_aabb(Component::Collider::AABB& aabb) override
+				class AABBSticky : public Component::Collider::AABB, public Phys
 				{
-					if (Component::Collider::AABB::collide(aabb))
-						return true;
+					glm::vec2 previous_{};
+				public:
+					using Component::Collider::AABB::AABB;
 
-					previous_.x = aabb.transform.x;
-					previous_.y = aabb.transform.y;
-					return false;
-				}
+					bool collide_aabb(Component::Collider::AABB& aabb) override
+					{
+						if (Component::Collider::AABB::collide(aabb))
+							return true;
 
-				void resolve(Component::Col& col, Component::Movement& movement) override
-				{
-					col.transform.x = previous_.x;
-					col.transform.y = previous_.y;
-				}
-			};
+						previous_.x = aabb.transform.x;
+						previous_.y = aabb.transform.y;
+						return false;
+					}
+
+					void resolve(Component::Col& col, Component::Movement& movement) override
+					{
+						col.transform.x = previous_.x;
+						col.transform.y = previous_.y;
+					}
+				};
+			}
 		}
 	}
 }

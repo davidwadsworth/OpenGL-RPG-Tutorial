@@ -1,6 +1,7 @@
 #pragma once
 #include "rect.h"
 #include "component_collider.h"
+#include <glm/glm.hpp>
 
 /*
 collider information for checking aabb to abbb collisions
@@ -16,7 +17,22 @@ namespace Component {
 		protected:
 			glm::vec2 support(glm::vec2 direction) override
 			{
-				
+				auto furthest_distance = std::numeric_limits<float>::lowest();
+				auto furthest_vertex = glm::vec2();
+
+				std::array<glm::vec2, 4> vertices = {glm::vec2(x, y), glm::vec2(x + w, y), glm::vec2(x + w, y + h), glm::vec2(x, y + h)};
+
+				for (auto v : vertices)
+				{
+					auto distance = glm::dot(v + get_center(), direction);
+					if (distance > furthest_distance)
+					{
+						furthest_distance = distance;
+						furthest_vertex = v + get_center();
+					}
+				}
+
+				return furthest_vertex;
 			}
 
 		public:
