@@ -159,9 +159,9 @@
     <ClInclude Include="component_collider_physics_aabb_sticky.h" />
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_collider_physics.h" />
-    <ClInclude Include="component_collider_physics_boundary.h" />
-    <ClInclude Include="component_collider_physics_circle.h" />
-    <ClInclude Include="component_collider_physics_polygon.h" />
+    <ClInclude Include="component_collider_physics_boundary_smooth.h" />
+    <ClInclude Include="component_collider_physics_circle_smooth.h" />
+    <ClInclude Include="component_collider_physics_polygon_smooth.h" />
     <ClInclude Include="component_collider_polygon.h" />
     <ClInclude Include="component_controller.h" />
     <ClInclude Include="component_controller_keyboard.h" />

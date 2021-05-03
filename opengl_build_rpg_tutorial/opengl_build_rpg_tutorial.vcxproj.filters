@@ -221,13 +221,13 @@
     <ClInclude Include="component_system_update_check_collision_gjk.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_collider_physics_circle.h">
+    <ClInclude Include="component_collider_physics_boundary_smooth.h">
       <Filter>EC\Component\Collider\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="component_collider_physics_boundary.h">
+    <ClInclude Include="component_collider_physics_circle_smooth.h">
       <Filter>EC\Component\Collider\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="component_collider_physics_polygon.h">
+    <ClInclude Include="component_collider_physics_polygon_smooth.h">
       <Filter>EC\Component\Collider\Physics</Filter>
     </ClInclude>
   </ItemGroup>
