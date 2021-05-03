@@ -27,14 +27,15 @@ template <typename T> inline component_id get_component_type_id() noexcept
 /*
 storage class for components and other entities beneath it
 can either id and retrieve components/children, or treat them as lists.
+
 @author David Wadsworth
 */
 
 class Entity
 {
 private:
-	DataStructures::SplayTree<Comp> components_;
-	DataStructures::SplayTree<Entity> children_;
+	SplayTree<Comp> components_;
+	SplayTree<Entity> children_;
 public:	
 	static long long count; // count entity references
 	

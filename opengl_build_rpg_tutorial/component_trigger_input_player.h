@@ -49,7 +49,7 @@ namespace Component {
                     auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
 
                     // get collision world
-                    auto& c_colw_col_vec = *gamestate->get_child("collision world")->get_component<Component::ColliderVector>();
+                   // auto& c_colw_col_vec = *gamestate->get_child("collision world")->get_component<Component::AABBVector>();
 
                     auto& c_pla_transform = *entity_->add_component<Component::Transform>(x_, y_, 64.0f);
                     auto& c_pla_src = *entity_->add_component<Component::Src>(Rect{ 0.0f, 0.0f, 64.0f, 64.0f });
@@ -64,7 +64,7 @@ namespace Component {
 
                     auto csu_pla_animation = entity_->add_component<Component::System::Update::Animation>(4, c_pla_src);
                     auto csu_pla_animate_move = entity_->add_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
-                    auto csu_check_collision_aabb = entity_->add_component<Component::System::Update::CheckCollisionAABB>(c_pla_movement, c_pla_col_aabb, c_colw_col_vec);
+                  //  auto csu_check_collision_aabb = entity_->add_component<Component::System::Update::CheckCollisionAABB>(c_pla_movement, c_pla_col_aabb, c_colw_col_vec);
 
                     // set up flesh animations
                     std::string anims[] = {
@@ -122,7 +122,7 @@ namespace Component {
                     auto& update_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("update");
 
                     update_systems.push_back(csu_pla_move);
-                    update_systems.push_back(csu_check_collision_aabb);
+                   // update_systems.push_back(csu_check_collision_aabb);
                     update_systems.push_back(csu_pla_camera);
                     update_systems.push_back(csu_pla_animate_move);
                     update_systems.push_back(csu_pla_animation);

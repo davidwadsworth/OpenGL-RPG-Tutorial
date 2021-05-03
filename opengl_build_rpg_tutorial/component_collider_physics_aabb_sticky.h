@@ -14,7 +14,7 @@ namespace Component {
 		namespace Physics {
 			namespace AABB
 			{
-				class AABBSticky : public Component::Collider::AABB, public Phys
+				class Sticky : public Component::Collider::AABB, public Phys
 				{
 					glm::vec2 previous_{};
 				public:

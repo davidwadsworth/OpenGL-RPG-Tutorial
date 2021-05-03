@@ -7,7 +7,7 @@ bool Component::Col::collide(Component::Col& col)
 
 	glm::vec2 direction, a, b, c;
 
-	auto triple_product = [](glm::vec2 a, glm::vec2 b, glm::vec2 c) 
+	auto triple_product = [](glm::vec2 a, glm::vec2 b, glm::vec2 c)
 	{
 		auto a3 = glm::vec3(a, 0);
 		auto b3 = glm::vec3(b, 0);
@@ -77,5 +77,6 @@ bool Component::Col::collide(Component::Col& col)
 
 		if (glm::dot(simplex_[i++], direction) < 0)
 			return false;
+	}
 }
 
