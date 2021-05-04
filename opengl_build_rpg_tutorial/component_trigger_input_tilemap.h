@@ -97,9 +97,8 @@ namespace Component {
 						auto& c_tile_transform = *entity_->push_back_component<Component::Transform>(tile_dest);
 						// get the approriate src tile from the list of tile_srcs subtracted by one
 						auto& c_tile_src = *static_cast<Component::Src*>(tile_srcs[tiles[i]]);
-						auto& c_tile_dest = *entity_->push_back_component<Component::Dest>();
 						auto csr_tile_dynamic_draw = entity_->push_back_component<Component::System::Render::CameraDraw>
-							(c_renderer, c_tile_src, c_tile_dest, c_tset_material, c_tile_transform, c_cam_transform);
+							(c_renderer, c_tile_src, c_tile_transform, c_tset_material, c_cam_transform);
 						render_systems.push_back(csr_tile_dynamic_draw);
 					}
 				}

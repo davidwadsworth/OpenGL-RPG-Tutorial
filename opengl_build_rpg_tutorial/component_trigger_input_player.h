@@ -2,7 +2,6 @@
 #include "component_trigger_input.h"
 #include "component_transform.h"
 #include "component_src.h"
-#include "component_dest.h"
 #include "component_renderer.h"
 #include "component_material.h"
 #include "component_system_render_camera_draw.h"
@@ -53,12 +52,11 @@ namespace Component {
 
                     auto& c_pla_transform = *entity_->add_component<Component::Transform>(x_, y_, 64.0f);
                     auto& c_pla_src = *entity_->add_component<Component::Src>(Rect{ 0.0f, 0.0f, 64.0f, 64.0f });
-                    auto& c_pla_dest = *entity_->add_component<Component::Dest>();
                     auto& c_pla_material = *entity_->add_component<Component::Material>(c_flesh_tex, c_sprite_shader, 0);
                     auto& c_pla_movement = *entity_->add_component<Component::Movement>(240.0f);
                     auto& c_pla_col_aabb = *entity_->add_component<Component::Collider::AABB>(c_pla_transform, 64.0f);
 
-                    auto csr_pla_dynamic_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_dest, c_pla_material, c_pla_transform, c_cam_transform);
+                    auto csr_pla_dynamic_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_transform, c_pla_material, c_cam_transform);
                     auto csu_pla_camera = entity_->add_component<Component::System::Update::Camera>(c_pla_transform, c_cam_transform);
                     auto csu_pla_move = entity_->add_component<Component::System::Update::Move>(c_pla_transform, c_cont_keyboard, c_pla_movement);
 

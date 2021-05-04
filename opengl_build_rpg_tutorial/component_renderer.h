@@ -3,9 +3,7 @@
 #include <vector>
 #include <glm/vec4.hpp>
 #include "component_material.h"
-#include "component_src.h"
-#include "component_dest.h"
-
+#include "rect.h"
 /*
 Simple batch renderer for drawing sprites 
 
@@ -25,7 +23,7 @@ namespace Component
 		void release();
 
 		void begin();
-		void draw(Component::Src& src, Component::Dest& dest, Component::Material& mat);
+		void draw(Rect& src, Rect& dest, Component::Material& mat);
 		void flush();
 		void end();
 	};

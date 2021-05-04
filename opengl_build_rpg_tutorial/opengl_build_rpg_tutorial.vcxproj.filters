@@ -116,9 +116,6 @@
     <ClInclude Include="component_src.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_dest.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="component_system_render_camera_draw.h">
       <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
@@ -182,9 +179,6 @@
     <ClInclude Include="component_trigger_input_tileset.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
-    <ClInclude Include="component_movement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="component_collider.h">
       <Filter>EC\Component\Collider</Filter>
     </ClInclude>
@@ -229,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="component_collider_physics_polygon_smooth.h">
       <Filter>EC\Component\Collider\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="component_movement.h">
+      <Filter>EC\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

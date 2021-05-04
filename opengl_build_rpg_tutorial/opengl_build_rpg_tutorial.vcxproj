@@ -171,7 +171,6 @@
     <ClInclude Include="component_trigger_input_collider_map.h" />
     <ClInclude Include="component_trigger_input_collision_world.h" />
     <ClInclude Include="component_trigger_input_engine.h" />
-    <ClInclude Include="component_dest.h" />
     <ClInclude Include="component_src.h" />
     <ClInclude Include="component_system.h" />
     <ClInclude Include="component_trigger_input.h" />

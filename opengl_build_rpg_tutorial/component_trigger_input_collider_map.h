@@ -25,6 +25,13 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override
 				{
+					/*
+						71 = circle
+						48 = boundary
+						24 = polygon
+						47 = aabb
+					*/
+
 					// get collider tile info
 					auto& c_tset_material = *gamestate->get_child("TestTileset")->get_component<Component::Material>(0);
 					auto& c_tset_col_tile_src = *gamestate->get_child("TestTileset")->get_component<Component::Src>(46);
@@ -39,20 +46,18 @@ namespace Component {
 					// test colliders here
 
 					// smooth aabb
-					auto& c_smaabb_dest = *entity_->push_back_component<Component::Dest>();
 					auto& c_smaabb_transform = *entity_->push_back_component<Component::Transform>(704.0f, 600.0f, 64.0f);
 					auto c_smaabb_aabb = entity_->push_back_component<Component::Collider::Physics::AABB::Smooth>(c_smaabb_transform, 64.0f);
 
 					auto csr_smaabb_cam_draw = entity_->push_back_component<Component::System::Render::CameraDraw>
-						(c_renderer, c_tset_col_tile_src, c_smaabb_dest, c_tset_material, c_smaabb_transform, c_cam_transform);
+						(c_renderer, c_tset_col_tile_src, c_smaabb_transform, c_tset_material, c_cam_transform);
 
 					// sticky aabb 
-					auto& c_staabb_dest = *entity_->push_back_component<Component::Dest>();
 					auto& c_staabb_transform = *entity_->push_back_component<Component::Transform>(896.0f, 600.0f, 64.0f);
 					auto c_staabb_aabb = entity_->push_back_component<Component::Collider::Physics::AABB::Sticky>(c_staabb_transform, 64.0f);
 
 					auto csr_staabb_cam_draw = entity_->push_back_component<Component::System::Render::CameraDraw>
-						(c_renderer, c_tset_col_tile_src, c_staabb_dest, c_tset_material, c_staabb_transform, c_cam_transform);
+						(c_renderer, c_tset_col_tile_src, c_staabb_transform, c_tset_material, c_cam_transform);
 
 					// add colliders to collision world
 					c_cworld_col_vec.push_back(c_smaabb_aabb);

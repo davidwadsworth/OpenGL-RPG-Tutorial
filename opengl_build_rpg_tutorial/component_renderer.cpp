@@ -43,7 +43,7 @@ void Component::Renderer::begin()
 	current_mat_ = nullptr;
 }
 
-void Component::Renderer::draw(Component::Src& src, Component::Dest& dest, Component::Material& mat)
+void Component::Renderer::draw(Rect& src, Rect& dest, Component::Material& mat)
 {
 	// checks if buffer is over sprite limit or current material isn't set
 	// finally checks if the current material has a different id from the new material
@@ -56,7 +56,7 @@ void Component::Renderer::draw(Component::Src& src, Component::Dest& dest, Compo
 	}
 
 	// translate src to fractions of the image dimensions
-	Rect norm_src = src;
+	auto norm_src = src;
 	auto img_w = mat.texture.width;
 	auto img_h = mat.texture.height;
 
