@@ -153,9 +153,9 @@ public:
     }
 
     SplayTree(SplayTree&&) = delete;
-    SplayTree(const SplayTree&&) = delete;
+    SplayTree(const SplayTree&) = delete;
     SplayTree& operator=(SplayTree&&) = delete;
-    SplayTree& operator=(const SplayTree&&) = delete;
+    SplayTree& operator=(const SplayTree&) = delete;
 
     // Function to insert a new key k
     // in splay tree with given root

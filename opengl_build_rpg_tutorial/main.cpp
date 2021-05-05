@@ -23,7 +23,7 @@ void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mo
 int main()
 {
     if (!glfwInit())
-        Logger::error("failed to initialize glfw!", 1);
+        Logger::error("failed to initialize glfw!", 2);
 
     // opengl version = major.minor
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -43,7 +43,7 @@ int main()
     glfwSetKeyCallback(window, key_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        Logger::error("failed to initialize glad!", 1);
+        Logger::error("failed to initialize glad!", 2);
 
     int flags;
     glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -128,9 +128,9 @@ int main()
     glfwTerminate();
 
     if (Entity::count)
-        Logger::warning("Entity Memory Leak: " + Entity::count, 0);
+        Logger::warning("Entity Memory Leak: " + Entity::count, 2);
     if (Comp::count)
-        Logger::warning("Component Memory Leak: " + Comp::count, 0);
+        Logger::warning("Component Memory Leak: " + Comp::count, 2);
 
     return 0;
 }
