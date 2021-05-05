@@ -6,21 +6,22 @@
 #include "glad/glad.h"
 #include <iostream>
 #include "splay_tree.h"
+#include "logger.h"
 
 using component_id = std::size_t;
 
-inline component_id get_new_component_type_id()
+inline component_id get_new_component_id()
 {
 	static component_id last_id = 0u;
 	return ++last_id;
 }
 
 // depending on how many components there are creates a seperate get_component_type_if for each, thus giving the illusion of unique id
-template <typename T> inline component_id get_component_type_id() noexcept
+template <typename T> inline component_id get_component_id() noexcept
 {
 	// assert that it inherits Comp
 	static_assert (std::is_base_of<Comp, T>::value, "");
-	static component_id type_id = get_new_component_type_id();
+	static component_id type_id = get_new_component_id();
 	return type_id;
 }
 
@@ -47,8 +48,6 @@ public:
 
 	~Entity()
 	{
-		components_.~SplayTree();
-		children_.~SplayTree();
 		--count;
 	}
 
@@ -60,12 +59,23 @@ public:
 
 	Entity* get_child(std::size_t pos)
 	{
-		return children_.search(pos);
+		auto r_child = children_.search(pos);
+
+		if (!r_child)
+			Logger::error("could not find child, pos = " + pos, 2);
+
+		return r_child;
 	}
 
-	Entity* get_child(std::string str)
+	Entity* get_child(std::string id)
 	{
-		return children_.search(std::hash<std::string>{}(str));
+		auto hashed_str = std::hash<std::string>{}(id);
+		auto r_child = children_.search(hashed_str);
+
+		if (!r_child)
+			Logger::error("could not find child, str id = " + id, 2);
+
+		return r_child;
 	}
 
 	std::vector<Entity*> get_child_list()
@@ -73,14 +83,15 @@ public:
 		return children_.get_ordered_list();
 	}
 
-	bool has_child(std::string str)
+	bool has_child(std::string id)
 	{
-		return get_child(str);
+		return get_child(id);
 	}
 
-	void remove_child(std::string str)
+	void remove_child(std::string id)
 	{
-		children_.remove(std::hash<std::string>{}(str));
+		auto hashed_str = std::hash<std::string>{}(id);
+		children_.remove(hashed_str);
 	}
 
 	GLuint children_size()
@@ -95,33 +106,54 @@ public:
 	}
 
 	// inserts entity into child tree with hash of str as unique id
-	Entity* add_child(Entity* entity, std::string str)
+	Entity* add_id_child(Entity* entity, std::string id)
 	{
-		return children_.insert(std::hash<std::string>{}(str), entity);
+		auto hashed_str = std::hash<std::string>{}(id);
+		return children_.insert(hashed_str, entity);
 	}
 
+
 	// gets component of matching unique id, throws if not there
-	template<typename T> T* get_component()
+	template <typename T>
+	T* get_component()
 	{
-		return static_cast<T*>(components_.search(get_component_type_id<T>()));
+		auto r_comp = components_.search(get_component_id<T>());
+
+		if (!r_comp)
+			Logger::error("could not find component, component id = " + get_component_id<T>(), 2);
+
+		return static_cast<T*>(r_comp);
 	}
 
 	// searches component tree for templated component at pos
-	template<typename T> T* get_component(std::size_t pos)
+	template <typename T>
+	T* get_component(std::size_t pos)
 	{
-		return static_cast<T*>(components_.search(pos));
+		auto r_comp = components_.search(pos);
+
+		if (!r_comp)
+			Logger::error("could not find component, pos = " + pos, 2);
+
+		return static_cast<T*>(r_comp);
 	}
 
 	// searches component tree for specific component of hashed string
-	template<typename T> T* get_component(std::string str)
+	template <typename T>
+	T* get_component(std::string id)
 	{
-		return static_cast<T*>(components_.search(std::hash<std::string>{}(str)));
+		auto hashed_str = std::hash<std::string>{}(id);
+		auto r_comp = components_.search(hashed_str);
+
+		if (!r_comp)
+			Logger::error("could not find component, str id = " + id, 2);
+
+		return static_cast<T*>(r_comp);
 	}
 
 	// checks if unique id of component is located in component tree
 	template <typename T> bool has_component()
 	{
-		return components_.search(get_component_type_id<T>());
+		return components_.search(get_component_id<T>());
 	}
 
 	// checks if string id of component is located in component tree
@@ -137,24 +169,31 @@ public:
 	}
 
 	// adds component to splay tree and gives it a unique id, can't have two of the same component per entity
-	template <typename T, typename... TArgs> T* add_component(TArgs&&... args)
+	template<typename T, typename... TArgs>
+	T* add_component(TArgs&&... args)
 	{
 		T* c(new T(std::forward<TArgs>(args)...));
-		return static_cast<T*>(components_.insert(get_component_type_id<T>(), c));
+		components_.insert(get_component_id<T>(), c);
+		return c;
 	}
 
 	// adds component to splay tree using a hashed string
-	template <typename T, typename... TArgs> T* add_component_str_id(std::string str, TArgs&&... args)
+	template<typename T, typename... TArgs>
+	T* add_id_component(std::string id, TArgs&&... args)
 	{
 		T* c(new T(std::forward<TArgs>(args)...));
-		return static_cast<T*>(components_.insert(std::hash<std::string>{}(str), c));
+		auto hashed_str = std::hash<std::string>{}(id);
+		components_.insert(hashed_str, c);
+		return c;
 	}
 
 	// adds component to splay tree and treats it like an array, can have two of the same component in an entity
-	template <typename T, typename... TArgs> T* push_back_component(TArgs&&... m_args)
+	template<typename T, typename... TArgs>
+	T* push_back_component(TArgs&&... args)
 	{
-		T* c(new T(std::forward<TArgs>(m_args)...));
-		return static_cast<T*>(components_.insert(c));
+		T* c(new T(std::forward<TArgs>(args)...));
+		components_.insert(c);
+		return c;
 	}
 
 	// gets array of components

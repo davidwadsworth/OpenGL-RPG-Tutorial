@@ -7,9 +7,10 @@
 #include "component_trigger_input.h"
 #include "component_vector.h"
 #include "component_renderer.h"
+#include "logger.h"
 
 /*
-Source code for episode 13 of Build Your Own RPG series
+Source code for episode 14 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -22,10 +23,7 @@ void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mo
 int main()
 {
     if (!glfwInit())
-    {
-        std::cerr << "failed to initialize glfw!" << std::endl;
-        return -1;
-    }
+        Logger::error("failed to initialize glfw!", 1);
 
     // opengl version = major.minor
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -45,11 +43,7 @@ int main()
     glfwSetKeyCallback(window, key_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cerr << "failed to initialize glad!" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
+        Logger::error("failed to initialize glad!", 1);
 
     int flags;
     glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -88,9 +82,9 @@ int main()
 
     auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
 
-    std::cout << "Entities Created: " << Entity::count << std::endl;
-    std::cout << "Components Created: " << Comp::count << std::endl;
-
+    Logger::message("Entities Created: " + Entity::count);
+    Logger::message("Components Created: " + Comp::count);
+    
     GLfloat last_frame = 0.0f;
 
     // game loop
@@ -117,6 +111,9 @@ int main()
             
         c_renderer.end();
 
+        if (Game::exit)
+            glfwSetWindowShouldClose(window, GL_TRUE);
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -131,9 +128,9 @@ int main()
     glfwTerminate();
 
     if (Entity::count)
-        std::cerr << "Entity Memory Leak: " << Entity::count << std::endl;
+        Logger::warning("Entity Memory Leak: " + Entity::count, 0);
     if (Comp::count)
-        std::cerr << "Component Memory Leak: " << Comp::count << std::endl;
+        Logger::warning("Component Memory Leak: " + Comp::count, 0);
 
     return 0;
 }

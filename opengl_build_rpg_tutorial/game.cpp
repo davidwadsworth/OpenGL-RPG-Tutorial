@@ -9,6 +9,7 @@ GLuint Game::height = 600u;
 GLfloat Game::delta_time = 0.0f;
 std::array<bool, MAX_KEYS> Game::keys{0};
 Entity* Game::global = new Entity();
+bool Game::exit = false;
 
 // EC reference counting
 long long Comp::count = 0ll;

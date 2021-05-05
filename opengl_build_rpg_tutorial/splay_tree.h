@@ -1,13 +1,7 @@
 #pragma once
-#include <glad\glad.h>
+#include <vector>
+#include <memory>
 #include <iostream>
-
-/*
-Copy and pasted (mostly) verbatim from geeks for geeks. Simple one class templated splay tree solution
-   * https://www.geeksforgeeks.org/splay-tree-set-1-insert/ // right_rotate, left_rotate, splay, pre_order, and search functions
-   * https://www.geeksforgeeks.org/splay-tree-set-2-insert-delete/ // insert function
-@author GeeksForGeeks, David Wadsworth
-*/
 
 template <typename T>
 class SplayTree
@@ -16,22 +10,21 @@ class SplayTree
     {
     public:
         Node(std::size_t key, T* value)
-            : key(key), value(value), left(nullptr), right(right)
+            : key(key), value(value)
         {}
 
         ~Node()
         {
             delete value;
         }
-
         std::size_t key;
         T* value;
-        Node* left, *right;
+        Node* left, * right;
     };
 
-    // A utility function to right  
-    // rotate subtree rooted with y  
-    // See the diagram given above.  
+    // A utility function to right
+    // rotate subtree Nodeed with y
+    // See the diagram given above.
     Node* right_rotate(Node* x)
     {
         Node* y = x->left;
@@ -40,9 +33,9 @@ class SplayTree
         return y;
     }
 
-    // A utility function to left  
-    // rotate subtree rooted with x  
-    // See the diagram given above.  
+    // A utility function to left
+    // rotate subtree Nodeed with x
+    // See the diagram given above.
     Node* left_rotate(Node* x)
     {
         Node* y = x->right;
@@ -51,82 +44,81 @@ class SplayTree
         return y;
     }
 
-    // This function brings the key at 
-    // root if key is present in tree.  
-    // If key is not present, then it 
-    // brings the last accessed item at  
-    // root. This function modifies the 
-    // tree and returns the new root  
-    Node* splay(Node* root, std::size_t key)
+    // This function brings the key at
+    // node if key is present in tree.
+    // If key is not present, then it
+    // brings the last accessed item at
+    // Node. This function modifies the
+    // tree and returns the new Node
+    Node* splay(Node* node, int key)
     {
-        // Base cases: root is NULL or 
-        // key is present at root  
-        if (root == nullptr || root->key == key)
-            return root;
+        // Base cases: Node is NULL or
+        // key is present at Node
+        if (node == nullptr || node->key == key)
+            return node;
 
-        // Key lies in left subtree  
-        if (root->key > key)
+        // Key lies in left subtree
+        if (node->key > key)
         {
-            // Key is not in tree, we are done  
-            if (root->left == nullptr)
-                return root;
-                
-            // Zig-Zig (Left Left)  
-            if (root->left->key > key)
+            // Key is not in tree, we are done
+            if (node->left == nullptr) return node;
+
+            // Zig-Zig (Left Left)
+            if (node->left->key > key)
             {
-                // First recursively bring the 
-                // key as root of left-left  
-                root->left->left = splay(root->left->left, key);
+                // First recursively bring the
+                // key as node of left-left
+                node->left->left = splay(node->left->left, key);
 
-                // Do first rotation for root,  
-                // second rotation is done after else  
-                root = right_rotate(root);
+                // Do first rotation for node,
+                // second rotation is done after else
+                node = right_rotate(node);
             }
-            else if (root->left->key < key) // Zig-Zag (Left Right)  
+            else if (node->left->key < key) // Zig-Zag (Left Right)
             {
-                // First recursively bring 
-                // the key as root of left-right  
-                root->left->right = splay(root->left->right, key);
+                // First recursively bring
+                // the key as node of left-right
+                node->left->right = splay(node->left->right, key);
 
-                // Do first rotation for root->left  
-                if (root->left->right != nullptr)
-                    root->left = left_rotate(root->left);
+                // Do first rotation for Node->left
+                if (node->left->right != nullptr)
+                    node->left = left_rotate(node->left);
             }
 
-            // Do second rotation for root  
-            return (root->left == nullptr) ? root : right_rotate(root);
+            // Do second rotation for node
+            return (node->left == nullptr) ? node : right_rotate(node);
         }
-        else // Key lies in right subtree  
+        else // Key lies in right subtree
         {
-            // Key is not in tree, we are done  
-            if (root->right == nullptr)
-                return root;
-                
-            // Zag-Zig (Right Left)  
-            if (root->right->key > key)
-            {
-                // Bring the key as root of right-left  
-                root->right->left = splay(root->right->left, key);
+            // Key is not in tree, we are done
+            if (node->right == nullptr) return node;
 
-                // Do first rotation for root->right  
-                if (root->right->left != nullptr)
-                    root->right = right_rotate(root->right);
-            }
-            else if (root->right->key < key)// Zag-Zag (Right Right)  
+            // Zig-Zag (Right Left)
+            if (node->right->key > key)
             {
-                // Bring the key as root of  
-                // right-right and do first rotation  
-                root->right->right = splay(root->right->right, key);
-                root = left_rotate(root);
+                // Bring the key as Node of right-left
+                node->right->left = splay(node->right->left, key);
+
+                // Do first rotation for node->right
+                if (node->right->left != nullptr)
+                    node->right = right_rotate(node->right);
+            }
+            else if (node->right->key < key)// Zag-Zag (Right Right)
+            {
+                // Bring the key as node of
+                // right-right and do first rotation
+                node->right->right = splay(node->right->right, key);
+                node = left_rotate(node);
             }
 
-            // Do second rotation for root  
-            return (root->right == nullptr) ? root : left_rotate(root);
+            // Do second rotation for Node
+            return (node->right == nullptr) ? node : left_rotate(node);
         }
     }
-    // A utility function to print  
-    // pre order traversal of the tree.  
-    // The function also prints height of every Node  
+
+    // A utility function to print
+    // preorder traversal of the tree.
+    // The function also prints height of every node
     void pre_order(Node* node)
     {
         if (node != nullptr)
@@ -137,22 +129,21 @@ class SplayTree
         }
     }
 
-    void pre_order(Node* node, std::vector<T*>& list)
+    void in_order(Node* node, std::vector<T*> list)
     {
         if (node != nullptr)
         {
-            pre_order(node->left, list);
+            in_order(node->left, list);
             list.push_back(node->value);
-            pre_order(node->right, list);
+            in_order(node->right, list);
         }
     }
 
-    GLuint size_;
     Node* root_;
     std::vector<std::unique_ptr<Node>> nodes_;
 public:
     SplayTree()
-        : root_(nullptr), size_(0)
+        : root_(nullptr)
     {}
 
     ~SplayTree()
@@ -161,43 +152,48 @@ public:
         root_ = nullptr;
     }
 
-    T* insert(std::size_t key, T* value)
-    {
-        ++size_;
+    SplayTree(SplayTree&&) = delete;
+    SplayTree(const SplayTree&&) = delete;
+    SplayTree& operator=(SplayTree&&) = delete;
+    SplayTree& operator=(const SplayTree&&) = delete;
 
-        // Simple Case: If tree is empty  
-        if (root_ == nullptr) 
+    // Function to insert a new key k
+    // in splay tree with given root
+    T* insert(std::size_t k, T* value)
+    {
+        // Simple Case: If tree is empty
+        if (root_ == nullptr)
         {
-            root_ = new Node(key, value);
+            root_ = new Node(k, value);
             nodes_.push_back(std::unique_ptr<Node>(root_));
             return value;
         }
-        // Bring the closest leaf node to root  
-        root_ = splay(root_, key);
 
-        // If key is already present, then return  
-        if (root_->key == key)
+        // Bring the closest leaf node to root
+        root_ = splay(root_, k);
+
+        // If key is already present, then return
+        if (root_->key == k)
         {
-            --size_;
             delete value;
             return root_->value;
         }
-        // Otherwise allocate memory for new node  
-        auto new_node = new Node(key, value);
+        // Otherwise allocate memory for new Node
+        Node* new_node = new Node(k, value);
 
-        // If root's key is greater, make  
-        // root as right child of newnode  
-        // and copy the left child of root to newnode  
-        if (root_->key > key)
+        // If root's key is greater, make
+        // root as right child of new node
+        // and copy the left child of root to new Node
+        if (root_->key > k)
         {
             new_node->right = root_;
             new_node->left = root_->left;
             root_->left = nullptr;
         }
 
-        // If root's key is smaller, make  
-        // root as left child of newnode  
-        // and copy the right child of root to newnode  
+        // If root's key is smaller, make
+        // root as left child of new Node
+        // and copy the right child of root to new Node
         else
         {
             new_node->left = root_;
@@ -207,33 +203,17 @@ public:
 
         root_ = new_node;
         nodes_.push_back(std::unique_ptr<Node>(new_node));
-        return value;
+        return value; // new node becomes new root
     }
 
     T* insert(T* value)
     {
-        return insert(size_, value);
-    }
-
-    // The search function for Splay tree.  
-    // Note that this function returns the  
-    // new root of Splay Tree. If key is  
-    // present in tree then, it is moved to root.  
-    T* search(std::size_t key)
-    {
-        root_ = splay(root_, key);
-
-        if (root_)
-            if (root_->key == key)
-                return root_->value;
-
-        return nullptr;
+        return insert(nodes_.size(), value);
     }
 
     void remove(std::size_t key)
     {
-        Node* temp = nullptr;
-
+        Node* temp;
         if (!root_)
             return;
 
@@ -271,26 +251,38 @@ public:
             root_->right = temp->right;
         }
 
-
         for (auto i = 0; i < nodes_.size(); ++i)
             if (nodes_[i]->key == key)
             {
                 nodes_.erase(nodes_.begin() + i);
                 break;
             }
+
+        // return root of the new Splay Tree
+        return;
     }
 
-    // returns an array of ordered values in the binary tree
+    T* search(std::size_t key)
+    {
+        root_ = splay(root_, key);
+
+        if (root_)
+            if (root_->key == key)
+                return root_->value;
+
+        return nullptr;
+    }
+
     std::vector<T*> get_ordered_list()
     {
-        std::vector<T*> return_list;
-        pre_order(root_, return_list);
-        return return_list;
+        std::vector<T*> temp_list;
+        in_order(root_, temp_list);
+        return temp_list;
     }
 
-    GLuint size()
+    std::size_t size()
     {
-        return size_;
+        return nodes_.size();
     }
 
     void print()
@@ -298,6 +290,5 @@ public:
         pre_order(root_);
         std::cout << std::endl;
     }
+
 };
-
-

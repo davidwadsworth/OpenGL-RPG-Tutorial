@@ -39,8 +39,8 @@ namespace Component {
 					}
 					catch (std::exception e)
 					{
-						std::cerr << "Failed to read tileset file!" << std::endl;
-						throw;
+						Logger::error("Failed to read tileset file! path = " + path_, 1);
+						return;
 					}
 
 					auto tileset_json = nlohmann::json::parse(ts_stream);
@@ -58,7 +58,7 @@ namespace Component {
 					float tileset_h = tileset_json["imageheight"];
 
 					if (!gamestate->get_child("texture manager")->has_component<Component::Texture>(image_name))
-						gamestate->get_child("texture manager")->add_component_str_id<Component::Texture>(image_name)->load(image_src.c_str());
+						gamestate->get_child("texture manager")->add_id_component<Component::Texture>(image_name)->load(image_src.c_str());
 					
 					auto& c_tileset_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>(image_name);
 					auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");

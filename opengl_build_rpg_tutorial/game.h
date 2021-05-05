@@ -21,6 +21,7 @@ public:
 	static GLfloat delta_time;
 	static std::array<bool, MAX_KEYS> keys;
 	static Entity* global;
+	static bool exit;
 
 	static void init(Entity* game);
 };

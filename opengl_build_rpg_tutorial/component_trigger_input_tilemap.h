@@ -48,8 +48,8 @@ namespace Component {
 					}
 					catch (std::exception e)
 					{
-						std::cerr << "Failed to read tilemap file!" << std::endl;
-						throw;
+						Logger::error("Failed to read tilemap file! path = " + path_, 1);
+						return;
 					}
 
 					// parse into json obj
@@ -70,7 +70,7 @@ namespace Component {
 					if (!gamestate->has_child(set_name))
 					{
 						auto tileset = new Entity();
-						auto& cti_tileset = *tileset->add_component_str_id<Component::Trigger::Input::TileSet>(set_name, set_name, tileset_source);
+						auto& cti_tileset = *tileset->add_id_component<Component::Trigger::Input::TileSet>(set_name, set_name, tileset_source);
 						cti_tileset.execute(gamestate);
 
 						entity_->push_back_child(tileset);

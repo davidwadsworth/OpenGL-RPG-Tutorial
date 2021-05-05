@@ -24,7 +24,7 @@ namespace Component {
 				{
 					auto flesh_tex_name = "resources/images/flesh_full.png";
 
-					auto& c_flesh_tex = *entity_->add_component_str_id<Component::Texture>("flesh_full");
+					auto& c_flesh_tex = *entity_->add_id_component<Component::Texture>("flesh_full");
 					c_flesh_tex.load(flesh_tex_name);
 				}
 			};

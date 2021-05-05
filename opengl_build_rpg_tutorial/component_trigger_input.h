@@ -31,7 +31,7 @@ namespace Component {
 
 				// set up entity and add into our passed through map
 				entity_ = new Entity();
-				gamestate->add_child(entity_, name_);
+				gamestate->add_id_child(entity_, name_);
 
 				create(gamestate);
 			}

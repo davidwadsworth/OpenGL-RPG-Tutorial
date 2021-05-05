@@ -144,6 +144,7 @@
     <ClCompile Include="component_collider.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="component_material.cpp" />
     <ClCompile Include="component_renderer.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="component_shader.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="logger.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="component_trigger_input_renderer.h" />
     <ClInclude Include="splay_tree.h" />

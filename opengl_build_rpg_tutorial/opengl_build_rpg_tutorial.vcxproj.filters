@@ -72,6 +72,9 @@
     <ClCompile Include="component_collider.cpp">
       <Filter>EC\Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="component_movement.h">
       <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="logger.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

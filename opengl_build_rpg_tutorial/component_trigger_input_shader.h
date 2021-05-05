@@ -27,7 +27,7 @@ namespace Component {
 					auto vs_file_name = "resources/shaders/sprite.vs";
 					auto fs_file_name = "resources/shaders/sprite.fs";
 
-					auto& c_shader = *entity_->add_component_str_id<Component::Shader>("sprite");
+					auto& c_shader = *entity_->add_id_component<Component::Shader>("sprite");
 					c_shader.load(vs_file_name, fs_file_name);
 
 					// set up orthographic projection

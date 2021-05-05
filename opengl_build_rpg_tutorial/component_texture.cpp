@@ -1,7 +1,7 @@
 #include "component_texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-#include <iostream>
+#include "logger.h"
 
 void Component::Texture::load(const GLchar* tex_file_name)
 {
@@ -11,10 +11,7 @@ void Component::Texture::load(const GLchar* tex_file_name)
 	unsigned char* image = stbi_load(tex_file_name, &width, &height, &nr_channels, STBI_rgb_alpha);
 
 	if (!image)
-	{
-		std::cout << "Failed to load texture: " << tex_file_name << std::endl;
-		throw;
-	}
+		Logger::error("Failed to load texture: " + std::string(tex_file_name), 2);
 	
 	// set dimensions
 	this->width = width;

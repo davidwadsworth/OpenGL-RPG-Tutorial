@@ -1,7 +1,7 @@
 #include "component_shader.h"
 #include <fstream>
 #include <sstream>
-#include <iostream>
+#include "logger.h"
 
 void Component::Shader::compile(const GLchar* vs_data, const GLchar* fs_data)
 {
@@ -22,8 +22,7 @@ void Component::Shader::compile(const GLchar* vs_data, const GLchar* fs_data)
     if (!success)
     {
         glGetShaderInfoLog(vs, 512, nullptr, info_log);
-        std::cerr << "Vertex shader compilation failure: vs = " << vs_file_name_ << std::endl;
-        throw;
+        Logger::error("Vertex shader compilation failure: vs = " + vs_file_name_ + "\n" + std::string(info_log), 1);
     }
 
     // fragment shader
@@ -36,7 +35,7 @@ void Component::Shader::compile(const GLchar* vs_data, const GLchar* fs_data)
     if (!success)
     {
         glGetShaderInfoLog(fs, 512, nullptr, info_log);
-        std::cerr << "Fragment shader compilation failure: fs = " << fs_file_name_ << std::endl;
+        Logger::error("Fragment shader compilation failure: fs = " + fs_file_name_ + "\n" + std::string(info_log), 1);
     }
 
     // shader program init
@@ -50,8 +49,7 @@ void Component::Shader::compile(const GLchar* vs_data, const GLchar* fs_data)
     if (!success)
     {
         glGetProgramInfoLog(id_, 512, nullptr, info_log);
-        std::cerr << "Program linking failure: vs = " << vs_file_name_ << "fs = " << fs_file_name_ << std::endl;
-        throw;
+        Logger::error("Program linking failure: vs = " + vs_file_name_ + "fs = " + fs_file_name_ + "\n" + std::string(info_log), 1);
     }
 
     // delete orphaned shader files
@@ -90,8 +88,8 @@ void Component::Shader::load(const GLchar* vs_file_name, const GLchar* fs_file_n
     }
     catch (std::exception e)
     {
-        std::cerr << "Failed to read shader files!" << std::endl;
-        throw;
+        Logger::error("Failed to read shader files! vs = " + vs_file_name_ + "fs = " + fs_file_name_, 1);
+        return;
     }
 
     compile(vs_code.c_str(), fs_code.c_str());
