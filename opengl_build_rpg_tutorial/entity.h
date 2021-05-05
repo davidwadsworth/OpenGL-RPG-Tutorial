@@ -85,7 +85,8 @@ public:
 
 	bool has_child(std::string id)
 	{
-		return get_child(id);
+		auto hashed_str = std::hash<std::string>{}(id);
+		return children_.search(hashed_str);
 	}
 
 	void remove_child(std::string id)
@@ -157,9 +158,10 @@ public:
 	}
 
 	// checks if string id of component is located in component tree
-	template <typename T> bool has_component(std::string str)
+	template <typename T> bool has_component(std::string id)
 	{
-		return components_.search(std::hash<std::string>{}(str));
+		auto hashed_str = std::hash<std::string>{}(id);
+		return components_.search(hashed_str);
 	}
 
 	// checks if id of component is located in component tree

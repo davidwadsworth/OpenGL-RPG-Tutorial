@@ -10,7 +10,7 @@ class Logger
 public:
 	Logger() = delete;
 
-	static void to_file(std::string file_path = "output.err");
+	static void to_file(std::string file_path = "debug.err");
 	static void message(std::string message);
 	static void warning(std::string message, int severity);
 	static void error(std::string message, int severity);

@@ -50,7 +50,7 @@ class SplayTree
     // brings the last accessed item at
     // Node. This function modifies the
     // tree and returns the new Node
-    Node* splay(Node* node, int key)
+    Node* splay(Node* node, std::size_t key)
     {
         // Base cases: Node is NULL or
         // key is present at Node
@@ -129,7 +129,7 @@ class SplayTree
         }
     }
 
-    void in_order(Node* node, std::vector<T*> list)
+    void in_order(Node* node, std::vector<T*>& list)
     {
         if (node != nullptr)
         {

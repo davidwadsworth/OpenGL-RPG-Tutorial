@@ -82,8 +82,8 @@ int main()
 
     auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
 
-    Logger::message("Entities Created: " + Entity::count);
-    Logger::message("Components Created: " + Comp::count);
+    Logger::message("Entities Created: " + std::to_string(Entity::count));
+    Logger::message("Components Created: " + std::to_string(Comp::count));
     
     GLfloat last_frame = 0.0f;
 
@@ -163,38 +163,43 @@ void APIENTRY gl_debug_output(GLenum source,
     // ignore non-significant error/warning codes
     if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
 
-    std::cout << "---------------" << std::endl;
-    std::cout << "Debug message (" << id << "): " << message << std::endl;
+    std::string str;
+    int sev{};
 
     switch (source)
     {
-    case GL_DEBUG_SOURCE_API:             std::cout << "Source: API"; break;
-    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   std::cout << "Source: Window System"; break;
-    case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cout << "Source: Shader Compiler"; break;
-    case GL_DEBUG_SOURCE_THIRD_PARTY:     std::cout << "Source: Third Party"; break;
-    case GL_DEBUG_SOURCE_APPLICATION:     std::cout << "Source: Application"; break;
-    case GL_DEBUG_SOURCE_OTHER:           std::cout << "Source: Other"; break;
-    } std::cout << std::endl;
+    case GL_DEBUG_SOURCE_API:             str += "Source: API"; break;
+    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   str += "Source: Window System"; break;
+    case GL_DEBUG_SOURCE_SHADER_COMPILER: str += "Source: Shader Compiler"; break;
+    case GL_DEBUG_SOURCE_THIRD_PARTY:     str += "Source: Third Party"; break;
+    case GL_DEBUG_SOURCE_APPLICATION:     str += "Source: Application"; break;
+    case GL_DEBUG_SOURCE_OTHER:           str += "Source: Other"; break;
+    } 
+
+    str += "\n";
 
     switch (type)
     {
-    case GL_DEBUG_TYPE_ERROR:               std::cout << "Type: Error"; break;
-    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: std::cout << "Type: Deprecated Behaviour"; break;
-    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  std::cout << "Type: Undefined Behaviour"; break;
-    case GL_DEBUG_TYPE_PORTABILITY:         std::cout << "Type: Portability"; break;
-    case GL_DEBUG_TYPE_PERFORMANCE:         std::cout << "Type: Performance"; break;
-    case GL_DEBUG_TYPE_MARKER:              std::cout << "Type: Marker"; break;
-    case GL_DEBUG_TYPE_PUSH_GROUP:          std::cout << "Type: Push Group"; break;
-    case GL_DEBUG_TYPE_POP_GROUP:           std::cout << "Type: Pop Group"; break;
-    case GL_DEBUG_TYPE_OTHER:               std::cout << "Type: Other"; break;
-    } std::cout << std::endl;
+    case GL_DEBUG_TYPE_ERROR:               str += "Type: Error"; break;
+    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: str += "Type: Deprecated Behaviour"; break;
+    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  str += "Type: Undefined Behaviour"; break;
+    case GL_DEBUG_TYPE_PORTABILITY:         str += "Type: Portability"; break;
+    case GL_DEBUG_TYPE_PERFORMANCE:         str += "Type: Performance"; break;
+    case GL_DEBUG_TYPE_MARKER:              str += "Type: Marker"; break;
+    case GL_DEBUG_TYPE_PUSH_GROUP:          str += "Type: Push Group"; break;
+    case GL_DEBUG_TYPE_POP_GROUP:           str += "Type: Pop Group"; break;
+    case GL_DEBUG_TYPE_OTHER:               str += "Type: Other"; break;
+    }
+
+    str += "\n";
 
     switch (severity)
     {
-    case GL_DEBUG_SEVERITY_HIGH:         std::cout << "Severity: high"; break;
-    case GL_DEBUG_SEVERITY_MEDIUM:       std::cout << "Severity: medium"; break;
-    case GL_DEBUG_SEVERITY_LOW:          std::cout << "Severity: low"; break;
-    case GL_DEBUG_SEVERITY_NOTIFICATION: std::cout << "Severity: notification"; break;
-    } std::cout << std::endl;
-    std::cout << std::endl;
+    case GL_DEBUG_SEVERITY_HIGH:         sev = 2; break;
+    case GL_DEBUG_SEVERITY_MEDIUM:       sev = 1; break;
+    case GL_DEBUG_SEVERITY_LOW:          sev = 0; break;
+    case GL_DEBUG_SEVERITY_NOTIFICATION: sev = 0; break;
+    } 
+
+    Logger::error("OpenGL error (" + id + std::string("): ") + std::string(message) + "\n" + str, sev);
 }
