@@ -21,7 +21,7 @@ bool Component::Col::collide(Component::Col& col)
 		switch (i)
 		{
 		case 0:
-			direction = this->get_center() - col.get_center();
+			direction = col.get_center() - this->get_center();
 			break;
 		case 1:
 			direction *= -1;
@@ -73,7 +73,7 @@ bool Component::Col::collide(Component::Col& col)
 			break;
 		}
 
-		simplex_[i] = this->support(direction) - col.support(-direction);
+		simplex_[i] = col.support(direction) - this->support(-direction);
 
 		if (glm::dot(simplex_[i++], direction) < 0)
 			return false;

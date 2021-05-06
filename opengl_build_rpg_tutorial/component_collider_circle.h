@@ -20,7 +20,7 @@ namespace Component {
 
 			glm::vec2 get_center()
 			{
-				return center_;
+				return center_ + glm::vec2(transform.x, transform.y);
 			}
 
 		public:

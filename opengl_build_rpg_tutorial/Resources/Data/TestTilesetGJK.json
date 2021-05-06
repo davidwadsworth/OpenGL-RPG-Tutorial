@@ -1,0 +1,14 @@
+{ "columns":24,
+ "image":"Resources/Images/iq_shape_padding_GJK.png",
+ "imageheight":104,
+ "imagewidth":818,
+ "margin":2,
+ "name":"iq_shape_padding_GJK",
+ "spacing":2,
+ "tilecount":72,
+ "tiledversion":"1.4.3",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":1.4
+}
