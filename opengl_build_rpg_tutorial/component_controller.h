@@ -3,7 +3,7 @@
 
 namespace Component
 {
-	struct Cont : public Comp
+	struct IController : public IComponent
 	{
 		virtual bool key_down_left() = 0;
 		virtual bool key_down_right() = 0;

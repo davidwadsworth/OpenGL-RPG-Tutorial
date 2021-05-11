@@ -9,7 +9,7 @@ Abstract holding class for texture shader combinations used in component_rendere
 */
 namespace Component
 {
-	class Material : public Comp
+	class Material : public IComponent
 	{
 		static GLuint id_gen;
 		GLint tex_unit_;

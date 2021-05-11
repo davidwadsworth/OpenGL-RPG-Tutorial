@@ -10,7 +10,7 @@ Image handling class. Responsible for loading and binding textures to tex slots.
 */
 namespace Component
 {
-	class Texture : public Comp
+	class Texture : public IComponent
 	{
 		GLuint id_;
 	public:

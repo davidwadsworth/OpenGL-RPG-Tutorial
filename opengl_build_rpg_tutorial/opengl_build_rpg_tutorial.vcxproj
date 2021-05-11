@@ -141,7 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="component_collider.cpp" />
+    <ClCompile Include="component_collider_gjk.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="logger.cpp" />
@@ -153,22 +153,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h" />
+    <ClInclude Include="component_array.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
-    <ClInclude Include="component_collider_boundary.h" />
-    <ClInclude Include="component_collider_circle.h" />
+    <ClInclude Include="component_collider_gjk.h" />
+    <ClInclude Include="component_collider_gjk_boundary.h" />
+    <ClInclude Include="component_collider_gjk_circle.h" />
     <ClInclude Include="component_collider_physics_aabb_sticky.h" />
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
-    <ClInclude Include="component_collider_physics.h" />
-    <ClInclude Include="component_collider_physics_boundary_smooth.h" />
-    <ClInclude Include="component_collider_physics_circle_smooth.h" />
-    <ClInclude Include="component_collider_physics_polygon_smooth.h" />
-    <ClInclude Include="component_collider_polygon.h" />
+    <ClInclude Include="physics.h" />
+    <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h" />
+    <ClInclude Include="component_collider_gjk_physics_circle_smooth.h" />
+    <ClInclude Include="component_collider_gjk_physics_polygon_smooth.h" />
+    <ClInclude Include="component_collider_gjk_polygon.h" />
     <ClInclude Include="component_controller.h" />
     <ClInclude Include="component_controller_keyboard.h" />
     <ClInclude Include="component_movement.h" />
-    <ClInclude Include="component_system_update_check_collision_aabb.h" />
-    <ClInclude Include="component_system_update_check_collision_gjk.h" />
+    <ClInclude Include="component_system_update_check_collision.h" />
     <ClInclude Include="component_trigger_input_collider_map.h" />
     <ClInclude Include="component_trigger_input_collision_world.h" />
     <ClInclude Include="component_trigger_input_engine.h" />

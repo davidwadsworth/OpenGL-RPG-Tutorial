@@ -14,7 +14,7 @@ namespace Component {
 	namespace System {
 		namespace Render 
 		{
-			class CameraDraw : public Component::Sys
+			class CameraDraw : public Component::ISystem
 			{
 				Component::Renderer& renderer_;
 				Component::Src& src_;

@@ -12,12 +12,12 @@ namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
-			class TileSet : public Component::Trigger::In
+			class TileSet : public Component::Trigger::IInput
 			{
 				std::string path_;
 			public:
 				TileSet(std::string name, std::string path)
-					: Component::Trigger::In(name), path_(path)
+					: Component::Trigger::IInput(name), path_(path)
 				{}
 
 			private:
@@ -39,7 +39,7 @@ namespace Component {
 					}
 					catch (std::exception e)
 					{
-						Logger::error("Failed to read tileset file! path = " + path_, 1);
+						Logger::error("Failed to read tileset file! path = " + path_, Logger::MEDIUM);
 						return;
 					}
 

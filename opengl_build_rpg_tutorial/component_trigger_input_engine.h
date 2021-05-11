@@ -13,11 +13,11 @@ namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
-			class Engine : public Component::Trigger::In
+			class Engine : public Component::Trigger::IInput
 			{
 			public:
 				Engine(std::string name)
-					: Component::Trigger::In(name)
+					: Component::Trigger::IInput(name)
 				{}
 
 			private:

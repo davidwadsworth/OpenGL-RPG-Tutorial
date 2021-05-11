@@ -2,10 +2,11 @@
 #include "component_controller.h"
 #include <GLFW/glfw3.h>
 #include "game.h"
+#include "component_array.h"
 
 namespace Component {
 	namespace Controller {
-		class Keyboard : public Component::Cont
+		class Keyboard : public Component::IController
 		{
 			enum KeyID
 			{
@@ -14,24 +15,28 @@ namespace Component {
 				down = GLFW_KEY_DOWN,
 				up = GLFW_KEY_UP,
 			};
+			Component::KeyboardArray* keys_;
 		public:
-			Keyboard() = default;
+			Keyboard()
+			{
+				keys_ = Game::global->get_child("keyboard")->get_component<Component::KeyboardArray>();
+			}
 
 			bool key_down_left() override
 			{
-				return Game::keys[left];
+				return (*keys_)[left];
 			}
 			bool key_down_right() override
 			{
-				return Game::keys[right];
+				return (*keys_)[right];
 			}
 			bool key_down_down() override
 			{
-				return Game::keys[down];
+				return (*keys_)[down];
 			}
 			bool key_down_up() override
 			{
-				return Game::keys[up];
+				return (*keys_)[up];
 			}
 		};
 	}

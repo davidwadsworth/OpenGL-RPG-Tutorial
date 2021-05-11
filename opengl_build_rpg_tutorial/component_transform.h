@@ -10,7 +10,7 @@ Rect storing coordinates with respect to the origin
 
 namespace Component
 {
-	struct Transform : public Comp, public Rect
+	struct Transform : public IComponent, public Rect
 	{
 		Transform(const Rect& rect, GLfloat sc)
 			: Rect(rect), sc(sc)

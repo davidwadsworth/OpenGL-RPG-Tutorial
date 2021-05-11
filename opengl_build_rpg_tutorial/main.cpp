@@ -8,6 +8,8 @@
 #include "component_vector.h"
 #include "component_renderer.h"
 #include "logger.h"
+#include "component_array.h"
+#include <sstream>
 
 /*
 Source code for episode 14 of Build Your Own RPG series
@@ -22,8 +24,13 @@ void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mo
 
 int main()
 {
+    auto game = new Entity();
+
+    // init game
+    Game::init(game);
+
     if (!glfwInit())
-        Logger::error("failed to initialize glfw!", 2);
+        Logger::error("failed to initialize glfw!", Logger::HIGH);
 
     // opengl version = major.minor
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -43,7 +50,7 @@ int main()
     glfwSetKeyCallback(window, key_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        Logger::error("failed to initialize glad!", 2);
+        Logger::error("failed to initialize glad!", Logger::HIGH);
 
     int flags;
     glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -63,17 +70,13 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    auto game = new Entity();
-
-    // init game
-    Game::init(game);
 
     auto current_state = game->get_child("overworld");
 
     auto overworld_game_objs = current_state->get_component_list();
 
     for (auto obj : overworld_game_objs)
-        static_cast<Component::Trigger::In*>(obj)->execute(current_state);
+        static_cast<Component::Trigger::IInput*>(obj)->execute(current_state);
 
     // set up used game objects
     auto engine = current_state->get_child("engine");
@@ -83,7 +86,7 @@ int main()
     auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
 
     Logger::message("Entities Created: " + std::to_string(Entity::count));
-    Logger::message("Components Created: " + std::to_string(Comp::count));
+    Logger::message("Components Created: " + std::to_string(IComponent::count));
     
     GLfloat last_frame = 0.0f;
 
@@ -128,22 +131,24 @@ int main()
     glfwTerminate();
 
     if (Entity::count)
-        Logger::warning("Entity Memory Leak: " + Entity::count, 2);
-    if (Comp::count)
-        Logger::warning("Component Memory Leak: " + Comp::count, 2);
+        Logger::warning("Entity Memory Leak: " + Entity::count, Logger::HIGH);
+    if (IComponent::count)
+        Logger::warning("Component Memory Leak: " + IComponent::count, Logger::HIGH);
 
     return 0;
 }
 
 void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mode)
 {
+    static Component::KeyboardArray& keys = *Game::global->get_child("keyboard")->get_component<Component::KeyboardArray>();
+    
     if (key >= 0 && key < MAX_KEYS)
     {
         // update our global keyboard object
         if (action == GLFW_PRESS)
-            Game::keys[key] = GL_TRUE;
+            keys[key] = GL_TRUE;
         else if (action == GLFW_RELEASE)
-            Game::keys[key] = GL_FALSE;
+            keys[key] = GL_FALSE;
     }
 }
 
@@ -163,43 +168,39 @@ void APIENTRY gl_debug_output(GLenum source,
     // ignore non-significant error/warning codes
     if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
 
-    std::string str;
-    int sev{};
+    std::stringstream ss;
+    ss << "OpenGL error (" << id << "): " << message << std::endl;
 
     switch (source)
     {
-    case GL_DEBUG_SOURCE_API:             str += "Source: API"; break;
-    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   str += "Source: Window System"; break;
-    case GL_DEBUG_SOURCE_SHADER_COMPILER: str += "Source: Shader Compiler"; break;
-    case GL_DEBUG_SOURCE_THIRD_PARTY:     str += "Source: Third Party"; break;
-    case GL_DEBUG_SOURCE_APPLICATION:     str += "Source: Application"; break;
-    case GL_DEBUG_SOURCE_OTHER:           str += "Source: Other"; break;
-    } 
-
-    str += "\n";
+    case GL_DEBUG_SOURCE_API:             ss << "SOURCE: API"; break;
+    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   ss << "SOURCE: Window System"; break;
+    case GL_DEBUG_SOURCE_SHADER_COMPILER: ss << "SOURCE: Shader Compiler"; break;
+    case GL_DEBUG_SOURCE_THIRD_PARTY:     ss << "SOURCE: Third Party"; break;
+    case GL_DEBUG_SOURCE_APPLICATION:     ss << "SOURCE: Application"; break;
+    case GL_DEBUG_SOURCE_OTHER:           ss << "SOURCE: Other"; break;
+    } ss << std::endl;
 
     switch (type)
     {
-    case GL_DEBUG_TYPE_ERROR:               str += "Type: Error"; break;
-    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: str += "Type: Deprecated Behaviour"; break;
-    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  str += "Type: Undefined Behaviour"; break;
-    case GL_DEBUG_TYPE_PORTABILITY:         str += "Type: Portability"; break;
-    case GL_DEBUG_TYPE_PERFORMANCE:         str += "Type: Performance"; break;
-    case GL_DEBUG_TYPE_MARKER:              str += "Type: Marker"; break;
-    case GL_DEBUG_TYPE_PUSH_GROUP:          str += "Type: Push Group"; break;
-    case GL_DEBUG_TYPE_POP_GROUP:           str += "Type: Pop Group"; break;
-    case GL_DEBUG_TYPE_OTHER:               str += "Type: Other"; break;
-    }
-
-    str += "\n";
+    case GL_DEBUG_TYPE_ERROR:               ss << "TYPE: Error"; break;
+    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: ss << "TYPE: Deprecated Behaviour"; break;
+    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  ss << "TYPE: Undefined Behaviour"; break;
+    case GL_DEBUG_TYPE_PORTABILITY:         ss << "TYPE: Portability"; break;
+    case GL_DEBUG_TYPE_PERFORMANCE:         ss << "TYPE: Performance"; break;
+    case GL_DEBUG_TYPE_MARKER:              ss << "TYPE: Marker"; break;
+    case GL_DEBUG_TYPE_PUSH_GROUP:          ss << "TYPE: Push Group"; break;
+    case GL_DEBUG_TYPE_POP_GROUP:           ss << "TYPE: Pop Group"; break;
+    case GL_DEBUG_TYPE_OTHER:               ss << "TYPE: Other"; break;
+    } ss << std::endl;
 
     switch (severity)
     {
-    case GL_DEBUG_SEVERITY_HIGH:         sev = 2; break;
-    case GL_DEBUG_SEVERITY_MEDIUM:       sev = 1; break;
-    case GL_DEBUG_SEVERITY_LOW:          sev = 0; break;
-    case GL_DEBUG_SEVERITY_NOTIFICATION: sev = 0; break;
-    } 
+    case GL_DEBUG_SEVERITY_HIGH:         ss << "GL SEVERITY: high"; break;
+    case GL_DEBUG_SEVERITY_MEDIUM:       ss << "GL SEVERITY: medium"; break;
+    case GL_DEBUG_SEVERITY_LOW:          ss << "GL SEVERITY: low"; break;
+    case GL_DEBUG_SEVERITY_NOTIFICATION: ss << "GL SEVERITY: notification"; break;
+    }
 
-    Logger::error("OpenGL error (" + id + std::string("): ") + std::string(message) + "\n" + str, sev);
+    Logger::error(ss.str(), Logger::HIGH);
 }

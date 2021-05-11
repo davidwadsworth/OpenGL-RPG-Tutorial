@@ -7,8 +7,8 @@
 namespace Component
 {
 	template <typename T>
-	struct Vector : public Comp, public std::vector<T> {};
-#define SystemVector Vector<Component::Sys*>
-#define ColliderVector Vector<Component::Col*>
+	struct Vector : public IComponent, public std::vector<T> {};
+#define SystemVector Vector<Component::ISystem*>
+#define GJKVector Vector<Component::Collider::IGJK*>
 #define AABBVector Vector<Component::Collider::AABB*>
 }

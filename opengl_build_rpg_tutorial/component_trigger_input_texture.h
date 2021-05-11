@@ -12,11 +12,11 @@ namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
-			class Texture : public Component::Trigger::In
+			class Texture : public Component::Trigger::IInput
 			{
 			public:
 				Texture(std::string name)
-					: Component::Trigger::In(name)
+					: Component::Trigger::IInput(name)
 				{}
 
 			private:

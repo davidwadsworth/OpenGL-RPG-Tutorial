@@ -13,13 +13,13 @@ Animates object to play walk and idle animations on controller move events
 namespace Component{
 	namespace System {
 		namespace Update {
-			class AnimateMove : public Component::Sys
+			class AnimateMove : public Component::ISystem
 			{
-				Component::Cont& controller_;
+				Component::IController& controller_;
 				Component::System::Update::Animation& animation_;
 				glm::ivec2 prev_;
 			public:
-				AnimateMove(Component::Cont& controller, Component::System::Update::Animation& animation)
+				AnimateMove(Component::IController& controller, Component::System::Update::Animation& animation)
 					: controller_(controller), animation_(animation), prev_{ 0, 1 }
 				{}
 

@@ -10,7 +10,7 @@ Handles all game object creation related operations, generally from data classes
 
 namespace Component {
 	namespace Trigger {
-		class In : public Component::Trig
+		class IInput : public Component::ITrigger
 		{
 		protected:
 			Entity* entity_;
@@ -19,7 +19,7 @@ namespace Component {
 			virtual void create(Entity* gamestate) = 0;
 		public:
 
-			In(std::string name)
+			IInput(std::string name)
 				: entity_(nullptr), name_(name)
 			{}
 

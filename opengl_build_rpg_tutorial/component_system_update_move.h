@@ -17,14 +17,14 @@ namespace Component {
 		{
 			constexpr auto ONE_OVER_SQRT_TWO = 0.70710678118f;
 
-			class Move : public Component::Sys
+			class Move : public Component::ISystem
 			{
 				Component::Transform& transform_;
-				Component::Cont& controller_;
+				Component::IController& controller_;
 				Component::Movement& movement_;
 			public:
 
-				Move(Component::Transform& transform, Component::Cont& controller, Component::Movement& movement)
+				Move(Component::Transform& transform, Component::IController& controller, Component::Movement& movement)
 					: transform_(transform), controller_(controller), movement_(movement)
 				{}
 

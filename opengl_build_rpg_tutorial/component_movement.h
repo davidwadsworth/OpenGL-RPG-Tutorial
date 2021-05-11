@@ -5,7 +5,7 @@
 
 namespace Component
 {
-	class Movement : public Comp
+	class Movement : public IComponent
 	{
 	public:
 		Movement(GLfloat speed)

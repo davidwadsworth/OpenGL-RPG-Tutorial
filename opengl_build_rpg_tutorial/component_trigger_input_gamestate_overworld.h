@@ -22,11 +22,11 @@ namespace Component {
 		namespace Input {
 			namespace GameState
 			{
-				class Overworld : public Component::Trigger::In
+				class Overworld : public Component::Trigger::IInput
 				{
 				public:
 					Overworld(std::string name)
-						: Component::Trigger::In(name)
+						: Component::Trigger::IInput(name)
 					{}
 
 				private:

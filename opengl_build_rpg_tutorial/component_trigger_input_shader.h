@@ -13,11 +13,11 @@ namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
-			class Shader : public Component::Trigger::In
+			class Shader : public Component::Trigger::IInput
 			{
 			public:
 				Shader(std::string name)
-					: Component::Trigger::In(name)
+					: Component::Trigger::IInput(name)
 				{}
 
 			private:

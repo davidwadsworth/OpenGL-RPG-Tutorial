@@ -14,12 +14,12 @@ namespace Component {
 	namespace Trigger {
 		namespace Input 
 		{
-			class Camera : public Component::Trigger::In
+			class Camera : public Component::Trigger::IInput
 			{
 				GLfloat width_, height_;
 			public:
 				Camera(std::string name, GLfloat width, GLfloat height)
-					: Component::Trigger::In(name), width_(width), height_(height)
+					: Component::Trigger::IInput(name), width_(width), height_(height)
 				{}
 				Camera(std::string name, GLfloat length)
 					: Camera(name, length, length)

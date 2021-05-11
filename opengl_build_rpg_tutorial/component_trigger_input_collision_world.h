@@ -13,17 +13,17 @@ namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
-			class CollisionWorld : public Component::Trigger::In
+			class CollisionWorld : public Component::Trigger::IInput
 			{
 			public:
 				CollisionWorld(std::string name)
-					: Component::Trigger::In(name)
+					: Component::Trigger::IInput(name)
 				{}
 
 			private:
 				void create(Entity* gamestate) override
 				{
-					this->entity_->add_component<Component::ColliderVector>();
+					this->entity_->add_component<Component::GJKVector>();
 				}
 			};
 		}

@@ -11,8 +11,8 @@
 #include "component_system_update_camera.h"
 #include "component_controller_keyboard.h"
 #include "component_vector.h"
-#include "component_collider_circle.h"
-#include "component_system_update_check_collision_gjk.h"
+#include "component_collider_gjk_circle.h"
+#include "component_system_update_check_collision.h"
 
 /*
 Creates our player object to move around in the overworld.
@@ -23,12 +23,12 @@ Creates our player object to move around in the overworld.
 namespace Component {
 	namespace Trigger {
 		namespace Input {
-			class Player : public Component::Trigger::In
+			class Player : public Component::Trigger::IInput
 			{
                 GLfloat x_, y_;
 			public:
 				Player(std::string name, GLfloat x, GLfloat y)
-					: Component::Trigger::In(name), x_(x), y_(y)
+					: Component::Trigger::IInput(name), x_(x), y_(y)
 				{}
 
             private:
@@ -48,13 +48,13 @@ namespace Component {
                     auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
 
                     // get collision world
-                    auto& c_colw_col_vec = *gamestate->get_child("collision world")->get_component<Component::ColliderVector>();
+                    auto& c_colw_col_vec = *gamestate->get_child("collision world")->get_component<Component::GJKVector>();
 
                     auto& c_pla_transform = *entity_->add_component<Component::Transform>(x_, y_, 64.0f);
                     auto& c_pla_src = *entity_->add_component<Component::Src>(Rect{ 0.0f, 0.0f, 64.0f, 64.0f });
                     auto& c_pla_material = *entity_->add_component<Component::Material>(c_flesh_tex, c_sprite_shader, 0);
                     auto& c_pla_movement = *entity_->add_component<Component::Movement>(240.0f);
-                    auto& c_pla_col_aabb = *entity_->add_component<Component::Collider::Circle>(c_pla_transform, 16.0f, glm::vec2(32.0f, 48.0f));
+                    auto& c_pla_col_gjk_circle = *entity_->add_component<Component::Collider::GJK::Circle>(c_pla_transform, 16.0f, glm::vec2(32.0f, 48.0f));
 
                     auto csr_pla_dynamic_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_transform, c_pla_material, c_cam_transform);
                     auto csu_pla_camera = entity_->add_component<Component::System::Update::Camera>(c_pla_transform, c_cam_transform);
@@ -62,7 +62,7 @@ namespace Component {
 
                     auto csu_pla_animation = entity_->add_component<Component::System::Update::Animation>(4, c_pla_src);
                     auto csu_pla_animate_move = entity_->add_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
-                    auto csu_check_collision_gjk = entity_->add_component<Component::System::Update::CheckCollisionGJK>(c_pla_movement, c_pla_col_aabb, c_colw_col_vec);
+                    auto csu_check_collision_gjk = entity_->add_component<Component::System::Update::CheckCollisionGJK>(c_pla_movement, c_pla_col_gjk_circle, c_colw_col_vec);
 
                     // set up flesh animations
                     std::string anims[] = {

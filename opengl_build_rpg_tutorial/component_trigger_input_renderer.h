@@ -15,12 +15,12 @@ namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
-			class Renderer : public Component::Trigger::In
+			class Renderer : public Component::Trigger::IInput
 			{
 
 			public:
 				Renderer(std::string name)
-					: Component::Trigger::In(name)
+					: Component::Trigger::IInput(name)
 				{}
 
 			private:

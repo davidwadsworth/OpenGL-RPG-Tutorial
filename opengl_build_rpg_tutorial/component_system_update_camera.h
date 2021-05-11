@@ -15,7 +15,7 @@ namespace Component {
 	namespace System {
 		namespace Update 
 		{
-			class Camera : public Component::Sys
+			class Camera : public Component::ISystem
 			{
 				Component::Transform& follower_, & camera_;
 			public:

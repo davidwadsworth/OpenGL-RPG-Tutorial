@@ -20,7 +20,7 @@ namespace Component {
 				public:
 					using Component::Collider::AABB::AABB;
 
-					bool collide_aabb(Component::Collider::AABB& aabb) override
+					bool collide(Component::Collider::AABB& aabb) override
 					{
 						if (Component::Collider::AABB::collide(aabb))
 							return true;
@@ -30,7 +30,7 @@ namespace Component {
 						return false;
 					}
 
-					void resolve(Component::Col& col, Component::Movement& movement) override
+					void resolve(Component::ICollider& col, Component::Movement& movement) override
 					{
 						col.transform.x = previous_.x;
 						col.transform.y = previous_.y;

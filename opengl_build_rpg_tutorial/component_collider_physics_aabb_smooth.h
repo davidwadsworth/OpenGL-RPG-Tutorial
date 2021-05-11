@@ -35,7 +35,7 @@ namespace Component {
 								   e3
 					*/
 
-					void resolve(Component::Col& col, Component::Movement& movement) override
+					void resolve(Component::ICollider &col, Component::Movement& movement) override
 					{
 						auto aabb_1 = &col;
 						auto aabb_2 = this;

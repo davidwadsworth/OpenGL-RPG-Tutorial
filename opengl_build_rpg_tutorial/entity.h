@@ -20,7 +20,9 @@ inline component_id get_new_component_id()
 template <typename T> inline component_id get_component_id() noexcept
 {
 	// assert that it inherits Comp
-	static_assert (std::is_base_of<Comp, T>::value, "");
+	if (!std::is_base_of<IComponent, T>::value)
+		Logger::error("Class does not inherit Component.", Logger::HIGH);
+
 	static component_id type_id = get_new_component_id();
 	return type_id;
 }
@@ -35,7 +37,7 @@ can either id and retrieve components/children, or treat them as lists.
 class Entity
 {
 private:
-	SplayTree<Comp> components_;
+	SplayTree<IComponent> components_;
 	SplayTree<Entity> children_;
 public:	
 	static long long count; // count entity references
@@ -62,7 +64,7 @@ public:
 		auto r_child = children_.search(pos);
 
 		if (!r_child)
-			Logger::error("could not find child, pos = " + pos, 2);
+			Logger::error("could not find child, pos = " + pos, Logger::HIGH);
 
 		return r_child;
 	}
@@ -73,7 +75,7 @@ public:
 		auto r_child = children_.search(hashed_str);
 
 		if (!r_child)
-			Logger::error("could not find child, str id = " + id, 2);
+			Logger::error("could not find child, str id = " + id, Logger::HIGH);
 
 		return r_child;
 	}
@@ -121,7 +123,7 @@ public:
 		auto r_comp = components_.search(get_component_id<T>());
 
 		if (!r_comp)
-			Logger::error("could not find component, component id = " + get_component_id<T>(), 2);
+			Logger::error("could not find component, component id = " + get_component_id<T>(), Logger::HIGH);
 
 		return static_cast<T*>(r_comp);
 	}
@@ -133,7 +135,7 @@ public:
 		auto r_comp = components_.search(pos);
 
 		if (!r_comp)
-			Logger::error("could not find component, pos = " + pos, 2);
+			Logger::error("could not find component, pos = " + pos, Logger::HIGH);
 
 		return static_cast<T*>(r_comp);
 	}
@@ -146,7 +148,7 @@ public:
 		auto r_comp = components_.search(hashed_str);
 
 		if (!r_comp)
-			Logger::error("could not find component, str id = " + id, 2);
+			Logger::error("could not find component, str id = " + id, Logger::HIGH);
 
 		return static_cast<T*>(r_comp);
 	}
@@ -199,7 +201,7 @@ public:
 	}
 
 	// gets array of components
-	std::vector<Comp*> get_component_list()
+	std::vector<IComponent*> get_component_list()
 	{
 		return components_.get_ordered_list();
 	}	

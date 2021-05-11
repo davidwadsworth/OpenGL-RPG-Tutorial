@@ -22,7 +22,9 @@ void Component::Shader::compile(const GLchar* vs_data, const GLchar* fs_data)
     if (!success)
     {
         glGetShaderInfoLog(vs, 512, nullptr, info_log);
-        Logger::error("Vertex shader compilation failure: vs = " + vs_file_name_ + "\n" + std::string(info_log), 1);
+        Logger::error("Vertex shader compilation failure: vs = " + vs_file_name_ + "\n" + std::string(info_log), Logger::MEDIUM);
+        glDeleteShader(vs);
+        return;
     }
 
     // fragment shader
@@ -35,7 +37,10 @@ void Component::Shader::compile(const GLchar* vs_data, const GLchar* fs_data)
     if (!success)
     {
         glGetShaderInfoLog(fs, 512, nullptr, info_log);
-        Logger::error("Fragment shader compilation failure: fs = " + fs_file_name_ + "\n" + std::string(info_log), 1);
+        Logger::error("Fragment shader compilation failure: fs = " + fs_file_name_ + "\n" + std::string(info_log), Logger::MEDIUM);
+        glDeleteShader(vs);
+        glDeleteShader(fs);
+        return;
     }
 
     // shader program init
@@ -49,7 +54,10 @@ void Component::Shader::compile(const GLchar* vs_data, const GLchar* fs_data)
     if (!success)
     {
         glGetProgramInfoLog(id_, 512, nullptr, info_log);
-        Logger::error("Program linking failure: vs = " + vs_file_name_ + "fs = " + fs_file_name_ + "\n" + std::string(info_log), 1);
+        Logger::error("Program linking failure: vs = " + vs_file_name_ + "fs = " + fs_file_name_ + "\n" + std::string(info_log), Logger::MEDIUM);
+        glDeleteShader(vs);
+        glDeleteShader(fs);
+        return;
     }
 
     // delete orphaned shader files
@@ -63,32 +71,42 @@ void Component::Shader::load(const GLchar* vs_file_name, const GLchar* fs_file_n
     vs_file_name_ = vs_file_name;
     fs_file_name_ = fs_file_name;
 
-    // load shaders from file
-    std::string vs_code;
-    std::string fs_code;
+    std::string vs_code, fs_code;
 
     try
     {
-        // open files
-        std::ifstream vs_file(vs_file_name);
-        std::ifstream fs_file(fs_file_name);
-        std::stringstream vs_stream, fs_stream;
+        // open vs shader files
+        std::ifstream vs_file(vs_file_name_);
+        std::stringstream vs_sstream;
 
-        // read into temp string streams
-        vs_stream << vs_file.rdbuf();
-        fs_stream << fs_file.rdbuf();
+        vs_sstream << vs_file.rdbuf();
 
-        // close file streams
         vs_file.close();
-        fs_file.close();
 
-        // convert streams into strings
-        vs_code = vs_stream.str();
-        fs_code = fs_stream.str();
+        vs_code = vs_sstream.str();
     }
     catch (std::exception e)
     {
-        Logger::error("Failed to read shader files! vs = " + vs_file_name_ + "fs = " + fs_file_name_, 1);
+        Logger::error("Failed to read vs shader file, " + std::string(vs_file_name_), Logger::MEDIUM);
+        return;
+    }
+
+    try
+    {
+        // open fs shader files
+        std::ifstream fs_file(fs_file_name_);
+        std::stringstream fs_sstream;
+
+        fs_sstream << fs_file.rdbuf();
+
+        fs_file.close();
+
+        fs_code = fs_sstream.str();
+
+    }
+    catch (std::exception e)
+    {
+        Logger::error("Failed to read fs shader file, " + std::string(fs_file_name_), Logger::MEDIUM);
         return;
     }
 

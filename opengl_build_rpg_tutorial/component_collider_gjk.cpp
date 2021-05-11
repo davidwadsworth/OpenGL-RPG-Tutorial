@@ -1,7 +1,7 @@
-#include "component_collider.h"
+#include "component_collider_gjk.h"
 #include <glm/glm.hpp>
 
-bool Component::Col::collide(Component::Col& col)
+bool Component::Collider::IGJK::collide(Component::Collider::IGJK& col)
 {
 	auto i = 0;
 

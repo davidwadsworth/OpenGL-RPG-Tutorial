@@ -9,7 +9,7 @@ Rect storing image coordinates
 
 namespace Component
 {
-	struct Src : public Comp, public Rect {
+	struct Src : public IComponent, public Rect {
 		Src() = default;
 		Src(const Rect& rect)
 			: Rect(rect)

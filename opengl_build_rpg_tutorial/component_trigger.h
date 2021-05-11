@@ -10,7 +10,7 @@ Systems whoes whole purpose is to execute once and be unused until needed again
 
 namespace Component
 {
-	struct Trig : public Comp
+	struct ITrigger : public IComponent
 	{
 		virtual void execute(Entity* gamestate) = 0;
 	};

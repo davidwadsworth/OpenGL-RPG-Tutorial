@@ -12,11 +12,11 @@ namespace Component {
 	namespace Trigger {
 		namespace Input 
 		{
-			class Controller : public Component::Trigger::In
+			class Controller : public Component::Trigger::IInput
 			{
 			public:
 				Controller(std::string name)
-					: Component::Trigger::In(name)
+					: Component::Trigger::IInput(name)
 				{}
 
 			private:

@@ -9,8 +9,8 @@ collision resolution abstract class.
 @author David Wadsworth
 */
 
-struct Phys
+struct IPhysics
 {
-	virtual void resolve(Component::Col& col, Component::Movement& movement) = 0;
+	virtual void resolve(Component::ICollider& col, Component::Movement& movement) = 0;
 };
 

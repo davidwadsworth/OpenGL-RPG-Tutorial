@@ -11,7 +11,7 @@ Simple batch renderer for drawing sprites
 */
 namespace Component
 {
-	class Renderer : public Comp
+	class Renderer : public IComponent
 	{
 		GLuint vbo_, vao_, att_size_, max_sprites_;
 		std::vector<GLfloat> buffer_;
