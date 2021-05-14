@@ -8,10 +8,9 @@ namespace Component {
 		{
 		protected:
 			std::array<glm::vec2, MAX_SIMPLEX> simplex_;
-			virtual glm::vec2 support(glm::vec2 direction) = 0;
 		public:
 			using Component::ICollider::ICollider;
-
+			virtual glm::vec2 support(glm::vec2 direction) = 0;
 			virtual bool collide(Component::Collider::IGJK& col);
 		};
 	}

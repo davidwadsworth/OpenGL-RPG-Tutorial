@@ -1,7 +1,6 @@
 #pragma once
 #include <glm/vec2.hpp>
 #include "component_collider.h"
-#include "component_movement.h"
 
 /*
 collision resolution abstract class.
@@ -11,6 +10,6 @@ collision resolution abstract class.
 
 struct IPhysics
 {
-	virtual void resolve(Component::ICollider& col, Component::Movement& movement) = 0;
+	virtual void resolve(Component::ICollider& col) = 0;
 };
 

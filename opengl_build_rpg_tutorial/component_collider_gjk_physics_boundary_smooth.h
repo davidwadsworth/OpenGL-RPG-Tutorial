@@ -1,7 +1,6 @@
 #pragma once
 #include "component_collider_gjk_boundary.h"
 #include "physics.h"
-#include "game.h"
 
 namespace Component {
 	namespace Collider {
@@ -14,13 +13,18 @@ namespace Component {
 					public:
 						using Component::Collider::GJK::Boundary::Boundary;
 
-						void resolve(Component::ICollider& col, Component::Movement& movement) override
+						void resolve(Component::ICollider& col) override
 						{
 							auto line = glm::normalize(vertices_[1] - vertices_[0]);
 							auto bisector = glm::vec2(line.y, -line.x);
 
-							col.transform.x += bisector.x * movement.speed * Game::delta_time;
-							col.transform.y += bisector.y * movement.speed * Game::delta_time;
+							auto gjk = static_cast<Component::Collider::IGJK*>(&col);
+
+							auto sup = gjk->support(-bisector) - this->support(bisector);
+							auto piercing_vec = glm::dot(sup, -bisector) * bisector;
+
+							col.transform.x += piercing_vec.x;
+							col.transform.y += piercing_vec.y;
 						}
 					};
 				}

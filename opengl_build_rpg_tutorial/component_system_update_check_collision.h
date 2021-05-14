@@ -19,12 +19,11 @@ namespace Component {
 			template <typename T>
 			class CheckCollision : public Component::ISystem
 			{
-				Component::Movement& movement_;
 				T& col_;
 				Component::Vector<T*>& col_list_;
 			public:
-				CheckCollision(Component::Movement& movement, T& col, Component::Vector<T*>& col_list)
-					: movement_(movement), col_(col), col_list_(col_list)
+				CheckCollision(T& col, Component::Vector<T*>& col_list)
+					: col_(col), col_list_(col_list)
 				{}
 
 				void execute() override
@@ -33,7 +32,7 @@ namespace Component {
 					{
 						if (c->collide(col_))
 						{
-							dynamic_cast<IPhysics*>(c)->resolve(col_, movement_);
+							dynamic_cast<IPhysics*>(c)->resolve(col_);
 							break;
 						}
 					}

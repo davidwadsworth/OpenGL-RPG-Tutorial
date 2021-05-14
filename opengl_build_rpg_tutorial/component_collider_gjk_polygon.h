@@ -13,24 +13,6 @@ namespace Component {
 			{
 			protected:
 				std::vector<glm::vec2> vertices_;
-
-				glm::vec2 support(glm::vec2 direction) override
-				{
-					auto furthest_distance = std::numeric_limits<float>::lowest();
-					auto furthest_vertex = glm::vec2();
-
-					for (auto &v : vertices_)
-					{
-						auto distance = glm::dot(v + get_center(), direction);
-						if (distance > furthest_distance)
-						{
-							furthest_distance = distance;
-							furthest_vertex = v + get_center();
-						}
-					}
-
-					return furthest_vertex;
-				}
 			public:
 				Polygon(Component::Transform& transform, std::vector<glm::vec2> vertices)
 					: IGJK(transform), vertices_(vertices)
@@ -42,6 +24,24 @@ namespace Component {
 					for (auto v : vertices_)
 						temp_center += v;
 					return temp_center / static_cast<float>(vertices_.size());
+				}
+				
+				glm::vec2 support(glm::vec2 direction) override
+				{
+					auto furthest_distance = std::numeric_limits<float>::lowest();
+					auto furthest_vertex = glm::vec2();
+
+					for (auto& v : vertices_)
+					{
+						auto distance = glm::dot(v + get_center(), direction);
+						if (distance > furthest_distance)
+						{
+							furthest_distance = distance;
+							furthest_vertex = v + get_center();
+						}
+					}
+
+					return furthest_vertex;
 				}
 			};
 		}

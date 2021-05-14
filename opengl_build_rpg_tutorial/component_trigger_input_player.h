@@ -62,7 +62,7 @@ namespace Component {
 
                     auto csu_pla_animation = entity_->add_component<Component::System::Update::Animation>(4, c_pla_src);
                     auto csu_pla_animate_move = entity_->add_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
-                    auto csu_check_collision_gjk = entity_->add_component<Component::System::Update::CheckCollisionGJK>(c_pla_movement, c_pla_col_gjk_circle, c_colw_col_vec);
+                    auto csu_check_collision_gjk = entity_->add_component<Component::System::Update::CheckCollisionGJK>(c_pla_col_gjk_circle, c_colw_col_vec);
 
                     // set up flesh animations
                     std::string anims[] = {

@@ -1,7 +1,6 @@
 #pragma once
 #include "component_collider_gjk_circle.h"
 #include "physics.h"
-#include "game.h"
 
 namespace Component {
 	namespace Collider {
@@ -14,12 +13,17 @@ namespace Component {
 					public:
 						using Component::Collider::GJK::Circle::Circle;
 
-						void resolve(Component::ICollider& col, Component::Movement& movement) override
+						void resolve(Component::ICollider& col) override
 						{
-							auto prev_direction = glm::normalize(get_center() - col.get_center());
+							auto bisector = glm::normalize(get_center() - col.get_center());
 
-							col.transform.x += prev_direction.x * movement.speed * Game::delta_time;
-							col.transform.y += prev_direction.y * movement.speed * Game::delta_time;
+							auto gjk = static_cast<Component::Collider::IGJK*>(&col);
+
+							auto sup = gjk->support(-bisector) - this->support(bisector);
+							auto piercing_vec = glm::dot(sup, -bisector) * bisector;
+
+							col.transform.x += piercing_vec.x;
+							col.transform.y += piercing_vec.y;
 						}
 					};
 				}

@@ -1,5 +1,5 @@
 #pragma once
-#include "component_collider_physics.h"
+#include "physics.h"
 #include "component_collider_aabb.h"
 #include <glm\geometric.hpp>
 
@@ -14,7 +14,7 @@ namespace Component {
 		namespace Physics {
 			namespace AABB
 			{
-				class Sticky : public Component::Collider::AABB, public Phys
+				class Sticky : public Component::Collider::AABB, public IPhysics
 				{
 					glm::vec2 previous_{};
 				public:
@@ -30,7 +30,7 @@ namespace Component {
 						return false;
 					}
 
-					void resolve(Component::ICollider& col, Component::Movement& movement) override
+					void resolve(Component::ICollider& col) override
 					{
 						col.transform.x = previous_.x;
 						col.transform.y = previous_.y;

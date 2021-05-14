@@ -81,17 +81,22 @@ namespace Component {
 						}
 
 
-						void resolve(Component::ICollider& col, Component::Movement& movement) override
+						void resolve(Component::ICollider& col) override
 						{
 							auto closest_distance = -FLT_MAX;
-							auto closest_vertex = glm::vec2();
+							auto bisector = glm::vec2();
 
-							find_closest_distance(closest_distance, closest_vertex, vertices_[0], vertices_[1], col.get_center() - this->get_center(), 1);
+							find_closest_distance(closest_distance, bisector, vertices_[0], vertices_[1], glm::normalize(col.get_center() - this->get_center()), 1);
 
-							closest_vertex = glm::normalize(closest_vertex);
+							bisector = glm::normalize(bisector);
 
-							col.transform.x += closest_vertex.y * movement.speed * Game::delta_time;
-							col.transform.y += -closest_vertex.x * movement.speed * Game::delta_time;
+							auto gjk = static_cast<Component::Collider::IGJK*>(&col);
+
+							auto sup = gjk->support(-bisector) - this->support(bisector);
+							auto piercing_vec = glm::dot(sup, -bisector) * bisector;
+
+							col.transform.x += piercing_vec.x;
+							col.transform.y += piercing_vec.y;
 						}
 					};
 				}

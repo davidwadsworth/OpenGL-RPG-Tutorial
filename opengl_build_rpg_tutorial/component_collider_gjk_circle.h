@@ -13,12 +13,6 @@ namespace Component {
 				GLfloat radius_;
 				glm::vec2 center_;
 
-			protected:
-				glm::vec2 support(glm::vec2 direction) override
-				{
-					return get_center() + radius_ * glm::normalize(direction);
-				}
-
 			public:
 				Circle(Component::Transform& transform, GLfloat radius, glm::vec2 center)
 					: IGJK(transform), radius_(radius), center_(center)
@@ -27,6 +21,11 @@ namespace Component {
 				glm::vec2 get_center() override
 				{
 					return center_ + glm::vec2(transform.x, transform.y);
+				}
+
+				glm::vec2 support(glm::vec2 direction) override
+				{
+					return get_center() + radius_ * glm::normalize(direction);
 				}
 			};
 		}

@@ -1,7 +1,8 @@
 ﻿#pragma once
-#include "component_collider_physics.h"
+#include "physics.h"
 #include "component_collider_aabb.h"
 #include <glm\geometric.hpp>
+#include "game.h"
 
 /*
 Calculates the shortest distance between rect side and the difference in centers of the colliders
@@ -15,7 +16,7 @@ namespace Component {
 		namespace Physics {
 			namespace AABB
 			{
-				class Smooth : public Component::Collider::AABB, public Phys
+				class Smooth : public Component::Collider::AABB, public IPhysics
 				{
 				public:
 					using Component::Collider::AABB::AABB;
@@ -35,9 +36,9 @@ namespace Component {
 								   e3
 					*/
 
-					void resolve(Component::ICollider &col, Component::Movement& movement) override
+					void resolve(Component::ICollider &col) override
 					{
-						auto aabb_1 = &col;
+						auto aabb_1 = static_cast<AABB*>(&col);
 						auto aabb_2 = this;
 
 						auto col_a_center = this->get_center() - col.get_center();
@@ -56,25 +57,29 @@ namespace Component {
 
 						auto min_distance = e1_distance;
 						auto bisector = glm::vec2(0.0f, -1.0f);
+						auto displacement = aabb_1->y + aabb_1->h - aabb_2->y;
 
 						if (e2_distance < min_distance)
 						{
 							min_distance = e2_distance;
 							bisector = glm::vec2(1.0f, 0.0f);
+							displacement = (aabb_1->x + aabb_1->w) - aabb_2->x;
 						}
 						if (e3_distance < min_distance)
 						{
 							min_distance = e3_distance;
 							bisector = glm::vec2(0.0f, 1.0f);
+							displacement = aabb_1->y - (aabb_2->y + aabb_2->h);
 						}
 						if (e4_distance < min_distance)
 						{
 							min_distance = e4_distance;
 							bisector = glm::vec2(-1.0f, 0.0f);
+							displacement = aabb_1->x - (aabb_2->x + aabb_2->w);
 						}
 
-						aabb_1->transform.x += bisector.x * movement.speed * Game::delta_time;
-						aabb_1->transform.y += bisector.y * movement.speed * Game::delta_time;
+						aabb_1->transform.x += bisector.x * displacement;
+						aabb_1->transform.y += bisector.y * displacement;
 					}
 				};
 			}
