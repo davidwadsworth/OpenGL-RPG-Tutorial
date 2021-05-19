@@ -25,6 +25,7 @@ namespace Component {
 				{
 					entity_->add_id_component<Component::SystemVector>("update");
 					entity_->add_id_component<Component::SystemVector>("render");
+					entity_->add_id_component<Component::TriggerVector>("trigger");
 				}
 			};
 		}

@@ -82,6 +82,7 @@ int main()
     auto engine = current_state->get_child("engine");
     auto& render_systems = *engine->get_component<Component::SystemVector>("render");
     auto& update_systems = *engine->get_component<Component::SystemVector>("update");
+    auto& trigger_systems = *engine->get_component<Component::TriggerVector>("trigger");
 
     auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
 
@@ -113,6 +114,9 @@ int main()
             r->execute();
             
         c_renderer.end();
+
+
+
 
         if (Game::exit)
             glfwSetWindowShouldClose(window, GL_TRUE);
