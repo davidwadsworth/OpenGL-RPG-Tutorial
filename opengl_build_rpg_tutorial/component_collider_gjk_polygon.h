@@ -11,19 +11,25 @@ namespace Component {
 		{
 			class Polygon : public Component::Collider::IGJK
 			{
+				glm::vec2 offset_;
 			protected:
 				std::vector<glm::vec2> vertices_;
 			public:
 				Polygon(Component::Transform& transform, std::vector<glm::vec2> vertices)
 					: IGJK(transform), vertices_(vertices)
-				{}
+				{
+					glm::vec2 temp_center = glm::vec2();
+					for (auto &v : vertices_)
+						temp_center += v;
+
+					offset_ = temp_center / static_cast<float>(vertices_.size());
+					for (auto &v : vertices_)
+						v -= offset_;
+				}
 
 				glm::vec2 get_center() override
 				{
-					glm::vec2 temp_center = glm::vec2();
-					for (auto v : vertices_)
-						temp_center += v;
-					return temp_center / static_cast<float>(vertices_.size());
+					return glm::vec2(transform.x, transform.y) + offset_;
 				}
 				
 				glm::vec2 support(glm::vec2 direction) override

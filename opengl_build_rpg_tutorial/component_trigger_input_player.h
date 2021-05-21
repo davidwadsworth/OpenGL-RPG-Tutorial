@@ -54,7 +54,7 @@ namespace Component {
                     auto& c_pla_src = *entity_->add_component<Component::Src>(Rect{ 0.0f, 0.0f, 64.0f, 64.0f });
                     auto& c_pla_material = *entity_->add_component<Component::Material>(c_flesh_tex, c_sprite_shader, 0);
                     auto& c_pla_movement = *entity_->add_component<Component::Movement>(240.0f);
-                    auto& c_pla_col_gjk_circle = *entity_->add_component<Component::Collider::GJK::Circle>(c_pla_transform, 16.0f, glm::vec2(32.0f, 48.0f));
+                    auto& c_pla_col_gjk_circle = *entity_->add_component<Component::Collider::GJK::Circle>(c_pla_transform, 32.0f, glm::vec2(32.0f, 32.0f));
 
                     auto csr_pla_dynamic_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_transform, c_pla_material, c_cam_transform);
                     auto csu_pla_camera = entity_->add_component<Component::System::Update::Camera>(c_pla_transform, c_cam_transform);
@@ -63,6 +63,15 @@ namespace Component {
                     auto csu_pla_animation = entity_->add_component<Component::System::Update::Animation>(4, c_pla_src);
                     auto csu_pla_animate_move = entity_->add_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
                     auto csu_check_collision_gjk = entity_->add_component<Component::System::Update::CheckCollisionGJK>(c_pla_col_gjk_circle, c_colw_col_vec);
+
+                    // set up collider draw
+                    auto& c_tset_material = *gamestate->get_child("TestTilesetGJK")->get_component<Component::Material>(0);
+                    auto& c_tset_col_circle_src = *gamestate->get_child("TestTilesetGJK")->get_component<Component::Src>(71);
+
+                    auto collider = new Entity();
+                    auto csr_col_cam_draw = collider->add_component<Component::System::Render::CameraDraw>(c_renderer, c_tset_col_circle_src, c_pla_transform, c_tset_material, c_cam_transform);
+
+                    entity_->add_id_child(collider, "collider");
 
                     // set up flesh animations
                     std::string anims[] = {
@@ -126,6 +135,7 @@ namespace Component {
                     update_systems.push_back(csu_pla_animation);
 
                     render_systems.push_back(csr_pla_dynamic_draw);
+                    render_systems.push_back(csr_col_cam_draw);
 				}
 			};
 		}

@@ -80,7 +80,6 @@ namespace Component {
 							}
 						}
 
-
 						void resolve(Component::ICollider& col) override
 						{
 							auto closest_distance = -FLT_MAX;
@@ -88,7 +87,7 @@ namespace Component {
 
 							find_closest_distance(closest_distance, bisector, vertices_[0], vertices_[1], glm::normalize(col.get_center() - this->get_center()), 1);
 
-							bisector = glm::normalize(bisector);
+							bisector = glm::normalize(glm::vec2(bisector.y, -bisector.x));
 
 							auto gjk = static_cast<Component::Collider::IGJK*>(&col);
 

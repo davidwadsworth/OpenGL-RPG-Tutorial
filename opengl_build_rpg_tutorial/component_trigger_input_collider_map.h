@@ -52,21 +52,24 @@ namespace Component {
 
 					// gjk circle
 					auto& c_circle_transform = *entity_->push_back_component<Component::Transform>(704.0f, 792.0f, 64.0f);
-					auto ccgpc_circle_smooth = entity_->push_back_component<Component::Collider::GJK::Physics::Circle::Smooth>(c_circle_transform, 32.0f, glm::vec2(32.0f, 32.0f));
+					auto ccgpc_circle_smooth = entity_->push_back_component<Component::Collider::GJK::Physics::Circle::Smooth>
+						(c_circle_transform, 32.0f, glm::vec2(32.0f, 32.0f));
 
 					auto csr_circle_cam_draw = entity_->push_back_component<Component::System::Render::CameraDraw>
 						(c_renderer, c_tset_col_circle_src, c_circle_transform, c_tset_material, c_cam_transform);
 
 					// gjk boundary
 					auto& c_boundary_transform = *entity_->push_back_component<Component::Transform>(704.0f - 128.0f, 792.0f, 64.0f);
-					auto ccgpb_boundary_smooth = entity_->push_back_component<Component::Collider::GJK::Physics::Boundary::Smooth>(c_boundary_transform, std::array<glm::vec2, MAX_BOUNDARY>{glm::vec2(0.0f, 64.0f), glm::vec2(64.0f, 0.0f)});
+					auto ccgpb_boundary_smooth = entity_->push_back_component<Component::Collider::GJK::Physics::Boundary::Smooth>
+						(c_boundary_transform, std::array<glm::vec2, MAX_BOUNDARY>{glm::vec2(0.0f, 64.0f), glm::vec2(64.0f, 0.0f)});
 
 					auto csr_boundary_cam_draw = entity_->push_back_component<Component::System::Render::CameraDraw>
 						(c_renderer, c_tset_col_boundary_src, c_boundary_transform, c_tset_material, c_cam_transform);
 
 					// gjk polygon
-					auto& c_polygon_transform = *entity_->push_back_component<Component::Transform>(704.0f - 192.0f, 792.0f, 64.0f);
-					auto ccgpp_polygon_smooth = entity_->push_back_component<Component::Collider::GJK::Physics::Polygon::Smooth>(c_polygon_transform, std::vector<glm::vec2>{glm::vec2(0.0f), glm::vec2(64.0f, 64.0f), glm::vec2(0.0f, 64.0f)});
+					auto& c_polygon_transform = *entity_->push_back_component<Component::Transform>(704.0f - 256.0f, 792.0f, 64.0f);
+					auto ccgpp_polygon_smooth = entity_->push_back_component<Component::Collider::GJK::Physics::Polygon::Smooth>
+						(c_polygon_transform, std::vector<glm::vec2>{glm::vec2(0.0f), glm::vec2(64.0f, 64.0f), glm::vec2(0.0f, 64.0f)});
 
 					auto csr_polygon_cam_draw = entity_->push_back_component<Component::System::Render::CameraDraw>
 						(c_renderer, c_tset_col_polygon_src, c_polygon_transform, c_tset_material, c_cam_transform);

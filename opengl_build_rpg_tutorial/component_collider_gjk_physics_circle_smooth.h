@@ -15,7 +15,7 @@ namespace Component {
 
 						void resolve(Component::ICollider& col) override
 						{
-							auto bisector = glm::normalize(get_center() - col.get_center());
+							auto bisector = glm::normalize(col.get_center() - this->get_center());
 
 							auto gjk = static_cast<Component::Collider::IGJK*>(&col);
 
