@@ -2,6 +2,11 @@
 #include "component_collider_gjk_boundary.h"
 #include "physics.h"
 
+/*
+Smoothly traverse over a boundary using another GJK collider
+
+@author David Wadsworth
+*/
 namespace Component {
 	namespace Collider {
 		namespace GJK {

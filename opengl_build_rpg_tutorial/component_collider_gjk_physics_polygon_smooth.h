@@ -3,6 +3,11 @@
 #include "component_collider_gjk_polygon.h"
 #include "game.h"
 
+/*
+Smoothly traverse over a convex polygon using another GJK collider
+
+@author David Wadsworth
+*/
 namespace Component {
 	namespace Collider {
 		namespace GJK {

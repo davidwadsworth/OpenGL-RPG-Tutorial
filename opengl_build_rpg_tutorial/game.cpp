@@ -16,7 +16,7 @@ long long IComponent::count = 0ll;
 long long Entity::count = 0ll;
 
 void Game::init(Entity* game)
-{
+{	
 	auto& ctigs_overworld = *game->add_component<Component::Trigger::Input::GameState::Overworld>("overworld");
 	ctigs_overworld.execute(game);
 

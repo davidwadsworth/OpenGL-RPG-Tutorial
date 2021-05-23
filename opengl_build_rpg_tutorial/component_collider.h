@@ -8,10 +8,6 @@ abstract class used to define collision objects in the game world.
 
 @author David Wadsworth
 */
-
-constexpr auto MAX_SIMPLEX = 3;
-
-
 namespace Component
 {
 	class ICollider : public IComponent

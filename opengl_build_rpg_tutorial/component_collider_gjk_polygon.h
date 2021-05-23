@@ -4,20 +4,56 @@
 #include <vector>
 #include <glad/glad.h>
 
+/*
+GJK implementation for at least three pointed non-concave polygons
 
+@author David Wadsworth
+*/
 namespace Component {
 	namespace Collider {
 		namespace GJK
 		{
 			class Polygon : public Component::Collider::IGJK
 			{
-				glm::vec2 offset_;
 			protected:
 				std::vector<glm::vec2> vertices_;
+			private:
+				glm::vec2 offset_;
+
+				bool is_convex()
+				{
+					if (vertices_.size() < 4)
+						return true;
+
+					auto sign = false;
+					auto n = vertices_.size();
+
+					for (auto i = 0; i < n; i++)
+					{
+						auto dx1 = vertices_[(i + 2) % n].x - vertices_[(i + 1) % n].x;
+						auto dy1 = vertices_[(i + 2) % n].y - vertices_[(i + 1) % n].y;
+						auto dx2 = vertices_[i].x - vertices_[(i + 1) % n].x;
+						auto dy2 = vertices_[i].y - vertices_[(i + 1) % n].y;
+						auto zcrossproduct = dx1 * dy2 - dy1 * dx2;
+
+						if (i == 0)
+							sign = zcrossproduct > 0;
+						else if (sign != (zcrossproduct > 0))
+							return false;
+					}
+
+					return true;
+				}
 			public:
 				Polygon(Component::Transform& transform, std::vector<glm::vec2> vertices)
 					: IGJK(transform), vertices_(vertices)
 				{
+					if (vertices.size() < 3)
+						Logger::error("Invalid polygon, not enough points", Logger::MEDIUM);
+						
+					if (!is_convex())
+						Logger::error("Invalid polygon, concave.", Logger::MEDIUM);
+
 					glm::vec2 temp_center = glm::vec2();
 					for (auto &v : vertices_)
 						temp_center += v;

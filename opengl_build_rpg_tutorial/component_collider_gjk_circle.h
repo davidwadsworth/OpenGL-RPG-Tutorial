@@ -3,7 +3,11 @@
 #include <glad/glad.h>
 #include <glm/geometric.hpp>
 
+/*
+GJK implementation for regular circles
 
+@author David Wadsworth
+*/
 namespace Component {
 	namespace Collider {
 		namespace GJK

@@ -115,9 +115,6 @@ int main()
             
         c_renderer.end();
 
-
-
-
         if (Game::exit)
             glfwSetWindowShouldClose(window, GL_TRUE);
 

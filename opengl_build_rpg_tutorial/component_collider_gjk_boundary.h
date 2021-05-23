@@ -4,6 +4,11 @@
 
 constexpr GLuint MAX_BOUNDARY = 2;
 
+/*
+GJK implementation for two pointed lines
+
+@author David Wadsworth
+*/
 namespace Component {
 	namespace Collider {
 		namespace GJK
