@@ -22,7 +22,7 @@ namespace Component {
 					using Component::Collider::AABB::AABB;
 
 					/* eg.
-											*col_center (displaces speed * {1,0})
+											*col_center (displacement * {1,0})
 
 								  e1
 						 p1	_______________ p2

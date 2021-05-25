@@ -49,15 +49,17 @@ namespace Component {
 					: IGJK(transform), vertices_(vertices)
 				{
 					if (vertices.size() < 3)
-						Logger::error("Invalid polygon, not enough points", Logger::MEDIUM);
+						Logger::error("Invalid polygon, not enough vertices", Logger::MEDIUM);
 						
 					if (!is_convex())
 						Logger::error("Invalid polygon, concave.", Logger::MEDIUM);
 
+					// calculate the center of the polygon
 					glm::vec2 temp_center = glm::vec2();
 					for (auto &v : vertices_)
 						temp_center += v;
 
+					// offset all vertices by center of the polygon
 					offset_ = temp_center / static_cast<float>(vertices_.size());
 					for (auto &v : vertices_)
 						v -= offset_;
@@ -73,6 +75,7 @@ namespace Component {
 					auto furthest_distance = std::numeric_limits<float>::lowest();
 					auto furthest_vertex = glm::vec2();
 
+					// calculate the furthest vertex along the direction
 					for (auto& v : vertices_)
 					{
 						auto distance = glm::dot(v + get_center(), direction);

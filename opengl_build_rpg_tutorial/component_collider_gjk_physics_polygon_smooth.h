@@ -23,6 +23,7 @@ namespace Component {
 							auto p = p2 - p1;
 							auto p_magnitude = p.x * p.x + p.y * p.y;
 
+							// floor square root function 
 							auto q_sqrt = [](auto num)
 							{
 								auto i = 1.0f;
@@ -30,6 +31,9 @@ namespace Component {
 								return static_cast<GLuint>(i);
 							};
 
+
+							// if the length of a side isn't the shortest split it up into x sides with 
+							// the length of the shortest side
 							if (p_magnitude > shortest_magnitude_)
 							{
 								auto du = shortest_distance_ * glm::normalize(p);
@@ -43,6 +47,7 @@ namespace Component {
 								return;
 							}
 
+							// check if line is closest 
 							auto distance = glm::dot(p2, direction) + glm::dot(p1, direction);
 
 							if (distance > closest_distance)
@@ -67,6 +72,7 @@ namespace Component {
 						Smooth(Component::Transform& transform, std::vector<glm::vec2> vertices)
 							: Component::Collider::GJK::Polygon(transform, vertices), shortest_magnitude_(FLT_MAX), shortest_distance_(FLT_MAX)
 						{
+							// calculate shortest magnitute and distance of all possible sides
 							auto i = 0;
 							while (i < vertices_.size())
 							{
@@ -88,16 +94,17 @@ namespace Component {
 						void resolve(Component::ICollider& col) override
 						{
 							auto closest_distance = -FLT_MAX;
-							auto bisector = glm::vec2();
+							auto perp_bisector = glm::vec2();
 
-							find_closest_distance(closest_distance, bisector, vertices_[0], vertices_[1], glm::normalize(col.get_center() - this->get_center()), 1);
+							find_closest_distance(closest_distance, perp_bisector, vertices_[0], vertices_[1], glm::normalize(col.get_center() - this->get_center()), 1);
 
-							bisector = glm::normalize(glm::vec2(bisector.y, -bisector.x));
+							// find perpendicular line of the closest side
+							perp_bisector = glm::normalize(glm::vec2(perp_bisector.y, -perp_bisector.x));
 
 							auto gjk = static_cast<Component::Collider::IGJK*>(&col);
 
-							auto sup = gjk->support(-bisector) - this->support(bisector);
-							auto piercing_vec = glm::dot(sup, -bisector) * bisector;
+							auto sup = gjk->support(-perp_bisector) - this->support(perp_bisector);
+							auto piercing_vec = glm::dot(sup, -perp_bisector) * perp_bisector;
 
 							col.transform.x += piercing_vec.x;
 							col.transform.y += piercing_vec.y;

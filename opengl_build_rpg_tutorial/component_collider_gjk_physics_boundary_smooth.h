@@ -21,12 +21,12 @@ namespace Component {
 						void resolve(Component::ICollider& col) override
 						{
 							auto line = glm::normalize(vertices_[1] - vertices_[0]);
-							auto bisector = glm::vec2(line.y, -line.x);
+							auto perp_bisector = glm::vec2(line.y, -line.x);
 
 							auto gjk = static_cast<Component::Collider::IGJK*>(&col);
 
-							auto sup = gjk->support(-bisector) - this->support(bisector);
-							auto piercing_vec = glm::dot(sup, -bisector) * bisector;
+							auto sup = gjk->support(-perp_bisector) - this->support(perp_bisector);
+							auto piercing_vec = glm::dot(sup, -perp_bisector) * perp_bisector;
 
 							col.transform.x += piercing_vec.x;
 							col.transform.y += piercing_vec.y;
