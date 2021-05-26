@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="component_bitmap_font.cpp" />
     <ClCompile Include="component_collider_gjk.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
@@ -154,6 +155,8 @@
   <ItemGroup>
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
+    <ClInclude Include="component_bitmap_font.h" />
+    <ClInclude Include="component_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
     <ClInclude Include="component_collider_gjk.h" />

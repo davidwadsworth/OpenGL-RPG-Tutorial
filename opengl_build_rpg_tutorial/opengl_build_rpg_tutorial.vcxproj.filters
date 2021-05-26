@@ -84,6 +84,9 @@
     <ClCompile Include="component_collider_gjk.cpp">
       <Filter>EC\Component\Collider\GJK</Filter>
     </ClCompile>
+    <ClCompile Include="component_bitmap_font.cpp">
+      <Filter>EC\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -244,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="component_system_update_check_collision.h">
       <Filter>EC\Component\System\Update</Filter>
+    </ClInclude>
+    <ClInclude Include="component_bitmap_glyph.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_bitmap_font.h">
+      <Filter>EC\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
