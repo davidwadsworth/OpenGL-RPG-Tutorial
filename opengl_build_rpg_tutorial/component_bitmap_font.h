@@ -13,6 +13,7 @@ namespace Component
 	class BitMapFont : public IComponent
 	{
 		GLuint line_h_;
+		Entity* font_;
 	public:
 		static struct Alignment
 		{
@@ -29,7 +30,8 @@ namespace Component
 			PointFiveSpaced
 		};
 
-		BitMapFont(GLuint font_size, Spacing spacing)
+		BitMapFont(Entity* font, GLuint font_size, Spacing spacing)
+			: font_(font)
 		{
 			switch (spacing)
 			{

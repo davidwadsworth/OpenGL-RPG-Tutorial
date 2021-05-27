@@ -1,6 +1,7 @@
 #pragma once
 #include "component.h"
 #include <glad/glad.h>
+#include <vector>
 
 namespace Component
 {
@@ -8,9 +9,13 @@ namespace Component
 	{
 	public:
 		BitMapGlyph() = default;
-		char glyph;
-		GLuint line_h;
-		GLuint child_off;
+		GLchar glyph;
+		GLint advance;
+		GLuint width, height;
+		GLint x_off, y_off;
+		std::vector<std::pair<GLint, GLint>> kerning;
+
+		GLuint check_kerning(char glyph);
 	};
 }
 

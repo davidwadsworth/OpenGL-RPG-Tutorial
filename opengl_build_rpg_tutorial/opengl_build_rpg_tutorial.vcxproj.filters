@@ -87,6 +87,9 @@
     <ClCompile Include="component_bitmap_font.cpp">
       <Filter>EC\Component</Filter>
     </ClCompile>
+    <ClCompile Include="component_bitmap_glyph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">

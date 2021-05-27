@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="component_bitmap_font.cpp" />
+    <ClCompile Include="component_bitmap_glyph.cpp" />
     <ClCompile Include="component_collider_gjk.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
