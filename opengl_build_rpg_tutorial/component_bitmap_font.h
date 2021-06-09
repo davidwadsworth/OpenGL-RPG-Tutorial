@@ -22,6 +22,21 @@ namespace Component
 			const float center = 0.5f;
 		};
 
+		struct MessageContainer
+		{
+			std::size_t length;
+			std::vector<Component::Transform*> dests;
+			std::string w;
+
+			MessageContainer& operator+=(const MessageContainer& mc)
+			{
+				dests.insert(this->dests.end(), mc.dests.begin(), mc.dests.end());
+				this->length += mc.length;
+				w += mc.w;
+				return *this;
+			}
+		};
+
 		enum Spacing
 		{
 			DoubleSpaced,
@@ -53,10 +68,10 @@ namespace Component
 			}
 		}
 
-		std::vector<Component::Transform*> generate_word(std::string word, Component::Transform** transforms, GLuint char_limit);
-		std::vector<Component::Transform*> generate_line(char* message, char delim, Component::Transform& textbox, 
-			float align_x, float pad_x, Component::Transform** transforms, GLuint char_lim);
-		std::vector<Component::Transform*> generate_message(std::string message, Component::Transform& textbox,
-			glm::vec2 align, glm::vec2 pad_x, std::vector<Component::Transform*> transforms);
+		MessageContainer generate_word(std::string word, std::vector<Component::Transform*> transforms, GLuint message_pos = 0u);
+		MessageContainer generate_line(char* message, char delim, Component::Transform& textbox, 
+			float align_x, float pad_x, std::vector<Component::Transform*> transforms, GLuint message_pos = 0u);
+		MessageContainer generate_message(std::string message, Component::Transform& textbox,
+			glm::vec2 align, glm::vec2 pad_x, std::vector<Component::Transform*> transforms, GLuint message_pos = 0u);
 	};
 }
