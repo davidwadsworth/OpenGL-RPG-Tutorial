@@ -88,7 +88,7 @@
       <Filter>EC\Component</Filter>
     </ClCompile>
     <ClCompile Include="component_bitmap_glyph.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>EC\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -25,6 +25,8 @@ Component::BitMapFont::MessageContainer Component::BitMapFont::generate_line(cha
 {
 	MessageContainer m_cont;
 
+
+
 	return MessageContainer();
 }
 

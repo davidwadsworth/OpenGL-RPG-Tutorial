@@ -18,10 +18,14 @@ namespace Component {
 			std::string name_;
 			virtual void create(Entity* gamestate) = 0;
 		public:
-
 			IInput(std::string name)
 				: entity_(nullptr), name_(name)
 			{}
+
+			void set_name(std::string name)
+			{
+				name_ = name;
+			}
 
 			void execute(Entity* gamestate) override final
 			{

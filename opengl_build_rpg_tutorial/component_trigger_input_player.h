@@ -27,9 +27,15 @@ namespace Component {
 			{
                 GLfloat x_, y_;
 			public:
-				Player(std::string name, GLfloat x, GLfloat y)
-					: Component::Trigger::IInput(name), x_(x), y_(y)
+				Player(std::string name)
+					: Component::Trigger::IInput(name)
 				{}
+
+                void set_position(GLfloat x, GLfloat y)
+                {
+                    x_ = x;
+                    y_ = y;
+                }
 
             private:
                 void create(Entity* gamestate) override final
