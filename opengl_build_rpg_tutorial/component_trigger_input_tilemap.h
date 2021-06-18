@@ -32,7 +32,7 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					// load shaders from file
+					// load tilemap from file
 					std::stringstream tm_stream;
 					
 					try
