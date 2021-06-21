@@ -11,6 +11,7 @@ namespace Component
 {
 	class Material : public IComponent
 	{
+	protected:
 		static GLuint id_gen;
 		GLint tex_unit_;
 	public:
@@ -25,7 +26,7 @@ namespace Component
 		~Material()
 		{}
 
-		void compile();
+		virtual void compile();
 		void bind();
 	};
 }

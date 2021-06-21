@@ -55,6 +55,9 @@
     <Filter Include="EC\Component\Collider\AABB\Physics">
       <UniqueIdentifier>{b5f88663-a61f-40c9-8756-d5c2471d3c98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EC\Component\Material">
+      <UniqueIdentifier>{a9f8956d-e85e-4ace-b9b8-c7b16ecb628e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,9 +65,6 @@
     </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="component_material.cpp">
-      <Filter>EC\Component</Filter>
     </ClCompile>
     <ClCompile Include="component_renderer.cpp">
       <Filter>EC\Component</Filter>
@@ -84,11 +84,14 @@
     <ClCompile Include="component_collider_gjk.cpp">
       <Filter>EC\Component\Collider\GJK</Filter>
     </ClCompile>
-    <ClCompile Include="component_bitmap_font.cpp">
-      <Filter>EC\Component</Filter>
-    </ClCompile>
     <ClCompile Include="component_bitmap_glyph.cpp">
       <Filter>EC\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="component_material.cpp">
+      <Filter>EC\Component\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="component_material_color.cpp">
+      <Filter>EC\Component\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,9 +111,6 @@
       <Filter>EC\Component\System</Filter>
     </ClInclude>
     <ClInclude Include="component_transform.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_material.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
     <ClInclude Include="component_renderer.h">
@@ -254,8 +254,14 @@
     <ClInclude Include="component_bitmap_glyph.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_bitmap_font.h">
-      <Filter>EC\Component</Filter>
+    <ClInclude Include="component_trigger_input_font.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_material.h">
+      <Filter>EC\Component\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="component_material_color.h">
+      <Filter>EC\Component\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

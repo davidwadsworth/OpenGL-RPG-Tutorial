@@ -141,9 +141,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="component_bitmap_font.cpp" />
     <ClCompile Include="component_bitmap_glyph.cpp" />
     <ClCompile Include="component_collider_gjk.cpp" />
+    <ClCompile Include="component_material_color.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="logger.cpp" />
@@ -156,7 +156,6 @@
   <ItemGroup>
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
-    <ClInclude Include="component_bitmap_font.h" />
     <ClInclude Include="component_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
@@ -165,6 +164,8 @@
     <ClInclude Include="component_collider_gjk_circle.h" />
     <ClInclude Include="component_collider_physics_aabb_sticky.h" />
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
+    <ClInclude Include="component_material_color.h" />
+    <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h" />
     <ClInclude Include="component_collider_gjk_physics_circle_smooth.h" />
