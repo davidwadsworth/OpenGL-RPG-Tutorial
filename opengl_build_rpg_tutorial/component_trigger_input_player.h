@@ -131,6 +131,7 @@ namespace Component {
                         csu_pla_animation->add(anims[anim_i++], Anim{ walk_1, walk_2 });
                     }
 
+                    // get render and update systems
                     auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
                     auto& update_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("update");
 

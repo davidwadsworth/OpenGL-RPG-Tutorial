@@ -34,6 +34,12 @@ namespace Component {
 					c_shader.use();
 					auto projection = glm::ortho(0.0f, (GLfloat)Game::width, (GLfloat)Game::height, 0.0f, -1.0f, 1.0f);
 					c_shader.set_mat4("projection", projection);
+
+					auto fnt_vs_file_name = "resources/shaders/font.vs";
+					auto fnt_fs_file_name = "resources/shaders/font.fs";
+
+					auto& c_fnt_shader = *entity_->add_id_component<Component::Shader>("font");
+					c_fnt_shader.load(fnt_vs_file_name, fnt_fs_file_name);
 				}
 			};
 		}

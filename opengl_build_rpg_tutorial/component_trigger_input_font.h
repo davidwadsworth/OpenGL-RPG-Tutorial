@@ -61,7 +61,7 @@ namespace Component {
 					auto& c_font_texture = *gamestate->get_child("texture manager")->get_component<Component::Texture>(texture_id);
 					auto& c_font_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("font");
 
-					auto& c_font_material = *entity_->add_component<Component::Material::Color>( c_font_texture, c_font_shader, "font", glm::vec3(0.0f, 0.0f, 0.0f));
+					auto& c_font_material = *entity_->push_back_component<Component::Material::Color>( c_font_texture, c_font_shader, "font", glm::vec3(0.0f, 0.0f, 0.0f));
 
 					for (auto glyph_json : fnt_json["chars"])
 					{

@@ -165,6 +165,8 @@
     <ClInclude Include="component_collider_physics_aabb_sticky.h" />
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_material_color.h" />
+    <ClInclude Include="component_system_render_draw.h" />
+    <ClInclude Include="component_trigger_input_display_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h" />

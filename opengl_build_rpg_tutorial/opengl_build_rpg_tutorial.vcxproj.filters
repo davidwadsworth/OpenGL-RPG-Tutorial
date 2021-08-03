@@ -266,6 +266,12 @@
     <ClInclude Include="component_src.h">
       <Filter>EC\Component\Src</Filter>
     </ClInclude>
+    <ClInclude Include="component_trigger_input_display_text.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_render_draw.h">
+      <Filter>EC\Component\System\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">
