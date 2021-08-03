@@ -1,4 +1,4 @@
-#include "component_bitmap_glyph.h"
+#include "component_src_bitmap_glyph.h"
 
 GLuint Component::BitMapGlyph::check_kerning(char glyph_2)
 {

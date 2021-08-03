@@ -115,6 +115,11 @@ public:
 		return children_.insert(hashed_str, entity);
 	}
 
+	// inserts entity into child tree with unique id
+	Entity* add_id_child(Entity* entity, std::size_t id)
+	{
+		return children_.insert(id, entity);
+	}
 
 	// gets component of matching unique id, throws if not there
 	template <typename T>

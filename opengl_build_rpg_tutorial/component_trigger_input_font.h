@@ -4,6 +4,7 @@
 #include "json.hpp"
 #include "delimiter_split.h"
 #include "component_material_color.h"
+#include "component_src_bitmap_glyph.h"
 
 
 /*
@@ -54,82 +55,40 @@ namespace Component {
 					auto texture_manager = gamestate->get_child("texture manager");
 					auto texture_id = delimiter_split(delimiter_split(image_src.c_str(), '/').back().c_str(), '.')[0];
 
-
 					if (!gamestate->get_child("texture manager")->has_component<Component::Texture>(texture_id))
 						gamestate->get_child("texture manager")->add_id_component<Component::Texture>(texture_id)->load(image_src.c_str());
-
 
 					auto& c_font_texture = *gamestate->get_child("texture manager")->get_component<Component::Texture>(texture_id);
 					auto& c_font_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("font");
 
 					auto& c_font_material = *entity_->add_component<Component::Material::Color>( c_font_texture, c_font_shader, "font", glm::vec3(0.0f, 0.0f, 0.0f));
 
-					auto chars_node = font_node->first_node("chars");
-
-					auto tex_width = static_cast<double>(tex_c->width);
-					auto tex_height = static_cast<double>(tex_c->height);
-
-					auto char_node = chars_node->first_node("char");
-
-					auto glyph(new Entity());
-					auto bm_glyph = glyph->add_component<Component::BitMapGlyph>();
-
-					auto id = atoi(char_node->first_attribute("id")->value());
-
-					auto x = atof(char_node->first_attribute("x")->value());
-					auto y = atof(char_node->first_attribute("y")->value());
-					auto w = atof(char_node->first_attribute("width")->value());
-					auto h = atof(char_node->first_attribute("height")->value());
-
-					auto src_vec4 = glm::vec4(x / tex_width, y / tex_height, (x + w) / tex_width, (y + h) / tex_height);
-
-					auto src = glyph->add_component<Component::Src>(src_vec4);
-
-					bm_glyph->x_off = atoi(char_node->first_attribute("xoffset")->value());
-					bm_glyph->y_off = atoi(char_node->first_attribute("yoffset")->value());
-					bm_glyph->advance = atoi(char_node->first_attribute("xadvance")->value());
-					bm_glyph->width = static_cast<GLuint>(w);
-					bm_glyph->height = static_cast<GLuint>(h);
-					bm_glyph->glyph = id;
-
-					font->add_child(glyph);
-
-					bm_font->child_off = id - 1;
-					for (; char_node; char_node = char_node->next_sibling())
+					for (auto glyph_json : fnt_json["chars"])
 					{
-						auto glyph(new Entity());
-						auto bm_glyph = glyph->add_component<Component::BitMapGlyph>();
+						std::size_t id = glyph_json["id"];
 
-						id = atoi(char_node->first_attribute("id")->value());
+						auto& c_bm_glyph = *entity_->add_component<Component::BitMapGlyph>(id);
 
-						x = atof(char_node->first_attribute("x")->value());
-						y = atof(char_node->first_attribute("y")->value());
-						w = atof(char_node->first_attribute("width")->value());
-						h = atof(char_node->first_attribute("height")->value());
-
-						src_vec4 = glm::vec4(x / tex_width, y / tex_height, (x + w) / tex_width, (y + h) / tex_height);
-
-						src = glyph->add_component<Component::Src>(src_vec4);
-
-						bm_glyph->x_off = atoi(char_node->first_attribute("xoffset")->value());
-						bm_glyph->y_off = atoi(char_node->first_attribute("yoffset")->value());
-						bm_glyph->advance = atoi(char_node->first_attribute("xadvance")->value());
-						bm_glyph->width = static_cast<GLuint>(w);
-						bm_glyph->height = static_cast<GLuint>(h);
-						bm_glyph->glyph = id;
-
-						font->add_child(glyph);
+						c_bm_glyph.x = glyph_json["x"];
+						c_bm_glyph.y = glyph_json["y"];
+						c_bm_glyph.w = glyph_json["width"];
+						c_bm_glyph.h = glyph_json["height"];
+						
+						c_bm_glyph.x_off = glyph_json["xoffset"];
+						c_bm_glyph.y_off = glyph_json["yoffset"];
+						c_bm_glyph.advance = glyph_json["xadvance"];
+						c_bm_glyph.glyph = static_cast<char>(id);
 					}
 
-					for (auto kerning_node = font_node->first_node("kerning"); kerning_node; kerning_node = kerning_node->next_sibling())
+					for (auto kerning_json : fnt_json["kerning"])
 					{
-						auto first = atoi(kerning_node->first_attribute("first")->value());
-						auto second = atoi(kerning_node->first_attribute("second")->value());
-						auto amount = atoi(kerning_node->first_attribute("amount")->value());
+						std::size_t first = kerning_json["first"];
+						int second = kerning_json["second"];
+						int amount = kerning_json["amount"];
 
-						auto bm_glyph = font[first].get_component<Component::BitMapGlyph>();
+						auto& c_bm_glyph = *entity_->get_component<Component::BitMapGlyph>(first);
 
-						bm_glyph->kerning.push_back({ second, amount });
+						c_bm_glyph.kerning.push_back({ second, amount });
 					}
 				}
 			};

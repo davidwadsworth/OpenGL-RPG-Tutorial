@@ -58,6 +58,9 @@
     <Filter Include="EC\Component\Material">
       <UniqueIdentifier>{a9f8956d-e85e-4ace-b9b8-c7b16ecb628e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EC\Component\Src">
+      <UniqueIdentifier>{4d43af6b-ac9e-454b-a9de-4338d83fc6f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -84,14 +87,14 @@
     <ClCompile Include="component_collider_gjk.cpp">
       <Filter>EC\Component\Collider\GJK</Filter>
     </ClCompile>
-    <ClCompile Include="component_bitmap_glyph.cpp">
-      <Filter>EC\Component</Filter>
-    </ClCompile>
     <ClCompile Include="component_material.cpp">
       <Filter>EC\Component\Material</Filter>
     </ClCompile>
     <ClCompile Include="component_material_color.cpp">
       <Filter>EC\Component\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="component_src_bitmap_glyph.cpp">
+      <Filter>EC\Component\Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="rect.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="component_src.h">
-      <Filter>EC\Component</Filter>
     </ClInclude>
     <ClInclude Include="component_system_render_camera_draw.h">
       <Filter>EC\Component\System\Render</Filter>
@@ -251,9 +251,6 @@
     <ClInclude Include="component_system_update_check_collision.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_bitmap_glyph.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_input_font.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
@@ -263,12 +260,21 @@
     <ClInclude Include="component_material_color.h">
       <Filter>EC\Component\Material</Filter>
     </ClInclude>
+    <ClInclude Include="component_src_bitmap_glyph.h">
+      <Filter>EC\Component\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="component_src.h">
+      <Filter>EC\Component\Src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Resources\Shaders\sprite.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Data\gilsans.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
