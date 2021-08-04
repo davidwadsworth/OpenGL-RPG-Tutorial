@@ -8,6 +8,8 @@
 #include "component_system_render_draw.h"
 
 /*
+Display text to the screen without regard to the map.
+ 
 @author David Wadsworth
 */
 
@@ -37,8 +39,9 @@ namespace Component {
 					// get render systems
 					auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
 
-					auto font = gamestate->get_child("font");
+					auto font = gamestate->get_child("gilsans");
 
+					// hacky way to get font material, might change this, might not.
 					auto& c_font_material = *font->get_component<Component::Material>(0);
 
 					auto x_pos = pos_.x;

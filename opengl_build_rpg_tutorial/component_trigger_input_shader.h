@@ -40,6 +40,9 @@ namespace Component {
 
 					auto& c_fnt_shader = *entity_->add_id_component<Component::Shader>("font");
 					c_fnt_shader.load(fnt_vs_file_name, fnt_fs_file_name);
+
+					c_fnt_shader.use();
+					c_fnt_shader.set_mat4("projection", projection);
 				}
 			};
 		}

@@ -283,5 +283,11 @@
     <None Include="Resources\Data\gilsans.json">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Resources\Shaders\font.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Shaders\font.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

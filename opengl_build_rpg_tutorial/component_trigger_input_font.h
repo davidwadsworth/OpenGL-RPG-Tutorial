@@ -6,8 +6,9 @@
 #include "component_material_color.h"
 #include "component_src_bitmap_glyph.h"
 
-
 /*
+Load in font bitmap fonts with json.
+ 
 @author David Wadsworth
 */
 
@@ -61,13 +62,13 @@ namespace Component {
 					auto& c_font_texture = *gamestate->get_child("texture manager")->get_component<Component::Texture>(texture_id);
 					auto& c_font_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("font");
 
-					auto& c_font_material = *entity_->push_back_component<Component::Material::Color>( c_font_texture, c_font_shader, "font", glm::vec3(0.0f, 0.0f, 0.0f));
+					auto& c_font_material = *entity_->push_back_component<Component::Color>( c_font_texture, c_font_shader, 3, glm::vec3(1.0f, 1.0f, 1.0f));
 
 					for (auto glyph_json : fnt_json["chars"])
 					{
 						std::size_t id = glyph_json["id"];
 
-						auto& c_bm_glyph = *entity_->add_component<Component::BitMapGlyph>(id);
+						auto& c_bm_glyph = *entity_->add_id_component<Component::BitMapGlyph>(id);
 
 						c_bm_glyph.x = glyph_json["x"];
 						c_bm_glyph.y = glyph_json["y"];

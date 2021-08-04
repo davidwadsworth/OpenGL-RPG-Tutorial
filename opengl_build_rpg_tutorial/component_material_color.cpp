@@ -1,7 +1,7 @@
 #include "component_material_color.h"
 
-void Component::Material::Color::compile()
+void Component::Color::compile()
 {
 	Material::compile();
-	shader.set_vec3f("color", color_);
+	shader.set_vec3f("spriteColor", color_);
 }

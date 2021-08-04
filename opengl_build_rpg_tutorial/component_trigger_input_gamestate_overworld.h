@@ -40,12 +40,12 @@ namespace Component {
 						entity_->push_back_component<Component::Trigger::Input::Renderer>("renderer");
 						entity_->push_back_component<Component::Trigger::Input::Shader>("shader manager");
 						entity_->push_back_component<Component::Trigger::Input::Texture>("texture manager");
-						entity_->push_back_component<Component::Trigger::Input::Font>("resources/data/gilsans.json");
+						entity_->push_back_component<Component::Trigger::Input::Font>("gilsans", "resources/data/gilsans.json");
 						entity_->push_back_component<Component::Trigger::Input::CollisionWorld>("collision world");
 						entity_->push_back_component<Component::Trigger::Input::TileMap>("tilemap", "resources/data/TestTileMapGJK.json");
 						entity_->push_back_component<Component::Trigger::Input::Player>("player", (GLfloat)Game::width, 792.0f);
 						entity_->push_back_component<Component::Trigger::Input::ColliderMap>("collider map");
-						entity_->push_back_component<Component::Trigger::Input::DisplayText>("display", "Hello world!", glm::vec2(0.0f, 32.0f));
+						entity_->push_back_component<Component::Trigger::Input::DisplayText>("display", "Hello world!", glm::vec2(0.0f, 0.0f));
 					}
 				};
 			}

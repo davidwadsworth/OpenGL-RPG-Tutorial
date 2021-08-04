@@ -215,6 +215,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Data\gilsans.json" />
+    <None Include="Resources\Shaders\font.fs" />
+    <None Include="Resources\Shaders\font.vs" />
     <None Include="Resources\Shaders\sprite.fs" />
     <None Include="Resources\Shaders\sprite.vs" />
   </ItemGroup>

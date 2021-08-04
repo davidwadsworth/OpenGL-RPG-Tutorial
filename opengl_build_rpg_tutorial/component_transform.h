@@ -12,6 +12,10 @@ namespace Component
 {
 	struct Transform : public IComponent, public Rect
 	{
+		Transform()
+			: Rect{}, sc(1.0f)
+		{}
+
 		Transform(const Rect& rect, GLfloat sc)
 			: Rect(rect), sc(sc)
 		{}

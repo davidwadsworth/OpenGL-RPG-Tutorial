@@ -196,6 +196,15 @@ public:
 		return c;
 	}
 
+	// adds component to splay tree using a hashed string
+	template<typename T, typename... TArgs>
+	T* add_id_component(std::size_t id, TArgs&&... args)
+	{
+		T* c(new T(std::forward<TArgs>(args)...));
+		components_.insert(id, c);
+		return c;
+	}
+
 	// adds component to splay tree and treats it like an array, can have two of the same component in an entity
 	template<typename T, typename... TArgs>
 	T* push_back_component(TArgs&&... args)

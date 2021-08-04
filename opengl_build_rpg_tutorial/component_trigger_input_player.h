@@ -22,13 +22,19 @@ Creates our player object to move around in the overworld.
 
 namespace Component {
 	namespace Trigger {
-		namespace Input {
+		namespace Input 
+        {
 			class Player : public Component::Trigger::IInput
 			{
                 GLfloat x_, y_;
 			public:
-				Player(std::string name)
-					: Component::Trigger::IInput(name)
+
+                Player(std::string name)
+                    : Component::Trigger::IInput(name), x_(0.0f), y_(0.0f)
+                {}
+
+				Player(std::string name, GLfloat x, GLfloat y)
+					: Component::Trigger::IInput(name), x_(x), y_(y)
 				{}
 
                 void set_position(GLfloat x, GLfloat y)
