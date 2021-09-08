@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
+    <ClInclude Include="component_grouped_objects.h" />
     <ClInclude Include="component_src_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
@@ -166,8 +167,14 @@
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_material_color.h" />
     <ClInclude Include="component_system_render_draw.h" />
+    <ClInclude Include="component_system_update_traverse_tree.h" />
+    <ClInclude Include="component_tree.h" />
+    <ClInclude Include="component_trigger_add_render_systems.h" />
+    <ClInclude Include="component_trigger_clean_engine.h" />
     <ClInclude Include="component_trigger_input_display_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />
+    <ClInclude Include="component_trigger_input_textbox.h" />
+    <ClInclude Include="frarr.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h" />
     <ClInclude Include="component_collider_gjk_physics_circle_smooth.h" />
@@ -212,6 +219,7 @@
     <ClInclude Include="splay_tree.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="component_texture.h" />
+    <ClInclude Include="tree.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Data\gilsans.json" />

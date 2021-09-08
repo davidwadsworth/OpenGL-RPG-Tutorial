@@ -1,0 +1,11 @@
+{
+	"box_height" : 500,
+	"box_width" : 500,
+	"box_scale : "1.0",	
+	"font" : "gilsans",
+	"font_scale" : "1.0",
+	"align_horizontal" : "center",
+	"align_vertical" : "center",
+	"line_spacing" : "1.5",
+	"message" : "Hi there, welcome to our world!\nYou are a big guy, I would estimate about 1.5 me would fit inside you\nPlease feed me."
+}
