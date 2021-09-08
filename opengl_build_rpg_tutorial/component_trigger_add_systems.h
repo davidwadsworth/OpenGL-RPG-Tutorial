@@ -8,7 +8,8 @@ namespace Component {
 		{
 			Entity* game_obj_;
 		public:
-
+			AddSystems(Entity* game_obj)
+			{}
 		};
 	}
 }

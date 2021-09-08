@@ -281,9 +281,6 @@
     <ClInclude Include="component_tree.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_add_render_systems.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_clean_engine.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
@@ -295,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="component_grouped_objects.h">
       <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_add_systems.h">
+      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

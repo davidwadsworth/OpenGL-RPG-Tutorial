@@ -62,7 +62,7 @@ public:
 		return buffer_[i];
 	}
 
-	std::vector<T>& iterator()
+	std::vector<T> iterator()
 	{
 		return buffer_;
 	}

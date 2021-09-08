@@ -20,7 +20,7 @@ namespace Component
 		void add(T obj, std::size_t pos)
 		{
 			if (pos >= objects.size())
-				Logger::error("GroupedObject is full. Add failed", Logger::HIGH);
+				Logger::error("GroupedObject pos is out of bounds. Add failed", Logger::HIGH);
 			objects[pos].push_back(obj);
 		}
 
