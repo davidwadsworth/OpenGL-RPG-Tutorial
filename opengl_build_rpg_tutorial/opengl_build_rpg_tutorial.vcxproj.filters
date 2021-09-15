@@ -296,6 +296,9 @@
     <ClInclude Include="component_trigger_add_systems.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
+    <ClInclude Include="component_trigger_switch_systems.h">
+      <Filter>EC\Component\Trigger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">

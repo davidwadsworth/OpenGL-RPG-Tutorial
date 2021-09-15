@@ -174,6 +174,7 @@
     <ClInclude Include="component_trigger_input_display_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_textbox.h" />
+    <ClInclude Include="component_trigger_switch_systems.h" />
     <ClInclude Include="frarr.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h" />

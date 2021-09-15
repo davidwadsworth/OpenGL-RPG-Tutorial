@@ -1,15 +1,16 @@
 #pragma once
+#pragma once
 #include "component_trigger.h"
 #include "component_grouped_objects.h"
 
 namespace Component {
 	namespace Trigger
 	{
-		class AddSystems
+		class SwitchSystems
 		{
 			Entity* game_obj_;
 		public:
-			AddSystems(Entity* game_obj)
+			SwitchSystems(Entity* game_obj)
 				: game_obj_(game_obj)
 			{}
 
@@ -28,17 +29,25 @@ namespace Component {
 					auto& obj_render_systems = *game_obj_->get_component<Component::GroupedSystems>("render");
 
 					for (auto i = 0; i < obj_render_systems.objects.size(); ++i)
-						for (auto j = 0; j < obj_render_systems.objects[i].size; ++j)
-							engine_render_systems.add(obj_render_systems.objects[i][j], i);
+					{
+						auto vec_copy = obj_render_systems.objects[i];
+						obj_render_systems.objects[i] = engine_render_systems.objects[i];
+						engine_render_systems.objects[i] = vec_copy;
+
+					}
 				}
 
 				if (game_obj_->has_component<Component::GroupedSystems>("update"))
 				{
 					auto& obj_update_systems = *game_obj_->get_component<Component::GroupedSystems>("update");
 
-					for (auto i = 0; i < obj_update_systems.objects.size(); ++i)
-						for (auto j = 0; j < obj_update_systems.objects[i].size; ++j)
-							engine_update_systems.add(obj_update_systems.objects[i][j], i);
+					for (auto i = 0; i < obj_update_systems.objects.size(); ++i) 
+					{
+						auto vec_copy = obj_update_systems.objects[i];
+						obj_update_systems.objects[i] = engine_update_systems.objects[i];
+						engine_update_systems.objects[i] = vec_copy;
+
+					}
 				}
 			}
 		};

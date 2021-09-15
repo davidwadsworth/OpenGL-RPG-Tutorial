@@ -26,5 +26,5 @@ namespace Component
 
 		std::vector<FRArr<T>> objects;
 	};
-#define GroupedSystems GroupedObjects<Component::ISystem>
+#define GroupedSystems GroupedObjects<Component::ISystem*>
 }
