@@ -7,5 +7,10 @@
 	"align_horizontal" : "center",
 	"align_vertical" : "center",
 	"line_spacing" : "1.5",
-	"message" : "Hi there, welcome to our world!\nYou are a big guy, I would estimate about 1.5 me would fit inside you\nPlease feed me."
+	"padding" : "5.0",
+	"message" : [
+		"Hi there, welcome to our world!",
+		"You are a big guy, I would estimate about 1.5 me would fit inside you",
+		"Please feed me so I may grow."
+	]
 }
