@@ -169,8 +169,9 @@
     <ClInclude Include="component_system_render_draw.h" />
     <ClInclude Include="component_system_update_traverse_tree.h" />
     <ClInclude Include="component_tree.h" />
-    <ClInclude Include="component_trigger_add_systems.h" />
+    <ClInclude Include="component_trigger_add_game_obj.h" />
     <ClInclude Include="component_trigger_clean_engine.h" />
+    <ClInclude Include="component_trigger_delete_game_obj.h" />
     <ClInclude Include="component_trigger_input_display_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_textbox.h" />

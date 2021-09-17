@@ -219,4 +219,11 @@ public:
 	{
 		return components_.get_ordered_list();
 	}	
+
+	// delete all components and children
+	void clear()
+	{
+		children_.clear();
+		components_.clear();
+	}
 };

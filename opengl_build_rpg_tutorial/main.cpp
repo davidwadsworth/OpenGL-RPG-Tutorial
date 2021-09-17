@@ -10,9 +10,10 @@
 #include "logger.h"
 #include "component_array.h"
 #include <sstream>
+#include "component_grouped_objects.h"
 
 /*
-Source code for episode 15 of Build Your Own RPG series
+Source code for episode 16 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -80,8 +81,8 @@ int main()
 
     // set up used game objects
     auto engine = current_state->get_child("engine");
-    auto& render_systems = *engine->get_component<Component::SystemVector>("render");
-    auto& update_systems = *engine->get_component<Component::SystemVector>("update");
+    auto& render_systems = *engine->get_component<Component::GroupedSystems>("render");
+    auto& update_systems = *engine->get_component<Component::GroupedSystems>("update");
     auto& trigger_systems = *engine->get_component<Component::TriggerVector>("trigger");
 
     auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
@@ -104,14 +105,16 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // make updates to live entities
-        for (auto u : update_systems)
-            u->execute();
+        for (auto u : update_systems.objects)
+            for (auto i = 0; i < u.size; ++i)
+               u[i]->execute();
 
         c_renderer.begin();
         
         // make draw calls to renderer
-        for (auto r : render_systems)
-            r->execute();
+        for (auto r : render_systems.objects)
+            for (auto i = 0; i < r.size; ++i)
+                r[i]->execute();
             
         c_renderer.end();
 
@@ -122,10 +125,7 @@ int main()
         glfwPollEvents();
     }
 
-    render_systems.clear();
-    update_systems.clear();
-
-    // delete entities and their components
+    // delete game and global entities and their components
     delete Game::global;
     delete game;
     

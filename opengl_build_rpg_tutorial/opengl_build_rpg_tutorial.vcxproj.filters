@@ -293,10 +293,13 @@
     <ClInclude Include="component_grouped_objects.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_add_systems.h">
+    <ClInclude Include="component_trigger_switch_systems.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_switch_systems.h">
+    <ClInclude Include="component_trigger_add_game_obj.h">
+      <Filter>EC\Component\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_delete_game_obj.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
   </ItemGroup>

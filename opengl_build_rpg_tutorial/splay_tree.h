@@ -148,14 +148,21 @@ public:
 
     ~SplayTree()
     {
-        nodes_.clear();
-        root_ = nullptr;
+        clear();
     }
 
     SplayTree(SplayTree&&) = delete;
     SplayTree(const SplayTree&) = delete;
     SplayTree& operator=(SplayTree&&) = delete;
     SplayTree& operator=(const SplayTree&) = delete;
+    
+    // delete all objects and set the root back to nullptr
+    void clear()
+    {
+        nodes_.clear();
+        root_ = nullptr;
+    }
+
 
     // Function to insert a new key k
     // in splay tree with given root
