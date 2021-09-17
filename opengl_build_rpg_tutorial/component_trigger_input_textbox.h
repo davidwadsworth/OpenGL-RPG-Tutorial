@@ -62,9 +62,15 @@ namespace Component {
 
 					// create boxes
 
-					 
+					auto current_pos = glm::vec2(padding) + pos_;
+					auto curr_char = message.begin();
+					
+					do
+					{
+						// create line for textbox
 
 
+					} while (curr_char++ != message.end());
 				}
 			};
 		}
