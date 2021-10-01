@@ -59,15 +59,40 @@ namespace Component {
 					float line_spacing = msg_json["line_spacing"];
 					float padding = msg_json["padding"];
 					std::string message = msg_json["message"];
+					
+					// get font
+					auto font = gamestate->get_child("gilsans");
 
 					// create boxes
 
-					auto current_pos = glm::vec2(padding) + pos_;
+					auto current_pos = pos_ + padding;
 					auto curr_char = message.begin();
 					
+					Entity* current_tb = nullptr;
+					
+					auto current_pos = pos_ + padding;
+
 					do
 					{
+						// create a new textbox if needed
+						if (!current_tb)
+						{
+							current_tb = new Entity();
+							entity_->push_back_child(current_tb);
+						}
+
+
 						// create line for textbox
+
+
+						// create word
+
+
+						// check if needs a new textbox
+						if (/*TODO*/0)
+						{
+							current_tb = nullptr;
+						}
 
 
 					} while (curr_char++ != message.end());
