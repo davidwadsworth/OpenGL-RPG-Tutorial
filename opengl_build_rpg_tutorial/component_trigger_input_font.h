@@ -5,6 +5,7 @@
 #include "delimiter_split.h"
 #include "component_material_color.h"
 #include "component_src_bitmap_glyph.h"
+#include "component_template.h"
 
 /*
 Load in font bitmap fonts with json.
@@ -51,6 +52,7 @@ namespace Component {
 					auto fnt_json = nlohmann::json::parse(fnt_stream);
 
 					int line_h = fnt_json["common"]["lineHeight"];
+					entity_->add_id_component<Component::Integer>("line_h", line_h);
 					std::string image_src = fnt_json["pages"][0];
 
 					auto texture_manager = gamestate->get_child("texture manager");
