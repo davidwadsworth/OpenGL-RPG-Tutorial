@@ -95,12 +95,15 @@ namespace Component {
 
 					// HelpersBox::generate
 
+
 					auto line_h = font->get_component<Component::Integer>("line_h")->value;
+
+					auto space = line_h / 3.0f;
 
 					auto box_x = pos_.x - msg_padding_x;
 					auto box_y = pos_.y - msg_padding_y - box_h;
 
-					line_h = line_h - static_cast<int>(line_h / 3.0f / line_spacing);
+					line_h = line_h - static_cast<int>(space / line_spacing);
 
 					corner_size = corner_size * box_sc;
 					text_padding = text_padding + corner_size;
@@ -188,43 +191,28 @@ namespace Component {
 
 						// create line for textbox
 
-						switch (message[message_pos])
+						switch (*curr_char)
 						{
 						case ' ':
-							current_pos.x += SPACE;
-							++message_pos;
+							current_pos.x += space;
+							curr_char++;
 							continue;
 						case '[':
-							HelpersOptionBox::generate(box, font);
+							// TODO generate option box
 							break;
 						case '\n':
 							current_pos.y += line_h;
-							current_pos.x = x + padding;
+							current_pos.x = box_x + text_padding;
 
-							if (current_pos.y > y + h - padding)
+							if (current_pos.y > box_y + box_h - text_padding)
 								return;
 
-							++message_pos;
+							curr_char++;
 							break;
-						case '|':
-							++message_pos;
-							return;
 						default:
 							break;
 						}
 
-						auto word = HelpersText::generate_word(&message[message_pos], ' ', '\0', font);
-
-						if (word.length + current_pos.x > x + w - padding)
-						{
-							current_pos.y += line_h;
-							current_pos.x = x + padding;
-
-							if (current_pos.y + line_h > y + h - padding)
-								return;
-						}
-
-						word.generate(current_pos, c_box, c_font_tex, box, font_scale);
 
 						// HelpersText::generate_word
 
@@ -234,7 +222,7 @@ namespace Component {
 
 						auto c_font = font->get_component<Component::BitMapFont>();
 
-						for (auto i = 0; message[i] != stop && message[i] != delimiter; ++i)
+						for (auto i = 0; *curr_char != ' ' && *curr_char != message.end(); ++i)
 						{
 							auto font_char = font->get_child(message[i] - c_font->child_off);
 							temp_word.characters.push_back(font_char);
@@ -265,6 +253,16 @@ namespace Component {
 							auto cur_char_dest = cur_char->get_component<Component::Dest>();
 							cur_char_dest->dest = glm::vec4(current_x1, current_y1, current_x2, current_y2);
 						}
+
+						if (word.length + current_pos.x > x + w - padding)
+						{
+							current_pos.y += line_h;
+							current_pos.x = x + padding;
+
+							if (current_pos.y + line_h > y + h - padding)
+								return;
+						}
+
 
 						// check if needs a new textbox
 						if (/*TODO*/0)

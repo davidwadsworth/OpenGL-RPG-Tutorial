@@ -29,10 +29,6 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					// get player shader and textures
-					auto& c_flesh_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("gilsans");
-					auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("font");
-
 					// get renderer
 					auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
