@@ -9,6 +9,7 @@
 #include "component_material.h"
 #include "component_system_render_camera_draw.h"
 #include "component_controller_keyboard.h"
+#include "component_src_bitmap_glyph.h"
 
 /*
 @author David Wadsworth
@@ -216,50 +217,40 @@ namespace Component {
 
 						// HelpersText::generate_word
 
-						temp_word;
+						std::vector<Component::Transform*> temp_transforms;
+						std::vector<Component::BitMapGlyph*> temp_glyphs;
+						auto temp_word_length = 0;
+
 
 						GLint prev_char = -1;
 
-						auto c_font = font->get_component<Component::BitMapFont>();
-
-						for (auto i = 0; *curr_char != ' ' && *curr_char != message.end(); ++i)
+						for (auto i = 0; *curr_char != ' ' && curr_char != message.end(); ++i)
 						{
-							auto font_char = font->get_child(message[i] - c_font->child_off);
-							temp_word.characters.push_back(font_char);
+							auto c_bitmap_char = font->get_component<Component::BitMapGlyph>(message[i]);
 
-							auto c_bitmap_char = font_char->get_component<Component::BitMapGlyph>();
-
-							temp_word.length += c_bitmap_char->advance + HelpersText::kerning(c_bitmap_char, prev_char);
+							temp_word_length += c_bitmap_char->advance + c_bitmap_char->check_kerning(prev_char);
 							prev_char = message[i];
-							temp_word.w.push_back(prev_char);
 
+							auto curr_x = current_pos.x + c_bitmap_char->x_off + c_bitmap_char->check_kerning(prev_char);
+							auto curr_y = current_pos.y + c_bitmap_char->y_off;
+							auto ch_w = c_bitmap_char->w;
+							auto ch_h = c_bitmap_char->h;
 
-							// HelpersText::word.generate()
-							auto c_bitmap_char = this->characters[i]->get_component<Component::BitMapGlyph>();
-							auto& src = this->characters[i]->get_component<Component::Src>()->src;
+							current_pos.x += c_bitmap_char->advance + c_bitmap_char->check_kerning(prev_char);
 
-							auto current_x1 = current_pos.x + c_bitmap_char->x_off + HelpersText::kerning(c_bitmap_char, prev_char);
-							auto current_y1 = current_pos.y + c_bitmap_char->y_off;
-							auto current_x2 = current_x1 + c_bitmap_char->width;
-							auto current_y2 = current_y1 + c_bitmap_char->height;
+							auto cur_char_transform = entity_->push_back_component<Component::Transform>(
+								Rect { curr_x, curr_y, ch_w, ch_h }, font_sc);
 
-							current_pos.x += c_bitmap_char->advance + HelpersText::kerning(c_bitmap_char, prev_char);
-
-							auto cur_char = box->get_child(c_box->child_pos++);
-
-							auto cur_char_src = cur_char->get_component<Component::Src>();
-							cur_char_src->src = src;
-
-							auto cur_char_dest = cur_char->get_component<Component::Dest>();
-							cur_char_dest->dest = glm::vec4(current_x1, current_y1, current_x2, current_y2);
+							temp_transforms.push_back(cur_char_transform);
+							temp_glyphs.push_back(c_bitmap_char);
 						}
 
-						if (word.length + current_pos.x > x + w - padding)
+						if (temp_word_length + current_pos.x > box_x + box_w - text_padding)
 						{
 							current_pos.y += line_h;
-							current_pos.x = x + padding;
+							current_pos.x = box_x + text_padding;
 
-							if (current_pos.y + line_h > y + h - padding)
+							if (current_pos.y + line_h > box_y + box_h - text_padding)
 								return;
 						}
 
