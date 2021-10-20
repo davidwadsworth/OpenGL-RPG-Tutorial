@@ -94,9 +94,6 @@ namespace Component {
 
 					// create boxes
 
-					// HelpersBox::generate
-
-
 					auto line_h = font->get_component<Component::Integer>("line_h")->value;
 
 					auto space = line_h / 3.0f;
@@ -178,18 +175,16 @@ namespace Component {
 					auto current_pos = pos_ + text_padding;
 					auto curr_char = message.begin();
 					
-					Entity* current_tb = nullptr;
-					
+					Entity* current_tb = current_tb = new Entity();
+					entity_->push_back_child(current_tb);
+
+					std::vector<std::vector<Component::Transform*>> tb_lines;
+					tb_lines.push_back(std::vector<Component::Transform*>());
+					auto line_count = 0;
+					std::vector<Component::Transform*>* curr_line = &tb_lines[line_count];
+
 					do
 					{
-						// create a new textbox if needed
-						if (!current_tb)
-						{
-							current_tb = new Entity();
-							entity_->push_back_child(current_tb);
-						}
-
-
 						// create line for textbox
 
 						switch (*curr_char)
@@ -206,7 +201,13 @@ namespace Component {
 							current_pos.x = box_x + text_padding;
 
 							if (current_pos.y > box_y + box_h - text_padding)
-								return;
+							{
+								current_tb = new Entity();
+								entity_->push_back_child(current_tb);
+
+								tb_lines.clear();
+								line_count = 0;
+							}
 
 							curr_char++;
 							break;
@@ -214,13 +215,9 @@ namespace Component {
 							break;
 						}
 
-
-						// HelpersText::generate_word
-
 						std::vector<Component::Transform*> temp_transforms;
 						std::vector<Component::BitMapGlyph*> temp_glyphs;
 						auto temp_word_length = 0;
-
 
 						GLint prev_char = -1;
 
@@ -251,16 +248,16 @@ namespace Component {
 							current_pos.x = box_x + text_padding;
 
 							if (current_pos.y + line_h > box_y + box_h - text_padding)
-								return;
+							{
+								current_tb = new Entity();
+								entity_->push_back_child(current_tb);
+								
+								tb_lines.clear();
+								line_count = 0;
+							}
+							tb_lines.push_back(std::vector<Component::Transform*>());
+							curr_line = &tb_lines[++line_count];
 						}
-
-
-						// check if needs a new textbox
-						if (/*TODO*/0)
-						{
-							current_tb = nullptr;
-						}
-
 
 					} while (curr_char++ != message.end());
 				}
