@@ -6,11 +6,11 @@
 namespace Component {
 	namespace Trigger
 	{
-		class AddGameObj
+		class RemoveGameObj
 		{
 			Entity* game_obj_;
 		public:
-			AddGameObj(Entity* game_obj)
+			RemoveGameObj(Entity* game_obj)
 				: game_obj_(game_obj)
 			{}
 

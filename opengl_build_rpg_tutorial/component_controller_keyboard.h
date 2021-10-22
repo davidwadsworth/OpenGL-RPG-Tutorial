@@ -14,6 +14,7 @@ namespace Component {
 				right = GLFW_KEY_RIGHT,
 				down = GLFW_KEY_DOWN,
 				up = GLFW_KEY_UP,
+				action_1 = GLFW_KEY_Z,
 			};
 			Component::KeyboardArray* keys_;
 		public:
@@ -37,6 +38,10 @@ namespace Component {
 			bool key_down_up() override
 			{
 				return (*keys_)[up];
+			}
+			bool key_down_action_1() override
+			{
+				return (*keys_)[action_1];
 			}
 		};
 	}
