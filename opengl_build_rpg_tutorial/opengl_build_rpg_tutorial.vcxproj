@@ -28,26 +28,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -157,6 +157,7 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_grouped_objects.h" />
+    <ClInclude Include="component_observer.h" />
     <ClInclude Include="component_src_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
@@ -172,11 +173,14 @@
     <ClInclude Include="component_tree.h" />
     <ClInclude Include="component_trigger_add_game_obj.h" />
     <ClInclude Include="component_trigger_clean_engine.h" />
+    <ClInclude Include="component_trigger_delete_entity.h" />
     <ClInclude Include="component_trigger_delete_game_obj.h" />
-    <ClInclude Include="component_trigger_input_display_text.h" />
+    <ClInclude Include="component_trigger_input_dependent_display_text.h" />
+    <ClInclude Include="component_trigger_input_dependent_tracker.h" />
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_textbox.h" />
     <ClInclude Include="component_trigger_switch_systems.h" />
+    <ClInclude Include="doubly_linked_list.h" />
     <ClInclude Include="frarr.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h" />
@@ -187,7 +191,7 @@
     <ClInclude Include="component_controller_keyboard.h" />
     <ClInclude Include="component_movement.h" />
     <ClInclude Include="component_system_update_check_collision.h" />
-    <ClInclude Include="component_trigger_input_collider_map.h" />
+    <ClInclude Include="component_trigger_input_dependent_collider_map.h" />
     <ClInclude Include="component_trigger_input_collision_world.h" />
     <ClInclude Include="component_trigger_input_engine.h" />
     <ClInclude Include="component_src.h" />
@@ -202,10 +206,10 @@
     <ClInclude Include="component_trigger_input_camera.h" />
     <ClInclude Include="component_trigger_input_controller.h" />
     <ClInclude Include="component_trigger_input_gamestate_overworld.h" />
-    <ClInclude Include="component_trigger_input_player.h" />
+    <ClInclude Include="component_trigger_input_dependent_player.h" />
     <ClInclude Include="component_trigger_input_shader.h" />
     <ClInclude Include="component_trigger_input_texture.h" />
-    <ClInclude Include="component_trigger_input_tilemap.h" />
+    <ClInclude Include="component_trigger_input_dependent_tilemap.h" />
     <ClInclude Include="component_trigger.h" />
     <ClInclude Include="component_trigger_input_tileset.h" />
     <ClInclude Include="component_vector.h" />
@@ -226,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Data\gilsans.json" />
+    <None Include="Resources\Data\test_message.json" />
     <None Include="Resources\Shaders\font.fs" />
     <None Include="Resources\Shaders\font.vs" />
     <None Include="Resources\Shaders\sprite.fs" />

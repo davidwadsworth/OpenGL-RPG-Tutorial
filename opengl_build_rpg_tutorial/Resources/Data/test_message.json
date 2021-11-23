@@ -10,7 +10,7 @@
 	"text_padding" : "5.0",
 	"msg_padding_x" : "0.0",
 	"msg_padding_y" : "10.0",
-	"corner_size" : 10,
+	"corner_size" : "10.0",
 	"speech_box": "false",
 	"message" : [
 		"Hi there, welcome to our world!",

@@ -10,7 +10,7 @@ struct IComponent
 	static long long count; // count component references
 
 	IComponent() {++count;}
-	virtual ~IComponent() { --count; } // Make sure if overloaded to call ~Comp() else it will falsely acuse you of a memory leak
+	virtual ~IComponent() { --count; } // Make sure if overloaded to call ~Comp()
 
 	// delete all functions that could possibly copy one component onto another
 	IComponent(const IComponent&) = delete;

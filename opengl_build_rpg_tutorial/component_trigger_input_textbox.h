@@ -10,6 +10,10 @@
 #include "component_system_render_camera_draw.h"
 #include "component_controller_keyboard.h"
 #include "component_src_bitmap_glyph.h"
+#include "component_trigger_delete_game_obj.h"
+#include "component_trigger_add_game_obj.h"
+#include "component_trigger_delete_entity.h"
+#include "component_trigger_switch_systems.h"
 
 /*
 @author David Wadsworth
@@ -66,7 +70,7 @@ namespace Component {
 					float text_padding = msg_json["text_padding"];
 					float msg_padding_x = msg_json["msg_padding_x"];
 					float msg_padding_y = msg_json["msg_padding_y"];
-					int corner_size = msg_json["corner_size"];
+					float corner_size = msg_json["corner_size"];
 					bool speech_box = msg_json["speech_box"] == "true";
 					std::string message = msg_json["message"];
 					
@@ -175,7 +179,7 @@ namespace Component {
 					auto current_pos = pos_ + text_padding;
 					auto curr_char = message.begin();
 					
-					Entity* current_tb = current_tb = new Entity();
+					auto current_tb = new Entity();
 					entity_->push_back_child(current_tb);
 
 					std::vector<std::vector<Component::Transform*>> tb_lines;
@@ -260,6 +264,18 @@ namespace Component {
 						}
 
 					} while (curr_char++ != message.end());
+
+					auto e_pause = new Entity();
+					e_pause->add_id_component<Component::GroupedSystems>("update");
+					entity_->add_id_child(e_pause, "pause");
+
+					entity_->push_back_component<Component::Trigger::SwitchSystems>(e_pause);
+					
+					// get the live triggers to be executed after game loop
+					auto& c_engine_triggers = *gamestate->get_child("engine")->get_component<Component::TriggerVector>();
+
+
+
 				}
 			};
 		}
