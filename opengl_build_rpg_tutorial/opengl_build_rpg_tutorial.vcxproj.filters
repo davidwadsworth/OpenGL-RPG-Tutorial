@@ -263,9 +263,6 @@
     <ClInclude Include="component_system_render_draw.h">
       <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_textbox.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
     <ClInclude Include="tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -316,6 +313,9 @@
     </ClInclude>
     <ClInclude Include="doubly_linked_list.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_dependent_textbox.h">
+      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

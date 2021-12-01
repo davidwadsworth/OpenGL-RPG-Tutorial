@@ -23,6 +23,7 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override
 				{
+					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("collision world");
 					this->entity_->add_component<Component::GJKVector>();
 				}
 			};
