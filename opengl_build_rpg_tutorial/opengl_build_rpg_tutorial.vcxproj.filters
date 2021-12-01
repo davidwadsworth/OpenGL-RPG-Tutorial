@@ -311,9 +311,6 @@
     <ClInclude Include="component_trigger_input_dependent_tilemap.h">
       <Filter>EC\Component\Trigger\Input\Dependent</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_tracker.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
     <ClInclude Include="component_observer.h">
       <Filter>EC\Component</Filter>
     </ClInclude>

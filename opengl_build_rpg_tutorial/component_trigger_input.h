@@ -16,9 +16,11 @@ namespace Component {
 			Entity* entity_;
 		private:
 			Entity* parent_;
-			std::string name_;
-			bool 
-			virtual void create(Entity* gamestate) = 0;
+			std::string name_; 
+			virtual void create(Entity* gamestate)
+			{
+
+			}
 		public:
 			
 			IInput(Entity* parent, std::string name)

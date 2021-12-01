@@ -15,52 +15,56 @@ Display text to the screen without regard to the map.
 
 namespace Component {
 	namespace Trigger {
-		namespace Input
-		{
-			class DisplayText : public Component::Trigger::IInput
+		namespace Input {
+			namespace Dependent
 			{
-				std::string text_;
-				glm::vec2 pos_;
-			public:
-				DisplayText(std::string name, std::string text, glm::vec2 pos)
-					: Component::Trigger::IInput(name), text_(text), pos_(pos)
-				{}
-
-			private:
-				void create(Entity* gamestate) override final
+				class DisplayText : public Component::Trigger::IInput
 				{
-					// get renderer
-					auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
+					std::string text_;
+					glm::vec2 pos_;
+				public:
+					DisplayText(std::string name, std::string text, glm::vec2 pos)
+						: Component::Trigger::IInput(name), text_(text), pos_(pos)
+					{}
 
-					// get render systems
-					auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
-
-					auto font = gamestate->get_child("gilsans");
-
-					// hacky way to get font material, might change this, might not.
-					auto& c_font_material = *font->get_component<Component::Material>(0);
-
-					auto x_pos = pos_.x;
-					char prev_c = 0;
-
-					for (auto c : text_)
+				private:
+					void create(Entity* gamestate) override final
 					{
-						auto& c_bm_glyph = *font->get_component<Component::BitMapGlyph>(static_cast<std::size_t>(c));
+						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("display text");
 
-						auto& c_transform = *entity_->push_back_component<Component::Transform>();
+						// get renderer
+						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
-						c_transform.x = x_pos + c_bm_glyph.x_off + c_bm_glyph.check_kerning(prev_c);
-						c_transform.y = pos_.y + c_bm_glyph.y_off;
-						c_transform.w = c_bm_glyph.w;
-						c_transform.h = c_bm_glyph.h;
+						// get render systems
+						auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
 
-						x_pos += c_bm_glyph.advance;
+						auto font = gamestate->get_child("gilsans");
 
-						auto crs_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_bm_glyph, c_transform, c_font_material);
-						render_systems.push_back(crs_draw);
+						// hacky way to get font material, might change this, might not.
+						auto& c_font_material = *font->get_component<Component::Material>(0);
+
+						auto x_pos = pos_.x;
+						char prev_c = 0;
+
+						for (auto c : text_)
+						{
+							auto& c_bm_glyph = *font->get_component<Component::BitMapGlyph>(static_cast<std::size_t>(c));
+
+							auto& c_transform = *entity_->push_back_component<Component::Transform>();
+
+							c_transform.x = x_pos + c_bm_glyph.x_off + c_bm_glyph.check_kerning(prev_c);
+							c_transform.y = pos_.y + c_bm_glyph.y_off;
+							c_transform.w = c_bm_glyph.w;
+							c_transform.h = c_bm_glyph.h;
+
+							x_pos += c_bm_glyph.advance;
+
+							auto crs_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_bm_glyph, c_transform, c_font_material);
+							render_systems.push_back(crs_draw);
+						}
 					}
-				}
-			};
+				};
+			}
 		}
 
 	}

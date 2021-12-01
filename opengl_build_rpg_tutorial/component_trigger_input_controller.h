@@ -22,6 +22,7 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
+					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("controller");
 					entity_->add_component<Component::Controller::Keyboard>();
 				}
 			};

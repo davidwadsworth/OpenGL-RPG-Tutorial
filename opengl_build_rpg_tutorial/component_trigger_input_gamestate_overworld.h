@@ -6,12 +6,12 @@
 #include "component_trigger_input_renderer.h"
 #include "component_trigger_input_shader.h"
 #include "component_trigger_input_texture.h"
-#include "component_trigger_input_tilemap.h"
-#include "component_trigger_input_player.h"
+#include "component_trigger_input_dependent_tilemap.h"
+#include "component_trigger_input_dependent_player.h"
 #include "component_trigger_input_collision_world.h"
-#include "component_trigger_input_collider_map.h"
+#include "component_trigger_input_dependent_collider_map.h"
 #include "component_trigger_input_font.h"
-#include "component_trigger_input_display_text.h"
+#include "component_trigger_input_dependent_display_text.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -34,6 +34,7 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override final
 					{
+						entity_->push_back_component<Component::Trigger::IInput>("observer");
 						entity_->push_back_component<Component::Trigger::Input::Engine>("engine");
 						entity_->push_back_component<Component::Trigger::Input::Camera>("camera", 64.0f * 32.0f);
 						entity_->push_back_component<Component::Trigger::Input::Controller>("controller");
@@ -42,10 +43,10 @@ namespace Component {
 						entity_->push_back_component<Component::Trigger::Input::Texture>("texture manager");
 						entity_->push_back_component<Component::Trigger::Input::Font>("gilsans", "resources/data/gilsans.json");
 						entity_->push_back_component<Component::Trigger::Input::CollisionWorld>("collision world");
-						entity_->push_back_component<Component::Trigger::Input::TileMap>("tilemap", "resources/data/TestTileMapGJK.json");
-						entity_->push_back_component<Component::Trigger::Input::Player>("player", (GLfloat)Game::width, 792.0f);
-						entity_->push_back_component<Component::Trigger::Input::ColliderMap>("collider map");
-						entity_->push_back_component<Component::Trigger::Input::DisplayText>("display", "Hello world!", glm::vec2(0.0f, 0.0f));
+						entity_->push_back_component<Component::Trigger::Input::Dependent::TileMap>("tilemap", "resources/data/TestTileMapGJK.json");
+						entity_->push_back_component<Component::Trigger::Input::Dependent::Player>("player", (GLfloat)Game::width, 792.0f);
+						entity_->push_back_component<Component::Trigger::Input::Dependent::ColliderMap>("collider map");
+						entity_->push_back_component<Component::Trigger::Input::Dependent::DisplayText>("display", "Hello world!", glm::vec2(0.0f, 0.0f));
 					}
 				};
 			}

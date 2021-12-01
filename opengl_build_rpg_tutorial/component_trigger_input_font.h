@@ -28,6 +28,8 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
+					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("font");
+
 					// load tilemap from file
 					std::stringstream fnt_stream;
 

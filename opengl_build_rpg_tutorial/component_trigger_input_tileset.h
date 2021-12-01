@@ -23,6 +23,8 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
+					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("tileset");
+
 					// load shaders from file
 					std::stringstream ts_stream;
 

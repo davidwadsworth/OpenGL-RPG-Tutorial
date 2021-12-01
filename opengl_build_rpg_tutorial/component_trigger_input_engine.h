@@ -25,6 +25,7 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
+					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("engine");
 					entity_->add_id_component<Component::GroupedSystems>("update");
 					entity_->add_id_component<Component::GroupedSystems>("render");
 					entity_->add_id_component<Component::TriggerVector>("trigger");
