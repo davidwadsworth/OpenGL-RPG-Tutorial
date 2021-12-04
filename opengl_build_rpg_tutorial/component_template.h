@@ -1,7 +1,6 @@
 #pragma once
 #include "component.h"
 
-
 namespace Component
 {
 

@@ -15,6 +15,7 @@
 #include "component_trigger_delete_entity.h"
 #include "component_trigger_switch_systems.h"
 #include "component_observer.h"
+#include "component_doubly_linked_list.h"
 
 /*
 @author David Wadsworth
@@ -37,8 +38,8 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override final
 					{
-						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("textbox");
-
+						auto& c_tb_observer = *gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("textbox");
+						auto& c_system_list = *entity_->push_back_component<Component::SystemList>();
 						// load tilemap from file
 						std::stringstream msg_stream;
 
@@ -171,6 +172,16 @@ namespace Component {
 						auto csr_r_side_camera_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_r_side_src, c_r_side_trans, c_tb_material, c_cam_transform);
 						auto csr_b_side_camera_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_b_side_src, c_b_side_trans, c_tb_material, c_cam_transform);
 
+						c_system_list.push_back(csr_tl_corner_camera_draw);
+						c_system_list.push_back(csr_tr_corner_camera_draw);
+						c_system_list.push_back(csr_bl_corner_camera_draw);
+						c_system_list.push_back(csr_br_corner_camera_draw);
+						c_system_list.push_back(csr_t_side_camera_draw);
+						c_system_list.push_back(csr_l_side_camera_draw);
+						c_system_list.push_back(csr_r_side_camera_draw);
+						c_system_list.push_back(csr_b_side_camera_draw);
+
+
 						// arrow transform (used only with speech textboxes)
 						if (speech_box)
 						{
@@ -277,8 +288,6 @@ namespace Component {
 
 						// get the live triggers to be executed after game loop
 						auto& c_engine_triggers = *gamestate->get_child("engine")->get_component<Component::TriggerVector>();
-
-
 					}
 				};
 			}
