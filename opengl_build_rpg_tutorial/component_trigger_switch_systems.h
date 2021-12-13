@@ -6,7 +6,7 @@
 namespace Component {
 	namespace Trigger
 	{
-		class SwitchSystems
+		class SwitchSystems : public ITrigger
 		{
 			Entity* game_obj_;
 		public:
@@ -14,7 +14,7 @@ namespace Component {
 				: game_obj_(game_obj)
 			{}
 
-			void execute(Entity* gamestate)
+			void execute(Entity* gamestate) override
 			{
 				auto obj_render = game_obj_->get_child("render");
 				auto obj_update = game_obj_->get_child("update");

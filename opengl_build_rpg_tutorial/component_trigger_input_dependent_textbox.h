@@ -40,9 +40,6 @@ namespace Component {
 					{
 						auto& c_tb_observer = *gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("textbox");
 						
-						auto tb_reference = new Entity();
-						entity_->add_id_child(tb_reference, "reference");
-						auto& c_tb_render_list = *tb_reference->add_id_component<Component::SystemList>("render");
 			
 						// load tilemap from file
 						std::stringstream msg_stream;
@@ -176,14 +173,6 @@ namespace Component {
 						auto csr_r_side_camera_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_r_side_src, c_r_side_trans, c_tb_material, c_cam_transform);
 						auto csr_b_side_camera_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_b_side_src, c_b_side_trans, c_tb_material, c_cam_transform);
 
-						c_tb_render_list.push_back(csr_tl_corner_camera_draw);
-						c_tb_render_list.push_back(csr_tr_corner_camera_draw);
-						c_tb_render_list.push_back(csr_bl_corner_camera_draw);
-						c_tb_render_list.push_back(csr_br_corner_camera_draw);
-						c_tb_render_list.push_back(csr_t_side_camera_draw);
-						c_tb_render_list.push_back(csr_l_side_camera_draw);
-						c_tb_render_list.push_back(csr_r_side_camera_draw);
-						c_tb_render_list.push_back(csr_b_side_camera_draw);
 
 
 						// arrow transform (used only with speech textboxes)
@@ -282,13 +271,28 @@ namespace Component {
 
 						} while (curr_char++ != message.end());
 
-						//TODO
+						auto tb_reference = new Entity();
+						entity_->add_id_child(tb_reference, "reference");
+						auto& c_tb_render_list = *tb_reference->add_id_component<Component::SystemList>("render systems");
+
+						c_tb_render_list.push_back(csr_tl_corner_camera_draw);
+						c_tb_render_list.push_back(csr_tr_corner_camera_draw);
+						c_tb_render_list.push_back(csr_bl_corner_camera_draw);
+						c_tb_render_list.push_back(csr_br_corner_camera_draw);
+						c_tb_render_list.push_back(csr_t_side_camera_draw);
+						c_tb_render_list.push_back(csr_l_side_camera_draw);
+						c_tb_render_list.push_back(csr_r_side_camera_draw);
+						c_tb_render_list.push_back(csr_b_side_camera_draw);
+
+						auto& c_tb_creation_trigger_list = *tb_reference->add_id_component<Component::TriggerList>("creation triggers");
+						
+
 						auto e_pause = new Entity();
-						auto e_pause->add_id_component<Component::SystemList>("update");
-						entity_->add_id_child(e_pause, "pause");
+						auto& c_pause_render_vector = *e_pause->add_id_component<Component::SystemVector>("update");
 
-						auto entity_->push_back_component<Component::Trigger::SwitchSystems>(e_pause);
+						auto ct_tb_pause_update = entity_->push_back_component<Component::Trigger::SwitchSystems>();
 
+						c_tb_creation_trigger_list.push_back(ct_tb_pause_update);
 
 						// get the live triggers to be executed after game loop
 						auto& c_engine_triggers = *gamestate->get_child("engine")->get_component<Component::TriggerVector>();

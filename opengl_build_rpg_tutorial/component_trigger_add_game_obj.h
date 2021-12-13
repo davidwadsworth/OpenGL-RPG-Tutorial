@@ -6,7 +6,7 @@
 namespace Component {
 	namespace Trigger
 	{
-		class AddGameObj
+		class AddGameObj : public Component::ITrigger
 		{
 			Entity* game_obj_;
 		public:
@@ -14,7 +14,7 @@ namespace Component {
 				: game_obj_(game_obj)
 			{}
 
-			void execute(Entity* gamestate)
+			void execute(Entity* gamestate) override
 			{
 				auto engine = gamestate->get_child("engine");
 

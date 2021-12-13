@@ -5,10 +5,10 @@
 namespace Component {
 	namespace Trigger
 	{
-		class CleanEngine
+		class CleanEngine : public ITrigger
 		{
 		public:
-			void execute(Entity* gamestate)
+			void execute(Entity* gamestate) override
 			{
 				auto engine = gamestate->get_child("engine");
 				auto grouped_render_systems = engine->get_component<Component::GroupedSystems>("render");
