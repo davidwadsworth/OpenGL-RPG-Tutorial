@@ -10,7 +10,7 @@ class SplayTree
     {
     public:
         Node(std::size_t key, T* value)
-            : key(key), value(value)
+            : key(key), value(value), left(nullptr), right(nullptr)
         {}
 
         ~Node()

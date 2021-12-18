@@ -23,8 +23,7 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("shader");
-
+					
 					// load in used shaders
 					auto vs_file_name = "resources/shaders/sprite.vs";
 					auto fs_file_name = "resources/shaders/sprite.fs";

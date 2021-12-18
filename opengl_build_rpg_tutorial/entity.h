@@ -7,6 +7,7 @@
 #include <iostream>
 #include "splay_tree.h"
 #include "logger.h"
+#include <string>
 
 using component_id = std::size_t;
 
@@ -97,7 +98,7 @@ public:
 		children_.remove(hashed_str);
 	}
 
-	GLuint children_size()
+	std::size_t children_size()
 	{
 		return children_.size();
 	}
@@ -128,9 +129,14 @@ public:
 		auto r_comp = components_.search(get_component_id<T>());
 
 		if (!r_comp)
-			Logger::error("could not find component, component id = " + get_component_id<T>(), Logger::HIGH);
+			Logger::error("could not find component, component id = " + std::to_string(get_component_id<T>()), Logger::HIGH);
 
-		return static_cast<T*>(r_comp);
+		auto casted_r_comp = dynamic_cast<T*>(r_comp);
+
+		if (!casted_r_comp)
+			Logger::error("component not of casted type", Logger::HIGH);
+
+		return casted_r_comp;
 	}
 
 	// searches component tree for templated component at pos
@@ -142,7 +148,12 @@ public:
 		if (!r_comp)
 			Logger::error("could not find component, pos = " + pos, Logger::HIGH);
 
-		return static_cast<T*>(r_comp);
+		auto casted_r_comp = dynamic_cast<T*>(r_comp);
+
+		if (!casted_r_comp)
+			Logger::error("component not of casted type, pos = " + pos, Logger::HIGH);
+
+		return casted_r_comp;
 	}
 
 	// searches component tree for specific component of hashed string
@@ -155,7 +166,13 @@ public:
 		if (!r_comp)
 			Logger::error("could not find component, str id = " + id, Logger::HIGH);
 
-		return static_cast<T*>(r_comp);
+		auto casted_r_comp = dynamic_cast<T*>(r_comp);
+
+		if (!casted_r_comp)
+			Logger::error("component not of casted type, str id = " + id, Logger::HIGH);
+
+
+		return casted_r_comp;
 	}
 
 	// checks if unique id of component is located in component tree

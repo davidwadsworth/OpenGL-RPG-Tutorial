@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #include "component_vector.h"
 #include "component_trigger_input.h"
 #include "component_texture.h"
@@ -6,10 +7,11 @@
 #include "component_renderer.h"
 #include "component_src_bitmap_glyph.h"
 #include "component_system_render_draw.h"
+#include "component_observer.h"
 
 /*
 Display text to the screen without regard to the map.
- 
+
 @author David Wadsworth
 */
 
@@ -18,12 +20,12 @@ namespace Component {
 		namespace Input {
 			namespace Dependent
 			{
-				class DisplayText : public Component::Trigger::IInput
+				class Text : public Component::Trigger::IInput
 				{
 					std::string text_;
 					glm::vec2 pos_;
 				public:
-					DisplayText(std::string name, std::string text, glm::vec2 pos)
+					Text(std::string name, std::string text, glm::vec2 pos)
 						: Component::Trigger::IInput(name), text_(text), pos_(pos)
 					{}
 

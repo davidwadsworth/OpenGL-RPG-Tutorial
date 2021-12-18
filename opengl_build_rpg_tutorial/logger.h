@@ -10,7 +10,7 @@ class Logger
 public:
 	Logger() = delete;
 
-	static enum SEVERITY
+	enum SEVERITY
 	{
 		LOW,
 		MEDIUM,

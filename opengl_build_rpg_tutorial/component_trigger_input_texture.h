@@ -22,12 +22,16 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("texture");
 
 					auto flesh_tex_name = "resources/images/flesh_full.png";
 
 					auto& c_flesh_tex = *entity_->add_id_component<Component::Texture>("flesh_full");
 					c_flesh_tex.load(flesh_tex_name);
+
+					auto textbox_file_name = "resources/images/textbox.png";
+
+					auto& c_textbox_tex = *entity_->add_id_component<Component::Texture>("textbox");
+					c_textbox_tex.load(textbox_file_name);
 				}
 			};
 		}

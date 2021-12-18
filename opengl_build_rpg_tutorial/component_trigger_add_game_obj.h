@@ -26,8 +26,8 @@ namespace Component {
 				{
 					auto& obj_render_systems = *game_obj_->get_component<Component::GroupedSystems>("render");
 
-					for (auto i = 0; i < obj_render_systems.objects.size(); ++i)
-						for (auto j = 0; j < obj_render_systems.objects[i].size; ++j)
+					for (auto i = 0u; i < obj_render_systems.objects.size(); ++i)
+						for (auto j = 0u; j < obj_render_systems.objects[i].size; ++j)
 							engine_render_systems.add(obj_render_systems.objects[i][j], i);
 				}
 
@@ -35,8 +35,8 @@ namespace Component {
 				{
 					auto& obj_update_systems = *game_obj_->get_component<Component::GroupedSystems>("update");
 
-					for (auto i = 0; i < obj_update_systems.objects.size(); ++i)
-						for (auto j = 0; j < obj_update_systems.objects[i].size; ++j)
+					for (auto i = 0u; i < obj_update_systems.objects.size(); ++i)
+						for (auto j = 0u; j < obj_update_systems.objects[i].size; ++j)
 							engine_update_systems.add(obj_update_systems.objects[i][j], i);
 				}
 

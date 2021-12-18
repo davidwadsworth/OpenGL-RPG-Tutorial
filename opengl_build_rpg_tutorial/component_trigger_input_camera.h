@@ -4,6 +4,7 @@
 #include "rect.h"
 #include <glm/vec2.hpp>
 #include "component_observer.h"
+#include "component_trigger_input_observer.h"
 
 /*
 Creates our local camera using width and height
@@ -28,7 +29,9 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("camera");
+					auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
+					cti_observer.add_subscriber(name_);
+
 					entity_->add_component<Component::Transform>(Rect{ 0.0f, 0.0f, width_, height_ });
 				}
 

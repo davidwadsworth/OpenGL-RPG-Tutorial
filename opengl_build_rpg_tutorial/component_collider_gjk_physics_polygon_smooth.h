@@ -18,7 +18,7 @@ namespace Component {
 					{
 						GLfloat shortest_magnitude_, shortest_distance_;
 
-						void find_closest_distance(float& closest_distance, glm::vec2& closest_vertex, glm::vec2 p1, glm::vec2 p2, glm::vec2 direction, int index)
+						void find_closest_distance(float& closest_distance, glm::vec2& closest_vertex, glm::vec2 p1, glm::vec2 p2, glm::vec2 direction, std::size_t index)
 						{
 							auto p = p2 - p1;
 							auto p_magnitude = p.x * p.x + p.y * p.y;

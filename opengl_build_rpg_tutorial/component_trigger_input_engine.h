@@ -17,17 +17,17 @@ namespace Component {
 		{
 			class Engine : public Component::Trigger::IInput
 			{
+				std::size_t group_sizes_;
 			public:
-				Engine(std::string name)
-					: Component::Trigger::IInput(name)
+				Engine(std::string name, std::size_t group_sizes)
+					: Component::Trigger::IInput(name), group_sizes_(group_sizes)
 				{}
 
 			private:
 				void create(Entity* gamestate) override final
 				{
-					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("engine");
-					entity_->add_id_component<Component::GroupedSystems>("update");
-					entity_->add_id_component<Component::GroupedSystems>("render");
+					entity_->add_id_component<Component::SystemVector>("update");
+					entity_->add_id_component<Component::SystemVector>("render");
 					entity_->add_id_component<Component::TriggerVector>("trigger");
 					entity_->add_component<Component::Trigger::CleanEngine>();
 				}

@@ -26,7 +26,9 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("renderer");
+					auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
+					cti_observer.add_subscriber(name_);
+
 					// create a renderer object and input appropriate attribute sizes and max amount of sprites on screen at once
 					// 2 = pos, 2 = coords
 					entity_->add_component<Component::Renderer>(std::vector<GLuint>{ 2, 2 }, MAX_SPRITES);

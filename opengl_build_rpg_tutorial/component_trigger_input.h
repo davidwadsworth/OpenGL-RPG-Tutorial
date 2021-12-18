@@ -14,23 +14,24 @@ namespace Component {
 		{
 		protected:
 			Entity* entity_;
+			std::string name_;
 		private:
 			Entity* parent_;
-			std::string name_; 
-			virtual void create(Entity* gamestate) {}
+			virtual void create(Entity* gamestate) = 0;
 		public:
 			
-			IInput(Entity* parent, std::string name)
-				: entity_(nullptr), name_(name), parent_(parent)
-			{}
-
 			IInput(std::string name)
-				: IInput(nullptr, name)
+				: entity_(nullptr), name_(name), parent_(nullptr)
 			{}
 
 			void set_name(std::string name)
 			{
 				name_ = name;
+			}
+
+			void set_parent(Entity* parent)
+			{
+				parent_ = parent;
 			}
 
 			void execute(Entity* gamestate) override final

@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include "logger.h"
 #include <vector>
+#include <string>
 /*
  * FRArr : fast resizable array
  * addition adds the element to end of list unless its full in which case it does nothing
@@ -39,10 +40,10 @@ public:
 		buffer_[size++] = col;
 	}
 
-	void remove(unsigned ele) // replaces the element with the element at the end
+	void remove(std::size_t ele) // replaces the element with the element at the end
 	{
 		if (ele >= size)
-			Logger::error("Deleting element at pos " + ele + " cannot be accomplished" , Logger::HIGH);
+			Logger::error("Deleting element at pos " + std::to_string(ele) + " cannot be accomplished" , Logger::HIGH);
 		buffer_[ele] = buffer_[--size];
 	}
 
@@ -55,10 +56,10 @@ public:
 		size = 0;
 	}
 
-	T& get(unsigned i)
+	T& get(std::size_t i)
 	{
 		if (i >= size)
-			Logger::error("cannot get element at pos " + i, Logger::HIGH);
+			Logger::error("cannot get element at pos " + std::to_string(i), Logger::HIGH);
 		return buffer_[i];
 	}
 
@@ -67,7 +68,7 @@ public:
 		return buffer_;
 	}
 
-	T& operator[](unsigned i)
+	T& operator[](std::size_t i)
 	{
 		return buffer_[i];
 	}
