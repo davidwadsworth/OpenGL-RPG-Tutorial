@@ -55,7 +55,7 @@ namespace Component {
 					auto fnt_json = nlohmann::json::parse(fnt_stream);
 
 					int line_h = fnt_json["common"]["lineHeight"];
-					entity_->add_id_component<Component::Integer>("line_h", line_h);
+					entity_->add_component<Component::Integer>(line_h);
 					std::string image_src = fnt_json["pages"][0];
 
 					auto texture_manager = gamestate->get_child("texture manager");
@@ -67,13 +67,16 @@ namespace Component {
 					auto& c_font_texture = *gamestate->get_child("texture manager")->get_component<Component::Texture>(texture_id);
 					auto& c_font_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("font");
 
-					auto& c_font_material = *entity_->push_back_component<Component::Color>( c_font_texture, c_font_shader, 3, glm::vec3(1.0f, 1.0f, 1.0f));
+					auto& c_font_material = *entity_->add_component<Component::Color>( c_font_texture, c_font_shader, 3, glm::vec3(0.0f, 0.0f, 0.0f));
+
+					auto e_glyphs = new Entity();
+					entity_->add_id_child(e_glyphs, "glyphs");
 
 					for (auto glyph_json : fnt_json["chars"])
 					{
 						std::size_t id = glyph_json["id"];
 
-						auto& c_bm_glyph = *entity_->add_id_component<Component::BitMapGlyph>(id);
+						auto& c_bm_glyph = *e_glyphs->add_id_component<Component::BitMapGlyph>(id);
 
 						c_bm_glyph.x = glyph_json["x"];
 						c_bm_glyph.y = glyph_json["y"];
@@ -92,7 +95,7 @@ namespace Component {
 						int second = kerning_json["second"];
 						int amount = kerning_json["amount"];
 
-						auto& c_bm_glyph = *entity_->get_component<Component::BitMapGlyph>(first);
+						auto& c_bm_glyph = *e_glyphs->get_component<Component::BitMapGlyph>(first);
 
 						c_bm_glyph.kerning.push_back({ second, amount });
 					}

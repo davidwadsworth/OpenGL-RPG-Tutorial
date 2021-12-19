@@ -43,14 +43,22 @@ namespace Component {
 						auto font = gamestate->get_child("gilsans");
 
 						// hacky way to get font material, might change this, might not.
-						auto& c_font_material = *font->get_component<Component::Material>(0);
+						auto& c_font_material = *font->get_component<Component::Color>();
 
 						auto x_pos = pos_.x;
 						char prev_c = 0;
 
+						auto e_glyphs = font->get_child("glyphs");
+
 						for (auto c : text_)
 						{
-							auto& c_bm_glyph = *font->get_component<Component::BitMapGlyph>(static_cast<std::size_t>(c));
+							if (c == ' ')
+							{
+								x_pos += 10;
+								continue;
+							}
+
+							auto& c_bm_glyph = *e_glyphs->get_component<Component::BitMapGlyph>(static_cast<std::size_t>(c));
 
 							auto& c_transform = *entity_->push_back_component<Component::Transform>();
 

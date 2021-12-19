@@ -31,11 +31,6 @@ namespace Component {
 					}
 				}
 
-				void add_observed(typename Component::DLL<T*>::Node * node, std::vector<std::string> strings)
-				{
-					add_observed({ node }, strings);
-				}
-
 				Component::DLL<T*>& add_subscriber(std::string name)
 				{
 					return *entity_->add_id_component<Component::DLL<T*>>(name);

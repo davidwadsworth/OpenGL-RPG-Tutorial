@@ -28,14 +28,16 @@ namespace Component {
 					{
 						std::string msg = "work first try? I should also check to see if new lines work as well, so here's more text.";
 
-						auto ctid_box = entity_->add_component<Component::Trigger::Input::Dependent::Box>("test box", Rect{10, 10, 300, 200}, 10.0f, 2.0f);
+						auto ctid_box = entity_->add_component<Component::Trigger::Input::Dependent::Box>("test box", Rect{10.0f, 10.0f, 300.0f, 200.0f}, 10.0f, 2.0f);
 						ctid_box->set_parent(entity_);
 						ctid_box->execute(gamestate);
 
-						auto ctid_text_area = entity_->add_component<Component::Trigger::Input::Dependent::TextArea>("test text area", msg, Rect{15, 15, 285, 285}, 1.0f, 1.0f);
+						auto ctid_text_area = entity_->add_component<Component::Trigger::Input::Dependent::TextArea>("test text area", msg, Rect{30.0f, 20.0f, 270.0f, 180.0f}, 1.0f, 1.0f);
 						ctid_text_area->set_parent(entity_);
 						ctid_text_area->execute(gamestate);
 						
+						auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
+
 						//auto ct_add_test_box = entity_->push_back_component<Component::Trigger::AddGameObj>(entity_->get_child("test box"));
 						//auto ct_add_test_text_area = entity_->push_back_component<Component::Trigger::AddGameObj>(entity_->get_child("test text area"));
 

@@ -47,8 +47,8 @@ namespace Component {
 						entity_->push_back_component<Component::Trigger::Input::Dependent::TileMap>("tilemap", "resources/data/TestTileMapGJK.json");
 						entity_->push_back_component<Component::Trigger::Input::Dependent::Player>("player", (GLfloat)Game::width, 792.0f);
 						entity_->push_back_component<Component::Trigger::Input::Dependent::ColliderMap>("collider map");
-						//entity_->push_back_component<Component::Trigger::Input::Dependent::Text>("display", "Hello world!", glm::vec2(0.0f, 0.0f));
 						entity_->push_back_component<Component::Trigger::Input::Dependent::Sandbox>("sandbox");
+						//entity_->push_back_component<Component::Trigger::Input::Dependent::Text>("display", "Hello world!", glm::vec2(30.0f, 20.0f));
 					}
 				};
 			}

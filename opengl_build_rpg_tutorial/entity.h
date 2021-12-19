@@ -65,7 +65,7 @@ public:
 		auto r_child = children_.search(pos);
 
 		if (!r_child)
-			Logger::error("could not find child, pos = " + pos, Logger::HIGH);
+			Logger::error("could not find child, pos = " + std::to_string(pos), Logger::HIGH);
 
 		return r_child;
 	}
@@ -146,12 +146,12 @@ public:
 		auto r_comp = components_.search(pos);
 
 		if (!r_comp)
-			Logger::error("could not find component, pos = " + pos, Logger::HIGH);
+			Logger::error("could not find component, pos = " + std::to_string(pos), Logger::HIGH);
 
 		auto casted_r_comp = dynamic_cast<T*>(r_comp);
 
 		if (!casted_r_comp)
-			Logger::error("component not of casted type, pos = " + pos, Logger::HIGH);
+			Logger::error("component not of casted type, pos = " + std::to_string(pos), Logger::HIGH);
 
 		return casted_r_comp;
 	}

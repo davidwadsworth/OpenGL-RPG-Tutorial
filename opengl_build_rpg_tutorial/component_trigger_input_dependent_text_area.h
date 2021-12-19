@@ -34,7 +34,7 @@ namespace Component {
 					void create(Entity* gamestate) override final
 					{
 						// grab the input observer class for a helper method
-						auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>();
+						auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
 
 						// create an observer component for the box 
 						auto e_observer = gamestate->get_child("observer");
@@ -44,21 +44,17 @@ namespace Component {
 						entity_->add_id_child(e_text_area_reference, "reference");
 						auto& c_text_area_ref_render_list = *e_text_area_reference->add_id_component<Component::SystemList>("render systems");
 
-						// get font
-						auto font = gamestate->get_child("gilsans");
-
 						// get renderer
 						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
-						// get camera
-						auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
+						auto font = gamestate->get_child("gilsans");
 
-						// get font material
-						auto& c_font_material = *font->get_component<Component::Material>(0);
+						// hacky way to get font material, might change this, might not.
+						auto& c_font_material = *font->get_component<Component::Color>();
 
 						// create boxes
 
-						auto line_h = font->get_component<Component::Integer>("line_h")->value;
+						auto line_h = font->get_component<Component::Integer>()->value;
 
 						auto space = line_h / 3.0f;
 
@@ -85,6 +81,7 @@ namespace Component {
 						auto e_msg_box = new Entity();
 						entity_->push_back_child(e_msg_box);
 
+						std::vector<Component::System::Render::Draw*> temp_draws;
 						do
 						{
 							switch (*curr_char)
@@ -113,24 +110,28 @@ namespace Component {
 
 							std::vector<Component::Transform*> temp_transforms;
 							std::vector<Component::BitMapGlyph*> temp_glyphs;
+
+							auto e_glyphs = font->get_child("glyphs");
+
 							auto temp_word_length = 0;
 
 							GLint prev_char = -1;
 
 							// add all the non space characters together into vectors of transforms glyphs and draw calls, also known as a "word"
-							for (auto i = 0; *curr_char != ' ' && curr_char != msg_.end(); ++i)
+							for (; curr_char != msg_.end() && *curr_char != ' '; curr_char++)
 							{
-								auto c_bitmap_char = font->get_component<Component::BitMapGlyph>(msg_[i]);
+								auto c_bitmap_char = e_glyphs->get_component<Component::BitMapGlyph>(static_cast<std::size_t>( * curr_char));
 
 								temp_word_length += c_bitmap_char->advance + c_bitmap_char->check_kerning(prev_char);
-								prev_char = msg_[i];
-
+								
 								auto curr_x = current_pos.x + c_bitmap_char->x_off + c_bitmap_char->check_kerning(prev_char);
 								auto curr_y = current_pos.y + c_bitmap_char->y_off;
 								auto ch_w = c_bitmap_char->w;
 								auto ch_h = c_bitmap_char->h;
 
 								current_pos.x += c_bitmap_char->advance + c_bitmap_char->check_kerning(prev_char);
+								
+								prev_char = *curr_char;
 
 								auto c_cur_char_transform = entity_->push_back_component<Component::Transform>(
 									Rect{ curr_x, curr_y, ch_w, ch_h }, font_sc_);
@@ -138,10 +139,10 @@ namespace Component {
 								temp_transforms.push_back(c_cur_char_transform);
 								temp_glyphs.push_back(c_bitmap_char);
 
-								auto csr_msg_cam_draw = e_msg_box->push_back_component<Component::System::Render::CameraDraw>(c_renderer, *c_bitmap_char, *c_cur_char_transform, c_font_material, c_cam_transform);
-								auto n_msg_cam_draw = c_text_area_ref_render_list.push_back(csr_msg_cam_draw);
-
-								cti_observer.add_observed(n_msg_cam_draw, std::vector<std::string>{ "camera", "renderer", "gilsans", name_ });
+								auto csr_msg_draw = e_msg_box->push_back_component<Component::System::Render::Draw>(c_renderer, *c_bitmap_char, *c_cur_char_transform, c_font_material);
+								//auto n_msg_cam_draw = c_text_area_ref_render_list.push_back(csr_msg_cam_draw);
+								temp_draws.push_back(csr_msg_draw);
+								
 							}
 
 							// if the added word breaks the x boundaries of the box create a new line
@@ -159,19 +160,17 @@ namespace Component {
 
 							}
 
-						} while (curr_char++ != msg_.end());
+						} while (curr_char != msg_.end());
 
-						auto n = c_text_area_ref_render_list.get_begin();
-						auto c_render_systems = gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
 
-						if (n != nullptr)
-						{
-							do
-							{
-								c_render_systems->push_back(n->value);
-								n = n->next;
-							} while (n != c_text_area_ref_render_list.get_begin());
-						}
+
+						//cti_observer.add_observed(std::vector<>{ n_msg_cam_draw }, std::vector<std::string>{ "camera", "renderer", "gilsans", name_ });
+
+
+						auto& c_render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
+						
+						c_render_systems.insert(c_render_systems.end(), temp_draws.begin(), temp_draws.end());
+
 					}
 				};
 			}
