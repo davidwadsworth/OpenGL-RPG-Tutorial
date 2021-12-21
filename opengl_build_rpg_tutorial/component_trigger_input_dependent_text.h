@@ -45,6 +45,8 @@ namespace Component {
 						// hacky way to get font material, might change this, might not.
 						auto& c_font_material = *font->get_component<Component::Color>();
 
+						auto line_h = font->get_component<Component::Integer>()->value;
+
 						auto x_pos = pos_.x;
 						char prev_c = 0;
 
@@ -54,7 +56,7 @@ namespace Component {
 						{
 							if (c == ' ')
 							{
-								x_pos += 10;
+								x_pos += line_h / 3.0f;
 								continue;
 							}
 

@@ -23,11 +23,11 @@ namespace Component {
 				{
 					std::string& msg_;
 					Rect rect_;
-					std::string font_;
+					std::string font_, align_h_, align_v_;
 					float line_spacing_, font_sc_;
 				public:
-					TextArea(std::string name, std::string& msg, Rect rect, float line_spacing, float font_sc)
-						: Component::Trigger::IInput(name), msg_(msg), rect_(rect), line_spacing_(line_spacing), font_sc_(font_sc)
+					TextArea(std::string name, std::string& msg, Rect rect, float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top")
+						: Component::Trigger::IInput(name), msg_(msg), rect_(rect), line_spacing_(line_spacing), font_sc_(font_sc), align_h_(align_h), align_v_(align_v)
 					{}
 
 				private:
@@ -94,14 +94,17 @@ namespace Component {
 								// TODO generate option box
 								break;
 							case '\n':
+								// if message character exceedes boundaries for box then create a new message to hold remainder
+								if (current_pos.y + 2 * line_h > rect_.y + rect_.h)
+									goto end;
+
 								current_pos.y += line_h;
 								current_pos.x = rect_.x;
 
-								// if message character exceedes boundaries for box then create a new message to hold remainder
-								if (current_pos.y > rect_.y + rect_.h)
-									return;
-
 								curr_char++;
+
+								tb_lines.push_back(std::vector<Component::Transform*>());
+								curr_line = &tb_lines[++line_count];
 								break;
 
 							default:
@@ -116,6 +119,7 @@ namespace Component {
 							auto temp_word_length = 0;
 
 							GLint prev_char = -1;
+							float prev_pos_x = current_pos.x;
 
 							// add all the non space characters together into vectors of transforms glyphs and draw calls, also known as a "word"
 							for (; curr_char != msg_.end() && *curr_char != ' '; curr_char++)
@@ -138,34 +142,86 @@ namespace Component {
 
 								temp_transforms.push_back(c_cur_char_transform);
 								temp_glyphs.push_back(c_bitmap_char);
-
-								auto csr_msg_draw = e_msg_box->push_back_component<Component::System::Render::Draw>(c_renderer, *c_bitmap_char, *c_cur_char_transform, c_font_material);
-								//auto n_msg_cam_draw = c_text_area_ref_render_list.push_back(csr_msg_cam_draw);
-								temp_draws.push_back(csr_msg_draw);
-								
 							}
 
 							// if the added word breaks the x boundaries of the box create a new line
-							if (temp_word_length + current_pos.x > rect_.x + rect_.w)
-							{
-								current_pos.y += line_h;
-								current_pos.x = rect_.x;
-
+							if (temp_word_length + prev_pos_x > rect_.x + rect_.w)
+							{								
 								// if the added line breaks the y boundary of the box create a new text box
-								if (current_pos.y + line_h > rect_.y + rect_.h)
-									return;
+								if (current_pos.y + 2 * line_h > rect_.y + rect_.h)
+									goto end;
+
+								auto begin_tranform_x = temp_transforms[0]->x;
+
+								for (auto transform : temp_transforms)
+								{
+									transform->x -= begin_tranform_x - rect_.x;
+									transform->y += line_h;
+								}
+
+								current_pos.y += line_h;
+								current_pos.x = rect_.x + temp_word_length;
 
 								tb_lines.push_back(std::vector<Component::Transform*>());
 								curr_line = &tb_lines[++line_count];
-
 							}
+
+							for (auto i = 0; i < temp_transforms.size(); ++i)
+							{
+								auto csr_msg_draw = e_msg_box->push_back_component<Component::System::Render::Draw>(c_renderer, *temp_glyphs[i], *temp_transforms[i], c_font_material);
+								temp_draws.push_back(csr_msg_draw);
+							}
+
+							curr_line->insert(curr_line->end(), temp_transforms.begin(), temp_transforms.end());
 
 						} while (curr_char != msg_.end());
 
 
-
 						//cti_observer.add_observed(std::vector<>{ n_msg_cam_draw }, std::vector<std::string>{ "camera", "renderer", "gilsans", name_ });
 
+					end:
+
+
+						auto x_offset = std::vector<float>(tb_lines.size(), 0.0f); // align left
+						auto y_offset = 0.0f; // align top
+
+						for (auto i = 0; i < tb_lines.size(); ++i)
+						{
+							auto line_segment = rect_.w - (((*(tb_lines[i].end()-1))->x + (*(tb_lines[i].end()-1))->w) - (*tb_lines[i].begin())->x);
+
+							if (align_h_ == "middle")
+								x_offset[i] = line_segment / 2.0f;
+							else if (align_h_ == "right")
+								x_offset[i] = line_segment;
+						}
+
+						auto y_lowest = FLT_MAX;
+						auto y_highest = -FLT_MAX;
+
+						for (auto transform : *tb_lines.begin())
+							if (transform->y < y_lowest)
+								y_lowest = transform->y;
+						
+						for (auto transform : *(tb_lines.end()-1))
+							if (transform->y + transform->h > y_highest)
+								y_highest = transform->y + transform->h;
+						
+						if (y_lowest == FLT_MAX)
+							y_lowest = rect_.y;
+						if (y_highest == -FLT_MAX)
+							y_highest = rect_.y + rect_.h;
+
+						if (align_v_ == "middle")
+							y_offset = (rect_.h - (y_highest - y_lowest)) / 2.0f;
+						else if (align_v_ == "bottom")
+							y_offset = (rect_.h - (y_highest - y_lowest));
+
+						for (auto i = 0; i < tb_lines.size(); ++i)
+							for (auto transform : tb_lines[i])
+							{
+								transform->x += x_offset[i];
+								transform->y += y_offset;
+							}
 
 						auto& c_render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
 						

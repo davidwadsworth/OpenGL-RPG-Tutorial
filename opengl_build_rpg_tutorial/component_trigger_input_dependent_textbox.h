@@ -3,6 +3,7 @@
 #include "component_trigger_input.h"
 #include "component_system.h"
 #include <sstream>
+#include <vector>
 #include "json.hpp"
 #include "component_template.h"
 #include "component_tree.h"
@@ -87,7 +88,7 @@ namespace Component {
 						float msg_padding_y = msg_json["msg_padding_y"];
 						float corner_size = msg_json["corner_size"];
 						bool speech_box = msg_json["speech_box"] == "true";
-						std::string message = msg_json["message"];
+						std::vector<std::string> message = msg_json["message"];
 
 						
 					}
