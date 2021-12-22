@@ -3,15 +3,13 @@
 #include "component_transform.h"
 #include "rect.h"
 #include <glm/vec2.hpp>
-#include "component_observer.h"
 #include "component_src.h"
 #include "component_material.h"
-#include "component_system_render_camera_draw.h"
-#include "component_doubly_linked_list.h"
-#include "component_trigger_input_observer.h"
+#include "component_vector.h"
+#include "component_system_render_draw.h"
 
 /*
-Creates our local camera using width and height
+Creates a box of desired width and height from a box skin
 
 @author David Wadsworth
 */
@@ -33,16 +31,6 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override final
 					{
-						// grab the input observer class for a helper method
-						auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
-
-						// create an observer component for the box 
-						cti_observer.add_subscriber(name_);
-
-						auto e_box_reference = new Entity();
-						entity_->add_id_child(e_box_reference, "reference");
-						auto& c_box_ref_render_list = *e_box_reference->add_id_component<Component::SystemList>("render systems");
-
 						// get renderer
 						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
@@ -118,24 +106,9 @@ namespace Component {
 						auto csr_b_side_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_b_side_src, c_b_side_trans, c_tb_material);
 						auto csr_center_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_center_src, c_center_trans, c_tb_material);
 						
-						/*
-						std::vector<DoublyLinkedList<ISystem*>::Node*> used_tb_nodes;
-
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_tl_corner_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_tr_corner_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_bl_corner_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_br_corner_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_t_side_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_l_side_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_r_side_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_b_side_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_center_camera_draw));
-						*/
-
-						//cti_observer.add_observed(used_tb_nodes, std::vector<std::string>{"camera", "renderer", name_});
-
 						auto& c_render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
 
+						// add to engine
 						c_render_systems.push_back(csr_tl_corner_camera_draw);
 						c_render_systems.push_back(csr_tr_corner_camera_draw);
 						c_render_systems.push_back(csr_bl_corner_camera_draw);
@@ -150,7 +123,7 @@ namespace Component {
 						if (speech_arrow_)
 						{
 							auto& c_arrow_dest = *entity_->push_back_component<Component::Transform>();
-							// TODO need to copy and paste old code from wayyyyy back repo project
+							// TODO
 						}
 
 					}

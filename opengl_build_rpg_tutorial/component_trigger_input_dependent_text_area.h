@@ -7,10 +7,11 @@
 #include "component_src_bitmap_glyph.h"
 #include "component_system_render_draw.h"
 #include "component_template.h"
+#include "component_material_color.h"
 
 /*
-Display text to the screen without regard to the map.
- 
+Displays text in a defined rectangular area with simple paragraph formating
+
 @author David Wadsworth
 */
 
@@ -33,17 +34,6 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override final
 					{
-						// grab the input observer class for a helper method
-						auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
-
-						// create an observer component for the box 
-						auto e_observer = gamestate->get_child("observer");
-						auto& c_box_observer = *e_observer->add_id_component<Component::SystemObserver>(name_);
-
-						auto e_text_area_reference = new Entity();
-						entity_->add_id_child(e_text_area_reference, "reference");
-						auto& c_text_area_ref_render_list = *e_text_area_reference->add_id_component<Component::SystemList>("render systems");
-
 						// get renderer
 						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
@@ -147,7 +137,7 @@ namespace Component {
 							// if the added word breaks the x boundaries of the box create a new line
 							if (temp_word_length + prev_pos_x > rect_.x + rect_.w)
 							{								
-								// if the added line breaks the y boundary of the box create a new text box
+ 								// if the added line breaks the y boundary of the box create a new text box
 								if (current_pos.y + 2 * line_h > rect_.y + rect_.h)
 									goto end;
 
@@ -166,6 +156,7 @@ namespace Component {
 								curr_line = &tb_lines[++line_count];
 							}
 
+							// finally create the draw calls necessary for the text
 							for (auto i = 0; i < temp_transforms.size(); ++i)
 							{
 								auto csr_msg_draw = e_msg_box->push_back_component<Component::System::Render::Draw>(c_renderer, *temp_glyphs[i], *temp_transforms[i], c_font_material);
@@ -176,15 +167,15 @@ namespace Component {
 
 						} while (curr_char != msg_.end());
 
-
-						//cti_observer.add_observed(std::vector<>{ n_msg_cam_draw }, std::vector<std::string>{ "camera", "renderer", "gilsans", name_ });
-
 					end:
 
+						// calculate the vertical and horizontal offset off of line info
 
 						auto x_offset = std::vector<float>(tb_lines.size(), 0.0f); // align left
 						auto y_offset = 0.0f; // align top
 
+
+						// horizontal alignment
 						for (auto i = 0; i < tb_lines.size(); ++i)
 						{
 							auto line_segment = rect_.w - (((*(tb_lines[i].end()-1))->x + (*(tb_lines[i].end()-1))->w) - (*tb_lines[i].begin())->x);
@@ -195,6 +186,7 @@ namespace Component {
 								x_offset[i] = line_segment;
 						}
 
+						// vertical alignment
 						auto y_lowest = FLT_MAX;
 						auto y_highest = -FLT_MAX;
 
@@ -216,6 +208,7 @@ namespace Component {
 						else if (align_v_ == "bottom")
 							y_offset = (rect_.h - (y_highest - y_lowest));
 
+						// put it all together
 						for (auto i = 0; i < tb_lines.size(); ++i)
 							for (auto transform : tb_lines[i])
 							{

@@ -266,35 +266,14 @@
     <ClInclude Include="tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_tree.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_clean_engine.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
     <ClInclude Include="frarr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="component_system_update_traverse_tree.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_grouped_objects.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_switch_systems.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_add_game_obj.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_delete_game_obj.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
     <ClInclude Include="component_template.h">
       <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_delete_entity.h">
-      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_dependent_collider_map.h">
       <Filter>EC\Component\Trigger\Input\Dependent</Filter>
@@ -308,28 +287,13 @@
     <ClInclude Include="component_trigger_input_dependent_tilemap.h">
       <Filter>EC\Component\Trigger\Input\Dependent</Filter>
     </ClInclude>
-    <ClInclude Include="component_observer.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="doubly_linked_list.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_input_dependent_textbox.h">
       <Filter>EC\Component\Trigger\Input\Dependent</Filter>
-    </ClInclude>
-    <ClInclude Include="component_doubly_linked_list.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_observer.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_dependent_text.h">
       <Filter>EC\Component\Trigger\Input\Dependent</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_dependent_box.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_sandbox.h">
       <Filter>EC\Component\Trigger\Input\Dependent</Filter>
     </ClInclude>
   </ItemGroup>

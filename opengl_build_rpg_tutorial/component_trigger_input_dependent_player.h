@@ -47,8 +47,6 @@ namespace Component {
                 private:
                     void create(Entity* gamestate) override final
                     {
-                        gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("player");
-
                         // get player shader and textures
                         auto& c_flesh_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("flesh_full");
                         auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");

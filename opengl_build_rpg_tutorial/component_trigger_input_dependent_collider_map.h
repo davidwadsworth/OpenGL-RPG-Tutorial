@@ -28,8 +28,6 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override
 					{
-						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("collider map");
-						
 						/*
 							71 = circle
 							48 = boundary

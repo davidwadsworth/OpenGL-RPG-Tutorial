@@ -23,9 +23,6 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override
 				{
-					auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
-					cti_observer.add_subscriber(name_);
-
 					this->entity_->add_component<Component::GJKVector>();
 				}
 			};

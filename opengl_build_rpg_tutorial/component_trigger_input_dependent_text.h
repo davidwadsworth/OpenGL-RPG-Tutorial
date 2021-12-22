@@ -7,7 +7,6 @@
 #include "component_renderer.h"
 #include "component_src_bitmap_glyph.h"
 #include "component_system_render_draw.h"
-#include "component_observer.h"
 
 /*
 Display text to the screen without regard to the map.
@@ -32,8 +31,6 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override final
 					{
-						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("display text");
-
 						// get renderer
 						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 

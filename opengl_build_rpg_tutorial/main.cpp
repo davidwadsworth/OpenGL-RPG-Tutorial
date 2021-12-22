@@ -10,7 +10,6 @@
 #include "logger.h"
 #include "component_array.h"
 #include <sstream>
-#include "component_grouped_objects.h"
 
 /*
 Source code for episode 16 of Build Your Own RPG series
@@ -83,7 +82,6 @@ int main()
     auto engine = current_state->get_child("engine");
     auto& render_systems = *engine->get_component<Component::SystemVector>("render");
     auto& update_systems = *engine->get_component<Component::SystemVector>("update");
-    auto& trigger_systems = *engine->get_component<Component::TriggerVector>("trigger");
 
     auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
 
@@ -105,19 +103,12 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // make updates to live entities
-        //for (auto u : update_systems.objects)
-          //  for (auto i = 0u; i < u.size; ++i)
-            //   u[i]->execute();
         for (auto u : update_systems)
             u->execute();
 
         c_renderer.begin();
         
         // make draw calls to renderer
-        //for (auto r : render_systems.objects)
-        //    for (auto i = 0u; i < r.size; ++i)
-        //        r[i]->execute();
-          
         for (auto r : render_systems)
             r->execute();
 

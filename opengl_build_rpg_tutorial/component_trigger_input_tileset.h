@@ -23,9 +23,6 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
-					cti_observer.add_subscriber(name_);
-
 					// load shaders from file
 					std::stringstream ts_stream;
 

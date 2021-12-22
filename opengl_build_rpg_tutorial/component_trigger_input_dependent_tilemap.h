@@ -33,8 +33,6 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override final
 					{
-						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("tilemap");
-
 						// load tilemap from file
 						std::stringstream tm_stream;
 
