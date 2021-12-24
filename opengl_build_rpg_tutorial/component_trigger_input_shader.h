@@ -16,9 +16,7 @@ namespace Component {
 			class Shader : public Component::Trigger::IInput
 			{
 			public:
-				Shader(std::string name)
-					: Component::Trigger::IInput(name)
-				{}
+				using Component::Trigger::IInput::IInput;
 
 			private:
 				void create(Entity* gamestate) override final

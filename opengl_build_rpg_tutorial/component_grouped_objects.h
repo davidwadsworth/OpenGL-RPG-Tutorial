@@ -24,6 +24,12 @@ namespace Component
 			objects[pos].push_back(obj);
 		}
 
+		void clear()
+		{
+			for (auto obj_frarr : objects)
+				obj_frarr.clear();
+		}
+
 		std::vector<FRArr<T>> objects;
 	};
 #define GroupedSystems GroupedObjects<Component::ISystem*>

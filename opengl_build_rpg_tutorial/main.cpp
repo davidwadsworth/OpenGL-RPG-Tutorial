@@ -74,15 +74,11 @@ int main()
 
     auto current_state = game->get_child("overworld");
 
-    auto overworld_game_objs = current_state->get_component_list();
-
-    for (auto obj : overworld_game_objs)
-        static_cast<Component::Trigger::IInput*>(obj)->execute(current_state);
 
     // set up used game objects
     auto engine = current_state->get_child("engine");
-    auto& render_systems = *engine->get_component<Component::SystemVector>("render");
-    auto& update_systems = *engine->get_component<Component::SystemVector>("update");
+    auto& render_systems = *engine->get_component<Component::GroupedSystems>("render");
+    auto& update_systems = *engine->get_component<Component::GroupedSystems>("update");
     auto& trigger_systems = *engine->get_component<Component::TriggerVector>("trigger");
 
     auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
@@ -103,26 +99,9 @@ int main()
         // clear screen to black
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        // make updates to live entities
-        //for (auto u : update_systems.objects)
-          //  for (auto i = 0u; i < u.size; ++i)
-            //   u[i]->execute();
-        for (auto u : update_systems)
-            u->execute();
-
-        c_renderer.begin();
         
-        // make draw calls to renderer
-        //for (auto r : render_systems.objects)
-        //    for (auto i = 0u; i < r.size; ++i)
-        //        r[i]->execute();
-          
-        for (auto r : render_systems)
-            r->execute();
-
-        c_renderer.end();
-
+        // TODO add gamestate run
+            
         if (Game::exit)
             glfwSetWindowShouldClose(window, GL_TRUE);
 

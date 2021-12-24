@@ -182,6 +182,7 @@
     <ClInclude Include="component_trigger_input_dependent_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_dependent_textbox.h" />
+    <ClInclude Include="component_trigger_input_gamestate.h" />
     <ClInclude Include="component_trigger_input_observer.h" />
     <ClInclude Include="component_trigger_switch_systems.h" />
     <ClInclude Include="doubly_linked_list.h" />

@@ -15,10 +15,7 @@ namespace Component {
 			class Texture : public Component::Trigger::IInput
 			{
 			public:
-				Texture(std::string name)
-					: Component::Trigger::IInput(name)
-				{}
-
+				using Component::Trigger::IInput::IInput;
 			private:
 				void create(Entity* gamestate) override final
 				{

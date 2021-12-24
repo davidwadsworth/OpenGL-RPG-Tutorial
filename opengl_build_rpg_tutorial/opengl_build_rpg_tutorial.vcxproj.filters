@@ -332,6 +332,9 @@
     <ClInclude Include="component_trigger_input_dependent_sandbox.h">
       <Filter>EC\Component\Trigger\Input\Dependent</Filter>
     </ClInclude>
+    <ClInclude Include="component_trigger_input_gamestate.h">
+      <Filter>EC\Component\Trigger\Input\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">

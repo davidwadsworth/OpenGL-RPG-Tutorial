@@ -3,11 +3,14 @@
 constexpr auto VERTICES = 6u;
 
 Component::Renderer::Renderer(std::vector<GLuint> attributes, GLuint max_sprites)
-	: vbo_(0), vao_(0), current_mat_(nullptr), max_sprites_(max_sprites)
+	: vbo_(0), vao_(0), current_mat_(nullptr), attributes_(attributes), max_sprites_(max_sprites)
+{}
+
+void Component::Renderer::init()
 {
 	// calculate total attribute size for attrib pointer arithmatic
 	att_size_ = 0;
-	for (auto att : attributes)
+	for (auto att : attributes_)
 		att_size_ += att;
 
 	// generate buffers
@@ -20,11 +23,11 @@ Component::Renderer::Renderer(std::vector<GLuint> attributes, GLuint max_sprites
 
 	// create and bind attributes to vbo 
 	auto stride = 0ull;
-	for (auto i = 0; i < attributes.size(); ++i)
+	for (auto i = 0; i < attributes_.size(); ++i)
 	{
 		glEnableVertexAttribArray(i);
-		glVertexAttribPointer(i, attributes[i], GL_FLOAT, GL_FALSE, att_size_ * sizeof(float), (GLvoid*)stride);
-		stride += attributes[i] * sizeof(float);
+		glVertexAttribPointer(i, attributes_[i], GL_FLOAT, GL_FALSE, att_size_ * sizeof(float), (GLvoid*)stride);
+		stride += attributes_[i] * sizeof(float);
 	}
 }
 

@@ -16,10 +16,12 @@ namespace Component
 		GLuint vbo_, vao_, att_size_, max_sprites_;
 		std::vector<GLfloat> buffer_;
 		Component::Material* current_mat_;
+		std::vector<GLuint> attributes_;
 	public:
 		Renderer(std::vector<GLuint> attributes, GLuint max_sprites);
 		~Renderer() { release(); }
 
+		void init();
 		void release();
 
 		void begin();

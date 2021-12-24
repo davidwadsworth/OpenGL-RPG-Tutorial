@@ -243,4 +243,10 @@ public:
 		children_.clear();
 		components_.clear();
 	}
+
+	// delete all entity children
+	void clear_children()
+	{
+		children_.clear();
+	}
 };

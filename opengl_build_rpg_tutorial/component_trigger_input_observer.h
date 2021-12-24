@@ -18,9 +18,7 @@ namespace Component {
 			class Obs : public Component::Trigger::IInput
 			{
 			public:
-				Obs(std::string name)
-					: Component::Trigger::IInput(name)
-				{}
+				using Component::Trigger::IInput::IInput;
 
 				void add_observed(std::vector<typename Component::DLL<T*>::Node*> nodes, std::vector<std::string> strings)
 				{

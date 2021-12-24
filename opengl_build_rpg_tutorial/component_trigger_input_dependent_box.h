@@ -118,7 +118,6 @@ namespace Component {
 						auto csr_b_side_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_b_side_src, c_b_side_trans, c_tb_material);
 						auto csr_center_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_center_src, c_center_trans, c_tb_material);
 						
-						/*
 						std::vector<DoublyLinkedList<ISystem*>::Node*> used_tb_nodes;
 
 						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_tl_corner_camera_draw));
@@ -130,21 +129,8 @@ namespace Component {
 						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_r_side_camera_draw));
 						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_b_side_camera_draw));
 						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_center_camera_draw));
-						*/
-
-						//cti_observer.add_observed(used_tb_nodes, std::vector<std::string>{"camera", "renderer", name_});
-
-						auto& c_render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
-
-						c_render_systems.push_back(csr_tl_corner_camera_draw);
-						c_render_systems.push_back(csr_tr_corner_camera_draw);
-						c_render_systems.push_back(csr_bl_corner_camera_draw);
-						c_render_systems.push_back(csr_br_corner_camera_draw);
-						c_render_systems.push_back(csr_t_side_camera_draw);
-						c_render_systems.push_back(csr_l_side_camera_draw);
-						c_render_systems.push_back(csr_r_side_camera_draw);
-						c_render_systems.push_back(csr_b_side_camera_draw);
-						c_render_systems.push_back(csr_center_camera_draw);
+						
+						cti_observer.add_observed(used_tb_nodes, std::vector<std::string>{"camera", "renderer", name_});
 
 						// arrow transform (used only with speech textboxes)
 						if (speech_arrow_)

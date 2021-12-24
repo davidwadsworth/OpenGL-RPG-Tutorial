@@ -54,7 +54,7 @@ namespace Component {
                         auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
 
                         // get renderer
-                        auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
+                        auto& c_renderer = *gamestate->get_component<Component::Renderer >("renderer");
 
                         // get controller 
                         auto& c_cont_keyboard = *gamestate->get_child("controller")->get_component<Component::Controller::Keyboard>();
@@ -141,8 +141,8 @@ namespace Component {
                         }
 
                         // get render and update systems
-                        auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
-                        auto& update_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("update");
+                        auto& render_systems = *gamestate->get_component<Component::SystemVector>("render");
+                        auto& update_systems = *gamestate->get_component<Component::SystemVector>("update");
 
                         update_systems.push_back(csu_pla_move);
                         update_systems.push_back(csu_check_collision_gjk);
