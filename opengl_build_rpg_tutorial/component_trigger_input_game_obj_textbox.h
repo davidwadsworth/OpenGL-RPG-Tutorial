@@ -15,10 +15,7 @@
 #include "component_trigger_add_game_obj.h"
 #include "component_trigger_delete_entity.h"
 #include "component_trigger_switch_systems.h"
-#include "component_observer.h"
-#include "component_doubly_linked_list.h"
-#include "component_trigger_input_observer.h"
-#include "component_trigger_input_dependent_text_area.h"
+#include "component_trigger_input_game_obj_text_area.h"
 
 /*
 @author David Wadsworth
@@ -27,7 +24,7 @@
 namespace Component {
 	namespace Trigger {
 		namespace Input {
-			namespace Dependent
+			namespace GameObj
 			{
 				class TextBox : public Component::Trigger::IInput
 				{

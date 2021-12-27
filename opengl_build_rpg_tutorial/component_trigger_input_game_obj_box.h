@@ -3,12 +3,11 @@
 #include "component_transform.h"
 #include "rect.h"
 #include <glm/vec2.hpp>
-#include "component_observer.h"
 #include "component_src.h"
 #include "component_material.h"
-#include "component_system_render_camera_draw.h"
+#include "component_system_render_draw.h"
 #include "component_doubly_linked_list.h"
-#include "component_trigger_input_observer.h"
+#include "component_trigger_input_game_obj.h"
 
 /*
 Creates our local camera using width and height
@@ -21,30 +20,21 @@ namespace Component {
 		namespace Input {
 			namespace Dependent
 			{
-				class Box : public Component::Trigger::IInput
+				class Box : public Component::Trigger::Input::IGameObj
 				{
 					Rect rect_;
 					float corner_size_, box_sc_;
 					bool speech_arrow_;
+					std::size_t render_group_;
 				public:
-					Box(std::string name, Rect rect, float corner_size, float box_sc, bool speech_arrow = false)
-						: Component::Trigger::IInput(name), rect_(rect), corner_size_(corner_size), box_sc_(box_sc), speech_arrow_(speech_arrow)
+					Box(std::string name, Rect rect, float corner_size, float box_sc, std::size_t render_group, bool speech_arrow = false)
+						: Component::Trigger::Input::IGameObj(name), rect_(rect), corner_size_(corner_size), box_sc_(box_sc), render_group_(render_group), speech_arrow_(speech_arrow)
 					{}
 				private:
-					void create(Entity* gamestate) override final
+					void init(Entity* gamestate) override final
 					{
-						// grab the input observer class for a helper method
-						auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
-
-						// create an observer component for the box 
-						cti_observer.add_subscriber(name_);
-
-						auto e_box_reference = new Entity();
-						entity_->add_id_child(e_box_reference, "reference");
-						auto& c_box_ref_render_list = *e_box_reference->add_id_component<Component::SystemList>("render systems");
-
 						// get renderer
-						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
+						auto& c_renderer = *gamestate->get_component<Component::Renderer>();
 
 						// get camera
 						auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
@@ -118,20 +108,18 @@ namespace Component {
 						auto csr_b_side_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_b_side_src, c_b_side_trans, c_tb_material);
 						auto csr_center_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_center_src, c_center_trans, c_tb_material);
 						
-						std::vector<DoublyLinkedList<ISystem*>::Node*> used_tb_nodes;
+						auto& c_grouped_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
 
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_tl_corner_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_tr_corner_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_bl_corner_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_br_corner_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_t_side_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_l_side_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_r_side_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_b_side_camera_draw));
-						used_tb_nodes.push_back(c_box_ref_render_list.push_back(csr_center_camera_draw));
+						c_grouped_render_systems.add(csr_tl_corner_camera_draw, render_group_);
+						c_grouped_render_systems.add(csr_tr_corner_camera_draw, render_group_);
+						c_grouped_render_systems.add(csr_bl_corner_camera_draw, render_group_);
+						c_grouped_render_systems.add(csr_br_corner_camera_draw, render_group_);
+						c_grouped_render_systems.add(csr_t_side_camera_draw, render_group_);
+						c_grouped_render_systems.add(csr_l_side_camera_draw, render_group_);
+						c_grouped_render_systems.add(csr_r_side_camera_draw, render_group_);
+						c_grouped_render_systems.add(csr_b_side_camera_draw, render_group_);
+						c_grouped_render_systems.add(csr_center_camera_draw, render_group_);
 						
-						cti_observer.add_observed(used_tb_nodes, std::vector<std::string>{"camera", "renderer", name_});
-
 						// arrow transform (used only with speech textboxes)
 						if (speech_arrow_)
 						{

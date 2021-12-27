@@ -4,6 +4,7 @@
 #include "component_collider_gjk_physics_circle_smooth.h"
 #include "component_collider_gjk_physics_boundary_smooth.h"
 #include "component_collider_gjk_physics_polygon_smooth.h"
+#include "component_grouped_objects.h"
 #include "component_vector.h"
 
 /*
@@ -29,6 +30,10 @@ namespace Component {
 					void create(Entity* gamestate) override
 					{
 						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("collider map");
+
+						auto e_collider_map_reference = new Entity();
+						entity_->add_id_child(e_collider_map_reference, "reference");
+						auto& c_collider_map_ref_render_list = *e_collider_map_reference->add_id_component<Component::GroupedSystems>("render systems");
 						
 						/*
 							71 = circle
@@ -46,10 +51,9 @@ namespace Component {
 						auto& c_tset_col_aabb_src = *gamestate->get_child("TestTilesetGJK")->get_component<Component::Src>(47);
 
 						// get map objects
-						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
+						auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
 						auto& c_cworld_col_vec = *gamestate->get_child("collision world")->get_component<Component::GJKVector>();
-						auto& c_engine_render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
 						auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
 
 						// test colliders here
@@ -85,9 +89,9 @@ namespace Component {
 						c_cworld_col_vec.push_back(ccgpp_polygon_smooth);
 
 						// add render systems
-						c_engine_render_systems.push_back(csr_circle_cam_draw);
-						c_engine_render_systems.push_back(csr_boundary_cam_draw);
-						c_engine_render_systems.push_back(csr_polygon_cam_draw);
+						c_collider_map_ref_render_list.add(csr_circle_cam_draw, 3);
+						c_collider_map_ref_render_list.add(csr_boundary_cam_draw, 3);
+						c_collider_map_ref_render_list.add(csr_polygon_cam_draw, 3);
 					}
 				};
 			}

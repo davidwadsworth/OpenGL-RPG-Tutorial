@@ -57,12 +57,12 @@
     <Filter Include="EC\Component\Trigger\Input\GameState">
       <UniqueIdentifier>{9fb5bef0-c526-4b9e-9db6-515c6f2c5c21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\Trigger\Input\Dependent">
-      <UniqueIdentifier>{52f76306-7a6f-4dba-96f8-aab124b9a5f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="EC\Component\Trigger\Input\GameObject">
+      <UniqueIdentifier>{52f76306-7a6f-4dba-96f8-aab124b9a5f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -168,12 +168,6 @@
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_controller.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_engine.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_renderer.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_shader.h">
@@ -296,44 +290,35 @@
     <ClInclude Include="component_trigger_delete_entity.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_collider_map.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
+    <ClInclude Include="component_trigger_input_game_obj_collider_map.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_text_area.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
+    <ClInclude Include="component_trigger_input_game_obj_text_area.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_player.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
+    <ClInclude Include="component_trigger_input_game_obj_player.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_tilemap.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
-    </ClInclude>
-    <ClInclude Include="component_observer.h">
-      <Filter>EC\Component</Filter>
+    <ClInclude Include="component_trigger_input_game_obj_tilemap.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="doubly_linked_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_textbox.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
+    <ClInclude Include="component_trigger_input_game_obj_textbox.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_doubly_linked_list.h">
-      <Filter>EC\Component</Filter>
+    <ClInclude Include="component_trigger_input_game_obj_text.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_observer.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_text.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_box.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_dependent_sandbox.h">
-      <Filter>EC\Component\Trigger\Input\Dependent</Filter>
+    <ClInclude Include="component_trigger_input_game_obj_box.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_gamestate.h">
       <Filter>EC\Component\Trigger\Input\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_game_obj.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

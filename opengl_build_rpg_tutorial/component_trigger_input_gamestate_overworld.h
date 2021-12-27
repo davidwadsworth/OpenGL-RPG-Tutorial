@@ -4,12 +4,12 @@
 #include "component_trigger_input_controller.h"
 #include "component_trigger_input_shader.h"
 #include "component_trigger_input_texture.h"
-#include "component_trigger_input_dependent_tilemap.h"
-#include "component_trigger_input_dependent_player.h"
+#include "component_trigger_input_game_obj_tilemap.h"
+#include "component_trigger_input_game_obj_player.h"
 #include "component_trigger_input_collision_world.h"
-#include "component_trigger_input_dependent_collider_map.h"
+#include "component_trigger_input_game_obj_collider_map.h"
 #include "component_trigger_input_font.h"
-#include "component_trigger_input_dependent_text.h"
+#include "component_trigger_input_game_obj_text.h"
 #include "component_trigger_input_gamestate.h"
 #include "component_grouped_objects.h"
 
@@ -82,21 +82,20 @@ namespace Component {
 					void create(Entity* gamestate) override final
 					{
 						// set up renderer and engine systems for run
-						auto c_render_systems_ = entity_->add_id_component<Component::GroupedSystems>("render systems", 64u);
-						auto c_update_systems_ = entity_->add_id_component<Component::GroupedSystems>("update systems", 64u);
-						auto c_triggers_ = entity_->add_id_component<Component::TriggerVector>("triggers");
+						auto c_render_systems_ = entity_->add_id_component<Component::GroupedSystems>("render");
+						auto c_update_systems_ = entity_->add_id_component<Component::GroupedSystems>("update");
+						auto c_triggers_ = entity_->add_id_component<Component::TriggerVector>("trigger");
 						auto c_renderer_ = entity_->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
 
-						entity_->add_id_component<Component::Trigger::Input::SystemObs>("observer", "observer");
 						entity_->add_id_component<Component::Trigger::Input::Camera>("camera", "camera", 64.0f * 32.0f);
 						entity_->add_id_component<Component::Trigger::Input::Controller>("controller", "controller");
 						entity_->add_id_component<Component::Trigger::Input::Shader>("shader manager", "shader manager");
 						entity_->add_id_component<Component::Trigger::Input::Texture>("texture manager", "texture manager");
 						entity_->add_id_component<Component::Trigger::Input::Font>("gilsans", "gilsans", "resources/data/gilsans.json");
 						entity_->add_id_component<Component::Trigger::Input::CollisionWorld>("collision world", "collision world");
-						entity_->add_id_component<Component::Trigger::Input::Dependent::TileMap>("tilemap", "tilemap", "resources/data/TestTileMapGJK.json");
-						entity_->add_id_component<Component::Trigger::Input::Dependent::Player>("player", "player", (GLfloat)Game::width, 792.0f);
-						entity_->add_id_component<Component::Trigger::Input::Dependent::ColliderMap>("collider map", "collider map");
+						entity_->add_id_component<Component::Trigger::Input::GameObj::TileMap>("tilemap", "tilemap", "resources/data/TestTileMapGJK.json");
+						entity_->add_id_component<Component::Trigger::Input::GameObj::Player>("player", "player", (GLfloat)Game::width, 792.0f);
+						entity_->add_id_component<Component::Trigger::Input::GameObj::ColliderMap>("collider map", "collider map");
 					}
 				};
 			}

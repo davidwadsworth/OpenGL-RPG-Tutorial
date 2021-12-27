@@ -20,7 +20,7 @@ Creates the tile map for our player to move around in the overworld using json t
 namespace Component {
 	namespace Trigger {
 		namespace Input {
-			namespace Dependent
+			namespace GameObj
 			{
 				class TileMap : public Component::Trigger::IInput
 				{
@@ -33,8 +33,6 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override final
 					{
-						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("tilemap");
-
 						// load tilemap from file
 						std::stringstream tm_stream;
 
@@ -61,7 +59,6 @@ namespace Component {
 						int tilemap_w = tilemap_json["width"];
 						std::vector<int> tiles = tilemap_json["layers"][0]["data"];
 
-
 						// set up tileset 
 						// This can have multiple tilesets, and thus multiple materials
 						// however for now we are going to stick with just one
@@ -85,8 +82,7 @@ namespace Component {
 
 						// get used game objects
 						auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
-						auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
-						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
+						auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
 						// set up tiles
 						for (auto i = 0; i < tiles.size(); ++i)

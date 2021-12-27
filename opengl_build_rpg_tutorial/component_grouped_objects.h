@@ -10,18 +10,47 @@ namespace Component
 	template <typename T>
 	class GroupedObjects
 	{
-	public:
-		GroupedObjects(std::size_t size)
+		struct Group : public FRArr<T>
 		{
-			for (auto i = 0; i < size; ++i)
-				objects.push_back(FRArr<T>());
-		}
+			Group(std::size_t id)
+				: id(id)
+			{}
+			std::size_t id;
+		};
+
+	public:
+		GroupedObjects()
+		{}
 
 		void add(T obj, std::size_t pos)
 		{
-			if (pos >= objects.size())
-				Logger::error("GroupedObject pos is out of bounds. Add failed", Logger::HIGH);
+			auto j = -1;
+			for (auto i = 0; i < groups.size(); ++i, ++j)
+			{
+				if (groups[i].id == pos)
+				{
+					groups[i].push_back(obj);
+					return;
+				}
+					
+				if (j >= 0)
+				{
+					if (groups[i].id > pos)
+					{
+						groups.insert(groups.begin() + j, Group(id))->push_back(obj);
+						return;
+					}
+				}
+			}
+				
+
+
 			objects[pos].push_back(obj);
+		}
+
+		void add(std::vector<T> objs, std::size_t pos)
+		{
+
 		}
 
 		void clear()
@@ -30,7 +59,7 @@ namespace Component
 				obj_frarr.clear();
 		}
 
-		std::vector<FRArr<T>> objects;
+		std::vector<Group>> groups;
 	};
 #define GroupedSystems GroupedObjects<Component::ISystem*>
 }

@@ -19,11 +19,12 @@ namespace Component {
 			Entity* parent_;
 			virtual void create(Entity* gamestate) = 0;
 		public:
-			
 			IInput(std::string name)
 				: entity_(nullptr), name_(name), parent_(nullptr)
 			{}
-
+			IInput(std::string name, Entity* parent)
+				: entity_(nullptr), name_(name), parent_(parent)
+			{}
 			void set_name(std::string name)
 			{
 				name_ = name;
@@ -34,7 +35,7 @@ namespace Component {
 				parent_ = parent;
 			}
 
-			void execute(Entity* gamestate) override final
+			void execute(Entity* gamestate) override
 			{
 				// set up entity and add into our passed through map
 				entity_ = new Entity();

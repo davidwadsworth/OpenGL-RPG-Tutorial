@@ -7,9 +7,10 @@
 #include "component_src_bitmap_glyph.h"
 #include "component_system_render_draw.h"
 #include "component_template.h"
+#include "component_material_color.h"
 
 /*
-Display text to the screen without regard to the map.
+Display text on screen defined to an area using common text writing rules and 
  
 @author David Wadsworth
 */
@@ -17,7 +18,7 @@ Display text to the screen without regard to the map.
 namespace Component {
 	namespace Trigger {
 		namespace Input {
-			namespace Dependent
+			namespace GameObj
 			{
 				class TextArea : public Component::Trigger::IInput
 				{
@@ -29,27 +30,22 @@ namespace Component {
 					TextArea(std::string name, std::string& msg, Rect rect, float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top")
 						: Component::Trigger::IInput(name), msg_(msg), rect_(rect), line_spacing_(line_spacing), font_sc_(font_sc), align_h_(align_h), align_v_(align_v)
 					{}
+					TextArea(std::string name, Entity* parent, std::string & msg, Rect rect, float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top")
+						: Component::Trigger::IInput(name, parent), msg_(msg), rect_(rect), line_spacing_(line_spacing), font_sc_(font_sc), align_h_(align_h), align_v_(align_v)
+					{}
 
 				private:
 					void create(Entity* gamestate) override final
 					{
-						// grab the input observer class for a helper method
-						auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>(0);
-
-						// create an observer component for the box 
-						auto e_observer = gamestate->get_child("observer");
-						auto& c_box_observer = *e_observer->add_id_component<Component::SystemObserver>(name_);
-
 						auto e_text_area_reference = new Entity();
 						entity_->add_id_child(e_text_area_reference, "reference");
-						auto& c_text_area_ref_render_list = *e_text_area_reference->add_id_component<Component::SystemList>("render systems");
+						auto& c_text_area_ref_render_list = *e_text_area_reference->add_id_component<Component::GroupedSystems>("render systems");
 
 						// get renderer
 						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
 
 						auto font = gamestate->get_child("gilsans");
 
-						// hacky way to get font material, might change this, might not.
 						auto& c_font_material = *font->get_component<Component::Color>();
 
 						// create boxes
