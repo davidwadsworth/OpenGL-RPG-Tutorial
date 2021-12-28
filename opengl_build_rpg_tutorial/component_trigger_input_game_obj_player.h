@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input.h"
+#include "component_trigger_input_game_obj.h"
 #include "component_transform.h"
 #include "component_src.h"
 #include "component_renderer.h"
@@ -23,19 +23,15 @@ Creates our player object to move around in the overworld.
 namespace Component {
 	namespace Trigger {
 		namespace Input {
-            namespace Dependent
+            namespace GameObj
             {
-                class Player : public Component::Trigger::IInput
+                class Player : public Component::Trigger::Input::IGameObj
                 {
+                    std::size_t render_group_, update_group_;
                     GLfloat x_, y_;
                 public:
-
-                    Player(std::string name)
-                        : Component::Trigger::IInput(name), x_(0.0f), y_(0.0f)
-                    {}
-
-                    Player(std::string name, GLfloat x, GLfloat y)
-                        : Component::Trigger::IInput(name), x_(x), y_(y)
+                    Player(std::string name, std::size_t render_group, std::size_t update_group, GLfloat x, GLfloat y)
+                        : Component::Trigger::Input::IGameObj(name), render_group_(render_group), update_group_(update_group), x_(x), y_(y)
                     {}
 
                     void set_position(GLfloat x, GLfloat y)
@@ -45,10 +41,8 @@ namespace Component {
                     }
 
                 private:
-                    void create(Entity* gamestate) override final
+                    void init(Entity* gamestate) override final
                     {
-                        gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("player");
-
                         // get player shader and textures
                         auto& c_flesh_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("flesh_full");
                         auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
@@ -141,17 +135,17 @@ namespace Component {
                         }
 
                         // get render and update systems
-                        auto& render_systems = *gamestate->get_component<Component::SystemVector>("render");
-                        auto& update_systems = *gamestate->get_component<Component::SystemVector>("update");
+                        auto& c_player_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
+                        auto& c_player_update_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("update");
 
-                        update_systems.push_back(csu_pla_move);
-                        update_systems.push_back(csu_check_collision_gjk);
-                        update_systems.push_back(csu_pla_camera);
-                        update_systems.push_back(csu_pla_animate_move);
-                        update_systems.push_back(csu_pla_animation);
+                        c_player_update_systems.add(csu_pla_move, update_group_);
+                        c_player_update_systems.add(csu_check_collision_gjk, update_group_);
+                        c_player_update_systems.add(csu_pla_camera, update_group_);
+                        c_player_update_systems.add(csu_pla_animate_move, update_group_);
+                        c_player_update_systems.add(csu_pla_animation, update_group_);
 
-                        render_systems.push_back(csr_pla_dynamic_draw);
-                        render_systems.push_back(csr_col_cam_draw);
+                        c_player_render_systems.add(csr_pla_dynamic_draw, render_group_);
+                        c_player_render_systems.add(csr_col_cam_draw, render_group_);
                     }
                 };
             }

@@ -1,6 +1,6 @@
 #pragma once
 #include "component_vector.h"
-#include "component_trigger_input.h"
+#include "component_trigger_input_game_obj.h"
 #include "component_system.h"
 #include <sstream>
 #include <vector>
@@ -16,6 +16,7 @@
 #include "component_trigger_delete_entity.h"
 #include "component_trigger_switch_systems.h"
 #include "component_trigger_input_game_obj_text_area.h"
+#include "component_trigger_input_game_obj_box.h"
 
 /*
 @author David Wadsworth
@@ -26,28 +27,18 @@ namespace Component {
 		namespace Input {
 			namespace GameObj
 			{
-				class TextBox : public Component::Trigger::IInput
+				class TextBox : public Component::Trigger::Input::IGameObj
 				{
 					std::string path_;
 					glm::vec2 pos_;
 				public:
 					TextBox(std::string name, std::string path, glm::vec2 pos)
-						: Component::Trigger::IInput(name), path_(path), pos_(pos)
+						: Component::Trigger::Input::IGameObj(name), path_(path), pos_(pos)
 					{}
 
 				private:
-					void create(Entity* gamestate) override final
+					void init(Entity* gamestate) override final
 					{
-						auto& cti_observer = *gamestate->get_component<Component::Trigger::Input::SystemObs>();
-
-						auto e_observer = gamestate->get_child("observer");
-						auto& c_tb_observer = *e_observer->add_id_component<Component::SystemObserver>("textbox");
-
-						auto e_tb_reference = new Entity();
-						entity_->add_id_child(e_tb_reference, "reference");
-						auto& c_tb_ref_render_list = *e_tb_reference->add_id_component<Component::SystemList>("render systems");
-
-
 						// load tilemap from file
 						std::stringstream msg_stream;
 
@@ -72,8 +63,8 @@ namespace Component {
 						auto msg_json = nlohmann::json::parse(msg_stream);
 
 						// get relavent message info
-						int box_h = msg_json["box_height"];
-						int box_w = msg_json["box_width"];
+						float box_h = msg_json["box_height"];
+						float box_w = msg_json["box_width"];
 						float box_sc = msg_json["box_scale"];
 						std::string font_name = msg_json["font"];
 						float font_sc = msg_json["font_scale"];
@@ -87,7 +78,10 @@ namespace Component {
 						bool speech_box = msg_json["speech_box"] == "true";
 						std::vector<std::string> message = msg_json["message"];
 
+						auto box_rect = Rect{pos_.x, pos_.y, box_w, box_h};
 						
+
+
 					}
 				};
 			}

@@ -1,6 +1,6 @@
 #pragma once
 #include "component_vector.h"
-#include "component_trigger_input.h"
+#include "component_trigger_input_game_obj.h"
 #include "component_texture.h"
 #include "component_shader.h"
 #include "component_renderer.h"
@@ -20,36 +20,37 @@ namespace Component {
 		namespace Input {
 			namespace GameObj
 			{
-				class TextArea : public Component::Trigger::IInput
+				class TextArea : public Component::Trigger::Input::IGameObj
 				{
+					std::size_t render_group_;
 					std::string& msg_;
 					Rect rect_;
 					std::string font_, align_h_, align_v_;
 					float line_spacing_, font_sc_;
 				public:
-					TextArea(std::string name, std::string& msg, Rect rect, float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top")
-						: Component::Trigger::IInput(name), msg_(msg), rect_(rect), line_spacing_(line_spacing), font_sc_(font_sc), align_h_(align_h), align_v_(align_v)
+					TextArea(std::string name, std::size_t render_group, std::string font, std::string& msg, Rect rect, 
+						float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top")
+						: Component::Trigger::Input::IGameObj(name), render_group_(render_group), font_(font), msg_(msg), rect_(rect), 
+						line_spacing_(line_spacing), font_sc_(font_sc), align_h_(align_h), align_v_(align_v)
 					{}
-					TextArea(std::string name, Entity* parent, std::string & msg, Rect rect, float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top")
-						: Component::Trigger::IInput(name, parent), msg_(msg), rect_(rect), line_spacing_(line_spacing), font_sc_(font_sc), align_h_(align_h), align_v_(align_v)
+
+					TextArea(std::string name, Entity* parent, std::size_t render_group, std::string font, std::string & msg, 
+						Rect rect, float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top")
+						: Component::Trigger::Input::IGameObj(name, parent), render_group_(render_group), font_(font), msg_(msg), rect_(rect),
+						line_spacing_(line_spacing), font_sc_(font_sc), align_h_(align_h), align_v_(align_v)
 					{}
 
 				private:
-					void create(Entity* gamestate) override final
+					void init(Entity* gamestate) override final
 					{
-						auto e_text_area_reference = new Entity();
-						entity_->add_id_child(e_text_area_reference, "reference");
-						auto& c_text_area_ref_render_list = *e_text_area_reference->add_id_component<Component::GroupedSystems>("render systems");
-
 						// get renderer
-						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
+						auto& c_renderer = *gamestate->get_component<Component::Renderer>();
 
-						auto font = gamestate->get_child("gilsans");
+						auto font = gamestate->get_child(font_);
 
 						auto& c_font_material = *font->get_component<Component::Color>();
 
 						// create boxes
-
 						auto line_h = font->get_component<Component::Integer>()->value;
 
 						auto space = line_h / 3.0f;
@@ -77,7 +78,7 @@ namespace Component {
 						auto e_msg_box = new Entity();
 						entity_->push_back_child(e_msg_box);
 
-						std::vector<Component::System::Render::Draw*> temp_draws;
+						std::vector<Component::ISystem*> temp_draws;
 						do
 						{
 							switch (*curr_char)
@@ -172,12 +173,7 @@ namespace Component {
 
 						} while (curr_char != msg_.end());
 
-
-						//cti_observer.add_observed(std::vector<>{ n_msg_cam_draw }, std::vector<std::string>{ "camera", "renderer", "gilsans", name_ });
-
 					end:
-
-
 						auto x_offset = std::vector<float>(tb_lines.size(), 0.0f); // align left
 						auto y_offset = 0.0f; // align top
 
@@ -219,10 +215,9 @@ namespace Component {
 								transform->y += y_offset;
 							}
 
-						auto& c_render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
+						auto& c_text_area_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
 						
-						c_render_systems.insert(c_render_systems.end(), temp_draws.begin(), temp_draws.end());
-
+						c_text_area_render_systems.add(temp_draws, render_group_);
 					}
 				};
 			}

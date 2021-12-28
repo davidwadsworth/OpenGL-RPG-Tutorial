@@ -33,11 +33,19 @@ public:
 		buffer_.clear();
 	}
 
-	void push_back(T col) // places T to the end of the unruly and increments size, if full then nothing is added
+	void push_back(T col) // places T to the end of the frarr and increments size, if full then nothing is added
 	{
 		if (size >= max_size) 
 			Logger::error("FRArr is full. Data might be lost", Logger::HIGH);
 		buffer_[size++] = col;
+	}
+
+	void push_back(std::vector<T> cols) // places a vector of T to the end of frarr
+	{
+		if (size + cols.size() - 1 >= max_size)
+			Logger::error("FRArr is full. Data might be lost", Logger::HIGH);
+
+		buffer_.insert(buffer_.end(), cols.begin(), cols.end());
 	}
 
 	void remove(std::size_t ele) // replaces the element with the element at the end

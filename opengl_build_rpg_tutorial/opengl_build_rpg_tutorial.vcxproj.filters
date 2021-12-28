@@ -263,9 +263,6 @@
     <ClInclude Include="component_tree.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_clean_engine.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
     <ClInclude Include="frarr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -319,6 +316,12 @@
     </ClInclude>
     <ClInclude Include="component_trigger_input_game_obj.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_render_tile_map.h">
+      <Filter>EC\Component\System\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="component_tile_map.h">
+      <Filter>EC\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,6 @@
 #include "component_src.h"
 #include "component_material.h"
 #include "component_system_render_draw.h"
-#include "component_doubly_linked_list.h"
 #include "component_trigger_input_game_obj.h"
 
 /*
@@ -97,7 +96,7 @@ namespace Component {
 						auto& c_br_corner_src = *entity_->push_back_component<Component::Src>(
 							Rect{ 20.0f, 20.0f, 10.0f, 10.0f });
 
-						// push back some systems
+						// draw calls
 						auto csr_tl_corner_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_tl_corner_src, c_tl_corner_trans, c_tb_material);
 						auto csr_tr_corner_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_tr_corner_src, c_tr_corner_trans, c_tb_material);
 						auto csr_bl_corner_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_bl_corner_src, c_bl_corner_trans, c_tb_material);
@@ -108,17 +107,18 @@ namespace Component {
 						auto csr_b_side_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_b_side_src, c_b_side_trans, c_tb_material);
 						auto csr_center_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_center_src, c_center_trans, c_tb_material);
 						
-						auto& c_grouped_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
+						auto& c_box_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
 
-						c_grouped_render_systems.add(csr_tl_corner_camera_draw, render_group_);
-						c_grouped_render_systems.add(csr_tr_corner_camera_draw, render_group_);
-						c_grouped_render_systems.add(csr_bl_corner_camera_draw, render_group_);
-						c_grouped_render_systems.add(csr_br_corner_camera_draw, render_group_);
-						c_grouped_render_systems.add(csr_t_side_camera_draw, render_group_);
-						c_grouped_render_systems.add(csr_l_side_camera_draw, render_group_);
-						c_grouped_render_systems.add(csr_r_side_camera_draw, render_group_);
-						c_grouped_render_systems.add(csr_b_side_camera_draw, render_group_);
-						c_grouped_render_systems.add(csr_center_camera_draw, render_group_);
+						// add draw calls into our game obj info container for the game to use later
+						c_box_render_systems.add(csr_tl_corner_camera_draw, render_group_);
+						c_box_render_systems.add(csr_tr_corner_camera_draw, render_group_);
+						c_box_render_systems.add(csr_bl_corner_camera_draw, render_group_);
+						c_box_render_systems.add(csr_br_corner_camera_draw, render_group_);
+						c_box_render_systems.add(csr_t_side_camera_draw, render_group_);
+						c_box_render_systems.add(csr_l_side_camera_draw, render_group_);
+						c_box_render_systems.add(csr_r_side_camera_draw, render_group_);
+						c_box_render_systems.add(csr_b_side_camera_draw, render_group_);
+						c_box_render_systems.add(csr_center_camera_draw, render_group_);
 						
 						// arrow transform (used only with speech textboxes)
 						if (speech_arrow_)

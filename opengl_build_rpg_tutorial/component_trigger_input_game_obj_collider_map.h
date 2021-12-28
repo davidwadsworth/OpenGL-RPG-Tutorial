@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input.h"
+#include "component_trigger_input_game_obj.h"
 #include "component_system_render_camera_draw.h"
 #include "component_collider_gjk_physics_circle_smooth.h"
 #include "component_collider_gjk_physics_boundary_smooth.h"
@@ -16,25 +16,20 @@ storage class for tiled collision objects
 namespace Component {
 	namespace Trigger {
 		namespace Input {
-			namespace Dependent
+			namespace GameObj
 			{
 
-				class ColliderMap : public Component::Trigger::IInput
+				class ColliderMap : public Component::Trigger::Input::IGameObj
 				{
+					std::size_t render_group_;
 				public:
-					ColliderMap(std::string name)
-						: Component::Trigger::IInput(name)
+					ColliderMap(std::string name, std::size_t render_group)
+						: Component::Trigger::Input::IGameObj(name), render_group_(render_group)
 					{}
 
 				private:
-					void create(Entity* gamestate) override
+					void init(Entity* gamestate) override final
 					{
-						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("collider map");
-
-						auto e_collider_map_reference = new Entity();
-						entity_->add_id_child(e_collider_map_reference, "reference");
-						auto& c_collider_map_ref_render_list = *e_collider_map_reference->add_id_component<Component::GroupedSystems>("render systems");
-						
 						/*
 							71 = circle
 							48 = boundary
@@ -88,10 +83,12 @@ namespace Component {
 						c_cworld_col_vec.push_back(ccgpb_boundary_smooth);
 						c_cworld_col_vec.push_back(ccgpp_polygon_smooth);
 
-						// add render systems
-						c_collider_map_ref_render_list.add(csr_circle_cam_draw, 3);
-						c_collider_map_ref_render_list.add(csr_boundary_cam_draw, 3);
-						c_collider_map_ref_render_list.add(csr_polygon_cam_draw, 3);
+						// add render systems to game obj info 
+						auto& c_col_map_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
+
+						c_col_map_render_systems.add(csr_circle_cam_draw, render_group_);
+						c_col_map_render_systems.add(csr_boundary_cam_draw, render_group_);
+						c_col_map_render_systems.add(csr_polygon_cam_draw, render_group_);
 					}
 				};
 			}

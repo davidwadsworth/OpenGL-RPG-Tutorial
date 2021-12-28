@@ -1,13 +1,11 @@
 #pragma once
-#pragma once
+#include "component_trigger_input_game_obj.h"
 #include "component_vector.h"
-#include "component_trigger_input.h"
 #include "component_texture.h"
 #include "component_shader.h"
 #include "component_renderer.h"
 #include "component_src_bitmap_glyph.h"
 #include "component_system_render_draw.h"
-#include "component_observer.h"
 
 /*
 Display text to the screen without regard to the map.
@@ -18,34 +16,33 @@ Display text to the screen without regard to the map.
 namespace Component {
 	namespace Trigger {
 		namespace Input {
-			namespace Dependent
+			namespace GameObj
 			{
-				class Text : public Component::Trigger::IInput
+				class Text : public Component::Trigger::Input::IGameObj
 				{
-					std::string text_;
+					std::size_t render_group_;
+					std::string text_, font_;
 					glm::vec2 pos_;
 				public:
-					Text(std::string name, std::string text, glm::vec2 pos)
-						: Component::Trigger::IInput(name), text_(text), pos_(pos)
+					Text(std::string name, std::size_t render_group, std::string font, std::string text, glm::vec2 pos)
+						: Component::Trigger::Input::IGameObj(name), font_(font), text_(text), pos_(pos)
 					{}
 
 				private:
-					void create(Entity* gamestate) override final
+					void init(Entity* gamestate) override final
 					{
-						gamestate->get_child("observer")->add_id_component<Component::SystemObserver>("display text");
-
 						// get renderer
-						auto& c_renderer = *gamestate->get_child("renderer")->get_component<Component::Renderer>();
+						auto& c_renderer = *gamestate->get_component<Component::Renderer>();
 
-						// get render systems
-						auto& render_systems = *gamestate->get_child("engine")->get_component<Component::SystemVector>("render");
+						// get relevant font info
+						auto font = gamestate->get_child(font_);
 
-						auto font = gamestate->get_child("gilsans");
-
-						// hacky way to get font material, might change this, might not.
 						auto& c_font_material = *font->get_component<Component::Color>();
 
 						auto line_h = font->get_component<Component::Integer>()->value;
+
+						// create render system info
+						auto& c_text_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
 
 						auto x_pos = pos_.x;
 						char prev_c = 0;
@@ -72,7 +69,7 @@ namespace Component {
 							x_pos += c_bm_glyph.advance;
 
 							auto crs_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_bm_glyph, c_transform, c_font_material);
-							render_systems.push_back(crs_draw);
+							c_text_render_systems.add(crs_draw, render_group_);
 						}
 					}
 				};

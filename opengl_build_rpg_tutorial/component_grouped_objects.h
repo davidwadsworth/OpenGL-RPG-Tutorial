@@ -5,6 +5,10 @@
 #include "frarr.h"
 #include "logger.h"
 
+
+// this probably should be defined out of code but its here for now
+#define MAX_CONTAINER_SIZE 128ull
+
 namespace Component
 {
 	template <typename T>
@@ -13,7 +17,7 @@ namespace Component
 		struct Group : public FRArr<T>
 		{
 			Group(std::size_t id)
-				: id(id)
+				: FRArr<T>(MAX_CONTAINER_SIZE), id(id)
 			{}
 			std::size_t id;
 		};
@@ -42,15 +46,34 @@ namespace Component
 					}
 				}
 			}
-				
-
-
-			objects[pos].push_back(obj);
+			
+			objects.push_back(Group(id));
+			(objects.end() - 1)->push_back(obj);
 		}
 
 		void add(std::vector<T> objs, std::size_t pos)
 		{
+			auto j = -1;
+			for (auto i = 0; i < groups.size(); ++i, ++j)
+			{
+				if (groups[i].id == pos)
+				{
+					groups[i].push_back(objs);
+					return;
+				}
 
+				if (j >= 0)
+				{
+					if (groups[i].id > pos)
+					{
+						groups.insert(groups.begin() + j, Group(id))->push_back(objs);
+						return;
+					}
+				}
+			}
+
+			objects.push_back(Group(id));
+			(objects.end() - 1)->push_back(objs);
 		}
 
 		void clear()
