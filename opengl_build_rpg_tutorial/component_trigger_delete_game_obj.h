@@ -24,7 +24,7 @@ namespace Component {
 				{
 					auto& obj_render_systems = *game_obj_->get_component<Component::GroupedSystems>("render");
 
-					for (auto obj_rg : obj_render_systems.objects)
+					for (auto obj_rg : obj_render_systems.groups)
 						for (auto i = 0; i < obj_rg.size; ++i)
 							obj_rg[i]->remove();
 				}
@@ -33,7 +33,7 @@ namespace Component {
 				{
 					auto& obj_update_systems = *game_obj_->get_component<Component::GroupedSystems>("update");
 
-					for (auto obj_ug : obj_update_systems.objects)
+					for (auto obj_ug : obj_update_systems.groups)
 						for (auto i = 0; i < obj_ug.size; ++i)
 							obj_ug[i]->remove();
 				}

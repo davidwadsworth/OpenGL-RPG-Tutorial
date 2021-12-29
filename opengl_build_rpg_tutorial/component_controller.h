@@ -10,6 +10,6 @@ namespace Component
 		virtual bool key_down_down() = 0;
 		virtual bool key_down_up() = 0;
 
-		virtual bool key_down_action_1() = 0;
+		virtual bool key_press_action_1() = 0;
 	};
 }

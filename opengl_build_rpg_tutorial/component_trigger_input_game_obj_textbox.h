@@ -78,8 +78,23 @@ namespace Component {
 						bool speech_box = msg_json["speech_box"] == "true";
 						std::vector<std::string> message = msg_json["message"];
 
-						auto box_rect = Rect{pos_.x, pos_.y, box_w, box_h};
+						/*
+						Textarea:
+						std::string name, std::size_t render_group, std::string font, std::string& msg, Rect rect, 
+						float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top"
 						
+						Box:
+						std::string name,std::size_t render_group, Rect rect, float corner_size, float box_sc, bool speech_arrow = false
+						*/
+
+						auto ctigo_box = entity_->add_component<Component::Trigger::Input::GameObj::Box>("box", 
+							5, Rect{pos_.x, pos_.y, box_w, box_h}, corner_size, box_sc, speech_box);
+						auto ctigo_text_area = entity_->add_component<Component::Trigger::Input::GameObj::TextArea>("textarea", 
+							5, font_name, message[0], Rect{pos_.x + msg_padding_x, pos_.y + msg_padding_y, box_w - 2* msg_padding_x, box_h - 2 * msg_padding_y },
+							line_spacing, font_sc, align_h, align_v);
+
+
+						e_game_info_->add_id_component<Component::TriggerVector>("trigger add");
 
 
 					}

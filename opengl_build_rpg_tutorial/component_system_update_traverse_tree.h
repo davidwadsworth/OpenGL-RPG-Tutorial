@@ -19,9 +19,10 @@ namespace Component {
 					: controller_(controller), cursor_(trigger_tree.get_root()), triggers_(triggers)
 				{}
 
-
 				void execute() override
 				{
+					if (controller_.key_press_action_1())
+						triggers_.push_back(cursor_->value);
 
 				}
 			};

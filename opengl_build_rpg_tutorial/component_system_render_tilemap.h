@@ -3,7 +3,7 @@
 #include "component_system.h"
 #include "component_transform.h"
 #include "game.h"
-#include "component_tile_map.h"
+#include "component_tilemap.h"
 #include "component_vector.h"
 
 /*
@@ -19,21 +19,21 @@ namespace Component {
 			class TileMap : public Component::ISystem
 			{
 				Component::Transform& camera_transform_;
-				Component::TileMap& tile_map_;
+				Component::TileMap& tilemap_;
 				Component::SystemVector& render_systems_;
 			public:
-				TileMap(Component::Transform& camera_transform, Component::TileMap& tile_map, Component::SystemVector& render_systems)
-					: camera_transform_(camera_transform), tile_map_(tile_map), render_systems_(render_systems)
+				TileMap(Component::Transform& camera_transform, Component::TileMap& tilemap, Component::SystemVector& render_systems)
+					: camera_transform_(camera_transform), tilemap_(tilemap), render_systems_(render_systems)
 				{}
 
 				void execute() override final
 				{
-					const unsigned col_start = camera_transform_.x / tile_map_.tile_size;
-					const unsigned row_start = camera_transform_.y / tile_map_.tile_size;
+					const unsigned col_start = camera_transform_.x / tilemap_.tile_size;
+					const unsigned row_start = camera_transform_.y / tilemap_.tile_size;
 
-					auto tile_size = tile_map_.tile_size;
-					auto map_width = tile_map_.width;
-					auto map_height = tile_map_.height;
+					auto tile_size = tilemap_.tile_size;
+					auto map_width = tilemap_.width;
+					auto map_height = tilemap_.height;
 
 					unsigned col_end = col_start + Game::width / tile_size + (Game::width % tile_size != 0);
 					col_end = col_end >= map_width ? map_width - 1 : col_end;

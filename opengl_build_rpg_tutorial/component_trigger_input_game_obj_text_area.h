@@ -23,12 +23,12 @@ namespace Component {
 				class TextArea : public Component::Trigger::Input::IGameObj
 				{
 					std::size_t render_group_;
-					std::string& msg_;
+					std::string msg_;
 					Rect rect_;
 					std::string font_, align_h_, align_v_;
 					float line_spacing_, font_sc_;
 				public:
-					TextArea(std::string name, std::size_t render_group, std::string font, std::string& msg, Rect rect, 
+					TextArea(std::string name, std::size_t render_group, std::string font, std::string msg, Rect rect, 
 						float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top")
 						: Component::Trigger::Input::IGameObj(name), render_group_(render_group), font_(font), msg_(msg), rect_(rect), 
 						line_spacing_(line_spacing), font_sc_(font_sc), align_h_(align_h), align_v_(align_v)

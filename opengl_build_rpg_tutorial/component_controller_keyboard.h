@@ -8,6 +8,7 @@ namespace Component {
 	namespace Controller {
 		class Keyboard : public Component::IController
 		{
+			bool action_1_pressed_;
 			enum KeyID
 			{
 				left = GLFW_KEY_LEFT,
@@ -19,6 +20,7 @@ namespace Component {
 			Component::KeyboardArray* keys_;
 		public:
 			Keyboard()
+				: action_1_pressed_(false), keys_(nullptr)
 			{
 				keys_ = Game::global->get_child("keyboard")->get_component<Component::KeyboardArray>();
 			}
@@ -39,9 +41,16 @@ namespace Component {
 			{
 				return (*keys_)[up];
 			}
-			bool key_down_action_1() override
+
+			bool key_press_action_1() override
 			{
-				return (*keys_)[action_1];
+				if ((*keys_)[action_1])
+					if (!action_1_pressed_)
+						action_1_pressed_ = true;
+				else
+					action_1_pressed_ = false;
+
+				return action_1_pressed_;
 			}
 		};
 	}

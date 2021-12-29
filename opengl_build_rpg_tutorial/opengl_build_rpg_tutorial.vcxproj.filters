@@ -317,10 +317,10 @@
     <ClInclude Include="component_trigger_input_game_obj.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_render_tile_map.h">
+    <ClInclude Include="component_system_render_tilemap.h">
       <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
-    <ClInclude Include="component_tile_map.h">
+    <ClInclude Include="component_tilemap.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
   </ItemGroup>

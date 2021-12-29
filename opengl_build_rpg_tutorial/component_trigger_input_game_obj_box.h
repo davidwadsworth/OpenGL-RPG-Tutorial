@@ -17,7 +17,7 @@ Creates our local camera using width and height
 namespace Component {
 	namespace Trigger {
 		namespace Input {
-			namespace Dependent
+			namespace GameObj
 			{
 				class Box : public Component::Trigger::Input::IGameObj
 				{
@@ -26,7 +26,7 @@ namespace Component {
 					bool speech_arrow_;
 					std::size_t render_group_;
 				public:
-					Box(std::string name, Rect rect, float corner_size, float box_sc, std::size_t render_group, bool speech_arrow = false)
+					Box(std::string name, std::size_t render_group, Rect rect, float corner_size, float box_sc, bool speech_arrow = false)
 						: Component::Trigger::Input::IGameObj(name), rect_(rect), corner_size_(corner_size), box_sc_(box_sc), render_group_(render_group), speech_arrow_(speech_arrow)
 					{}
 				private:

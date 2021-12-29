@@ -167,10 +167,10 @@
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_material_color.h" />
     <ClInclude Include="component_system_render_draw.h" />
-    <ClInclude Include="component_system_render_tile_map.h" />
+    <ClInclude Include="component_system_render_tilemap.h" />
     <ClInclude Include="component_system_update_traverse_tree.h" />
     <ClInclude Include="component_template.h" />
-    <ClInclude Include="component_tile_map.h" />
+    <ClInclude Include="component_tilemap.h" />
     <ClInclude Include="component_tree.h" />
     <ClInclude Include="component_trigger_add_game_obj.h" />
     <ClInclude Include="component_trigger_delete_entity.h" />
