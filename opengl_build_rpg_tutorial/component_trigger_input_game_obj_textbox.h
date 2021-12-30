@@ -96,7 +96,7 @@ namespace Component {
 							
 							auto e_txta_game_info = gamestate->get_child(name_ + " text area " + std::to_string(i))->get_child("game info");
 							add_triggers.push_back(e_txta_game_info->get_component<Component::Trigger::AddGameObj>());
-							c_trigger_qlt.push_child()
+							c_trigger_qlt.push_child(e_txta_game_info->get_component<Component::Trigger::RemoveGameObj>());
 						}
 						
 						auto& c_tbox_trigger_vector_add = *e_game_info_->add_id_component<Component::TriggerVector>("trigger add");
