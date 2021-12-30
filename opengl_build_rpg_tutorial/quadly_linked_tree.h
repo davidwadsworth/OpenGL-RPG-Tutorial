@@ -15,6 +15,11 @@ public:
 	QuadlyLinkedTree()
 		: head_(nullptr)
 	{}
+	QuadlyLinkedTree(T item)
+	{
+		push_down(item);
+	}
+
 	~QuadlyLinkedTree()
 	{
 		clear();
@@ -31,7 +36,8 @@ public:
 		direction_up,
 		direction_down,
 		diection_right,
-		direction_left
+		direction_left,
+		child
 	};
 
 	struct Node
@@ -40,7 +46,8 @@ public:
 		Node* up,
 			* down,
 			* right,
-			* left;
+			* left,
+			* child;
 	};
 
 	Node* push_right(T item)
@@ -63,6 +70,11 @@ public:
 		return head_ = insert(item, head_, Direction::direction_up);
 	}
 
+	Node* push_child(T item)
+	{
+		return head_ = insert(item, head_, Direction::child);
+	}
+
 	Node* get_begin()
 	{
 		return head_;
@@ -74,7 +86,7 @@ private:
 		if (!node)
 		{
 			clear();
-			head_ = new Node{ item, nullptr, nullptr, nullptr, nullptr };
+			head_ = new Node{ item, nullptr, nullptr, nullptr, nullptr, nullptr};
 			head_->up = head_->down = head_->left = head_->right = head_;
 			return head_;
 		}
@@ -83,32 +95,35 @@ private:
 		switch (direction)
 		{
 		case Direction::direction_up:
-			ins = new Node{ item, node->up, node, nullptr, nullptr };
+			ins = new Node{ item, node->up, node, nullptr, nullptr, nullptr };
 			ins->right = ins->left = ins;
 			if (node->up)
 				node->up->down = ins;
 			node->up = ins;
 			break;
 		case Direction::direction_down:
-			ins = new Node{ item, node, node->down, nullptr, nullptr };
+			ins = new Node{ item, node, node->down, nullptr, nullptr, nullptr };
 			ins->right = ins->left = ins;
 			if (node->down)
 				node->down->up = ins;
 			node->down = ins;
 			break;
 		case Direction::diection_right:
-			ins = new Node{ item, nullptr, nullptr, node->right, node };
+			ins = new Node{ item, nullptr, nullptr, node->right, node, nullptr};
 			ins->down = ins->up = ins;
 			if (node->right)
 				node->right->left = ins;
 			node->right = ins;
 			break;
 		case Direction::direction_left:
-			ins = new Node{ item, nullptr, nullptr, node, node->left };
+			ins = new Node{ item, nullptr, nullptr, node, node->left, nullptr };
 			ins->down = ins->up = ins;
 			if (node->left)
 				node->left->right = ins;
 			node->left = ins;
+			break;
+		case Direction::child:
+			ins = new Node{ item, nullptr, nullptr, nullptr, nullptr, head_ };
 			break;
 		default:
 			throw;

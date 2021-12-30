@@ -5,18 +5,13 @@
 #include <sstream>
 #include <vector>
 #include "json.hpp"
-#include "component_template.h"
-#include "component_tree.h"
-#include "component_material.h"
-#include "component_system_render_camera_draw.h"
-#include "component_controller_keyboard.h"
-#include "component_src_bitmap_glyph.h"
 #include "component_trigger_delete_game_obj.h"
-#include "component_trigger_add_game_obj.h"
 #include "component_trigger_delete_entity.h"
 #include "component_trigger_switch_systems.h"
 #include "component_trigger_input_game_obj_text_area.h"
 #include "component_trigger_input_game_obj_box.h"
+#include "component_quadly_linked_tree.h"
+#include "component_system_update_traverse_tree.h"
 
 /*
 @author David Wadsworth
@@ -76,26 +71,38 @@ namespace Component {
 						float msg_padding_y = msg_json["msg_padding_y"];
 						float corner_size = msg_json["corner_size"];
 						bool speech_box = msg_json["speech_box"] == "true";
-						std::vector<std::string> message = msg_json["message"];
+						std::vector<std::string> messages = msg_json["message"];
 
-						/*
-						Textarea:
-						std::string name, std::size_t render_group, std::string font, std::string& msg, Rect rect, 
-						float line_spacing, float font_sc, std::string align_h = "left", std::string align_v = "top"
-						
-						Box:
-						std::string name,std::size_t render_group, Rect rect, float corner_size, float box_sc, bool speech_arrow = false
-						*/
+						std::vector<Component::ITrigger*> add_triggers;
 
-						auto ctigo_box = entity_->add_component<Component::Trigger::Input::GameObj::Box>("box", 
+						auto ctigo_box = entity_->add_id_component<Component::Trigger::Input::GameObj::Box>("box", name_ + "_box",
 							5, Rect{pos_.x, pos_.y, box_w, box_h}, corner_size, box_sc, speech_box);
-						auto ctigo_text_area = entity_->add_component<Component::Trigger::Input::GameObj::TextArea>("textarea", 
-							5, font_name, message[0], Rect{pos_.x + msg_padding_x, pos_.y + msg_padding_y, box_w - 2* msg_padding_x, box_h - 2 * msg_padding_y },
-							line_spacing, font_sc, align_h, align_v);
+						ctigo_box->execute(gamestate);
 
+						add_triggers.push_back(gamestate->get_child(name_ + " box")->
+							get_child("game info")->get_component<Component::Trigger::AddGameObj>());
 
-						e_game_info_->add_id_component<Component::TriggerVector>("trigger add");
+						auto& c_trigger_qlt = *entity_->add_id_component<Component::QLTriggerTree>("quadly linked trigger tree");
+						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse tree");
 
+						for (auto i = messages.size() - 1; i >= 0; --i)
+						{
+							auto ctigo_text_area = entity_->add_id_component<Component::Trigger::Input::GameObj::TextArea>(
+								"text area " + std::to_string(i), name_ + " text area " + std::to_string(i), 5, font_name,
+								messages[i], Rect{pos_.x + msg_padding_x, pos_.y + msg_padding_y, box_w - 2 * msg_padding_x,
+								box_h - 2 * msg_padding_y}, line_spacing, font_sc, align_h, align_v);
+							
+							ctigo_text_area->execute(gamestate);
+							
+							auto e_txta_game_info = gamestate->get_child(name_ + " text area " + std::to_string(i))->get_child("game info");
+							add_triggers.push_back(e_txta_game_info->get_component<Component::Trigger::AddGameObj>());
+							c_trigger_qlt.push_child()
+						}
+						
+						auto& c_tbox_trigger_vector_add = *e_game_info_->add_id_component<Component::TriggerVector>("trigger add");
+						auto& c_tbox_update_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("update");
+
+						c_tbox_trigger_vector_add.insert(c_tbox_trigger_vector_add.end(), add_triggers.begin(), add_triggers.end());
 
 					}
 				};

@@ -11,7 +11,7 @@ namespace Component {
 				void create(Entity* gamestate) final
 				{
 					e_game_info_ = new Entity();
-					entity_->add_id_child(e_game_info_, "game_info");
+					entity_->add_id_child(e_game_info_, "game info");
 
 					e_game_info_->add_id_component<Component::Trigger::AddGameObj>("add", name_);
 					e_game_info_->add_id_component<Component::Trigger::RemoveGameObj>("delete", name_);
