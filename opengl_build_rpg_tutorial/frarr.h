@@ -48,6 +48,11 @@ public:
 		buffer_.insert(buffer_.end(), cols.begin(), cols.end());
 	}
 
+	void push_back(FRArr<T>& frarr)
+	{
+		push_back(frarr.buffer_);
+	}
+
 	void remove(std::size_t ele) // replaces the element with the element at the end
 	{
 		if (ele >= size)

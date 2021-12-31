@@ -11,13 +11,12 @@ namespace Component {
 				void create(Entity* gamestate) final
 				{
 					e_game_info_ = new Entity();
-					entity_->add_id_child(e_game_info_, "game info");
+					entity_->add_id_child(e_game_info_, "game_info");
 
 					e_game_info_->add_id_component<Component::Trigger::AddGameObj>("add", name_);
-					e_game_info_->add_id_component<Component::Trigger::RemoveGameObj>("delete", name_);
+					e_game_info_->add_id_component<Component::Trigger::RemoveGameObj>("remove", name_);
 				}
 
-				// this is kinda funny how garbage these virtual functions are
 				virtual void init(Entity* gamestate) = 0;
 			protected:
 				Entity* e_game_info_ = nullptr;

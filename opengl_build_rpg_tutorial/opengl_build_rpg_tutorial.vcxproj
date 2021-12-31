@@ -157,6 +157,7 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_grouped_objects.h" />
+    <ClInclude Include="component_quadly_linked_tree.h" />
     <ClInclude Include="component_src_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="component_texture.h" />
     <ClInclude Include="quadly_linked_tree.h" />
+    <ClInclude Include="tree.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Data\gilsans.json" />

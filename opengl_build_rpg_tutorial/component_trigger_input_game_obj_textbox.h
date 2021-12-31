@@ -10,7 +10,7 @@
 #include "component_trigger_switch_systems.h"
 #include "component_trigger_input_game_obj_text_area.h"
 #include "component_trigger_input_game_obj_box.h"
-#include "component_quadly_linked_tree.h"
+#include "component_tree.h"
 #include "component_system_update_traverse_tree.h"
 
 /*
@@ -25,10 +25,11 @@ namespace Component {
 				class TextBox : public Component::Trigger::Input::IGameObj
 				{
 					std::string path_;
+					std::size_t render_group_;
 					glm::vec2 pos_;
 				public:
-					TextBox(std::string name, std::string path, glm::vec2 pos)
-						: Component::Trigger::Input::IGameObj(name), path_(path), pos_(pos)
+					TextBox(std::string name, std::size_t render_group, std::string path, glm::vec2 pos)
+						: Component::Trigger::Input::IGameObj(name), path_(path), render_group_(render_group), pos_(pos)
 					{}
 
 				private:
@@ -73,37 +74,60 @@ namespace Component {
 						bool speech_box = msg_json["speech_box"] == "true";
 						std::vector<std::string> messages = msg_json["message"];
 
-						std::vector<Component::ITrigger*> add_triggers;
+						auto& c_tbox_update_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("update");
+						auto& c_tbox_trigger_vector_add = *e_game_info_->add_id_component<Component::TriggerVector>("trigger_add");
+						auto& c_tbox_trigger_vector_remove = *e_game_info_->add_id_component<Component::TriggerVector>("trigger_remove");
 
-						auto ctigo_box = entity_->add_id_component<Component::Trigger::Input::GameObj::Box>("box", name_ + "_box",
-							5, Rect{pos_.x, pos_.y, box_w, box_h}, corner_size, box_sc, speech_box);
+						auto e_pause = new Entity();
+						entity_->add_id_child(e_pause, "pause");
+						e_pause->add_component<Component::GroupedSystems>("update");
+
+
+						auto ctigo_box = entity_->add_id_component<Component::Trigger::Input::GameObj::Box>("box", "box",
+							entity_, render_group_, Rect{pos_.x, pos_.y, box_w, box_h}, corner_size, box_sc, speech_box);
 						ctigo_box->execute(gamestate);
 
-						add_triggers.push_back(gamestate->get_child(name_ + " box")->
-							get_child("game info")->get_component<Component::Trigger::AddGameObj>());
+						auto e_box_game_info = gamestate->get_child("box")->get_child("game info");
 
-						auto& c_trigger_qlt = *entity_->add_id_component<Component::QLTriggerTree>("quadly linked trigger tree");
-						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse tree");
+						c_tbox_trigger_vector_add.push_back(e_box_game_info->get_component<Component::Trigger::AddGameObj>());
+						c_tbox_trigger_vector_remove.push_back(e_box_game_info->get_component<Component::Trigger::RemoveGameObj>());
 
-						for (auto i = messages.size() - 1; i >= 0; --i)
+						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
+						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree");
+
+						for (auto i = 0; i < messages.size(); ++i)
 						{
 							auto ctigo_text_area = entity_->add_id_component<Component::Trigger::Input::GameObj::TextArea>(
-								"text area " + std::to_string(i), name_ + " text area " + std::to_string(i), 5, font_name,
+								"text_area_" + std::to_string(i),"text_area_" + std::to_string(i), entity_, render_group_, font_name,
 								messages[i], Rect{pos_.x + msg_padding_x, pos_.y + msg_padding_y, box_w - 2 * msg_padding_x,
 								box_h - 2 * msg_padding_y}, line_spacing, font_sc, align_h, align_v);
 							
 							ctigo_text_area->execute(gamestate);
-							
-							auto e_txta_game_info = gamestate->get_child(name_ + " text area " + std::to_string(i))->get_child("game info");
-							add_triggers.push_back(e_txta_game_info->get_component<Component::Trigger::AddGameObj>());
-							c_trigger_qlt.push_child(e_txta_game_info->get_component<Component::Trigger::RemoveGameObj>());
 						}
+
+						for (auto i = messages.size() - 1; i > 0; --i)
+						{
+							auto e_txt_curr_game_info = entity_->get_child("text_area_" + std::to_string(i))->get_child("game_info");
+							auto e_txt_prev_game_info = entity_->get_child("text_area_" + std::to_string(i - 1))->get_child("game_info");
+							std::vector<Component::ITrigger*> msg_triggers;
+							
+							msg_triggers.push_back(e_txt_prev_game_info->get_component<Component::Trigger::RemoveGameObj>("remove"));
+							msg_triggers.push_back(e_txt_curr_game_info->get_component<Component::Trigger::AddGameObj>("add"));
+							c_trigger_tree.add(msg_triggers);
+						}
+
+						auto e_txt_end_game_info = entity_->get_child("text_area_" + std::to_string(messages.size() - 1));
+						std::vector<Component::ITrigger*> msg_triggers;
+						msg_triggers.push_back(e_txt_end_game_info->get_component<Component::Trigger::RemoveGameObj>("remove"));
+						msg_triggers.push_back(entity_->add_id_component<Component::Trigger::DeleteEntity>("delete_entity", name_));
+						msg_triggers.push_back();
+
+						auto e_txt_0_game_info = entity_->get_child("text_area_0")->get_child("game_info");
+
+						c_tbox_trigger_vector_add.push_back(e_txt_0_game_info->get_component<Component::Trigger::AddGameObj>());
+
+
 						
-						auto& c_tbox_trigger_vector_add = *e_game_info_->add_id_component<Component::TriggerVector>("trigger add");
-						auto& c_tbox_update_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("update");
-
-						c_tbox_trigger_vector_add.insert(c_tbox_trigger_vector_add.end(), add_triggers.begin(), add_triggers.end());
-
 					}
 				};
 			}

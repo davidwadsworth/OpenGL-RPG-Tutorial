@@ -8,5 +8,5 @@ namespace Component
 	template <typename T>
 	class Tree : public IComponent, public Tre<T>
 	{};
-#define TriggerTree Tree<Component::ITrigger*>
+#define TriggerTree Tree<std::vector<Component::ITrigger*>>
 }

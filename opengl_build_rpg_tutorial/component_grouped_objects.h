@@ -76,13 +76,20 @@ namespace Component
 			(objects.end() - 1)->push_back(objs);
 		}
 
+
+		void add(GroupedObjects<T>& grouped_objects)
+		{
+			for (auto group : grouped_objects.groups)
+
+		}
+
 		void clear()
 		{
 			for (auto obj_frarr : objects)
 				obj_frarr.clear();
 		}
 
-		std::vector<Group>> groups;
+		std::vector<Group> groups;
 	};
 #define GroupedSystems GroupedObjects<Component::ISystem*>
 }

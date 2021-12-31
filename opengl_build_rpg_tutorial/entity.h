@@ -104,7 +104,7 @@ public:
 	}
 
 	// inserts entity into child tree, and treats it like an array
-	Entity* push_back_child(Entity* entity)
+	Entity* push_back_child(Entity* entity) 
 	{
 		return children_.insert(entity);
 	}

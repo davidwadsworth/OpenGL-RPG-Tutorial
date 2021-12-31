@@ -89,13 +89,13 @@ namespace Component {
 
 						entity_->add_id_component<Component::Trigger::Input::Camera>("camera", "camera", 64.0f * 32.0f);
 						entity_->add_id_component<Component::Trigger::Input::Controller>("controller", "controller");
-						entity_->add_id_component<Component::Trigger::Input::Shader>("shader manager", "shader manager");
-						entity_->add_id_component<Component::Trigger::Input::Texture>("texture manager", "texture manager");
+						entity_->add_id_component<Component::Trigger::Input::Shader>("shader_manager", "shader_manager");
+						entity_->add_id_component<Component::Trigger::Input::Texture>("texture_manager", "texture_manager");
 						entity_->add_id_component<Component::Trigger::Input::Font>("gilsans", "gilsans", "resources/data/gilsans.json");
-						entity_->add_id_component<Component::Trigger::Input::CollisionWorld>("collision world", "collision world");
+						entity_->add_id_component<Component::Trigger::Input::CollisionWorld>("collision_world", "collision_world");
 						entity_->add_id_component<Component::Trigger::Input::GameObj::TileMap>("tilemap", "tilemap", "resources/data/TestTileMapGJK.json");
 						entity_->add_id_component<Component::Trigger::Input::GameObj::Player>("player", "player", (GLfloat)Game::width, 792.0f);
-						entity_->add_id_component<Component::Trigger::Input::GameObj::ColliderMap>("collider map", "collider map");
+						entity_->add_id_component<Component::Trigger::Input::GameObj::ColliderMap>("collider_map", "collider_map");
 					}
 				};
 			}

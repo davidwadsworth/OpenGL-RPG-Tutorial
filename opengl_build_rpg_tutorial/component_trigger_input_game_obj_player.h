@@ -44,8 +44,8 @@ namespace Component {
                     void init(Entity* gamestate) override final
                     {
                         // get player shader and textures
-                        auto& c_flesh_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("flesh_full");
-                        auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
+                        auto& c_flesh_tex = *gamestate->get_child("texture_manager")->get_component<Component::Texture>("flesh_full");
+                        auto& c_sprite_shader = *gamestate->get_child("shader_manager")->get_component<Component::Shader>("sprite");
 
                         // get renderer
                         auto& c_renderer = *gamestate->get_component<Component::Renderer >("renderer");
@@ -57,7 +57,7 @@ namespace Component {
                         auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
 
                         // get collision world
-                        auto& c_colw_col_vec = *gamestate->get_child("collision world")->get_component<Component::GJKVector>();
+                        auto& c_colw_col_vec = *gamestate->get_child("collision_world")->get_component<Component::GJKVector>();
 
                         auto& c_pla_transform = *entity_->add_component<Component::Transform>(x_, y_, 64.0f);
                         auto& c_pla_src = *entity_->add_component<Component::Src>(Rect{ 0.0f, 0.0f, 64.0f, 64.0f });
