@@ -26,18 +26,16 @@ namespace Component {
 				{
 					auto& obj_render_systems = *game_obj_->get_component<Component::GroupedSystems>("render");
 
-					for (auto i = 0u; i < obj_render_systems.groups.size(); ++i)
-						for (auto j = 0u; j < obj_render_systems.groups[i].size; ++j)
-							engine_render_systems.add(obj_render_systems.groups[i][j], i);
+					for (auto group : obj_render_systems.groups)
+						obj_render_systems.add(group);
 				}
 
 				if (game_obj_->has_component<Component::GroupedSystems>("update"))
 				{
 					auto& obj_update_systems = *game_obj_->get_component<Component::GroupedSystems>("update");
 
-					for (auto i = 0u; i < obj_update_systems.groups.size(); ++i)
-						for (auto j = 0u; j < obj_update_systems.groups[i].size; ++j)
-							engine_update_systems.add(obj_update_systems.groups[i][j], i);
+					for (auto group : obj_update_systems.groups)
+						obj_update_systems.add(group);
 				}
 
 				if (game_obj_->has_component<Component::TriggerVector>("trigger add"))

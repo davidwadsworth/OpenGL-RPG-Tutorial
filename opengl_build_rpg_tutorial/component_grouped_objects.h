@@ -77,10 +77,14 @@ namespace Component
 		}
 
 
-		void add(GroupedObjects<T>& grouped_objects)
+		void add(Group& group)
 		{
-			for (auto group : grouped_objects.groups)
+			//TODO
+		}
 
+		void remove(Group& group)
+		{
+			//TODO
 		}
 
 		void clear()

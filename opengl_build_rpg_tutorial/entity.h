@@ -116,6 +116,13 @@ public:
 		return children_.insert(hashed_str, entity);
 	}
 
+	Entity* add_id_child(std::string id)
+	{
+		auto e = new Entity();
+		auto hashed_str = std::hash<std::string>{}(id);
+		return children_.insert(hashed_str, e);
+	}
+
 	// inserts entity into child tree with unique id
 	Entity* add_id_child(Entity* entity, std::size_t id)
 	{

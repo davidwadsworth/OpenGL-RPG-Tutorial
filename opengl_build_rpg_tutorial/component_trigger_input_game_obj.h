@@ -18,9 +18,8 @@ namespace Component {
 				}
 
 				virtual void init(Entity* gamestate) = 0;
-			protected:
-				Entity* e_game_info_ = nullptr;
 			public:
+				Entity* e_game_info_ = nullptr;
 				using Component::Trigger::IInput::IInput;
 			};
 		}

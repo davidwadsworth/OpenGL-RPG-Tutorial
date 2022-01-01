@@ -19,14 +19,15 @@ namespace Component {
 				auto engine = gamestate->get_child("engine");
 
 				auto& engine_triggers = *engine->get_component<Component::TriggerVector>("trigger");
+				auto& engine_render_systems = *engine->get_component<Component::GroupedSystems>("render");
+				auto& engine_update_systems = *engine->get_component<Component::GroupedSystems>("update");
 
 				if (game_obj_->has_component<Component::GroupedSystems>("render"))
 				{
 					auto& obj_render_systems = *game_obj_->get_component<Component::GroupedSystems>("render");
 
 					for (auto obj_rg : obj_render_systems.groups)
-						for (auto i = 0; i < obj_rg.size; ++i)
-							obj_rg[i]->remove();
+						engine_render_systems.remove(obj_rg);
 				}
 
 				if (game_obj_->has_component<Component::GroupedSystems>("update"))
@@ -34,8 +35,7 @@ namespace Component {
 					auto& obj_update_systems = *game_obj_->get_component<Component::GroupedSystems>("update");
 
 					for (auto obj_ug : obj_update_systems.groups)
-						for (auto i = 0; i < obj_ug.size; ++i)
-							obj_ug[i]->remove();
+						engine_update_systems.remove(obj_ug);
 				}
 
 				if (game_obj_->has_component<Component::TriggerVector>("trigger remove"))
