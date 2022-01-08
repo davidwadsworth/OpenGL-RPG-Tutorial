@@ -224,6 +224,7 @@
     <ClInclude Include="json.hpp" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="rect.h" />
+    <ClInclude Include="sort.h" />
     <ClInclude Include="splay_tree.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="component_texture.h" />

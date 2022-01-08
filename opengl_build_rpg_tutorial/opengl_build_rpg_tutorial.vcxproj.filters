@@ -18,12 +18,6 @@
     <Filter Include="EC\Component\System">
       <UniqueIdentifier>{0d16eb6b-3dbc-449e-839e-6a7d36518083}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\System\Render">
-      <UniqueIdentifier>{b28cdf7b-d0aa-4a5c-b4be-79e317e913c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\System\Update">
-      <UniqueIdentifier>{f38c53a0-73a2-4851-acc7-31e05b4a2fe9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EC\Component\Controller">
       <UniqueIdentifier>{7785d3a9-fb05-49f3-84b0-6ee5774cd4ac}</UniqueIdentifier>
     </Filter>
@@ -63,6 +57,12 @@
     </Filter>
     <Filter Include="EC\Component\Trigger\Input\GameObject">
       <UniqueIdentifier>{52f76306-7a6f-4dba-96f8-aab124b9a5f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\System\Render">
+      <UniqueIdentifier>{b28cdf7b-d0aa-4a5c-b4be-79e317e913c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\System\Update">
+      <UniqueIdentifier>{f38c53a0-73a2-4851-acc7-31e05b4a2fe9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +324,9 @@
       <Filter>EC\Component</Filter>
     </ClInclude>
     <ClInclude Include="tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
