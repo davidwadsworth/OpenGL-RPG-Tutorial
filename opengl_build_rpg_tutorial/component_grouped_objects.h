@@ -5,6 +5,7 @@
 #include "frarr.h"
 #include "logger.h"
 #include "sort.h"
+#include "component_system_item.h"
 
 
 // this probably should be defined out of code but its here for now
@@ -12,41 +13,13 @@
 
 namespace Component
 {
-	class GroupedSystems
+	class Engine
 	{
-	public:
-
-		struct Item
-		{
-			Item(std::vector<Component::ISystem*> sys, std::string iid)
-				: items(sys), iid(iid)
-			{}
-
-			Item(Component::ISystem* sys, std::string iid)
-				: iid(iid)
-			{
-				items.push_back(sys);
-			}
-
-			std::vector<Component::ISystem*> items;
-			std::string iid;
-
-			bool operator==(const Item& item) { return this->iid == item.iid; }
-			bool operator==(Item&& item) { return this->iid == item.iid; }
-			bool operator>(const Item& item) { return this->iid > item.iid; }
-			bool operator>(Item&& item) { return this->iid < item.iid; }
-			bool operator<(const Item& item) { return this->iid > item.iid; }
-			bool operator<(Item&& item) { return this->iid < item.iid; }
-			bool operator<=(const Item& item) { return *this == item || *this < item; }
-			bool operator<=(Item&& item) { return *this == item || *this < item; }
-			bool operator>=(const Item& item) { return *this == item || *this > item; }
-			bool operator>=(Item&& item) { return *this == item || *this > item; }
-		};
-
-		struct Group : public FRArr<Item*>
+		friend Component::System::IItem;
+		struct Group : public FRArr<Component::System::IItem*>
 		{
 			Group(float gid)
-				: FRArr<Item>(MAX_CONTAINER_SIZE), gid(gid)
+				: FRArr<Component::System::IItem*>(MAX_CONTAINER_SIZE), gid(gid)
 			{}
 			float gid;
 
@@ -62,131 +35,96 @@ namespace Component
 			bool operator>=(const Group& group) { return *this == group || *this > group; }
 			bool operator>=(Group&& group) { return *this == group || *this > group; }
 		};
-		
-		GroupedSystems()
+
+		FRArr<Group> groups_;
+		int search(float gid)
+		{
+			int l = 0;
+			int r = groups_.size - 1;
+
+			while (r > l)
+			{
+				int m = (r - l) >> 1;
+
+				if (groups_[m].gid == gid)
+					return m;
+
+				if (groups_[m].gid > gid)
+					l = m;
+
+				if (groups_[m].gid < gid)
+					r = m;
+			}
+			return -1;
+		}
+
+	public:
+
+		Engine()
 		{}
 
-		void add(Component::ISystem* obj, std::string iid, float gid)
-		{
-			auto item = new Item(obj, iid);
+		void add(Component::System::IItem* item, float gid)
+		{	
+			int gsr = search(gid);
 
-			auto j = -1;
-			for (auto i = 0; i < groups.size(); ++i, ++j)
+			if (gsr > 0)
+				groups_[gsr].push_back(item);
+			else
 			{
-				if (groups[i].gid == gid)
-				{
-					groups[i].push_back(item);
-					return;
-				}
-					
-				if (j >= 0)
-				{
-					if (groups[i].gid > gid)
-					{
-						Group group(gid);
-						group.push_back(item);
-						groups.insert(groups.begin() + j, group);
-						return;
-					}
-				}
+				Group g(gid);
+				g.push_back(item);
+				groups_.push_back(g);
 			}
-			
-			Group group(gid);
-			group.push_back(item);
-			groups.push_back(group);
 		}
 
-		void add(Component::ISystem* sys, std::string name)
+		void add(Engine& engine)
 		{
-			add(sys, name, static_cast<float>(groups.size()));
-		}
-
-		void add(std::vector<Component::ISystem*> sys, std::string iid, float gid)
-		{
-			auto item = new Item(sys, iid);
-			items.push_back(std::unique_ptr<Item>(std::move(item)));
-
-			auto j = -1;
-			for (auto i = 0; i < groups.size(); ++i, ++j)
+			for (auto i = 0ull; i < engine.groups_.size; ++i)
 			{
-				if (groups[i].gid == gid)
+				int gsr = search(engine.groups_[i].gid);
+				Group* g = nullptr;
+
+				if (gsr > 0)
+					g = &groups_[gsr];
+				else
 				{
-					groups[i].push_back(item);
-					return;
+					groups_.push_back(Group(engine.groups_[i].gid));
+					g = &groups_[groups_.size - 1];
 				}
 
-				if (j >= 0)
-				{
-					if (groups[i].gid > gid)
-					{
-						Group group(gid);
-						group.push_back(item);
-
-						groups.insert(groups.begin() + j, group);
-						return;
-					}
-				}
+				for (auto j = 0ull; j < engine.groups_[i].size; ++j)
+					g->push_back(engine.groups_[i][j]);
 			}
-
-			Group group(gid);
-			group.push_back(item);
-			groups.push_back(group);
 		}
-	
-		Group* search(const Group& group)
+		
+		void clean()
 		{
-			
-		}
-
-		void add(std::vector<Component::ISystem*> objs, std::string iid)
-		{
-			add(objs, iid, static_cast<float>(groups.size()));
-		}
-
-		void add(Group& group)
-		{
-
-		}
-
-		void clean(std::string iid, float gid)
-		{
-			for (auto group : groups)
+			for (auto i = 0ull; i < groups_.size; ++i)
 			{
-				if (group.gid == gid)
-				{
-					for (auto i = 0ull; i < group.size; ++i)
+				if (groups_[i].size)
+					for (auto j = 0ull; j < groups_[i].size; ++j)
 					{
-						if (group[i]->iid == iid)
-							group.remove(i--);
+						if (groups_[i][j]->removed_)
+							groups_[i].remove(j--);
 					}
-				}
+				else
+					groups_.remove(i--);
 			}
+		}
+
+		void run()
+		{
+			for (auto i = 0ull; i < groups_.size; ++i)
+				for (auto j = 0ull; j < groups_[i].size; ++j)
+					groups_[i][j]->execute();
 		}
 
 		void clear()
 		{
-			for (auto obj_frarr : groups)
-				obj_frarr.clear();
+			for (auto i = 0; i < groups_.size; ++i)
+				groups_[i].clear();
 
-			items.clear();
+			groups_.clear();
 		}
-
-		std::vector<Group> groups;
-		std::vector<std::unique_ptr<Item>> items;
-	
-		private:
-			Group* search(std::vector<Group> groups, int m, int l, int r)
-			{
-				if (l > r)
-					return nullptr;
-
-				if (groups[middle] == group)
-					return &groups[middle];
-
-				if (groups[middle] > group)
-				{
-					Group[]
-				}
-			}
 	};
 }

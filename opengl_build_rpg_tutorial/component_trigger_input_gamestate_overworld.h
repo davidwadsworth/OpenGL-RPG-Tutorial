@@ -12,6 +12,7 @@
 #include "component_trigger_input_game_obj_text.h"
 #include "component_trigger_input_gamestate.h"
 #include "component_grouped_objects.h"
+#include "component_system_clean_engine.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -29,7 +30,9 @@ namespace Component {
 					Component::GroupedSystems* c_update_systems_ = nullptr;
 					Component::GroupedSystems* c_render_systems_ = nullptr;
 					Component::TriggerVector* c_triggers_ = nullptr;
+					Component::TriggerVector* c_before_triggers_ = nullptr;
 					Component::Renderer* c_renderer_ = nullptr;
+
 				public:
 					using Component::Trigger::Input::IGameState::IGameState;
 
@@ -71,6 +74,9 @@ namespace Component {
 
 					void run() override final
 					{
+						for (auto bt : *c_before_triggers_)
+							bt->execute(entity_);
+
 						// make updates to live entities
 						for (auto u : c_update_systems_->groups)
 							for (auto i = 0u; i < u.size; ++i)
@@ -85,9 +91,9 @@ namespace Component {
 
 						c_renderer_->end();
 
-
 						for (auto t : *c_triggers_)
 							t->execute(entity_);
+
 					}
 
 				private:

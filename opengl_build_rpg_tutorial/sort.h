@@ -3,20 +3,20 @@
 template<typename T>
 class merge_sort
 {
-	static void merge(T arr[], int l, int m, int r)
+	static void merge(std::vector<T>& vec, int l, int m, int r)
 	{
 		int i, j, k;
 		int n1 = m - l + 1;
 		int n2 = r - m;
 
 		/* create temp arrays */
-		int L[n1], R[n2];
+		std::vector<T> L, R;
 
 		/* Copy data to temp arrays L[] and R[] */
 		for (i = 0; i < n1; i++)
-			L[i] = arr[l + i];
+			L.push_back(vec[l + i]);
 		for (j = 0; j < n2; j++)
-			R[j] = arr[m + 1 + j];
+			R.push_back(vec[m + 1 + j]);
 
 		/* Merge the temp arrays back into arr[l..r]*/
 		i = 0; // Initial index of first subarray 
@@ -26,12 +26,12 @@ class merge_sort
 		{
 			if (L[i] <= R[j])
 			{
-				arr[k] = L[i];
+				vec[k] = L[i];
 				i++;
 			}
 			else
 			{
-				arr[k] = R[j];
+				vec[k] = R[j];
 				j++;
 			}
 			k++;
@@ -41,7 +41,7 @@ class merge_sort
 		   are any */
 		while (i < n1)
 		{
-			arr[k] = L[i];
+			vec[k] = L[i];
 			i++;
 			k++;
 		}
@@ -50,13 +50,12 @@ class merge_sort
 		   are any */
 		while (j < n2)
 		{
-			arr[k] = R[j];
+			vec[k] = R[j];
 			j++;
 			k++;
 		}
 	}
-public:
-	void sort(T arr[], int l, int r)
+	static void sort(std::vector<T>& vec, int l, int r)
 	{
 		if (l < r)
 		{
@@ -65,10 +64,34 @@ public:
 			int m = l + (r - l) / 2;
 
 			// Sort first and second halves 
-			sort(arr, l, m);
-			sort(arr, m + 1, r);
+			sort(vec, l, m);
+			sort(vec, m + 1, r);
 
-			merge(arr, l, m, r);
+			merge(vec, l, m, r);
 		}
 	}
+public:
+	static void sort(std::vector<T>& vec)
+	{
+		sort(vec, 0, vec.size() - 1);
+	}
 };
+
+template <class T>
+static void insertion_sort(std::vector<T>& vec)
+{
+	int i, j;
+	T key;
+	for (i = 1; i < vec.size(); i++)
+	{
+		key = vec[i];
+		j = i - 1;
+
+		while (j >= 0 && vec[j] > key)
+		{
+			vec[j + 1] = vec[j];
+			j = j - 1;
+		}
+		vec[j + 1] = key;
+	}
+}

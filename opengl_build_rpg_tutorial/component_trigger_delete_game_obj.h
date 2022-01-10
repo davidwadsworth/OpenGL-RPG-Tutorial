@@ -27,7 +27,7 @@ namespace Component {
 					auto& obj_render_systems = *game_obj_->get_component<Component::GroupedSystems>("render");
 
 					for (auto obj_rg : obj_render_systems.groups)
-						engine_render_systems.clean(obj_rg.id);
+						engine_render_systems.clean(obj_rg);
 				}
 
 				if (game_obj_->has_component<Component::GroupedSystems>("update"))
@@ -35,7 +35,7 @@ namespace Component {
 					auto& obj_update_systems = *game_obj_->get_component<Component::GroupedSystems>("update");
 
 					for (auto obj_ug : obj_update_systems.groups)
-						engine_update_systems.clean(obj_ug.id);
+						engine_update_systems.clean(obj_ug);
 				}
 
 				if (game_obj_->has_component<Component::TriggerVector>("trigger remove"))

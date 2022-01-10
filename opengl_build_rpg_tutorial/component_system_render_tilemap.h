@@ -1,6 +1,6 @@
 #pragma once
 #pragma once
-#include "component_system.h"
+#include "component_system_item.h"
 #include "component_transform.h"
 #include "game.h"
 #include "component_tilemap.h"
@@ -14,16 +14,15 @@ executes systems stored in system array based on where the camera is located ass
 
 namespace Component {
 	namespace System {
-		namespace Render
+		namespace Item
 		{
-			class TileMap : public Component::ISystem
+			class TileMap : public Component::System::IItem
 			{
 				Component::Transform& camera_transform_;
 				Component::TileMap& tilemap_;
-				Component::SystemVector& render_systems_;
 			public:
-				TileMap(Component::Transform& camera_transform, Component::TileMap& tilemap, Component::SystemVector& render_systems)
-					: camera_transform_(camera_transform), tilemap_(tilemap), render_systems_(render_systems)
+				TileMap(Component::Transform& camera_transform, Component::TileMap& tilemap, std::vector<Component::ISystem*> systems)
+					: Component::System::IItem(systems), camera_transform_(camera_transform), tilemap_(tilemap)
 				{}
 
 				void execute() override final
@@ -43,7 +42,7 @@ namespace Component {
 
 					for (auto i = row_start * map_width; i <= row_end * map_width; i += map_width)
 						for (auto j = i + col_start; j <= i + col_end; j++)
-							render_systems_[j]->execute();
+							systems_[j]->execute();
 				}
 			};
 		}

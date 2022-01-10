@@ -64,6 +64,9 @@
     <Filter Include="EC\Component\System\Update">
       <UniqueIdentifier>{f38c53a0-73a2-4851-acc7-31e05b4a2fe9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EC\Component\System\Item">
+      <UniqueIdentifier>{8797329b-1d40-42c5-9aa3-e0ad47d46a23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -314,9 +317,6 @@
     <ClInclude Include="component_trigger_input_game_obj.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_render_tilemap.h">
-      <Filter>EC\Component\System\Render</Filter>
-    </ClInclude>
     <ClInclude Include="component_tilemap.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
@@ -328,6 +328,12 @@
     </ClInclude>
     <ClInclude Include="sort.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_item.h">
+      <Filter>EC\Component\System\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_render_tilemap.h">
+      <Filter>EC\Component\System\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -167,6 +167,7 @@
     <ClInclude Include="component_collider_physics_aabb_sticky.h" />
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_material_color.h" />
+    <ClInclude Include="component_system_item.h" />
     <ClInclude Include="component_system_render_draw.h" />
     <ClInclude Include="component_system_render_tilemap.h" />
     <ClInclude Include="component_system_update_traverse_tree.h" />
