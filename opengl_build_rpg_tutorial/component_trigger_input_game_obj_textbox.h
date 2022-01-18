@@ -28,7 +28,7 @@ namespace Component {
 					std::size_t render_group_, update_group_;
 					glm::vec2 pos_;
 				public:
-					TextBox(std::string name, std::size_t render_group, std::size_t update_group, std::string path, glm::vec2 pos)
+					TextBox(std::string name, std::string path, glm::vec2 pos, std::size_t render_group, std::size_t update_group)
 						: Component::Trigger::Input::IGameObj(name), path_(path), render_group_(render_group), update_group_(update_group), pos_(pos)
 					{}
 
@@ -74,13 +74,13 @@ namespace Component {
 						bool speech_box = msg_json["speech_box"] == "true";
 						std::vector<std::string> messages = msg_json["message"];
 
-						auto& c_tbox_update_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("update");
+						auto& c_tbox_update_systems = *e_game_info_->add_id_component<Component::Engine>("update");
 						auto& c_tbox_trigger_vector_add = *e_game_info_->add_id_component<Component::TriggerVector>("trigger_add");
 						auto& c_tbox_trigger_vector_remove = *e_game_info_->add_id_component<Component::TriggerVector>("trigger_remove");
 
 						auto e_pause = new Entity();
 						entity_->add_id_child(e_pause, "pause");
-						auto& c_pause_update_systems = *e_pause->add_id_component<Component::GroupedSystems>("update");
+						auto& c_pause_update_systems = *e_pause->add_id_component<Component::Engine>("update");
 						auto ct_pause_switch_systems = e_pause->add_id_component<Component::Trigger::SwitchSystems>("switch_systems", c_pause_update_systems);
 
 						c_tbox_trigger_vector_add.push_back(ct_pause_switch_systems);
@@ -96,8 +96,8 @@ namespace Component {
 						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
 						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree);
 
-						c_pause_update_systems.add(csu_tree_traverse, update_group_);
-
+						auto cs_pause_item = e_pause->add_id_component<Component::System::IItem>("item", std::vector<Component::ISystem*>{csu_tree_traverse});;
+					
 						for (auto i = 0; i < messages.size(); ++i)
 						{
 							auto ctigo_text_area = entity_->add_id_component<Component::Trigger::Input::GameObj::TextArea>(

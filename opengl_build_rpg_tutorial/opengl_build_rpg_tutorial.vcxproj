@@ -156,8 +156,7 @@
   <ItemGroup>
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
-    <ClInclude Include="component_grouped_objects.h" />
-    <ClInclude Include="component_quadly_linked_tree.h" />
+    <ClInclude Include="component_engine.h" />
     <ClInclude Include="component_src_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
@@ -168,11 +167,11 @@
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_material_color.h" />
     <ClInclude Include="component_system_item.h" />
+    <ClInclude Include="component_system_item_textbox.h" />
     <ClInclude Include="component_system_render_draw.h" />
-    <ClInclude Include="component_system_render_tilemap.h" />
+    <ClInclude Include="component_system_item_tilemap.h" />
     <ClInclude Include="component_system_update_traverse_tree.h" />
     <ClInclude Include="component_template.h" />
-    <ClInclude Include="component_tilemap.h" />
     <ClInclude Include="component_tree.h" />
     <ClInclude Include="component_trigger_add_game_obj.h" />
     <ClInclude Include="component_trigger_delete_entity.h" />

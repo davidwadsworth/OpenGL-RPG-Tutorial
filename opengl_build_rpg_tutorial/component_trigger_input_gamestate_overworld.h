@@ -11,8 +11,8 @@
 #include "component_trigger_input_font.h"
 #include "component_trigger_input_game_obj_text.h"
 #include "component_trigger_input_gamestate.h"
-#include "component_grouped_objects.h"
-#include "component_system_clean_engine.h"
+#include "component_engine.h"
+#include "component_trigger_input_game_obj_textbox.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -27,10 +27,9 @@ namespace Component {
 			{
 				class Overworld : public Component::Trigger::Input::IGameState
 				{
-					Component::GroupedSystems* c_update_systems_ = nullptr;
-					Component::GroupedSystems* c_render_systems_ = nullptr;
+					Component::Engine* c_update_engine_ = nullptr;
+					Component::Engine* c_render_engine_ = nullptr;
 					Component::TriggerVector* c_triggers_ = nullptr;
-					Component::TriggerVector* c_before_triggers_ = nullptr;
 					Component::Renderer* c_renderer_ = nullptr;
 
 				public:
@@ -66,28 +65,21 @@ namespace Component {
 						entity_->clear_children();
 
 						// remove engine and renderer baggage
-						c_render_systems_->clear();
-						c_update_systems_->clear();
+						c_render_engine_->clear();
+						c_update_engine_->clear();
 						c_triggers_->clear();
 						c_renderer_->release();
 					}
 
 					void run() override final
 					{
-						for (auto bt : *c_before_triggers_)
-							bt->execute(entity_);
-
 						// make updates to live entities
-						for (auto u : c_update_systems_->groups)
-							for (auto i = 0u; i < u.size; ++i)
-								u[i]->execute();
+						c_update_engine_->run();
 
 						c_renderer_->begin();
 
 						// make draw calls to renderer
-						for (auto r : c_render_systems_->groups)
-							for (auto i = 0u; i < r.size; ++i)
-								r[i]->execute();
+						c_render_engine_->run();
 
 						c_renderer_->end();
 
@@ -100,8 +92,8 @@ namespace Component {
 					void create(Entity* gamestate) override final
 					{
 						// set up renderer and engine systems for run
-						auto c_render_systems_ = entity_->add_id_component<Component::GroupedSystems>("render");
-						auto c_update_systems_ = entity_->add_id_component<Component::GroupedSystems>("update");
+						auto c_render_systems_ = entity_->add_id_component<Component::Engine>("render");
+						auto c_update_systems_ = entity_->add_id_component<Component::Engine>("update");
 						auto c_triggers_ = entity_->add_id_component<Component::TriggerVector>("trigger");
 						auto c_renderer_ = entity_->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
 
@@ -117,6 +109,7 @@ namespace Component {
 						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::TileMap>("tilemap", "tilemap", "resources/data/TestTileMapGJK.json");
 						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::Player>("player", "player", (GLfloat)Game::width, 792.0f);
 						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::ColliderMap>("collider_map", "collider_map");
+						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::TextBox>("textbox", "textbox", "resources/data/test_textbox.json", );
 					}
 				};
 			}

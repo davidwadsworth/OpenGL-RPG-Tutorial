@@ -7,12 +7,11 @@ namespace Component {
 		class IItem : public Component::ISystem
 		{
 		protected:
-			bool removed_;
+			friend class Component::Engine;
 			std::vector<Component::ISystem*> systems_;
 		public:
-			friend Component::Engine;
 			IItem(std::vector<Component::ISystem*> systems)
-				: systems_(systems), removed_(false)
+				: systems_(systems)
 			{}
 
 			void execute() override
@@ -20,9 +19,6 @@ namespace Component {
 				for (auto sys : systems_)
 					sys->execute();
 			}
-
-			void remove() { removed_ = true; }
 		};
-
 	}
 }

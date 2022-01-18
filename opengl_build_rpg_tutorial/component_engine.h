@@ -7,19 +7,14 @@
 #include "sort.h"
 #include "component_system_item.h"
 
-
-// this probably should be defined out of code but its here for now
-#define MAX_CONTAINER_SIZE 128ull
-
 namespace Component
 {
 	class Engine
 	{
-		friend Component::System::IItem;
-		struct Group : public FRArr<Component::System::IItem*>
+		struct Group : public std::vector<Component::System::IItem*>
 		{
 			Group(float gid)
-				: FRArr<Component::System::IItem*>(MAX_CONTAINER_SIZE), gid(gid)
+				: gid(gid)
 			{}
 			float gid;
 
@@ -36,11 +31,11 @@ namespace Component
 			bool operator>=(Group&& group) { return *this == group || *this > group; }
 		};
 
-		FRArr<Group> groups_;
+		std::vector<Group> groups_;
 		int search(float gid)
 		{
 			int l = 0;
-			int r = groups_.size - 1;
+			int r = groups_.size() - 1;
 
 			while (r > l)
 			{
@@ -74,54 +69,36 @@ namespace Component
 				Group g(gid);
 				g.push_back(item);
 				groups_.push_back(g);
+				insertion_sort<Group>(groups_);
 			}
 		}
 
 		void add(Engine& engine)
 		{
-			for (auto i = 0ull; i < engine.groups_.size; ++i)
+			for (auto &gr : engine.groups_)
 			{
-				int gsr = search(engine.groups_[i].gid);
-				Group* g = nullptr;
+				int gsr = search(gr.gid);
 
-				if (gsr > 0)
-					g = &groups_[gsr];
+				if (gsr)
+					groups_[gsr].insert(groups_[gsr].end(), gr.begin(), gr.end());
 				else
 				{
-					groups_.push_back(Group(engine.groups_[i].gid));
-					g = &groups_[groups_.size - 1];
+					groups_.push_back(gr);
+					insertion_sort<Group>(groups_);
 				}
-
-				for (auto j = 0ull; j < engine.groups_[i].size; ++j)
-					g->push_back(engine.groups_[i][j]);
 			}
 		}
 		
-		void clean()
-		{
-			for (auto i = 0ull; i < groups_.size; ++i)
-			{
-				if (groups_[i].size)
-					for (auto j = 0ull; j < groups_[i].size; ++j)
-					{
-						if (groups_[i][j]->removed_)
-							groups_[i].remove(j--);
-					}
-				else
-					groups_.remove(i--);
-			}
-		}
-
 		void run()
 		{
-			for (auto i = 0ull; i < groups_.size; ++i)
-				for (auto j = 0ull; j < groups_[i].size; ++j)
+			for (auto i = 0ull; i < groups_.size(); ++i)
+				for (auto j = 0ull; j < groups_[i].size(); ++j)
 					groups_[i][j]->execute();
 		}
 
 		void clear()
 		{
-			for (auto i = 0; i < groups_.size; ++i)
+			for (auto i = 0; i < groups_.size(); ++i)
 				groups_[i].clear();
 
 			groups_.clear();

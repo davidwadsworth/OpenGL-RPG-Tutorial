@@ -272,9 +272,6 @@
     <ClInclude Include="component_system_update_traverse_tree.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_grouped_objects.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_switch_systems.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
@@ -317,12 +314,6 @@
     <ClInclude Include="component_trigger_input_game_obj.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_tilemap.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_quadly_linked_tree.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -332,8 +323,14 @@
     <ClInclude Include="component_system_item.h">
       <Filter>EC\Component\System\Item</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_render_tilemap.h">
+    <ClInclude Include="component_system_item_tilemap.h">
       <Filter>EC\Component\System\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_item_textbox.h">
+      <Filter>EC\Component\System\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="component_engine.h">
+      <Filter>EC\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
