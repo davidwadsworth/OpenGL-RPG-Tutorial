@@ -109,7 +109,7 @@ namespace Component {
 						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::TileMap>("tilemap", "tilemap", "resources/data/TestTileMapGJK.json");
 						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::Player>("player", "player", (GLfloat)Game::width, 792.0f);
 						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::ColliderMap>("collider_map", "collider_map");
-						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::TextBox>("textbox", "textbox", "resources/data/test_textbox.json", );
+						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::TextBox>("textbox", "textbox", "resources/data/test_textbox.json", glm::vec2(10.0f, 10.0f), 4, 1);
 					}
 				};
 			}
