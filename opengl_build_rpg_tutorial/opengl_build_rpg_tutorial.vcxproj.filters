@@ -67,6 +67,9 @@
     <Filter Include="EC\Component\System\Item">
       <UniqueIdentifier>{8797329b-1d40-42c5-9aa3-e0ad47d46a23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EC\Component\Trigger\Service">
+      <UniqueIdentifier>{3f1e4598-cc0b-4ca2-beb3-d7bb2b744528}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -331,6 +334,21 @@
     </ClInclude>
     <ClInclude Include="component_engine.h">
       <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_service.h">
+      <Filter>EC\Component\Trigger\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="component_message_hub.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_service_add_game_obj.h">
+      <Filter>EC\Component\Trigger\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_service_create_textbox.h">
+      <Filter>EC\Component\Trigger\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_update_check_active_services.h">
+      <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

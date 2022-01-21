@@ -26,7 +26,7 @@ namespace Component {
 
 				void execute(Entity* gamestate) override
 				{
-					for (auto )
+
 				}
 			};
 		}

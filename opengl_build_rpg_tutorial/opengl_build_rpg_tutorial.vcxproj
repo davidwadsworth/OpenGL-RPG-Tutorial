@@ -157,6 +157,9 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_engine.h" />
+    <ClInclude Include="component_message_hub.h" />
+    <ClInclude Include="component_system_update_check_active_services.h" />
+    <ClInclude Include="component_trigger_service.h" />
     <ClInclude Include="component_src_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
@@ -183,6 +186,8 @@
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_game_obj_textbox.h" />
     <ClInclude Include="component_trigger_input_gamestate.h" />
+    <ClInclude Include="component_trigger_service_add_game_obj.h" />
+    <ClInclude Include="component_trigger_service_create_textbox.h" />
     <ClInclude Include="component_trigger_switch_systems.h" />
     <ClInclude Include="frarr.h" />
     <ClInclude Include="physics.h" />
