@@ -20,6 +20,7 @@ public:
 	static GLfloat delta_time;
 	static Entity* global;
 	static bool exit;
+	static glm::vec2 removed;
 
 	static void init(Entity* game);
 };

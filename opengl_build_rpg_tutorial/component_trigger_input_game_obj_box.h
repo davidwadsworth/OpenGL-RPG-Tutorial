@@ -7,6 +7,7 @@
 #include "component_material.h"
 #include "component_system_render_draw.h"
 #include "component_trigger_input_game_obj.h"
+#include "component_system_item.h"
 
 /*
 Creates our local camera using width and height
@@ -26,6 +27,11 @@ namespace Component {
 					bool speech_arrow_;
 					std::size_t render_group_;
 				public:
+					Box(std::string name, std::size_t render_group)
+						: Component::Trigger::Input::IGameObj(name), rect_{0}, corner_size_(0.0f), box_sc_(0.0f), 
+						speech_arrow_(false), render_group_(render_group)
+					{}
+
 					Box(std::string name, std::size_t render_group, Rect rect, float corner_size, float box_sc, bool speech_arrow = false)
 						: Component::Trigger::Input::IGameObj(name), rect_(rect), corner_size_(corner_size), box_sc_(box_sc), render_group_(render_group), speech_arrow_(speech_arrow)
 					{}
@@ -106,27 +112,23 @@ namespace Component {
 						auto csr_r_side_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_r_side_src, c_r_side_trans, c_tb_material);
 						auto csr_b_side_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_b_side_src, c_b_side_trans, c_tb_material);
 						auto csr_center_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_center_src, c_center_trans, c_tb_material);
-						
-						auto& c_box_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
 
-						// add draw calls into our game obj info container for the game to use later
-						c_box_render_systems.add(csr_tl_corner_camera_draw, render_group_);
-						c_box_render_systems.add(csr_tr_corner_camera_draw, render_group_);
-						c_box_render_systems.add(csr_bl_corner_camera_draw, render_group_);
-						c_box_render_systems.add(csr_br_corner_camera_draw, render_group_);
-						c_box_render_systems.add(csr_t_side_camera_draw, render_group_);
-						c_box_render_systems.add(csr_l_side_camera_draw, render_group_);
-						c_box_render_systems.add(csr_r_side_camera_draw, render_group_);
-						c_box_render_systems.add(csr_b_side_camera_draw, render_group_);
-						c_box_render_systems.add(csr_center_camera_draw, render_group_);
-						
-						// arrow transform (used only with speech textboxes)
-						if (speech_arrow_)
-						{
-							auto& c_arrow_dest = *entity_->push_back_component<Component::Transform>();
-							// TODO need to copy and paste old code from wayyyyy back repo project
-						}
+						std::vector<Component::ISystem*> temp_systems;
 
+						temp_systems.push_back(csr_tl_corner_camera_draw);
+						temp_systems.push_back(csr_tr_corner_camera_draw);
+						temp_systems.push_back(csr_bl_corner_camera_draw);
+						temp_systems.push_back(csr_br_corner_camera_draw);
+						temp_systems.push_back(csr_t_side_camera_draw);
+						temp_systems.push_back(csr_l_side_camera_draw);
+						temp_systems.push_back(csr_r_side_camera_draw);
+						temp_systems.push_back(csr_b_side_camera_draw);
+						temp_systems.push_back(csr_center_camera_draw);
+
+						auto cs_item = e_game_info_->add_id_component<Component::System::IItem>("render item", temp_systems);
+
+						auto& render_engine = *gamestate->get_component<Component::Engine>("render");
+						render_engine.add(cs_item, render_group_);
 					}
 
 				};

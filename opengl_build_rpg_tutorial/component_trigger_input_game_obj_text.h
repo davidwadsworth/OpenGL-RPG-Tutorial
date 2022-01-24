@@ -41,13 +41,12 @@ namespace Component {
 
 						auto line_h = font->get_component<Component::Integer>()->value;
 
-						// create render system info
-						auto& c_text_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
-
 						auto x_pos = pos_.x;
 						char prev_c = 0;
 
 						auto e_glyphs = font->get_child("glyphs");
+
+						std::vector<Component::ISystem*> temp_render_systems;
 
 						for (auto c : text_)
 						{
@@ -69,8 +68,11 @@ namespace Component {
 							x_pos += c_bm_glyph.advance;
 
 							auto crs_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_bm_glyph, c_transform, c_font_material);
-							c_text_render_systems.add(crs_draw, render_group_);
+							temp_render_systems.push_back(crs_draw);
 						}
+
+						auto csi_render = e_game_info_->add_id_component<Component::System::IItem>("render",temp_render_systems);
+						gamestate->get_component<Component::Engine>("render")->add(csi_render, render_group_);
 					}
 				};
 			}

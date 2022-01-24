@@ -20,7 +20,8 @@ namespace Component {
 				Component::Transform& camera_transform_;
 				GLuint map_width_, map_height_, tile_size_;
 			public:
-				TileMap(Component::Transform& camera_transform, GLuint map_width, GLuint map_height, GLuint tile_size, std::vector<Component::ISystem*> systems)
+				TileMap(Component::Transform& camera_transform, GLuint map_width, GLuint map_height, 
+					GLuint tile_size, std::vector<Component::ISystem*> systems)
 					: Component::System::IItem(systems), camera_transform_(camera_transform), 
 					map_width_(map_width), map_height_(map_height), tile_size_(tile_size)
 				{}

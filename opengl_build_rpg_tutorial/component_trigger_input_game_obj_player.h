@@ -13,6 +13,7 @@
 #include "component_vector.h"
 #include "component_collider_gjk_circle.h"
 #include "component_system_update_check_collision.h"
+#include "component_engine.h"
 
 /*
 Creates our player object to move around in the overworld.
@@ -135,17 +136,26 @@ namespace Component {
                         }
 
                         // get render and update systems
-                        auto& c_player_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
-                        auto& c_player_update_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("update");
+                        auto& c_player_render_engine = *e_game_info_->add_id_component<Component::Engine>("render");
+                        auto& c_player_update_engine = *e_game_info_->add_id_component<Component::Engine>("update");
 
-                        c_player_update_systems.add(csu_pla_move, update_group_);
-                        c_player_update_systems.add(csu_check_collision_gjk, update_group_);
-                        c_player_update_systems.add(csu_pla_camera, update_group_);
-                        c_player_update_systems.add(csu_pla_animate_move, update_group_);
-                        c_player_update_systems.add(csu_pla_animation, update_group_);
+                        std::vector<Component::ISystem*> temp_render_systems;
+                        std::vector<Component::ISystem*> temp_update_systems;
 
-                        c_player_render_systems.add(csr_pla_dynamic_draw, render_group_);
-                        c_player_render_systems.add(csr_col_cam_draw, render_group_);
+                        temp_update_systems.push_back(csu_pla_move);
+                        temp_update_systems.push_back(csu_check_collision_gjk);
+                        temp_update_systems.push_back(csu_pla_camera);
+                        temp_update_systems.push_back(csu_pla_animate_move);
+                        temp_update_systems.push_back(csu_pla_animation);
+
+                        temp_render_systems.push_back(csr_pla_dynamic_draw);
+                        temp_render_systems.push_back(csr_col_cam_draw);
+
+                        auto csi_update = e_game_info_->add_id_component<Component::System::IItem>("update", temp_update_systems);
+                        auto csi_render = e_game_info_->add_id_component<Component::System::IItem>("render", temp_render_systems);
+
+                        gamestate->get_component<Component::Engine>("update")->add(csi_update, update_group_);
+                        gamestate->get_component<Component::Engine>("render")->add(csi_render, render_group_);
                     }
                 };
             }

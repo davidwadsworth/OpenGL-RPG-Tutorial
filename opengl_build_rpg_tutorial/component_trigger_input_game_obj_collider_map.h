@@ -4,7 +4,6 @@
 #include "component_collider_gjk_physics_circle_smooth.h"
 #include "component_collider_gjk_physics_boundary_smooth.h"
 #include "component_collider_gjk_physics_polygon_smooth.h"
-#include "component_grouped_objects.h"
 #include "component_vector.h"
 
 /*
@@ -83,12 +82,15 @@ namespace Component {
 						c_cworld_col_vec.push_back(ccgpb_boundary_smooth);
 						c_cworld_col_vec.push_back(ccgpp_polygon_smooth);
 
-						// add render systems to game obj info 
-						auto& c_col_map_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
+						std::vector<Component::ISystem*> temp_systems;
 
-						c_col_map_render_systems.add(csr_circle_cam_draw, render_group_);
-						c_col_map_render_systems.add(csr_boundary_cam_draw, render_group_);
-						c_col_map_render_systems.add(csr_polygon_cam_draw, render_group_);
+						temp_systems.push_back(csr_circle_cam_draw);
+						temp_systems.push_back(csr_boundary_cam_draw);
+						temp_systems.push_back(csr_polygon_cam_draw);
+
+						// add render systems to game obj info 
+						auto csi_render_item = e_game_info_->add_id_component<Component::System::IItem>("render", temp_systems);
+						gamestate->get_component<Component::Engine>("render")->add(csi_render_item, render_group_);
 					}
 				};
 			}

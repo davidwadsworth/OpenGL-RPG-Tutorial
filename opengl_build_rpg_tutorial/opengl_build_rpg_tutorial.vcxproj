@@ -158,8 +158,6 @@
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_engine.h" />
     <ClInclude Include="component_message_hub.h" />
-    <ClInclude Include="component_system_update_check_active_services.h" />
-    <ClInclude Include="component_trigger_service.h" />
     <ClInclude Include="component_src_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
     <ClInclude Include="component_collider_aabb.h" />
@@ -170,24 +168,20 @@
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_material_color.h" />
     <ClInclude Include="component_system_item.h" />
-    <ClInclude Include="component_system_item_textbox.h" />
+    <ClInclude Include="component_system_item_empty.h" />
     <ClInclude Include="component_system_render_draw.h" />
     <ClInclude Include="component_system_item_tilemap.h" />
-    <ClInclude Include="component_system_update_traverse_tree.h" />
     <ClInclude Include="component_template.h" />
     <ClInclude Include="component_tree.h" />
-    <ClInclude Include="component_trigger_add_game_obj.h" />
-    <ClInclude Include="component_trigger_delete_entity.h" />
-    <ClInclude Include="component_trigger_delete_game_obj.h" />
     <ClInclude Include="component_trigger_input_game_obj.h" />
     <ClInclude Include="component_trigger_input_game_obj_box.h" />
+    <ClInclude Include="component_trigger_input_game_obj_empty.h" />
     <ClInclude Include="component_trigger_input_game_obj_text_area.h" />
     <ClInclude Include="component_trigger_input_game_obj_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_game_obj_textbox.h" />
     <ClInclude Include="component_trigger_input_gamestate.h" />
-    <ClInclude Include="component_trigger_service_add_game_obj.h" />
-    <ClInclude Include="component_trigger_service_create_textbox.h" />
+    <ClInclude Include="component_trigger_loadtextbox.h" />
     <ClInclude Include="component_trigger_switch_systems.h" />
     <ClInclude Include="frarr.h" />
     <ClInclude Include="physics.h" />
@@ -233,7 +227,6 @@
     <ClInclude Include="splay_tree.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="component_texture.h" />
-    <ClInclude Include="quadly_linked_tree.h" />
     <ClInclude Include="tree.h" />
   </ItemGroup>
   <ItemGroup>

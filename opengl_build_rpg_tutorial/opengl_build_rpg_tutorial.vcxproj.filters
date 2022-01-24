@@ -67,9 +67,6 @@
     <Filter Include="EC\Component\System\Item">
       <UniqueIdentifier>{8797329b-1d40-42c5-9aa3-e0ad47d46a23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\Trigger\Service">
-      <UniqueIdentifier>{3f1e4598-cc0b-4ca2-beb3-d7bb2b744528}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -263,32 +260,11 @@
     <ClInclude Include="component_system_render_draw.h">
       <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
-    <ClInclude Include="quadly_linked_tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="component_tree.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="frarr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_update_traverse_tree.h">
-      <Filter>EC\Component\System\Update</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_switch_systems.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_add_game_obj.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_delete_game_obj.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
     <ClInclude Include="component_template.h">
       <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_delete_entity.h">
-      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_game_obj_collider_map.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
@@ -317,9 +293,6 @@
     <ClInclude Include="component_trigger_input_game_obj.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -329,26 +302,29 @@
     <ClInclude Include="component_system_item_tilemap.h">
       <Filter>EC\Component\System\Item</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_item_textbox.h">
+    <ClInclude Include="component_system_item_empty.h">
       <Filter>EC\Component\System\Item</Filter>
     </ClInclude>
     <ClInclude Include="component_engine.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_service.h">
-      <Filter>EC\Component\Trigger\Service</Filter>
-    </ClInclude>
     <ClInclude Include="component_message_hub.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_service_add_game_obj.h">
-      <Filter>EC\Component\Trigger\Service</Filter>
+    <ClInclude Include="tree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_service_create_textbox.h">
-      <Filter>EC\Component\Trigger\Service</Filter>
+    <ClInclude Include="component_tree.h">
+      <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_update_check_active_services.h">
-      <Filter>EC\Component\System\Update</Filter>
+    <ClInclude Include="component_trigger_switch_systems.h">
+      <Filter>EC\Component\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_game_obj_empty.h">
+      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_loadtextbox.h">
+      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

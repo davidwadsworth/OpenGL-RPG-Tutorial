@@ -214,10 +214,8 @@ namespace Component {
 								transform->x += x_offset[i];
 								transform->y += y_offset;
 							}
-
-						auto& c_text_area_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
-						
-						c_text_area_render_systems.add(temp_draws, render_group_);
+						auto csi_render = e_game_info_->add_id_component<Component::System::IItem>("render", temp_draws);
+						gamestate->get_component<Component::Engine>("render")->add(csi_render, render_group_);
 					}
 				};
 			}

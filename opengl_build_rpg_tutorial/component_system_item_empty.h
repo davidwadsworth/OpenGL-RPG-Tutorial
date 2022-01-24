@@ -1,15 +1,16 @@
 #pragma once
 #include "component_system_item.h"
+#include <vector>
 
 namespace Component {
 	namespace System {
 		namespace Item
 		{
-			class TextBox : public Component::System::IItem
+			class Empty : public Component::System::IItem
 			{
 				std::size_t draw_calls_;
 			public:
-				TextBox(std::vector<Component::ISystem*> systems)
+				Empty(std::vector<Component::ISystem*> systems)
 					: Component::System::IItem(systems), draw_calls_(0)
 				{}
 

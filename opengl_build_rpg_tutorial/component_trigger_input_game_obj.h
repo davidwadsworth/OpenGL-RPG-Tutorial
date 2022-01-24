@@ -1,8 +1,5 @@
 #pragma once
 #include "component_trigger_input.h"
-#include "component_trigger_add_game_obj.h"
-#include "component_trigger_delete_game_obj.h"
-
 namespace Component {
 	namespace Trigger {
 		namespace Input {

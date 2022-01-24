@@ -39,21 +39,12 @@ namespace Component {
 					{
 						auto overworld_objs = entity_->get_component_list();
 
-						// init information holding entities for active game objs
-						for (auto obj : overworld_objs)
-							static_cast<Component::Trigger::IInput*>(obj)->execute(entity_);
-
-						auto e_game_objs = entity_->get_child("game_objs");
-						auto overworld_game_objs = e_game_objs->get_component_list();
+						auto e_objs = entity_->get_child("objs");
+						auto overworld_objs = e_objs->get_component_list();
 
 						// init game objs
-						for (auto game_obj : overworld_game_objs)
-						{
-							auto cti_game_obj = static_cast<Component::Trigger::Input::IGameObj*>(game_obj);
-							cti_game_obj->execute(e_game_objs);
-							auto ct_add_game_obj = cti_game_obj->e_game_info_->get_component<Component::Trigger::AddGameObj>("add");
-							c_triggers_->push_back(ct_add_game_obj);
-						}
+						for (auto obj : overworld_objs)
+							static_cast<Component::ITrigger*>(obj)->execute(entity_);
 
 						c_renderer_->init();
 					}
@@ -85,6 +76,7 @@ namespace Component {
 
 						for (auto t : *c_triggers_)
 							t->execute(entity_);
+						c_triggers_->clear();
 
 					}
 
@@ -97,19 +89,19 @@ namespace Component {
 						auto c_triggers_ = entity_->add_id_component<Component::TriggerVector>("trigger");
 						auto c_renderer_ = entity_->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
 
-						entity_->add_id_component<Component::Trigger::Input::Camera>("camera", "camera", 64.0f * 32.0f);
-						entity_->add_id_component<Component::Trigger::Input::Controller>("controller", "controller");
-						entity_->add_id_component<Component::Trigger::Input::Shader>("shader_manager", "shader_manager");
-						entity_->add_id_component<Component::Trigger::Input::Texture>("texture_manager", "texture_manager");
-						entity_->add_id_component<Component::Trigger::Input::Font>("gilsans", "gilsans", "resources/data/gilsans.json");
-						entity_->add_id_component<Component::Trigger::Input::CollisionWorld>("collision_world", "collision_world");
-						
-						auto e_game_objs = entity_->add_id_child("game_objs");
+						auto objs = new Entity();
+						entity_->add_id_child(objs, "objs");
 
-						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::TileMap>("tilemap", "tilemap", "resources/data/TestTileMapGJK.json");
-						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::Player>("player", "player", (GLfloat)Game::width, 792.0f);
-						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::ColliderMap>("collider_map", "collider_map");
-						e_game_objs->add_id_component<Component::Trigger::Input::GameObj::TextBox>("textbox", "textbox", "resources/data/test_textbox.json", glm::vec2(10.0f, 10.0f), 4, 1);
+						objs->add_id_component<Component::Trigger::Input::Camera>("camera", "camera", 64.0f * 32.0f);
+						objs->add_id_component<Component::Trigger::Input::Controller>("controller", "controller");
+						objs->add_id_component<Component::Trigger::Input::Shader>("shader_manager", "shader_manager");
+						objs->add_id_component<Component::Trigger::Input::Texture>("texture_manager", "texture_manager");
+						objs->add_id_component<Component::Trigger::Input::Font>("gilsans", "gilsans", "resources/data/gilsans.json");
+						objs->add_id_component<Component::Trigger::Input::CollisionWorld>("collision_world", "collision_world");
+						objs->add_id_component<Component::Trigger::Input::GameObj::TileMap>("tilemap", "tilemap", "resources/data/TestTileMapGJK.json");
+						objs->add_id_component<Component::Trigger::Input::GameObj::Player>("player", "player", (GLfloat)Game::width, 792.0f);
+						objs->add_id_component<Component::Trigger::Input::GameObj::ColliderMap>("collider_map", "collider_map");
+						objs->add_id_component<Component::Trigger::Input::GameObj::TextBox>("textbox", "textbox", "resources/data/test_textbox.json", glm::vec2(10.0f, 10.0f), 4, 1);
 					}
 				};
 			}
