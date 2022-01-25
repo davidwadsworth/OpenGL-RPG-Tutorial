@@ -88,6 +88,19 @@ namespace Component
 				}
 			}
 		}
+
+		void swap(Engine& engine)
+		{
+			std::vector<Group> temp_groups;
+
+			temp_groups.insert(temp_groups.begin(), groups_.begin(), groups_.end());
+			
+			groups_.clear();
+			groups_.insert(groups_.begin(), engine.groups_.begin(), engine.groups_.end());
+
+			engine.groups_.clear();
+			engine.groups_.insert(engine.groups_.begin(), temp_groups.begin(), temp_groups.end());
+		}
 		
 		void run()
 		{

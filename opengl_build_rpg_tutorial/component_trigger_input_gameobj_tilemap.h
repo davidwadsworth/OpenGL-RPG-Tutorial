@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input_game_obj.h"
+#include "component_trigger_input_gameobj.h"
 #include "component_texture.h"
 #include "component_shader.h"
 #include "component_material.h"
@@ -10,8 +10,7 @@
 #include <sstream>
 #include "delimiter_split.h"
 #include "component_trigger_input_tileset.h"
-#include "component_tilemap.h"
-#include "component_system_render_tilemap.h"
+#include "component_system_item_tilemap.h"
 
 /*
 Creates the tile map for our player to move around in the overworld using json tiled files
@@ -63,7 +62,7 @@ namespace Component {
 						int tilemap_h = tilemap_json["height"];
 						int tile_size = tilemap_json["tilesize"];
 
-						auto& c_tilemap = *entity_->add_component<Component::TileMap>(tilemap_w, tilemap_h, tile_size);
+						auto& c_tilemap = *entity_->add_component<Component::System::Item::TileMap>(tilemap_w, tilemap_h, tile_size);
 
 						std::vector<int> tiles = tilemap_json["layers"][0]["data"];
 

@@ -2,7 +2,6 @@
 #include "component_controller.h"
 #include "component_system.h"
 #include "component_transform.h"
-#include "component_movement.h"
 
 /*
 Updates transform position on the game world
@@ -21,11 +20,11 @@ namespace Component {
 			{
 				Component::Transform& transform_;
 				Component::IController& controller_;
-				Component::Movement& movement_;
+				GLfloat speed_;
 			public:
 
-				Move(Component::Transform& transform, Component::IController& controller, Component::Movement& movement)
-					: transform_(transform), controller_(controller), movement_(movement)
+				Move(Component::Transform& transform, Component::IController& controller, GLfloat speed)
+					: transform_(transform), controller_(controller), speed_(speed)
 				{}
 
 				void execute() override
@@ -43,8 +42,8 @@ namespace Component {
 						y *= ONE_OVER_SQRT_TWO;
 					}
 
-					transform_.x += x * movement_.speed * Game::delta_time;
-					transform_.y += y * movement_.speed * Game::delta_time;
+					transform_.x += x * speed_ * Game::delta_time;
+					transform_.y += y * speed_ * Game::delta_time;
 				}
 			};
 		}

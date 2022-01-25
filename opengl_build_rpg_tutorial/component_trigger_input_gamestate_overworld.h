@@ -4,15 +4,15 @@
 #include "component_trigger_input_controller.h"
 #include "component_trigger_input_shader.h"
 #include "component_trigger_input_texture.h"
-#include "component_trigger_input_game_obj_tilemap.h"
-#include "component_trigger_input_game_obj_player.h"
-#include "component_trigger_input_collision_world.h"
-#include "component_trigger_input_game_obj_collider_map.h"
+#include "component_trigger_input_gameobj_tilemap.h"
+#include "component_trigger_input_gameobj_player.h"
+#include "component_trigger_input_collisionworld.h"
+#include "component_trigger_input_gameobj_collidermap.h"
 #include "component_trigger_input_font.h"
-#include "component_trigger_input_game_obj_text.h"
+#include "component_trigger_input_gameobj_text.h"
 #include "component_trigger_input_gamestate.h"
 #include "component_engine.h"
-#include "component_trigger_input_game_obj_textbox.h"
+#include "component_trigger_input_gameobj_textbox.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -38,9 +38,6 @@ namespace Component {
 					void init() override final
 					{
 						auto overworld_objs = entity_->get_component_list();
-
-						auto e_objs = entity_->get_child("objs");
-						auto overworld_objs = e_objs->get_component_list();
 
 						// init game objs
 						for (auto obj : overworld_objs)
@@ -84,24 +81,24 @@ namespace Component {
 					void create(Entity* gamestate) override final
 					{
 						// set up renderer and engine systems for run
-						auto c_render_systems_ = entity_->add_id_component<Component::Engine>("render");
-						auto c_update_systems_ = entity_->add_id_component<Component::Engine>("update");
-						auto c_triggers_ = entity_->add_id_component<Component::TriggerVector>("trigger");
-						auto c_renderer_ = entity_->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
+						auto game_engine = new Entity();
+						entity_->add_id_child(game_engine, "engine");
 
-						auto objs = new Entity();
-						entity_->add_id_child(objs, "objs");
+						auto c_render_systems_ = game_engine->add_id_component<Component::Engine>("render");
+						auto c_update_systems_ = game_engine->add_id_component<Component::Engine>("update");
+						auto c_triggers_ = game_engine->add_id_component<Component::TriggerVector>("trigger");
+						auto c_renderer_ = game_engine->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
 
-						objs->add_id_component<Component::Trigger::Input::Camera>("camera", "camera", 64.0f * 32.0f);
-						objs->add_id_component<Component::Trigger::Input::Controller>("controller", "controller");
-						objs->add_id_component<Component::Trigger::Input::Shader>("shader_manager", "shader_manager");
-						objs->add_id_component<Component::Trigger::Input::Texture>("texture_manager", "texture_manager");
-						objs->add_id_component<Component::Trigger::Input::Font>("gilsans", "gilsans", "resources/data/gilsans.json");
-						objs->add_id_component<Component::Trigger::Input::CollisionWorld>("collision_world", "collision_world");
-						objs->add_id_component<Component::Trigger::Input::GameObj::TileMap>("tilemap", "tilemap", "resources/data/TestTileMapGJK.json");
-						objs->add_id_component<Component::Trigger::Input::GameObj::Player>("player", "player", (GLfloat)Game::width, 792.0f);
-						objs->add_id_component<Component::Trigger::Input::GameObj::ColliderMap>("collider_map", "collider_map");
-						objs->add_id_component<Component::Trigger::Input::GameObj::TextBox>("textbox", "textbox", "resources/data/test_textbox.json", glm::vec2(10.0f, 10.0f), 4, 1);
+						entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera", 64.0f * 32.0f);
+						entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller");
+						entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager");
+						entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager");
+						entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans", "resources/data/gilsans.json");
+						entity_->add_id_ct_input<Component::Trigger::Input::CollisionWorld>("collision_world");
+						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap", "resources/data/TestTileMapGJK.json");
+						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player", (GLfloat)Game::width, 792.0f);
+						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collider_map");
+						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TextBox>("textbox", "resources/data/test_textbox.json", glm::vec2(10.0f, 10.0f), 4, 1);
 					}
 				};
 			}

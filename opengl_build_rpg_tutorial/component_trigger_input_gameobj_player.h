@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input_game_obj.h"
+#include "component_trigger_input_gameobj.h"
 #include "component_transform.h"
 #include "component_src.h"
 #include "component_renderer.h"
@@ -35,12 +35,6 @@ namespace Component {
                         : Component::Trigger::Input::IGameObj(name), render_group_(render_group), update_group_(update_group), x_(x), y_(y)
                     {}
 
-                    void set_position(GLfloat x, GLfloat y)
-                    {
-                        x_ = x;
-                        y_ = y;
-                    }
-
                 private:
                     void init(Entity* gamestate) override final
                     {
@@ -63,12 +57,11 @@ namespace Component {
                         auto& c_pla_transform = *entity_->add_component<Component::Transform>(x_, y_, 64.0f);
                         auto& c_pla_src = *entity_->add_component<Component::Src>(Rect{ 0.0f, 0.0f, 64.0f, 64.0f });
                         auto& c_pla_material = *entity_->add_component<Component::Material>(c_flesh_tex, c_sprite_shader, 0);
-                        auto& c_pla_movement = *entity_->add_component<Component::Movement>(240.0f);
                         auto& c_pla_col_gjk_circle = *entity_->add_component<Component::Collider::GJK::Circle>(c_pla_transform, 32.0f, glm::vec2(32.0f, 32.0f));
 
                         auto csr_pla_dynamic_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_transform, c_pla_material, c_cam_transform);
                         auto csu_pla_camera = entity_->add_component<Component::System::Update::Camera>(c_pla_transform, c_cam_transform);
-                        auto csu_pla_move = entity_->add_component<Component::System::Update::Move>(c_pla_transform, c_cont_keyboard, c_pla_movement);
+                        auto csu_pla_move = entity_->add_component<Component::System::Update::Move>(c_pla_transform, c_cont_keyboard, 240.0f);
 
                         auto csu_pla_animation = entity_->add_component<Component::System::Update::Animation>(4, c_pla_src);
                         auto csu_pla_animate_move = entity_->add_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);

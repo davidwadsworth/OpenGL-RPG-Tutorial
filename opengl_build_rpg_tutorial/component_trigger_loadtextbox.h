@@ -9,11 +9,11 @@ namespace Component {
 		class LoadTextBox : public Component::ITrigger
 		{
 			std::string path_;
+			Component::System::Update::TraverseTree& csu_tree_traverse_;
+			Entity* box_, * text_;
 		public:
-			LoadTextBox()
-			{}
-
-			void change_path(std::string path)
+			LoadTextBox(Component::System::Update::TraverseTree& csu_tree_traverse, Entity* box, Entity* text)
+				: path_("resources/data/test_message.json"), csu_tree_traverse_(csu_tree_traverse), box_(box), text_(text)
 			{}
 
 			void execute(Entity* gamestate)
@@ -56,33 +56,9 @@ namespace Component {
 				float corner_size = msg_json["corner_size"];
 				bool speech_box = msg_json["speech_box"] == "true";
 				std::vector<std::string> messages = msg_json["message"];
-			}
 
-			for (auto i = 0; i < messages.size(); ++i)
-			{
-				auto ctigo_text_area = entity_->add_id_component<Component::Trigger::Input::GameObj::TextArea>(
-					"text_area_" + std::to_string(i), "text_area_" + std::to_string(i), entity_, render_group_, font_name,
-					messages[i], Rect{ pos_.x + msg_padding_x, pos_.y + msg_padding_y, box_w - 2 * msg_padding_x,
-					box_h - 2 * msg_padding_y }, line_spacing, font_sc, align_h, align_v);
 
-				ctigo_text_area->execute(gamestate);
-			}
-
-			for (auto i = messages.size() - 1; i > 0; --i)
-			{
-				auto e_txt_curr_game_info = entity_->get_child("text_area_" + std::to_string(i))->get_child("game_info");
-				auto e_txt_prev_game_info = entity_->get_child("text_area_" + std::to_string(i - 1))->get_child("game_info");
-				std::vector<Component::ITrigger*> msg_triggers;
-
-				c_trigger_tree.add(msg_triggers);
-			}
-
-			auto e_txt_end_game_info = entity_->get_child("text_area_" + std::to_string(messages.size() - 1));
-			std::vector<Component::ITrigger*> msg_triggers;
-			msg_triggers.push_back(e_txt_end_game_info->get_component<Component::Trigger::RemoveGameObj>("remove"));
-			msg_triggers.push_back(e_box_game_info->get_component<Component::Trigger::RemoveGameObj>("remove"));
-			msg_triggers.push_back(ct_pause_switch_systems);
-			msg_triggers.push_back(entity_->add_id_component<Component::Trigger::DeleteEntity>("delete_entity", name_));
+				
 		};
 	}
 }

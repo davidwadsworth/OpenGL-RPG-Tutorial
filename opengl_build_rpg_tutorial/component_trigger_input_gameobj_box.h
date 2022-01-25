@@ -6,8 +6,9 @@
 #include "component_src.h"
 #include "component_material.h"
 #include "component_system_render_draw.h"
-#include "component_trigger_input_game_obj.h"
+#include "component_trigger_input_gameobj.h"
 #include "component_system_item.h"
+#include "component_engine.h"
 
 /*
 Creates our local camera using width and height
@@ -28,7 +29,7 @@ namespace Component {
 					std::size_t render_group_;
 				public:
 					Box(std::string name, std::size_t render_group)
-						: Component::Trigger::Input::IGameObj(name), rect_{0}, corner_size_(0.0f), box_sc_(0.0f), 
+						: Component::Trigger::Input::IGameObj(name), rect_{Game::removed.x, Game::removed.y, 0.0f, 0.0f}, corner_size_(0.0f), box_sc_(0.0f), 
 						speech_arrow_(false), render_group_(render_group)
 					{}
 
@@ -38,19 +39,6 @@ namespace Component {
 				private:
 					void init(Entity* gamestate) override final
 					{
-						// get renderer
-						auto& c_renderer = *gamestate->get_component<Component::Renderer>();
-
-						// get camera
-						auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
-
-						// get textbox shader and texture
-						auto& c_textbox_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("textbox");
-						auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
-
-						// add textbox material
-						auto& c_tb_material = *entity_->push_back_component<Component::Material>(c_textbox_tex, c_sprite_shader, 4);
-
 						auto box_x = rect_.x;
 						auto box_y = rect_.y;
 						auto box_w = rect_.w;
@@ -102,6 +90,14 @@ namespace Component {
 						auto& c_br_corner_src = *entity_->push_back_component<Component::Src>(
 							Rect{ 20.0f, 20.0f, 10.0f, 10.0f });
 
+						auto& c_renderer = *gamestate->get_child("engine")->get_component<Component::Renderer>("renderer");
+						// get textbox shader and texture
+						auto& c_textbox_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("textbox");
+						auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
+
+						// add textbox material
+						auto& c_tb_material = *entity_->push_back_component<Component::Material>(c_textbox_tex, c_sprite_shader, 4);
+
 						// draw calls
 						auto csr_tl_corner_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_tl_corner_src, c_tl_corner_trans, c_tb_material);
 						auto csr_tr_corner_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_tr_corner_src, c_tr_corner_trans, c_tb_material);
@@ -125,9 +121,9 @@ namespace Component {
 						temp_systems.push_back(csr_b_side_camera_draw);
 						temp_systems.push_back(csr_center_camera_draw);
 
-						auto cs_item = e_game_info_->add_id_component<Component::System::IItem>("render item", temp_systems);
+						auto cs_item = e_game_info_->add_id_component<Component::System::IItem>("render_item", temp_systems);
 
-						auto& render_engine = *gamestate->get_component<Component::Engine>("render");
+						auto& render_engine = *gamestate->get_child("engine")->get_component<Component::Engine>("render");
 						render_engine.add(cs_item, render_group_);
 					}
 

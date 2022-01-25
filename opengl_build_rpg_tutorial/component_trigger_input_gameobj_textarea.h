@@ -1,6 +1,6 @@
 #pragma once
 #include "component_vector.h"
-#include "component_trigger_input_game_obj.h"
+#include "component_trigger_input_gameobj.h"
 #include "component_texture.h"
 #include "component_shader.h"
 #include "component_renderer.h"
@@ -64,9 +64,6 @@ namespace Component {
 
 						auto line_count = 0;
 						std::vector<Component::Transform*>* curr_line = &tb_lines[line_count];
-
-						// count the messages for system tree construction
-						auto msg_box_count = 0u;
 
 						// the position where we are drawing characters on the screen
 						auto current_pos = glm::vec2(rect_.x, rect_.y);
@@ -215,7 +212,7 @@ namespace Component {
 								transform->y += y_offset;
 							}
 						auto csi_render = e_game_info_->add_id_component<Component::System::IItem>("render", temp_draws);
-						gamestate->get_component<Component::Engine>("render")->add(csi_render, render_group_);
+						gamestate->get_child("engine")->get_component<Component::Engine>("render")->add(csi_render, render_group_);
 					}
 				};
 			}

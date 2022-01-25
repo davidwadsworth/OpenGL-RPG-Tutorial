@@ -1,6 +1,5 @@
 #pragma once
 #include "component_system.h"
-#include "component_movement.h"
 #include "component_collider.h"
 #include "component_vector.h"
 #include "component_collider_gjk.h"
