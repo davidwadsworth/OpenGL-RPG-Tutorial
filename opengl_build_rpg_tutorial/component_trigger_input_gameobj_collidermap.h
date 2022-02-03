@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input_game_obj.h"
+#include "component_trigger_input_gameobj.h"
 #include "component_system_render_camera_draw.h"
 #include "component_collider_gjk_physics_circle_smooth.h"
 #include "component_collider_gjk_physics_boundary_smooth.h"

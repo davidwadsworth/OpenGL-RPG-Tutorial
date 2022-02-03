@@ -72,23 +72,23 @@ namespace Component {
 
 						// once more apropriate sprite sheets come into play these will be moved out into a different entity
 						auto& c_tl_corner_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 0.0f, 0.0f, 10.0f, 10.0f });
+							Rect{ 0.0f, 0.0f, corner_size_, corner_size_ });
 						auto& c_t_side_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 10.0f, 0.0f, 10.0f, 10.0f });
+							Rect{ corner_size_, 0.0f, corner_size_, corner_size_ });
 						auto& c_tr_corner_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 20.0f, 0.0f, 10.0f, 10.0f });
+							Rect{ corner_size_ * 2.0f, 0.0f, corner_size_, corner_size_ });
 						auto& c_l_side_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 0.0f, 10.0f, 10.0f, 10.0f });
+							Rect{ 0.0f, corner_size_, corner_size_, corner_size_ });
 						auto& c_center_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 10.0f, 10.0f, 10.0f, 10.0f });
+							Rect{ corner_size_, corner_size_, corner_size_, corner_size_ });
 						auto& c_r_side_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 20.0f, 10.0f, 10.0f, 10.0f });
+							Rect{ corner_size_ * 2.0f, corner_size_, corner_size_, corner_size_ });
 						auto& c_bl_corner_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 0.0f, 20.0f, 10.0f, 10.0f });
+							Rect{ 0.0f, corner_size_ * 2.0f , corner_size_, corner_size_ });
 						auto& c_b_side_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 10.0f, 20.0f, 10.0f, 10.0f });
+							Rect{ corner_size_, corner_size_ * 2.0f, corner_size_, corner_size_ });
 						auto& c_br_corner_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 20.0f, 20.0f, 10.0f, 10.0f });
+							Rect{ corner_size_ * 2.0f, corner_size_ * 2.0f, corner_size_, corner_size_ });
 
 						auto& c_renderer = *gamestate->get_child("engine")->get_component<Component::Renderer>("renderer");
 						// get textbox shader and texture

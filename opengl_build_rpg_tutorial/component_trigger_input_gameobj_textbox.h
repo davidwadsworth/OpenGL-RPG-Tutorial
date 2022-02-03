@@ -1,15 +1,13 @@
 #pragma once
-#include "component_vector.h"
-#include "component_system.h"
-#include <sstream>
-#include <vector>
-#include "json.hpp"
-#include "component_trigger_swapengine.h"
 #include "component_trigger_input_gameobj_empty.h"
 #include "component_trigger_input_gameobj_box.h"
+#include "component_vector.h"
+#include "component_trigger_swapengine.h"
 #include "component_tree.h"
 #include "component_system_update_traverse_tree.h"
-#include "component_trigger_loadtextbox.h"
+#include "component_trigger_load_textarea.h"
+#include "component_trigger_load_box.h"
+#include "component_trigger_load_textbox.h"
 
 /*
 @author David Wadsworth
@@ -46,12 +44,12 @@ namespace Component {
 						ctigo_empty->execute(gamestate);
 						
 						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
-						auto& csu_tree_traverse = *entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree);
+						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree);
 
-						auto cs_pause_item = e_pause->add_id_component<Component::System::IItem>("item", std::vector<Component::ISystem*>{csu_tree_traverse});;
+						auto cs_pause_item = e_pause->add_id_component<Component::System::IItem>("item", std::vector<Component::ISystem*>{csu_tree_traverse});
 						c_pause_update_engine.add(cs_pause_item, update_group_);
 
-						auto ct_load_textbox = e_game_info_->add_id_component<Component::Trigger::LoadTextBox>("add", csu_tree_traverse, entity_->get_child("box"), entity_->get_child("text"));
+						auto ct_load_textbox = e_game_info_->add_id_component<Component::Trigger::Load::TextBox>("load", entity_);
 					}
 				};
 			}

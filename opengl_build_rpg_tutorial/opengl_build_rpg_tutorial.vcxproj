@@ -156,7 +156,7 @@
   <ItemGroup>
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
-    <ClInclude Include="component_trigger_changebox.h" />
+    <ClInclude Include="component_trigger_load_box.h" />
     <ClInclude Include="component_engine.h" />
     <ClInclude Include="component_src_bitmap_glyph.h" />
     <ClInclude Include="component_collider.h" />
@@ -173,7 +173,7 @@
     <ClInclude Include="component_system_item_tilemap.h" />
     <ClInclude Include="component_template.h" />
     <ClInclude Include="component_tree.h" />
-    <ClInclude Include="component_trigger_changetextarea.h" />
+    <ClInclude Include="component_trigger_load_textarea.h" />
     <ClInclude Include="component_trigger_input_gameobj.h" />
     <ClInclude Include="component_trigger_input_gameobj_box.h" />
     <ClInclude Include="component_trigger_input_gameobj_empty.h" />
@@ -182,7 +182,7 @@
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_gameobj_textbox.h" />
     <ClInclude Include="component_trigger_input_gamestate.h" />
-    <ClInclude Include="component_trigger_loadtextbox.h" />
+    <ClInclude Include="component_trigger_load_textbox.h" />
     <ClInclude Include="component_trigger_swapengine.h" />
     <ClInclude Include="frarr.h" />
     <ClInclude Include="physics.h" />

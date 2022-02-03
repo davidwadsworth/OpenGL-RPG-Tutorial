@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input_game_obj.h"
+#include "component_trigger_input_gameobj.h"
 #include "component_vector.h"
 #include "component_texture.h"
 #include "component_shader.h"

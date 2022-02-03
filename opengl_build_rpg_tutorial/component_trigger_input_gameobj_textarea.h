@@ -8,6 +8,8 @@
 #include "component_system_render_draw.h"
 #include "component_template.h"
 #include "component_material_color.h"
+#include "component_system_item.h"
+#include "component_engine.h"
 
 /*
 Display text on screen defined to an area using common text writing rules and 

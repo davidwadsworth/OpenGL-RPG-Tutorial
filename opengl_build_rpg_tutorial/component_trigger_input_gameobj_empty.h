@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input_game_obj.h"
+#include "component_trigger_input_gameobj.h"
 #include "component_transform.h"
 #include "component_src_bitmap_glyph.h"
 #include "component_system_render_draw.h"
@@ -32,6 +32,7 @@ namespace Component {
 
 						auto csi_empty = e_game_info_->add_id_component<Component::System::Item::Empty>("render", temp_render_systems);
 						gamestate->get_component<Component::Engine>("render")->add(csi_empty, render_group_);
+						auto ct_change_text_area = e_game_info_->add_id_component<Component::Trigger::Load::TextArea>("load");
 					}
 				
 				public:
