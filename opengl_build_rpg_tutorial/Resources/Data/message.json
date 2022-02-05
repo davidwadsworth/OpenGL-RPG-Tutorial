@@ -1,0 +1,10 @@
+{
+	"position_x" : "100.0f",
+	"potition_y" : "100.0f",
+	"collider" : "collider,aabb,0",
+	"workflow" : [
+		{"Hi there, welcome to our world!"},
+		"You are a big guy, I would estimate about 1.5 me would fit inside you",
+		"Please feed me so I may grow."
+	]
+}

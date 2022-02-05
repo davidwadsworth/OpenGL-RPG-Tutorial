@@ -6,7 +6,7 @@
 
 /*
 Calculates the shortest distance between rect side and the difference in centers of the colliders
-displaces the perpendicular bisector of the edge multiplied by object speed.
+displaced by the perpendicular bisector of the edge.
  
 @author David Wadsworth
 */

@@ -1,0 +1,13 @@
+{
+	"font" : ["Resources/Data/font_gilsans.json"],
+	"textbox" : ["Resources/Data/textbox.json"],
+	"message" : ["Resources/Data/message.json"],
+	"shader" : ["Resources/Data/shader.json"],
+	"texture" : ["Resources/Data/texture.json"],
+	"tileset" : ["Resources/Data/tileset.json"],
+	"tilemap" : ["Resources/Data/tilemap.json"],
+	"player" : ["Resources/Data/player.json"],
+	"controller" : ["Resources/Data/controller_keyboard.json"],
+	"collider" : ["Resources/Data/collider.json"],
+	"spritesheet" : ["Resources/Data/spritesheet.json"]
+}

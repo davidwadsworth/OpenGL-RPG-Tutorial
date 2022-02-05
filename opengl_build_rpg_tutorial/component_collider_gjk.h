@@ -14,7 +14,7 @@ Then finding the farthest edge points that create a convex polygon (Convex hull)
 void collide(Component::Collider::IGJK& col): 
 	For this particular implementation of GJK we subvert creating the full minkowski difference by instead
 using best guess points from A - the best guess points from B and if they are close to forming a triangle
-over the origin repeating the guesses until out of possible guess points or enclosing the origin with a triangle
+over the origin repeating the guesses until out of possible guess points or enclosing the origin (0, 0) with a triangle
 
 glm::vec2[3] simplex_:
 	array of best guess A - B points;

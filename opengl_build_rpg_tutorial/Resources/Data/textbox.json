@@ -11,10 +11,7 @@
 	"msg_padding_x" : "0.0",
 	"msg_padding_y" : "10.0",
 	"corner_size" : "10.0",
-	"speech_box": "false",
-	"message" : [
-		"Hi there, welcome to our world!",
-		"You are a big guy, I would estimate about 1.5 me would fit inside you",
-		"Please feed me so I may grow."
-	]
+	"render_group" : 4,
+	"update_group" : 1,
 }
+

@@ -25,17 +25,13 @@ namespace Component {
 				{
 					Rect rect_;
 					float corner_size_, box_sc_;
-					bool speech_arrow_;
 					std::size_t render_group_;
 				public:
 					Box(std::string name, std::size_t render_group)
 						: Component::Trigger::Input::IGameObj(name), rect_{Game::removed.x, Game::removed.y, 0.0f, 0.0f}, corner_size_(0.0f), box_sc_(0.0f), 
-						speech_arrow_(false), render_group_(render_group)
+						render_group_(render_group)
 					{}
 
-					Box(std::string name, std::size_t render_group, Rect rect, float corner_size, float box_sc, bool speech_arrow = false)
-						: Component::Trigger::Input::IGameObj(name), rect_(rect), corner_size_(corner_size), box_sc_(box_sc), render_group_(render_group), speech_arrow_(speech_arrow)
-					{}
 				private:
 					void init(Entity* gamestate) override final
 					{
@@ -70,6 +66,10 @@ namespace Component {
 						auto& c_center_trans = *entity_->push_back_component<Component::Transform>(
 							Rect{ box_x + scaled_corner_size, box_y + scaled_corner_size, box_w - scaled_corner_size * 2, box_h - scaled_corner_size * 2 });
 
+						// speech arrow
+						auto& c_speech_arrow_trans = *entity_->push_back_component<Component::Transform>();
+
+
 						// once more apropriate sprite sheets come into play these will be moved out into a different entity
 						auto& c_tl_corner_src = *entity_->push_back_component<Component::Src>(
 							Rect{ 0.0f, 0.0f, corner_size_, corner_size_ });
@@ -89,6 +89,8 @@ namespace Component {
 							Rect{ corner_size_, corner_size_ * 2.0f, corner_size_, corner_size_ });
 						auto& c_br_corner_src = *entity_->push_back_component<Component::Src>(
 							Rect{ corner_size_ * 2.0f, corner_size_ * 2.0f, corner_size_, corner_size_ });
+						auto& c_speech_arrow_src = *entity_->push_back_component<Component::Src>(
+							Rect{0.0f, corner_size_ * 3.0f, corner_size_, corner_size_ });
 
 						auto& c_renderer = *gamestate->get_child("engine")->get_component<Component::Renderer>("renderer");
 						// get textbox shader and texture
@@ -108,6 +110,7 @@ namespace Component {
 						auto csr_r_side_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_r_side_src, c_r_side_trans, c_tb_material);
 						auto csr_b_side_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_b_side_src, c_b_side_trans, c_tb_material);
 						auto csr_center_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_center_src, c_center_trans, c_tb_material);
+						auto csr_speech_arrow_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_speech_arrow_src, c_speech_arrow_trans, c_tb_material);
 
 						std::vector<Component::ISystem*> temp_systems;
 
@@ -120,6 +123,7 @@ namespace Component {
 						temp_systems.push_back(csr_r_side_camera_draw);
 						temp_systems.push_back(csr_b_side_camera_draw);
 						temp_systems.push_back(csr_center_camera_draw);
+						temp_systems.push_back(csr_speech_arrow_camera_draw);
 
 						auto cs_item = e_game_info_->add_id_component<Component::System::IItem>("render_item", temp_systems);
 

@@ -1,0 +1,4 @@
+{
+	// left, right, down, up, action_1, action_2, action_3, start
+	"inputs" : [263, 262, 264, 265, 90, 88, 67, 257],
+}
