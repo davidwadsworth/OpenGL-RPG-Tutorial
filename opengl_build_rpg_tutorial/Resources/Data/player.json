@@ -1,0 +1,20 @@
+{
+	"position" : ["800.0", "792.0"],
+	"scale" : "1.0f",
+	"collider" : ["collider","circle","0"],
+	"spritesheet" : ["spritesheet","player"],
+	"debug" : "true",
+	"animations" : [
+		{"name" : "idle_down", "frames" : 1, },
+		{"name" : "idle_up", "frames" : 1, },
+		{"name" : "idle_right", "frames" : 1, },
+		{"name" : "idle_left", "frames" : 1, },
+		{"name" : "walk_down", "frames" : 3, },
+		{"name" : "walk_up", "frames" : 3, },
+		{"name" : "walk_right", "frames" : 3, },
+		{"name" : "walk_left", "frames" : 3, },
+		],
+	"animation_speed" : "4.0",
+	"render_group" : "3.0",
+	"update_group" : "1.0", 
+}

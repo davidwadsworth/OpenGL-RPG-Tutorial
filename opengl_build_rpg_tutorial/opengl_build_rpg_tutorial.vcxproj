@@ -156,6 +156,10 @@
   <ItemGroup>
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
+    <ClInclude Include="component_json.h" />
+    <ClInclude Include="component_trigger_input_index.h" />
+    <ClInclude Include="component_trigger_input_json.h" />
+    <ClInclude Include="component_trigger_input_spritesheet.h" />
     <ClInclude Include="component_trigger_load_box.h" />
     <ClInclude Include="component_engine.h" />
     <ClInclude Include="component_src_bitmap_glyph.h" />

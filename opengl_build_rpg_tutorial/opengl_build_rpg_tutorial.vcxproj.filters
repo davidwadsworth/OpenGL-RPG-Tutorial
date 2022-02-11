@@ -236,9 +236,6 @@
     <ClInclude Include="component_collider_gjk_physics_polygon_smooth.h">
       <Filter>EC\Component\Collider\GJK\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="physics.h">
-      <Filter>EC\Component\Collider</Filter>
-    </ClInclude>
     <ClInclude Include="component_system_update_check_collision.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
@@ -328,6 +325,21 @@
     </ClInclude>
     <ClInclude Include="component_trigger_load_box.h">
       <Filter>EC\Component\Trigger\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_json.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="physics.h">
+      <Filter>EC\Component\Collider\GJK\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_index.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_json.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_spritesheet.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
