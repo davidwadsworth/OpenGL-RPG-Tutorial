@@ -2,6 +2,7 @@
 	"position_x" : "100.0f",
 	"potition_y" : "100.0f",
 	"collider" : ["collider","aabb","0"],
+	"textbox" : ["textbox", "0"],
 	"workflow" : {
 		"textbox" : [
 			"Hi there, welcome to our world!",

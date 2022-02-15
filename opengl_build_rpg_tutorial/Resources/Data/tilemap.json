@@ -23,10 +23,12 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"resources/data/TestTilesetGJK.json"
+         "source":"resources/data/tileset.json"
         }],
  "tilewidth":32,
  "type":"map",
  "version":1.4,
- "width":32
+ "width":32,
+ "scale": "2.0",
+ "render_group" : "1.0",
 }

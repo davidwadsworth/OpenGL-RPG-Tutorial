@@ -5,40 +5,20 @@
 #include <glm/glm.hpp>
 #include "component_src_bitmap_glyph.h"
 #include "component_system_item_empty.h"
+#include "component_trigger_load.h"
 
 namespace Component {
 	namespace Trigger {
 		namespace Load
 		{
-			class TextArea : public Component::ITrigger
+			class TextArea : public Component::Trigger::ILoad
 			{
-				std::string msg_;
-				Entity* font_, * textarea_;
-				float line_spacing_, font_sc_;
-				Rect rect_;
-				std::string align_v_, align_h_;
 			public:
-				TextArea(Entity* textarea)
-					: font_(nullptr), textarea_(textarea)
-				{}
-
-				void load(std::string msg, Entity* font, float line_spacing, Rect rect,
-					float font_sc, std::string align_v, std::string align_h)
-				{
-					msg_ = msg;
-					font_ = font;
-					line_spacing_ = line_spacing;
-					rect_ = rect;
-					font_sc_ = font_sc;
-					align_v_ = align_v;
-					align_h_ = align_h;
-				}
-
 				void execute(Entity* gamestate) override
 				{
-					if (!font_)
-						Logger::error("message not loaded", Logger::SEVERITY::HIGH);
-
+					if (!json_)
+						Logger::error("missing load call to textarea", Logger::SEVERITY::HIGH);
+					
 					// create boxes
 					auto line_h = font_->get_component<Component::Integer>()->value;
 
@@ -196,6 +176,7 @@ namespace Component {
 							transform->y += y_offset;
 						}
 					textarea_->get_component<Component::System::Item::Empty>("render")->set_draw_calls(msg_.size());
+					json_ = nullptr;
 				}
 			};
 		}

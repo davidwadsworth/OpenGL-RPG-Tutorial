@@ -25,44 +25,23 @@ namespace Component {
 			{
 				class TileMap : public Component::Trigger::Input::IGameObj
 				{
-					std::string path_;
-					std::size_t render_group_;
 				public:
-					TileMap(std::string name, std::size_t render_group, std::string path)
-						: Component::Trigger::Input::IGameObj(name), render_group_(render_group), path_(path)
+					TileMap(std::string name)
+						: Component::Trigger::Input::IGameObj(name)
 					{}
 
 				private:
 					void init(Entity* gamestate) override final
 					{
-						// load tilemap from file
-						std::stringstream tm_stream;
-
-						try
-						{
-							// open files
-							std::ifstream tm_file(path_);
-
-							// read into temp string streams
-							tm_stream << tm_file.rdbuf();
-
-							// close file streams
-							tm_file.close();
-						}
-						catch (std::exception e)
-						{
-							Logger::error("Failed to read tilemap file! path = " + path_, Logger::MEDIUM);
-							return;
-						}
-
 						// parse into json obj
-						auto tilemap_json = nlohmann::json::parse(tm_stream);
+						auto& tilemap_json = gamestate->get_child("index")->get_child(name_)->get_component<Component::Json>()->json;
 
 						int tilemap_w = tilemap_json["width"];
 						int tilemap_h = tilemap_json["height"];
 						int tile_size = tilemap_json["tilesize"];
+						float tile_scale = tilemap_json["scale"];
+						float render_group = tilemap_json["render_group"];
 
-						auto& c_tilemap = *entity_->add_component<Component::System::Item::TileMap>(tilemap_w, tilemap_h, tile_size);
 
 						std::vector<int> tiles = tilemap_json["layers"][0]["data"];
 
@@ -75,13 +54,7 @@ namespace Component {
 
 						// if not set up already add tileset to overworld gamobjects
 						if (!gamestate->has_child(set_name))
-						{
-							auto tileset = new Entity();
-							auto& cti_tileset = *tileset->add_id_component<Component::Trigger::Input::TileSet>(set_name, set_name, tileset_source);
-							cti_tileset.execute(gamestate);
-
-							entity_->push_back_child(tileset);
-						}
+							Logger::error("index.json missing tileset: " + set_name, Logger::SEVERITY::HIGH);
 
 						// get a list of all srcs used
 						auto tile_srcs = gamestate->get_child(set_name)->get_component_list();
@@ -100,11 +73,11 @@ namespace Component {
 						{
 							Rect tile_dest
 							{
-								(i % tilemap_w) * 64.0f,  // finds place in column and multiplies by sprite width
-								(i / tilemap_w) * 64.0f,  // finds place in row and multiples by sprite height
-								64.0f, 64.0f
+								(i % tilemap_w) * tile_size,  // finds place in column and multiplies by sprite width
+								(i / tilemap_w) * tile_size ,  // finds place in row and multiples by sprite height
+								tile_size, tile_size
 							};
-							auto& c_tile_transform = *e_tiles->push_back_component<Component::Transform>(tile_dest);
+							auto& c_tile_transform = *e_tiles->push_back_component<Component::Transform>(tile_dest, tile_scale);
 							// get the approriate src tile from the list of tile_srcs subtracted by one
 							auto& c_tile_src = *static_cast<Component::Src*>(tile_srcs[tiles[i]]);
 							auto csr_tile_camera_draw = e_tiles->push_back_component<Component::System::Render::CameraDraw>
@@ -112,10 +85,9 @@ namespace Component {
 							c_render_vector.push_back(csr_tile_camera_draw);
 						}
 
-						auto csr_tmap_render = entity_->add_component<Component::System::Render::TileMap>(c_render_vector, c_tilemap);
+						auto csi_tmap_render = e_game_info_->add_id_component<Component::System::Item::TileMap>("render_item", tilemap_w, tilemap_h, tile_size * tile_scale, c_render_vector);
 
-						auto& c_tmap_render_systems = *e_game_info_->add_id_component<Component::GroupedSystems>("render");
-						c_tmap_render_systems.add(csr_tmap_render, render_group_);
+						gamestate->get_component<Component::Engine>("render")->add(csi_tmap_render, render_group);
 					}
 				};
 			}

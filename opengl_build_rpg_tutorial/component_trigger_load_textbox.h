@@ -6,43 +6,44 @@
 #include "component_trigger_load_textarea.h"
 #include "component_trigger_load_box.h"
 
+/*
+
+box json
+{
+	"box_rect" : [float, float, float, float] (x, y, w, h),
+	"box_scale" : float,
+	"corner_size" : int,
+	"textbox": [string, int],
+	"speech_arrow" : one of "right", "left", "none"
+	"position" : [float, float],
+}
+
+textarea json 
+{
+	"textarea_rect" : [float, float, float, float] (x, y, w, h), 
+	"font" : string,
+	"font_scale" : float,
+	"align_horizontal" : one of "center", "right", "left",
+	"align_vertical" : one of "center", "top", "bottom",
+	"line_spacing" : float,
+	"message" : string,
+	"textbox" : [string, int]
+}	
+
+*/
+
+
 namespace Component { 
 	namespace Trigger {
 		namespace Load 
 		{
 			class TextBox : public Component::ITrigger
 			{
-				std::string path_;
-				Entity* textbox_;
 			public:
-				TextBox(Entity* textbox)
-					: textbox_(textbox)
-				{}
-
 				void execute(Entity* gamestate) override
 				{
-					// load tilemap from file
-					std::stringstream msg_stream;
-
-					try
-					{
-						// open files
-						std::ifstream msg_file(path_);
-
-						// read into temp string streams
-						msg_stream << msg_file.rdbuf();
-
-						// close file streams
-						msg_file.close();
-					}
-					catch (std::exception e)
-					{
-						Logger::error("Failed to read message file! path = " + path_, Logger::MEDIUM);
-						return;
-					}
-
-					// parse into json obj
-					auto msg_json = nlohmann::json::parse(msg_stream);
+					
+					
 
 					// get relavent message info
 					float box_h = msg_json["box_height"];

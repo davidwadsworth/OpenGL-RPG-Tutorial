@@ -326,9 +326,6 @@
     <ClInclude Include="component_trigger_load_box.h">
       <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_json.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
     <ClInclude Include="physics.h">
       <Filter>EC\Component\Collider\GJK\Physics</Filter>
     </ClInclude>
@@ -340,6 +337,9 @@
     </ClInclude>
     <ClInclude Include="component_trigger_input_spritesheet.h">
       <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_load.h">
+      <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
