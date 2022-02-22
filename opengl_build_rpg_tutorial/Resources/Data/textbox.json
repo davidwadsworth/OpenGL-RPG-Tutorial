@@ -1,7 +1,7 @@
 [{
-	"box_height" : 500,
-	"box_width" : 500,
-	"max_characters" : 500,
+	"box_height" : 512,
+	"box_width" : 512,
+	"max_characters" : 512,
 	"box_scale" : "1.0",	
 	"font" : "gilsans",
 	"font_scale" : "1.0",
@@ -14,5 +14,7 @@
 	"corner_size" : "10.0",
 	"render_group" : "4.0",
 	"update_group" : "1.0",
+	"max_message" : 16,
+	"max_box" : 2, 
 },]
 

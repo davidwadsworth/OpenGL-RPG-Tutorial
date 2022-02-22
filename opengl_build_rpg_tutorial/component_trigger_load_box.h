@@ -56,9 +56,9 @@ namespace Component {
 					{
 						auto& c_speech_arrow_trans = *e_box->get_component<Component::Transform>(9);
 						if (json_["speech_arrow"] == "left")
-							c_speech_arrow_trans.set(box_x + scaled_corner_size, box_y + , scaled_corner_size * 2.0f, scaled_corner_size);
+							c_speech_arrow_trans.set(box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size);
 						else 
-							c_speech_arrow_trans.set(box_x + box_w - scaled_corner_size * 3.0f, box_y + , scaled_corner_size * 2.0f, scaled_corner_size);
+							c_speech_arrow_trans.set(box_x + box_w - scaled_corner_size * 3.0f, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size);
 					}
 
 				}
