@@ -17,15 +17,8 @@ namespace Component {
 		namespace Input {
 			namespace GameObj
 			{
-
 				class ColliderMap : public Component::Trigger::Input::IGameObj
 				{
-					std::size_t render_group_;
-				public:
-					ColliderMap(std::string name, std::size_t render_group)
-						: Component::Trigger::Input::IGameObj(name), render_group_(render_group)
-					{}
-
 				private:
 					void init(Entity* gamestate) override final
 					{
@@ -37,17 +30,17 @@ namespace Component {
 						*/
 
 						// get collider tile info
-						auto& c_tset_material = *gamestate->get_child("TestTilesetGJK")->get_component<Component::Material>(0);
+						auto& c_tset_material = *gamestate->get_child("tileset")->get_component<Component::Material>(0);
 
-						auto& c_tset_col_circle_src = *gamestate->get_child("TestTilesetGJK")->get_component<Component::Src>(71);
-						auto& c_tset_col_boundary_src = *gamestate->get_child("TestTilesetGJK")->get_component<Component::Src>(48);
-						auto& c_tset_col_polygon_src = *gamestate->get_child("TestTilesetGJK")->get_component<Component::Src>(24);
-						auto& c_tset_col_aabb_src = *gamestate->get_child("TestTilesetGJK")->get_component<Component::Src>(47);
+						auto& c_tset_col_circle_src = *gamestate->get_child("tileset")->get_component<Component::Src>(71);
+						auto& c_tset_col_boundary_src = *gamestate->get_child("tileset")->get_component<Component::Src>(48);
+						auto& c_tset_col_polygon_src = *gamestate->get_child("tileset")->get_component<Component::Src>(24);
+						auto& c_tset_col_aabb_src = *gamestate->get_child("tileset")->get_component<Component::Src>(47);
 
 						// get map objects
 						auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
-						auto& c_cworld_col_vec = *gamestate->get_child("collision world")->get_component<Component::GJKVector>();
+						auto& c_cworld_col_vec = *gamestate->get_child("collision_world")->get_component<Component::GJKVector>();
 						auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
 
 						// test colliders here
@@ -90,7 +83,7 @@ namespace Component {
 
 						// add render systems to game obj info 
 						auto csi_render_item = e_game_info_->add_id_component<Component::System::IItem>("render", temp_systems);
-						gamestate->get_component<Component::Engine>("render")->add(csi_render_item, render_group_);
+						gamestate->get_component<Component::Engine>("render")->add(csi_render_item, 3.0f);
 					}
 				};
 			}

@@ -23,18 +23,15 @@ namespace Component {
 			{
 				class Box : public Component::Trigger::Input::IGameObj
 				{
-					Rect rect_;
-					float corner_size_, box_sc_;
-					std::size_t render_group_;
-				public:
-					Box(std::string name, std::size_t render_group)
-						: Component::Trigger::Input::IGameObj(name), rect_{Game::removed.x, Game::removed.y, 0.0f, 0.0f}, corner_size_(0.0f), box_sc_(0.0f), 
-						render_group_(render_group)
-					{}
-
 				private:
 					void init(Entity* gamestate) override final
 					{
+						auto box_info = delimiter_split(name_.c_str(), '_');
+						if (box_info.size() < 2)
+							Logger::
+
+						auto box_json = gamestate->get_child("index")->get_component<Component::Json>(name_);
+
 						auto box_x = rect_.x;
 						auto box_y = rect_.y;
 						auto box_w = rect_.w;
@@ -93,12 +90,11 @@ namespace Component {
 							Rect{0.0f, corner_size_ * 3.0f, corner_size_, corner_size_ });
 
 						auto& c_renderer = *gamestate->get_child("engine")->get_component<Component::Renderer>("renderer");
-						// get textbox shader and texture
-						auto& c_textbox_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("textbox");
-						auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
+						
+						auto e_spritesheet = *gamestate->get_child("spritesheet")->get_component
 
 						// add textbox material
-						auto& c_tb_material = *entity_->push_back_component<Component::Material>(c_textbox_tex, c_sprite_shader, 4);
+						auto& c_tb_material = *;
 
 						// draw calls
 						auto csr_tl_corner_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_tl_corner_src, c_tl_corner_trans, c_tb_material);

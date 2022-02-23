@@ -86,6 +86,7 @@ namespace Component {
 					auto e_txta = e_textbox->get_child("textarea");
 
 					auto &c_trigger_tree = *e_textbox->get_component<Component::TriggerTree>();
+					c_trigger_tree.destroy();
 
 					auto box_json = nlohmann::json::parse(ss_box_json);
 					auto ctl_init_box = e_box->get_child("game_info")->get_component<Component::Trigger::Load::Box>("load_box_0");
