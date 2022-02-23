@@ -8,7 +8,7 @@
 	"align_horizontal" : "center",
 	"align_vertical" : "center",
 	"line_spacing" : "1.5",
-	"text_padding" : "5.0",
+	"text_padding" : "0.5",
 	"msg_padding_x" : "0.0",
 	"msg_padding_y" : "10.0",
 	"corner_size" : "10.0",

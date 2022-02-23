@@ -4,10 +4,11 @@
 	"collider" : ["collider","aabb","0"],
 	"textbox" : ["textbox", "0"],
 	"workflow" : {
-		"textbox" : [
+		"parser" : "message",
+		"data" : [
 			"Hi there, welcome to our world!",
 			"You are a big guy, I would estimate about 1.5 me would fit inside you", 
 			"Please feed me so I may grow.",
-		],
+		]},
 	},
 }

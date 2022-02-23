@@ -283,7 +283,7 @@
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "sprite_sheet_arr.png",
+	"image": "Resources/Images/spritesheet.png",
 	"format": "RGBA8888",
 	"size": {"w":124,"h":818},
 	"scale": "1",
