@@ -89,16 +89,16 @@ namespace Component {
 						auto c_triggers_ = game_engine->add_id_component<Component::TriggerVector>("trigger");
 						auto c_renderer_ = game_engine->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
 
-						entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera", 64.0f * 32.0f);
+						entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera");
 						entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller");
 						entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager");
 						entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager");
-						entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans", "resources/data/gilsans.json");
+						entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans");
 						entity_->add_id_ct_input<Component::Trigger::Input::CollisionWorld>("collision_world");
-						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap", "resources/data/TestTileMapGJK.json");
-						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player", (GLfloat)Game::width, 792.0f);
+						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap");
+						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player");
 						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collider_map");
-						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TextBox>("textbox", "resources/data/test_textbox.json", glm::vec2(10.0f, 10.0f), 4, 1);
+						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TextBox>("textbox");
 					}
 				};
 			}

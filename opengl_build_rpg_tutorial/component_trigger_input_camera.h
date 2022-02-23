@@ -16,18 +16,15 @@ namespace Component {
 		{
 			class Camera : public Component::Trigger::IInput
 			{
-				GLfloat width_, height_;
-			public:
-				Camera(std::string name, GLfloat width, GLfloat height)
-					: Component::Trigger::IInput(name), width_(width), height_(height)
-				{}
-				Camera(std::string name, GLfloat length)
-					: Camera(name, length, length)
-				{}
 			private:
 				void create(Entity* gamestate) override final
 				{
-					entity_->add_component<Component::Transform>(Rect{ 0.0f, 0.0f, width_, height_ });
+					auto& camera_json = gamestate->get_child("index")->get_child("camera")->get_component<Component::Json>()->json;
+
+					float width = camera_json["width"];
+					float height = camera_json["height"];
+
+					entity_->add_component<Component::Transform>(Rect{ 0.0f, 0.0f, width, height });
 				}
 
 			};

@@ -83,14 +83,21 @@ namespace Component {
 
 					auto e_textbox = gamestate->get_child(textbox_name)->get_child(textbox_pos);
 					auto e_box = e_textbox->get_child("box");
+					auto e_txta = e_textbox->get_child("textarea");
+
+					auto &c_trigger_tree = *e_textbox->get_component<Component::TriggerTree>();
 
 					auto box_json = nlohmann::json::parse(ss_box_json);
-					e_box->get_child("game_info")->get_component<Component::Trigger::Load::Box>("load_box_0")->load(box_json);
+					auto ctl_init_box = e_box->get_child("game_info")->get_component<Component::Trigger::Load::Box>("load_box_0");
+					ctl_init_box->load(box_json);
 
 					std::string offscreen_rect = "[\"" + std::to_string(Game::removed.x) + "\",\"" + std::to_string(Game::removed.y) + "\",\"0\",\"0\"],";
 					box_json["box_rect"] = nlohmann::json::parse(offscreen_rect);
 					
-					e_box->get_child("game_info")->get_component<Component::Trigger::Load::Box>("load_box_1")->load(box_json);
+					auto ctl_remove_box = e_box->get_child("game_info")->get_component<Component::Trigger::Load::Box>("load_box_1");
+					ctl_remove_box->load(box_json);
+
+					c_trigger_tree.add(std::vector<Component::ITrigger*>{ctl_remove_box});
 
 					// set up load data for textarea
 					std::string parser = workflow["parser"];
@@ -99,7 +106,7 @@ namespace Component {
 					{
 						std::vector<std::string> messages = workflow["data"];
 
-						for (auto i = 0; i < messages.size(); ++i)
+						for (auto i = messages.size() - 1; i >= 1; --i)
 						{
 							std::stringstream ss_txta_json;
 							ss_txta_json << "{\"textarea_rect\":[\"" << box_x + corner_size * box_sc / 2.0f + text_padding << "\",\"" << box_y + corner_size * box_sc / 2.0f + text_padding << "\",\"" 
@@ -112,13 +119,21 @@ namespace Component {
 							ss_txta_json << "\"textbox\":[\"" << textbox_name << "\",\"" << textbox_pos << "\"],";
 
 							auto msg_json = nlohmann::json::parse(ss_txta_json);
-
+							auto ctl_msg_txta = e_txta->get_child("game_info")->get_component<Component::Trigger::Load::TextArea>("load_textarea_" + std::to_string(i));
+							ctl_msg_txta->load(msg_json);
+							c_trigger_tree.add(std::vector<Component::ITrigger*>{ctl_msg_txta});
 						}
+						
 					}
 					else if (parser == "option_box")
 					{
 						//TODO
 					}
+					auto ctl_first_msg_txta = e_txta->get_child("game_info")->get_component<Component::Trigger::Load::TextArea>("load_textarea_0");
+
+					auto& c_trigger_vector = *gamestate->get_child("engine")->get_component<Component::TriggerVector>("trigger");
+					c_trigger_vector.push_back(ctl_init_box);
+					c_trigger_vector.push_back(ctl_first_msg_txta);
 				}
 			};
 		} 

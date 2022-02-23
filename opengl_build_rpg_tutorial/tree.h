@@ -11,9 +11,11 @@ public:
 		Node* next;
 		T item;
 	};
+
 	Tre()
 		: head_(nullptr)
 	{}
+
 	~Tre()
 	{
 		destroy();
@@ -37,5 +39,5 @@ public:
 	}
 private:
 	std::vector<std::unique_ptr<Node>> nodes_;
-	Node* head_;
+	Node* start_;
 };
