@@ -64,9 +64,6 @@
     <Filter Include="EC\Component\System\Update">
       <UniqueIdentifier>{f38c53a0-73a2-4851-acc7-31e05b4a2fe9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\System\Item">
-      <UniqueIdentifier>{8797329b-1d40-42c5-9aa3-e0ad47d46a23}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EC\Component\Trigger\Load">
       <UniqueIdentifier>{9684672b-b923-4386-9fb8-29bb434880a4}</UniqueIdentifier>
     </Filter>
@@ -293,15 +290,6 @@
     <ClInclude Include="sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_item.h">
-      <Filter>EC\Component\System\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_item_tilemap.h">
-      <Filter>EC\Component\System\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="component_system_item_empty.h">
-      <Filter>EC\Component\System\Item</Filter>
-    </ClInclude>
     <ClInclude Include="component_engine.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
@@ -340,6 +328,18 @@
     </ClInclude>
     <ClInclude Include="component_trigger_load.h">
       <Filter>EC\Component\Trigger\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_item.h">
+      <Filter>EC\Component\System</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_item_empty.h">
+      <Filter>EC\Component\System</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_item_box.h">
+      <Filter>EC\Component\System</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_item_tilemap.h">
+      <Filter>EC\Component\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

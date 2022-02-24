@@ -23,24 +23,23 @@ namespace Component {
 			{
 				class Box : public Component::Trigger::Input::IGameObj
 				{
-					Rect rect_;
-					float corner_size_, box_sc_;
-					std::size_t render_group_;
-				public:
-					Box(std::string name, std::size_t render_group)
-						: Component::Trigger::Input::IGameObj(name), rect_{Game::removed.x, Game::removed.y, 0.0f, 0.0f}, corner_size_(0.0f), box_sc_(0.0f), 
-						render_group_(render_group)
-					{}
-
 				private:
 					void init(Entity* gamestate) override final
 					{
-						auto box_x = rect_.x;
-						auto box_y = rect_.y;
-						auto box_w = rect_.w;
-						auto box_h = rect_.h;
+						auto box_info = delimiter_split(name_.c_str(), '_');
+						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json[box_info[1]];
 
-						auto scaled_corner_size = corner_size_ * box_sc_;
+						auto box_x = Game::removed.x;
+						auto box_y = Game::removed.y;
+						float box_w = box_json["box_width"];
+						float box_h = box_json["box_height"];
+
+						float corner_size = box_json["corner_size"];
+						float box_scale = box_json["box_scale"];
+
+						float render_group = box_json["render_group"];
+
+						auto scaled_corner_size = corner_size * box_scale;
 
 						// box corners transforms
 						auto& c_tl_corner_trans = *entity_->push_back_component<Component::Transform>(
@@ -69,36 +68,14 @@ namespace Component {
 						// speech arrow
 						auto& c_speech_arrow_trans = *entity_->push_back_component<Component::Transform>();
 
+						// get textbox shader and texture
 
-						// once more apropriate sprite sheets come into play these will be moved out into a different entity
-						auto& c_tl_corner_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 0.0f, 0.0f, corner_size_, corner_size_ });
-						auto& c_t_side_src = *entity_->push_back_component<Component::Src>(
-							Rect{ corner_size_, 0.0f, corner_size_, corner_size_ });
-						auto& c_tr_corner_src = *entity_->push_back_component<Component::Src>(
-							Rect{ corner_size_ * 2.0f, 0.0f, corner_size_, corner_size_ });
-						auto& c_l_side_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 0.0f, corner_size_, corner_size_, corner_size_ });
-						auto& c_center_src = *entity_->push_back_component<Component::Src>(
-							Rect{ corner_size_, corner_size_, corner_size_, corner_size_ });
-						auto& c_r_side_src = *entity_->push_back_component<Component::Src>(
-							Rect{ corner_size_ * 2.0f, corner_size_, corner_size_, corner_size_ });
-						auto& c_bl_corner_src = *entity_->push_back_component<Component::Src>(
-							Rect{ 0.0f, corner_size_ * 2.0f , corner_size_, corner_size_ });
-						auto& c_b_side_src = *entity_->push_back_component<Component::Src>(
-							Rect{ corner_size_, corner_size_ * 2.0f, corner_size_, corner_size_ });
-						auto& c_br_corner_src = *entity_->push_back_component<Component::Src>(
-							Rect{ corner_size_ * 2.0f, corner_size_ * 2.0f, corner_size_, corner_size_ });
-						auto& c_speech_arrow_src = *entity_->push_back_component<Component::Src>(
-							Rect{0.0f, corner_size_ * 3.0f, corner_size_, corner_size_ });
+
+
+						auto e_spritesheet = gamestate->get_child("spritesheet")->get_child("")
 
 						auto& c_renderer = *gamestate->get_child("engine")->get_component<Component::Renderer>("renderer");
-						// get textbox shader and texture
-						auto& c_textbox_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>("textbox");
-						auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
-
-						// add textbox material
-						auto& c_tb_material = *entity_->push_back_component<Component::Material>(c_textbox_tex, c_sprite_shader, 4);
+						
 
 						// draw calls
 						auto csr_tl_corner_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_tl_corner_src, c_tl_corner_trans, c_tb_material);
@@ -128,7 +105,7 @@ namespace Component {
 						auto cs_item = e_game_info_->add_id_component<Component::System::IItem>("render_item", temp_systems);
 
 						auto& render_engine = *gamestate->get_child("engine")->get_component<Component::Engine>("render");
-						render_engine.add(cs_item, render_group_);
+						render_engine.add(cs_item, render_group);
 					}
 
 				};

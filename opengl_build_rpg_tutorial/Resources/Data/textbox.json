@@ -1,20 +1,7 @@
 [{
-	"box_height" : 512,
-	"box_width" : 512,
-	"max_characters" : 512,
-	"box_scale" : "1.0",	
-	"font" : "gilsans",
-	"font_scale" : "1.0",
-	"align_horizontal" : "center",
-	"align_vertical" : "center",
-	"line_spacing" : "1.5",
-	"text_padding" : "0.5",
-	"msg_padding_x" : "0.0",
-	"msg_padding_y" : "10.0",
-	"corner_size" : "10.0",
-	"render_group" : "4.0",
-	"update_group" : "1.0",
 	"max_message" : 16,
 	"max_box" : 2, 
+	"textarea" : "textarea_0",
+	"box" : "box_0",
 },]
 

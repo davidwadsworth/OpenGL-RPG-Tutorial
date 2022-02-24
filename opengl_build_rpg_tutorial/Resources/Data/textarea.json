@@ -1,0 +1,11 @@
+[{
+	"font" : "gilsans",
+	"font_scale" : "1.0",
+	"align_horizontal" : "center",
+	"align_vertical" : "center",
+	"line_spacing" : "1.5",
+	"msg_padding" : ["0.5","1.0"],
+	"render_group" : "4.0",
+	"update_group" : "1.0",	
+	"max_characters" : 512,
+},]
