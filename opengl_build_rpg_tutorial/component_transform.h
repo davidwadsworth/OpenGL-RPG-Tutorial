@@ -13,27 +13,18 @@ namespace Component
 	struct Transform : public IComponent, public Rect
 	{
 		Transform()
-			: Rect{}, sc(1.0f)
-		{}
-
-		Transform(const Rect& rect, GLfloat sc)
-			: Rect(rect), sc(sc)
+			: Rect{}
 		{}
 
 		Transform(const Rect& rect)
-			: Transform(rect, 1.0f)
+			: Rect(rect)
 		{}
 
 		Transform(GLfloat x, GLfloat y, GLfloat length)
-			: Transform(Rect{ x, y, length, length }, 1.0f)
+			: Transform(Rect{ x, y, length, length })
 		{}
 
-		Transform(GLfloat x, GLfloat y, GLfloat length, GLfloat sc)
-			: Transform(Rect{ x, y, length, length }, sc)
-		{}
-
-		GLfloat sc;
-
+		
 		void set(float x, float y, float w, float h)
 		{
 			this->x = x;

@@ -29,7 +29,7 @@ namespace Component {
 						auto box_info = delimiter_split(name_.c_str(), '_');
 
 						if (box_info.size() < 2)
-							Logger::
+							Logger::error("box name not of 'name'_'position'", Logger::HIGH);
 
 						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json[box_info[1]];
 

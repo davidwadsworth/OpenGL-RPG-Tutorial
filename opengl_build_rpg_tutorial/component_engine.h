@@ -58,6 +58,11 @@ namespace Component
 		Engine()
 		{}
 
+		~Engine()
+		{
+			clear();
+		}
+
 		void add(Component::System::IItem* item, float gid)
 		{	
 			int gsr = search(gid);
@@ -101,12 +106,16 @@ namespace Component
 			engine.groups_.clear();
 			engine.groups_.insert(engine.groups_.begin(), temp_groups.begin(), temp_groups.end());
 		}
-		
-		void run()
+
+		std::vector<Component::ISystem*> flatten()
 		{
-			for (auto i = 0ull; i < groups_.size(); ++i)
-				for (auto j = 0ull; j < groups_[i].size(); ++j)
-					groups_[i][j]->execute();
+			std::vector<Component::ISystem*> flattened_engine;
+
+			for (auto& g : groups_)
+				for (auto& i : g)
+					flattened_engine.insert(flattened_engine.end(), i->systems_.begin(), i->systems_.end());
+
+			return flattened_engine;
 		}
 
 		void clear()

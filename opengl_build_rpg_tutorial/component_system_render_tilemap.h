@@ -13,9 +13,9 @@ executes systems stored in system array based on where the camera is located ass
 
 namespace Component {
 	namespace System {
-		namespace Item
+		namespace Render
 		{
-			class TileMap : public Component::System::IItem
+			class TileMap : public Component::ISystem
 			{
 				Component::Transform& camera_transform_;
 				GLuint map_width_, map_height_, tile_size_;
