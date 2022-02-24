@@ -27,6 +27,10 @@ namespace Component {
 					void init(Entity* gamestate) override final
 					{
 						auto box_info = delimiter_split(name_.c_str(), '_');
+
+						if (box_info.size() < 2)
+							Logger::
+
 						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json[box_info[1]];
 
 						auto box_x = Game::removed.x;
@@ -69,13 +73,6 @@ namespace Component {
 						auto& c_speech_arrow_trans = *entity_->push_back_component<Component::Transform>();
 
 						// get textbox shader and texture
-
-
-
-						auto e_spritesheet = gamestate->get_child("spritesheet")->get_child("")
-
-						auto& c_renderer = *gamestate->get_child("engine")->get_component<Component::Renderer>("renderer");
-						
 
 						// draw calls
 						auto csr_tl_corner_camera_draw = entity_->push_back_component<Component::System::Render::Draw>(c_renderer, c_tl_corner_src, c_tl_corner_trans, c_tb_material);

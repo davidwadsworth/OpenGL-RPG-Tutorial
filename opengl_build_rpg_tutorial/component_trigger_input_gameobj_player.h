@@ -101,23 +101,6 @@ namespace Component {
                         std::vector<Component::ISystem*> temp_render_systems;
                         std::vector<Component::ISystem*> temp_update_systems;
 
-                        if (debug)
-                        {
-                            std::string tileset_name = collider_json["tileset"];
-
-                            int tileid = shape_json["circle"]["circle"];
-                            // set up collider draw
-                            auto& c_tset_material = *gamestate->get_child(tileset_name)->get_component<Component::Material>(0);
-                            auto& c_tset_col_circle_src = *gamestate->get_child(tileset_name)->get_component<Component::Src>(tileid);
-
-                            auto collider = new Entity();
-                            auto csr_col_cam_draw = collider->add_component<Component::System::Render::CameraDraw>(c_renderer, c_tset_col_circle_src, c_pla_transform, c_tset_material, c_cam_transform);
-
-                            entity_->add_id_child(collider, "collider");
-
-                            temp_render_systems.push_back(csr_col_cam_draw);
-                        }
-
                         auto anim_i = 0u;
                         auto animation = new Entity();
                         entity_->push_back_child(animation);
@@ -140,6 +123,23 @@ namespace Component {
                         temp_update_systems.push_back(csu_pla_animation);
 
                         temp_render_systems.push_back(csr_pla_dynamic_draw);
+
+                        if (debug)
+                        {
+                            std::string tileset_name = collider_json["tileset"];
+
+                            int tileid = shape_json["circle"]["circle"];
+                            // set up collider draw
+                            auto& c_tset_material = *gamestate->get_child(tileset_name)->get_component<Component::Material>(0);
+                            auto& c_tset_col_circle_src = *gamestate->get_child(tileset_name)->get_component<Component::Src>(tileid);
+
+                            auto collider = new Entity();
+                            auto csr_col_cam_draw = collider->add_component<Component::System::Render::CameraDraw>(c_renderer, c_tset_col_circle_src, c_pla_transform, c_tset_material, c_cam_transform);
+
+                            entity_->add_id_child(collider, "collider");
+
+                            temp_render_systems.push_back(csr_col_cam_draw);
+                        }
 
                         auto csi_update = e_game_info_->add_id_component<Component::System::IItem>("update", temp_update_systems);
                         auto csi_render = e_game_info_->add_id_component<Component::System::IItem>("render", temp_render_systems);
