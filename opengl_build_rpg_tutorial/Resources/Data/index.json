@@ -10,5 +10,4 @@
 	"controller" : ["Resources/Data/controller_keyboard.json"],
 	"collider" : ["Resources/Data/collider.json"],
 	"spritesheet" : ["Resources/Data/spritesheet.json"],
-	"camera" : ["Resources/Data/camera.json"],
 }

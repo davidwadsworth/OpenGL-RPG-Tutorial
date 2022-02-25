@@ -33,8 +33,8 @@ namespace Component {
 
 					dest.x = transform_.x - camera_transform.x;
 					dest.y = transform_.y - camera_transform.y;
-					dest.w = transform_.w * transform_.sc;
-					dest.h = transform_.h * transform_.sc;
+					dest.w = transform_.w;
+					dest.h = transform_.h;
 
 					renderer_.draw(src_, dest, material_);
 				}

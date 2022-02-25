@@ -131,9 +131,6 @@
     <ClInclude Include="component_texture.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_update_camera.h">
-      <Filter>EC\Component\System\Update</Filter>
-    </ClInclude>
     <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -332,14 +329,17 @@
     <ClInclude Include="component_system_item.h">
       <Filter>EC\Component\System</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_item_empty.h">
-      <Filter>EC\Component\System</Filter>
+    <ClInclude Include="component_system_render_offset.h">
+      <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_item_box.h">
-      <Filter>EC\Component\System</Filter>
+    <ClInclude Include="component_system_render_empty.h">
+      <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_item_tilemap.h">
-      <Filter>EC\Component\System</Filter>
+    <ClInclude Include="component_system_render_tilemap.h">
+      <Filter>EC\Component\System\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_update_camera.h">
+      <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

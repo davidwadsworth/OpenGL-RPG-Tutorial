@@ -157,7 +157,8 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_json.h" />
-    <ClInclude Include="component_system_item_box.h" />
+    <ClInclude Include="component_system_render_offset.h" />
+    <ClInclude Include="component_system_update_camera.h" />
     <ClInclude Include="component_trigger_input_index.h" />
     <ClInclude Include="component_trigger_input_spritesheet.h" />
     <ClInclude Include="component_trigger_load.h" />
@@ -173,9 +174,9 @@
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_material_color.h" />
     <ClInclude Include="component_system_item.h" />
-    <ClInclude Include="component_system_item_empty.h" />
+    <ClInclude Include="component_system_render_empty.h" />
     <ClInclude Include="component_system_render_draw.h" />
-    <ClInclude Include="component_system_item_tilemap.h" />
+    <ClInclude Include="component_system_render_tilemap.h" />
     <ClInclude Include="component_template.h" />
     <ClInclude Include="component_tree.h" />
     <ClInclude Include="component_trigger_load_textarea.h" />
@@ -206,7 +207,6 @@
     <ClInclude Include="component_system_render_camera_draw.h" />
     <ClInclude Include="component_system_update_animate_move.h" />
     <ClInclude Include="component_system_update_animation.h" />
-    <ClInclude Include="component_system_update_camera.h" />
     <ClInclude Include="component_system_update_move.h" />
     <ClInclude Include="component_transform.h" />
     <ClInclude Include="component_trigger_input_camera.h" />

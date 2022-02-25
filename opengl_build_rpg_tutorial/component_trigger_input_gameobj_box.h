@@ -33,8 +33,10 @@ namespace Component {
 
 						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json[box_info[1]];
 
-						auto box_x = Game::removed.x;
-						auto box_y = Game::removed.y;
+						entity_->push_back_component<Component::Position>(Game::removed);
+
+						auto box_x = 0.0f;
+						auto box_y = 0.0f;
 						float box_w = box_json["box_width"];
 						float box_h = box_json["box_height"];
 
