@@ -157,6 +157,9 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_json.h" />
+    <ClInclude Include="component_qtkey_location.h" />
+    <ClInclude Include="component_qt.h" />
+    <ClInclude Include="component_qtkey.h" />
     <ClInclude Include="component_system_render_offset.h" />
     <ClInclude Include="component_system_update_camera.h" />
     <ClInclude Include="component_trigger_input_index.h" />
