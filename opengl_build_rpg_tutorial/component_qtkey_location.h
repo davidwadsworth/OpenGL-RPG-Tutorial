@@ -22,6 +22,7 @@ namespace Component {
 					: tree(tree), id(id)
 				{}
 			};
+			bool is_retrieved_;
 			std::vector<QuadTreeLocation> locations_;
 		public:
 

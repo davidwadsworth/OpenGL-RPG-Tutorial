@@ -101,11 +101,7 @@ namespace Component
 				}
 
 			for (auto i = 0; i < tree_keys_.size; i++)
-				if (!tree_keys_[i]->is_retrieved_)
-				{
-					tree_keys_[i]->is_retrieved_ = true;
-					retrieved_qt_keys.push_back(tree_keys_[i]->output_);
-				}
+				retrieved_qt_keys.push_back(tree_keys_[i]->output_);
 		}
 
 		void insert(IQuadTreeKey* key, Entity* master)
@@ -188,8 +184,6 @@ namespace Component
 		{
 			std::vector<T*> retrieved;
 			retrieve(rect, retrieved);
-			for (auto r : retrived)
-				r->is_retrieved_ = false;
 			return retrieved;
 		}
 
@@ -200,7 +194,8 @@ namespace Component
 			c_quadtree.insert(key, master);
 		}
 	};
-#define ColliderQuadTree QuadTree<Component::ICollider>
+#define GJKQuadTree QuadTree<Component::Collider::IGJK>
+#define AABBQuadTree QuadTree<Component::Collider::AABB>
 #define SystemQuadTree QuadTree<Component::ISystem>
 #define TriggerQuadTree QuadTree<Component::ITrigger>
 }

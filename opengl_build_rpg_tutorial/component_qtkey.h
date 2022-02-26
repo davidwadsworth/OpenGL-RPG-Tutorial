@@ -16,7 +16,6 @@ namespace Component
 	protected:
 		Component::Transform& transform_;
 		T& output_;
-		bool is_retrieved_;
 	public:
 		friend class QuadTree<T>;
 		QuadTreeKey(T& output, Component::Transform& transform)

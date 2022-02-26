@@ -1,5 +1,4 @@
 #pragma once
-#include "component.h"
 #include <vector>
 #include "component_collider_aabb.h"
 #include "component_system.h"
