@@ -1,8 +1,6 @@
 #pragma once
 #include "component_trigger_input.h"
 #include "component_position.h"
-#include "rect.h"
-#include <glm/vec2.hpp>
 
 /*
 Creates our local camera using width and height

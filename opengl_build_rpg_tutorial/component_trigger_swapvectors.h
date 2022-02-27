@@ -4,11 +4,11 @@
 namespace Component {
 	namespace Trigger
 	{
-		class SwapVector : public Component::ITrigger
+		class SwapVectors : public Component::ITrigger
 		{
 			std::vector& v1_, & v2_;
 		public:
-			SwapVector(std::vector& v1, std::vector& v2)
+			SwapVectors(std::vector& v1, std::vector& v2)
 				: v1_(v1), v2_(v2)
 			{}
 

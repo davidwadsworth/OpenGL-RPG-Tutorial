@@ -11,6 +11,7 @@ namespace Component
 	class ICollider : public Component::Rectangle
 	{
 	public:
+		using Component::Rectangle::Rectangle;
 		virtual glm::vec2 get_center() = 0;
 	};
 }

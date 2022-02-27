@@ -16,39 +16,36 @@ namespace Component {
 			Entity* entity_;
 			std::string name_;
 		private:
-			Entity* parent_;
 			virtual void create(Entity* gamestate) = 0;
 		public:
 			IInput(std::string name)
-				: entity_(nullptr), name_(name), parent_(nullptr)
+				: entity_(nullptr), name_(name)
 			{}
-			IInput(std::string name, Entity* parent)
-				: entity_(nullptr), name_(name), parent_(parent)
-			{}
-			void set_name(std::string name)
-			{
-				name_ = name;
-			}
-
-			void set_parent(Entity* parent)
-			{
-				parent_ = parent;
-			}
 
 			void execute(Entity* gamestate) override
 			{
 				// set up entity and add into our passed through map
 				entity_ = new Entity();
 				
-				// if parent isn't set use gamestate
-				if (!parent_)
-					parent_ = gamestate;
+				// if this game object is already in the gamestate 
+				if (gamestate->has_child(name_))
+					gamestate->remove_child(name_);
+
+				gamestate->add_id_child(entity_, name_);
+
+				create(gamestate);
+			}
+
+			void execute(Entity* gamestate, Entity* parent)
+			{
+				// set up entity and add into our passed through map
+				entity_ = new Entity();
 
 				// if this game object is already in the parent 
-				if (parent_->has_child(name_))
-					parent_->remove_child(name_);
+				if (parent->has_child(name_))
+					parent->remove_child(name_);
 
-				parent_->add_id_child(entity_, name_);
+				parent->add_id_child(entity_, name_);
 
 				create(gamestate);
 			}

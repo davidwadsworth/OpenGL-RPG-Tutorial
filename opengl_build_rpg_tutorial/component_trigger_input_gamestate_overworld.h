@@ -6,7 +6,7 @@
 #include "component_trigger_input_texture.h"
 #include "component_trigger_input_gameobj_tilemap.h"
 #include "component_trigger_input_gameobj_player.h"
-#include "component_trigger_input_qt.h"
+#include "component_trigger_input_quadtree.h"
 #include "component_trigger_input_gameobj_collidermap.h"
 #include "component_trigger_input_font.h"
 #include "component_trigger_input_gameobj_text.h"
@@ -32,10 +32,7 @@ namespace Component {
 					Component::TriggerVector* c_triggers_ = nullptr;
 					Component::Renderer* c_renderer_ = nullptr;
 
-				public:
-					using Component::Trigger::Input::IGameState::IGameState;
-
-					void init() override final
+					void _init() override final
 					{
 						auto overworld_objs = entity_->get_component_list();
 
@@ -46,6 +43,8 @@ namespace Component {
 						c_renderer_->init();
 					}
 
+				public:
+					using Component::Trigger::Input::IGameState::IGameState;
 
 					void destroy() override final
 					{
@@ -92,7 +91,7 @@ namespace Component {
 						entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager");
 						entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager");
 						entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans");
-						entity_->add_id_ct_input<Component::Trigger::Input::GJKQuadTree>("collision_world");
+						entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_world");
 						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap");
 						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player");
 						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collider_map");

@@ -19,8 +19,8 @@ namespace Component {
 			protected:
 				std::array<glm::vec2, MAX_BOUNDARY> vertices_;
 			public:
-				Boundary(Component::Transform& transform, std::array<glm::vec2, MAX_BOUNDARY> vertices)
-					: IGJK(transform), vertices_(vertices), offset_()
+				Boundary(Rect transform, std::array<glm::vec2, MAX_BOUNDARY> vertices)
+					: Component::Collider::IGJK(transform), vertices_(vertices), offset_()
 				{
 					offset_ = (vertices_[0] + vertices_[1]) / 2.0f;
 					for (auto& v : vertices_)
@@ -29,7 +29,7 @@ namespace Component {
 
 				glm::vec2 get_center() override
 				{
-					return glm::vec2(this->transform.x, this->transform.y) + offset_;
+					return glm::vec2(this->x, this->y) + offset_;
 				}
 
 				glm::vec2 support(glm::vec2 direction) override

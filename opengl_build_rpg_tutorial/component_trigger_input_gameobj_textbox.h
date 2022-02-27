@@ -2,7 +2,7 @@
 #include "component_trigger_input_gameobj_empty.h"
 #include "component_trigger_input_gameobj_box.h"
 #include "component_vector.h"
-#include "component_trigger_swapengine.h"
+#include "component_trigger_swapvectors.h"
 #include "component_tree.h"
 #include "component_system_update_traverse_tree.h"
 #include "component_trigger_load_textarea.h"
@@ -41,15 +41,13 @@ namespace Component {
 						auto e_pause = new Entity();
 						entity_->add_id_child(e_pause, "pause");
 						auto& c_pause_update_engine = *e_pause->add_id_component<Component::Engine>("update");
-						auto ct_pause_switch_systems = e_pause->add_id_component<Component::Trigger::SwapEngine>("switch_systems", c_pause_update_engine);
+						auto ct_pause_switch_systems = e_pause->add_id_component<Component::Trigger::SwapVectors>("switch_systems", c_pause_update_engine);
 
 						auto ctigo_box = entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Box>("box", render_group);
-						ctigo_box->set_parent(entity_);
-						ctigo_box->execute(gamestate);
+						ctigo_box->execute(gamestate, entity_);
 
 						auto ctigo_empty = entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Empty>("empty", e_font, max_characters, render_group);
-						ctigo_empty->set_parent(entity_);
-						ctigo_empty->execute(gamestate);
+						ctigo_empty->execute(gamestate, entity_);
 						
 						// add message and box triggers to gameinfo
 						int max_messages = textbox_json["max_message"];

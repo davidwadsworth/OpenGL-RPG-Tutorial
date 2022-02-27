@@ -1,11 +1,10 @@
 #pragma once
 #pragma once
 #include "component_system_item.h"
-#include "component_transform.h"
 #include "game.h"
 #include "component_vector.h"
 #include "component_renderer.h"
-#include "component_src.h"
+#include "component_rect.h"
 #include "component_position.h"
 
 /*

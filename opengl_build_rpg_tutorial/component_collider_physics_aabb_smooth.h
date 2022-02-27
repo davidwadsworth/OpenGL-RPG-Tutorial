@@ -78,8 +78,8 @@ namespace Component {
 							displacement = aabb_1->x - (aabb_2->x + aabb_2->w);
 						}
 
-						aabb_1->transform.x += bisector.x * displacement;
-						aabb_1->transform.y += bisector.y * displacement;
+						aabb_1->x += bisector.x * displacement;
+						aabb_1->y += bisector.y * displacement;
 					}
 				};
 			}

@@ -45,7 +45,7 @@ namespace Component {
 					return true;
 				}
 			public:
-				Polygon(Component::Transform& transform, std::vector<glm::vec2> vertices)
+				Polygon(Rect transform, std::vector<glm::vec2> vertices)
 					: IGJK(transform), vertices_(vertices)
 				{
 					if (vertices.size() < 3)
@@ -67,7 +67,7 @@ namespace Component {
 
 				glm::vec2 get_center() override
 				{
-					return glm::vec2(transform.x, transform.y) + offset_;
+					return glm::vec2(this->x, this->y) + offset_;
 				}
 				
 				glm::vec2 support(glm::vec2 direction) override

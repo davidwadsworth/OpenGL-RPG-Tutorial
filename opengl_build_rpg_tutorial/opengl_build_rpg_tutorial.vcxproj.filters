@@ -185,7 +185,7 @@
     <ClInclude Include="component_collider.h">
       <Filter>EC\Component\Rect\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_qt.h">
+    <ClInclude Include="component_trigger_input_quadtree.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_physics_aabb_smooth.h">
@@ -284,7 +284,7 @@
     <ClInclude Include="component_tree.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_swapvector.h">
+    <ClInclude Include="component_trigger_swapvectors.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_gameobj_empty.h">

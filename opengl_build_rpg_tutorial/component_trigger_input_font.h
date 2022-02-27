@@ -4,8 +4,8 @@
 #include "json.hpp"
 #include "delimiter_split.h"
 #include "component_material_color.h"
-#include "component_src_bitmap_glyph.h"
 #include "component_template.h"
+#include "component_rect_bitmap_glyph.h"
 
 /*
 Load in font bitmap fonts with json.

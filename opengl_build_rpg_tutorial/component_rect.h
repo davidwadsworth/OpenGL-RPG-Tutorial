@@ -6,11 +6,12 @@ namespace Component
 {
 	class Rectangle : public Rect, public IComponent
 	{
+	public:
 		Rectangle()
 			: Rect()
 		{}
 
-		Rectangle(const Rect& rect)
+		Rectangle(Rect rect)
 			: Rect(rect)
 		{}
 

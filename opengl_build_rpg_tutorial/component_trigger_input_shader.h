@@ -21,27 +21,23 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					
-					// load in used shaders
-					auto vs_file_name = "resources/shaders/sprite.vs";
-					auto fs_file_name = "resources/shaders/sprite.fs";
+					auto& shader_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+					auto shader_obj = shader_json.get<nlohmann::json::object_t>();
 
-					auto& c_shader = *entity_->add_id_component<Component::Shader>("sprite");
-					c_shader.load(vs_file_name, fs_file_name);
-
-					// set up orthographic projection
-					c_shader.use();
 					auto projection = glm::ortho(0.0f, (GLfloat)Game::width, (GLfloat)Game::height, 0.0f, -1.0f, 1.0f);
-					c_shader.set_mat4("projection", projection);
 
-					auto fnt_vs_file_name = "resources/shaders/font.vs";
-					auto fnt_fs_file_name = "resources/shaders/font.fs";
+					// load in used shaders
+					for (auto& shader : shader_obj)
+					{
+						auto& c_shader = *entity_->add_id_component<Component::Shader>(shader.first);
+						std::string vs_file_name = shader.second[0];
+						std::string fs_file_name = shader.second[1];
+						c_shader.load(vs_file_name.c_str(), fs_file_name.c_str());
 
-					auto& c_fnt_shader = *entity_->add_id_component<Component::Shader>("font");
-					c_fnt_shader.load(fnt_vs_file_name, fnt_fs_file_name);
-
-					c_fnt_shader.use();
-					c_fnt_shader.set_mat4("projection", projection);
+						// set up orthographic projection
+						c_shader.use();
+						c_shader.set_mat4("projection", projection);
+					}
 				}
 			};
 		}

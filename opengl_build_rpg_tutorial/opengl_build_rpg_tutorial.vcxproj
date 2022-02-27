@@ -191,7 +191,7 @@
     <ClInclude Include="component_trigger_input_gameobj_textbox.h" />
     <ClInclude Include="component_trigger_input_gamestate.h" />
     <ClInclude Include="component_trigger_load_textbox.h" />
-    <ClInclude Include="component_trigger_swapvector.h" />
+    <ClInclude Include="component_trigger_swapvectors.h" />
     <ClInclude Include="frarr.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h" />
@@ -202,7 +202,7 @@
     <ClInclude Include="component_controller_keyboard.h" />
     <ClInclude Include="component_system_update_check_collision.h" />
     <ClInclude Include="component_trigger_input_gameobj_collidermap.h" />
-    <ClInclude Include="component_trigger_input_qt.h" />
+    <ClInclude Include="component_trigger_input_quadtree.h" />
     <ClInclude Include="component_system.h" />
     <ClInclude Include="component_trigger_input.h" />
     <ClInclude Include="component_system_render_camera_draw.h" />

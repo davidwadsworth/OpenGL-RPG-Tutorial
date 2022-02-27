@@ -25,15 +25,15 @@ namespace Component {
 						if (Component::Collider::AABB::collide(aabb))
 							return true;
 
-						previous_.x = aabb.transform.x;
-						previous_.y = aabb.transform.y;
+						previous_.x = aabb.x;
+						previous_.y = aabb.y;
 						return false;
 					}
 
 					void resolve(Component::ICollider& col) override
 					{
-						col.transform.x = previous_.x;
-						col.transform.y = previous_.y;
+						col.x = previous_.x;
+						col.y = previous_.y;
 					}
 				};
 			}

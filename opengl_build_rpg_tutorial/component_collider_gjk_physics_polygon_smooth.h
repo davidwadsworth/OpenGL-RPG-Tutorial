@@ -107,8 +107,8 @@ namespace Component {
 							auto sup = gjk->support(-perp_bisector) - this->support(perp_bisector);
 							auto piercing_vec = glm::dot(sup, -perp_bisector) * perp_bisector;
 
-							col.transform.x += piercing_vec.x;
-							col.transform.y += piercing_vec.y;
+							col.x += piercing_vec.x;
+							col.y += piercing_vec.y;
 						}
 					};
 				}
