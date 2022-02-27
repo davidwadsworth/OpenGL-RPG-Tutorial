@@ -1,5 +1,6 @@
 #pragma once
 #include "component_collider.h"
+#include <array>
 
 constexpr auto MAX_SIMPLEX = 3;
 

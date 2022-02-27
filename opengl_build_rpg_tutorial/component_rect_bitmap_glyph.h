@@ -1,5 +1,5 @@
 #pragma once
-#include "component_src.h"
+#include "component_rect.h"
 #include <glad/glad.h>
 #include <vector>
 
@@ -11,10 +11,9 @@ Src component for bitmap fonts
 
 namespace Component
 {
-	class BitMapGlyph : public Src
+	class BitMapGlyph : public Component::Rectangle
 	{
 	public:
-		using Component::Src::Src;
 
 		char glyph;
 		int advance;

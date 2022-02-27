@@ -5,19 +5,17 @@
 #include "component_collider.h"
 #include "component_trigger.h"
 #include "component_system.h"
-#include "component_qtkey.h"
 
 constexpr auto MAX_INDEX = 4;
 constexpr auto MAX_LEVEL = 10; // we don't want our quadtree to expand inifinitely due to 11 objects being on the same position somehow
 
 namespace Component
 {
-	template <typename T>
 	class QuadTree
 	{
 		Rect rect_;
-		std::array<QuadTree<T>*, MAX_INDEX> trees_;
-		FRArr<IQuadTreeKey*> tree_keys_;
+		std::array<QuadTree*, MAX_INDEX> trees_;
+		FRArr<Rect*> objects_;
 		GLuint level_;
 
 		enum quadrants
@@ -59,19 +57,6 @@ namespace Component
 			return index;
 		}
 
-		void remove(GLuint id)
-		{
-			tree_keys_.remove(id);
-
-			if (id <= tree_keys_.size)
-			{
-				auto& tree_key = tree_keys_[id];
-				for (auto i = 0; i < tree_key->locations.size(); i++)
-					if (qt == tree_key->locations[i].tree)
-						tree_key->locations[i].id = id;
-			}
-		}
-
 		void split(Entity* master)
 		{
 			if (level_ + 1 > MAX_LEVEL)
@@ -79,63 +64,33 @@ namespace Component
 
 			auto x = rect_.x;
 			auto y = rect_.y;
-			auto sub_w = rect_ / 2.0f;
-			auto sub_h = rect_ / 2.0f;
+			auto sub_w = rect_.w / 2.0f;
+			auto sub_h = rect_.h / 2.0f;
 
 			// creates 4 new quad tree and adds entities to the prior tree's children
-			trees_[top_left] = master->push_back_component<QuadTree>(level_ + 1, tree_keys_.max_size, Rect{ x, y, sub_w, sub_h });
-			trees_[top_right] = master->push_back_component<QuadTree>(level_ + 1, tree_keys_.max_size, Rect{ x + sub_w, y, sub_w, sub_h });
-			trees_[bot_right] = master->push_back_component<QuadTree>(level_ + 1, tree_keys_.max_size, Rect{ x + sub_w, y + sub_h, sub_w, sub_h });
-			trees_[bot_left] = master->push_back_component<QuadTree>(level_ + 1, tree_keys_.max_size, Rect{ x, y + sub_h, sub_w, sub_h });
+			trees_[top_left] = master->push_back_component<QuadTree>(level_ + 1, objects_.max_size, Rect( x, y, sub_w, sub_h ));
+			trees_[top_right] = master->push_back_component<QuadTree>(level_ + 1, objects_.max_size, Rect( x + sub_w, y, sub_w, sub_h ));
+			trees_[bot_right] = master->push_back_component<QuadTree>(level_ + 1, objects_.max_size, Rect( x + sub_w, y + sub_h, sub_w, sub_h ));
+			trees_[bot_left] = master->push_back_component<QuadTree>(level_ + 1, objects_.max_size, Rect( x, y + sub_h, sub_w, sub_h ));
 		}
 
-		void retrieve(Rect rect, std::vector<T*>& retrieved_qt_keys)
+		void retrieve(Rect rect, std::vector<Rect*>& retrieved_qt_keys)
 		{
 			if (trees_[top_left])
 				for (auto in = index(rect);;)
 				{
-					auto in_tree = qt->trees[in % MAX_INDEX];
+					auto in_tree = trees_[in % MAX_INDEX];
 					retrieve(rect, retrieved_qt_keys);
 					in >>= 2;
 					if (!in) return;
 				}
 
-			for (auto i = 0; i < tree_keys_.size; i++)
-				retrieved_qt_keys.push_back(tree_keys_[i]->output_);
-		}
-
-		void insert(IQuadTreeKey* key, Entity* master)
-		{
-			if (tree_keys_.is_full()) {
-				split(Entity * master);
-				for (auto i = 0u; i < tree_keys_.size; i++)
-				{
-					auto key_i = tree_keys_[i];
-
-					for (auto in = index(key_i->transform_);;)
-					{
-						auto in_tree = trees_[in % MAX_INDEX];
-						in_tree->insert(key_i, master);
-						in >>= 2;
-						if (!in) break;
-					}
-				}
-				tree_keys_.clear();
-			}
-
-			if (trees_[top_left])
-				for (auto in = index(key);;) {
-					auto in_tree = trees_[in % MAX_INDEX];
-					in_tree->insert(key, master);
-					in >>= 2;
-					if (!in) return;
-				}
-
-			tree_keys_.push_back(key);
+			for (auto i = 0; i < objects_.size; i++)
+				retrieved_qt_keys.push_back(objects_[i]);
 		}
 
 		QuadTree(GLuint level, GLuint max_objects, Rect rect)
-			: level(level), tree_keys(max_objects), transform(transform), trees{}
+			: level_(level), objects_(max_objects), rect_(rect), trees_{}
 		{}
 	public:
 		friend class QuadTreeKey;
@@ -172,30 +127,49 @@ namespace Component
 
 			}
 
-			for (auto i = 0; i < tree_keys_.size; i++)
+			for (auto i = 0; i < objects_.size; i++)
 			{
-				auto& transform = tree_keys_[i]->transform_;
+				auto& transform = *objects_[i];
 				os << std::string(level_, '\t') << "(" << transform.x << ", " << transform.y << ", "
 					<< transform.w << ", " << transform.h << ")" << std::endl;
 			}
 		}
 
-		std::vector<T*> retrieve(Rect rect)
+		std::vector<Rect*> retrieve(Rect rect)
 		{
-			std::vector<T*> retrieved;
+			std::vector<Rect*> retrieved;
 			retrieve(rect, retrieved);
 			return retrieved;
 		}
 
-		static void insert(T& output, Component::Transform& transform, Entity* master)
+		void insert(Rect* rect, Entity* master)
 		{
-			auto& c_quadtree = *master->get_component<Component::QuadTree>(0);
-			auto key = master->push_back_component<Component::IQuadTreeKey>(output, transform);
-			c_quadtree.insert(key, master);
+			if (objects_.is_full()) {
+				split(master);
+				for (auto i = 0u; i < objects_.size; i++)
+				{
+					auto key_i = objects_[i];
+
+					for (auto in = index(*key_i);;)
+					{
+						auto in_tree = trees_[in % MAX_INDEX];
+						in_tree->insert(key_i, master);
+						in >>= 2;
+						if (!in) break;
+					}
+				}
+				objects_.clear();
+			}
+
+			if (trees_[top_left])
+				for (auto in = index(*rect);;) {
+					auto in_tree = trees_[in % MAX_INDEX];
+					in_tree->insert(rect, master);
+					in >>= 2;
+					if (!in) return;
+				}
+
+			objects_.push_back(rect);
 		}
 	};
-#define GJKQuadTree QuadTree<Component::Collider::IGJK>
-#define AABBQuadTree QuadTree<Component::Collider::AABB>
-#define SystemQuadTree QuadTree<Component::ISystem>
-#define TriggerQuadTree QuadTree<Component::ITrigger>
 }

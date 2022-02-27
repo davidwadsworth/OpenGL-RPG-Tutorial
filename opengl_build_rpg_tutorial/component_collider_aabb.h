@@ -12,24 +12,13 @@ collider information for checking aabb to abbb collisions
 namespace Component {
 	namespace Collider
 	{
-		class AABB : public Rect, public ICollider
+		class AABB : public ICollider
 		{
 		public:
-			AABB(Component::Transform& transform, GLfloat x, GLfloat y, GLfloat w, GLfloat h)
-				: ICollider(transform), Rect{ x, y, w, h }
-			{}
-
-			AABB(Component::Transform& transform, GLfloat x, GLfloat y, GLfloat s)
-				: ICollider(transform), Rect{ x, y, s, s }
-			{}
-
-			AABB(Component::Transform& transform, GLfloat s)
-				: ICollider(transform), Rect{ 0.0f, 0.0f, s, s }
-			{}
 
 			virtual bool collide(Component::Collider::AABB& col)
 			{
-				auto pos_a = glm::vec2{ this->transform.x, this->transform.y };
+				auto pos_a = glm::vec2{ x, this->transform.y };
 				auto pos_b = glm::vec2{ col.transform.x, col.transform.y };
 
 				Rect rect_a{ this->x + pos_a.x, this->y + pos_a.y, this->w, this->h};

@@ -1,7 +1,5 @@
 #pragma once
-#include <glm/vec2.hpp>
-#include "component_transform.h"
-#include <array>
+#include "component_rect.h"
 
 /*
 abstract class used to define collision objects in the game world.
@@ -10,15 +8,9 @@ abstract class used to define collision objects in the game world.
 */
 namespace Component
 {
-	class ICollider : public IComponent
+	class ICollider : public Component::Rectangle
 	{
 	public:
-		Component::Transform& transform;
-		
-		ICollider(Component::Transform& transform)
-			: transform(transform)
-		{}
-
 		virtual glm::vec2 get_center() = 0;
 	};
 }

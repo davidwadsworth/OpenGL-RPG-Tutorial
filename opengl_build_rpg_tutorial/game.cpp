@@ -24,4 +24,5 @@ void Game::init(Entity* game)
 	auto keyboard = new Entity();
 	keyboard->add_component<Component::KeyboardArray>();
 	Game::global->add_id_child(keyboard, "keyboard");
+
 }

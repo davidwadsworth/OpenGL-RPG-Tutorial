@@ -27,26 +27,8 @@
     <Filter Include="EC\Component\Trigger\Input">
       <UniqueIdentifier>{2f1fc7ba-149b-4e8e-b2a0-62fcb82612ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\Collider">
-      <UniqueIdentifier>{c8de2752-f01a-4bee-93e1-9fa4605fa087}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Collider\GJK">
-      <UniqueIdentifier>{ceb870b7-eb79-4762-bf65-565aaddecf9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Collider\GJK\Physics">
-      <UniqueIdentifier>{0b9a7f45-e072-4ce2-9b83-2eebb17f9bf6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Collider\AABB">
-      <UniqueIdentifier>{b9cc9142-85e5-4af2-b19d-75286f18fdfa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Collider\AABB\Physics">
-      <UniqueIdentifier>{b5f88663-a61f-40c9-8756-d5c2471d3c98}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EC\Component\Material">
       <UniqueIdentifier>{a9f8956d-e85e-4ace-b9b8-c7b16ecb628e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Src">
-      <UniqueIdentifier>{4d43af6b-ac9e-454b-a9de-4338d83fc6f6}</UniqueIdentifier>
     </Filter>
     <Filter Include="EC\Component\Trigger\Input\GameState">
       <UniqueIdentifier>{9fb5bef0-c526-4b9e-9db6-515c6f2c5c21}</UniqueIdentifier>
@@ -67,8 +49,23 @@
     <Filter Include="EC\Component\Trigger\Load">
       <UniqueIdentifier>{9684672b-b923-4386-9fb8-29bb434880a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\QuadTreeKey">
-      <UniqueIdentifier>{1d86e750-5e80-4608-ae27-e4f982f47a91}</UniqueIdentifier>
+    <Filter Include="EC\Component\Rect">
+      <UniqueIdentifier>{193490e3-fec0-460e-a442-49d683f0f7ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\Rect\Collider">
+      <UniqueIdentifier>{c8de2752-f01a-4bee-93e1-9fa4605fa087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\Rect\Collider\GJK">
+      <UniqueIdentifier>{ceb870b7-eb79-4762-bf65-565aaddecf9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\Rect\Collider\GJK\Physics">
+      <UniqueIdentifier>{0b9a7f45-e072-4ce2-9b83-2eebb17f9bf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\Rect\Collider\AABB">
+      <UniqueIdentifier>{b9cc9142-85e5-4af2-b19d-75286f18fdfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EC\Component\Rect\Collider\AABB\Physics">
+      <UniqueIdentifier>{b5f88663-a61f-40c9-8756-d5c2471d3c98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +91,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="component_collider_gjk.cpp">
-      <Filter>EC\Component\Collider\GJK</Filter>
+      <Filter>EC\Component\Rect\Collider\GJK</Filter>
     </ClCompile>
     <ClCompile Include="component_material.cpp">
       <Filter>EC\Component\Material</Filter>
@@ -102,8 +99,8 @@
     <ClCompile Include="component_material_color.cpp">
       <Filter>EC\Component\Material</Filter>
     </ClCompile>
-    <ClCompile Include="component_src_bitmap_glyph.cpp">
-      <Filter>EC\Component\Src</Filter>
+    <ClCompile Include="component_rect_bitmap_glyph.cpp">
+      <Filter>EC\Component\Rect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,9 +119,6 @@
     <ClInclude Include="component_system.h">
       <Filter>EC\Component\System</Filter>
     </ClInclude>
-    <ClInclude Include="component_transform.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="component_renderer.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
@@ -135,9 +129,6 @@
       <Filter>EC\Component</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="component_system_render_camera_draw.h">
@@ -192,16 +183,16 @@
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_collider.h">
-      <Filter>EC\Component\Collider</Filter>
+      <Filter>EC\Component\Rect\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_collisionworld.h">
+    <ClInclude Include="component_trigger_input_qt.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_physics_aabb_smooth.h">
-      <Filter>EC\Component\Collider\AABB\Physics</Filter>
+      <Filter>EC\Component\Rect\Collider\AABB\Physics</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_physics_aabb_sticky.h">
-      <Filter>EC\Component\Collider\AABB\Physics</Filter>
+      <Filter>EC\Component\Rect\Collider\AABB\Physics</Filter>
     </ClInclude>
     <ClInclude Include="logger.h">
       <Filter>Header Files</Filter>
@@ -210,28 +201,28 @@
       <Filter>EC\Component</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_gjk_boundary.h">
-      <Filter>EC\Component\Collider\GJK</Filter>
+      <Filter>EC\Component\Rect\Collider\GJK</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_gjk_circle.h">
-      <Filter>EC\Component\Collider\GJK</Filter>
+      <Filter>EC\Component\Rect\Collider\GJK</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_gjk_polygon.h">
-      <Filter>EC\Component\Collider\GJK</Filter>
+      <Filter>EC\Component\Rect\Collider\GJK</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_gjk.h">
-      <Filter>EC\Component\Collider\GJK</Filter>
+      <Filter>EC\Component\Rect\Collider\GJK</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_aabb.h">
-      <Filter>EC\Component\Collider\AABB</Filter>
+      <Filter>EC\Component\Rect\Collider\AABB</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h">
-      <Filter>EC\Component\Collider\GJK\Physics</Filter>
+      <Filter>EC\Component\Rect\Collider\GJK\Physics</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_gjk_physics_circle_smooth.h">
-      <Filter>EC\Component\Collider\GJK\Physics</Filter>
+      <Filter>EC\Component\Rect\Collider\GJK\Physics</Filter>
     </ClInclude>
     <ClInclude Include="component_collider_gjk_physics_polygon_smooth.h">
-      <Filter>EC\Component\Collider\GJK\Physics</Filter>
+      <Filter>EC\Component\Rect\Collider\GJK\Physics</Filter>
     </ClInclude>
     <ClInclude Include="component_system_update_check_collision.h">
       <Filter>EC\Component\System\Update</Filter>
@@ -244,12 +235,6 @@
     </ClInclude>
     <ClInclude Include="component_material_color.h">
       <Filter>EC\Component\Material</Filter>
-    </ClInclude>
-    <ClInclude Include="component_src_bitmap_glyph.h">
-      <Filter>EC\Component\Src</Filter>
-    </ClInclude>
-    <ClInclude Include="component_src.h">
-      <Filter>EC\Component\Src</Filter>
     </ClInclude>
     <ClInclude Include="component_system_render_draw.h">
       <Filter>EC\Component\System\Render</Filter>
@@ -299,7 +284,7 @@
     <ClInclude Include="component_tree.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_swapengine.h">
+    <ClInclude Include="component_trigger_swapvector.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_gameobj_empty.h">
@@ -313,9 +298,6 @@
     </ClInclude>
     <ClInclude Include="component_trigger_load_box.h">
       <Filter>EC\Component\Trigger\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="physics.h">
-      <Filter>EC\Component\Collider\GJK\Physics</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_index.h">
       <Filter>EC\Component\Trigger\Input</Filter>
@@ -344,14 +326,20 @@
     <ClInclude Include="component_system_update_camera.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_qt.h">
+    <ClInclude Include="component_quadtree.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_qtkey.h">
-      <Filter>EC\Component\QuadTreeKey</Filter>
+    <ClInclude Include="component_rect.h">
+      <Filter>EC\Component\Rect</Filter>
     </ClInclude>
-    <ClInclude Include="component_qtkey_location.h">
-      <Filter>EC\Component\QuadTreeKey</Filter>
+    <ClInclude Include="component_rect_bitmap_glyph.h">
+      <Filter>EC\Component\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physics.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

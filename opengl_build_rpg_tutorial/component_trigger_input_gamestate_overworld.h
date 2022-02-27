@@ -6,7 +6,7 @@
 #include "component_trigger_input_texture.h"
 #include "component_trigger_input_gameobj_tilemap.h"
 #include "component_trigger_input_gameobj_player.h"
-#include "component_trigger_input_collisionworld.h"
+#include "component_trigger_input_qt.h"
 #include "component_trigger_input_gameobj_collidermap.h"
 #include "component_trigger_input_font.h"
 #include "component_trigger_input_gameobj_text.h"
@@ -27,8 +27,8 @@ namespace Component {
 			{
 				class Overworld : public Component::Trigger::Input::IGameState
 				{
-					Component::Engine* c_update_engine_ = nullptr;
-					Component::Engine* c_render_engine_ = nullptr;
+					std::vector<Component::ISystem*> update_;
+					std::vector<Component::ISystem*> render_;
 					Component::TriggerVector* c_triggers_ = nullptr;
 					Component::Renderer* c_renderer_ = nullptr;
 
@@ -49,32 +49,30 @@ namespace Component {
 
 					void destroy() override final
 					{
+						c_renderer_->release();
 						// destroy all active game objs
 						entity_->clear_children();
-
-						// remove engine and renderer baggage
-						c_render_engine_->clear();
-						c_update_engine_->clear();
-						c_triggers_->clear();
-						c_renderer_->release();
+						update_.clear();
+						render_.clear();
 					}
 
 					void run() override final
 					{
 						// make updates to live entities
-						c_update_engine_->run();
+						for (auto u : update_)
+							u->execute();
 
 						c_renderer_->begin();
 
 						// make draw calls to renderer
-						c_render_engine_->run();
+						for (auto r : render_)
+							r->execute();
 
 						c_renderer_->end();
 
 						for (auto t : *c_triggers_)
 							t->execute(entity_);
 						c_triggers_->clear();
-
 					}
 
 				private:
@@ -84,21 +82,24 @@ namespace Component {
 						auto game_engine = new Entity();
 						entity_->add_id_child(game_engine, "engine");
 
-						auto c_render_systems_ = game_engine->add_id_component<Component::Engine>("render");
-						auto c_update_systems_ = game_engine->add_id_component<Component::Engine>("update");
-						auto c_triggers_ = game_engine->add_id_component<Component::TriggerVector>("trigger");
-						auto c_renderer_ = game_engine->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
+						auto& c_render_engine = *game_engine->add_id_component<Component::Engine>("render");
+						auto& c_update_engine = *game_engine->add_id_component<Component::Engine>("update");
+						c_triggers_ = game_engine->add_id_component<Component::TriggerVector>("trigger");
+						c_renderer_ = game_engine->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
 
 						entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera");
 						entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller");
 						entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager");
 						entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager");
 						entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans");
-						entity_->add_id_ct_input<Component::Trigger::Input::CollisionWorld>("collision_world");
+						entity_->add_id_ct_input<Component::Trigger::Input::GJKQuadTree>("collision_world");
 						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap");
 						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player");
 						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collider_map");
 						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TextBox>("textbox");
+
+						update_ = c_update_engine.flatten();
+						render_ = c_render_engine.flatten();
 					}
 				};
 			}
