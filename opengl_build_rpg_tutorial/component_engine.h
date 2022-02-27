@@ -5,13 +5,12 @@
 #include "frarr.h"
 #include "logger.h"
 #include "sort.h"
-#include "component_system_item.h"
 
 namespace Component
 {
 	class Engine
 	{
-		struct Group : public std::vector<Component::System::IItem*>
+		struct Group : public std::vector<Component::ISystem*>
 		{
 			Group(float gid)
 				: gid(gid)
@@ -113,7 +112,7 @@ namespace Component
 
 			for (auto& g : groups_)
 				for (auto& i : g)
-					flattened_engine.insert(flattened_engine.end(), i->systems_.begin(), i->systems_.end());
+					flattened_engine.insert(flattened_engine.end(), .begin(), i->systems_.end());
 
 			return flattened_engine;
 		}
