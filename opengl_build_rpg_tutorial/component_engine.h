@@ -62,7 +62,7 @@ namespace Component
 			clear();
 		}
 
-		void add(Component::System::IItem* item, float gid)
+		void add(Component::ISystem* item, float gid)
 		{	
 			int gsr = search(gid);
 
@@ -93,26 +93,12 @@ namespace Component
 			}
 		}
 
-		void swap(Engine& engine)
-		{
-			std::vector<Group> temp_groups;
-
-			temp_groups.insert(temp_groups.begin(), groups_.begin(), groups_.end());
-			
-			groups_.clear();
-			groups_.insert(groups_.begin(), engine.groups_.begin(), engine.groups_.end());
-
-			engine.groups_.clear();
-			engine.groups_.insert(engine.groups_.begin(), temp_groups.begin(), temp_groups.end());
-		}
-
 		std::vector<Component::ISystem*> flatten()
 		{
 			std::vector<Component::ISystem*> flattened_engine;
 
 			for (auto& g : groups_)
-				for (auto& i : g)
-					flattened_engine.insert(flattened_engine.end(), .begin(), i->systems_.end());
+				flattened_engine.insert(flattened_engine.end(), g.begin(), g.end());
 
 			return flattened_engine;
 		}

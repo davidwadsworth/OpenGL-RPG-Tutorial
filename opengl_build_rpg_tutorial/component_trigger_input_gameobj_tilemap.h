@@ -10,7 +10,7 @@
 #include <sstream>
 #include "delimiter_split.h"
 #include "component_trigger_input_tileset.h"
-#include "component_system_item_tilemap.h"
+#include "component_system_render_tilemap.h"
 
 /*
 Creates the tile map for our player to move around in the overworld using json tiled files
@@ -61,13 +61,15 @@ namespace Component {
 						auto& c_tset_material = *static_cast<Component::Material*>(tile_srcs[0]);
 
 						// get used game objects
-						auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
+						auto& c_cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 						auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
 						auto e_tiles = new Entity();
 
 						auto& c_render_vector = *entity_->add_component<Component::SystemVector>();
 
+						std::vector<Component::Transform*> trans_vec;
+						std::vector<Component::Src*> src_vec;
 						// set up tiles
 						for (auto i = 0; i < tiles.size(); ++i)
 						{
@@ -77,17 +79,16 @@ namespace Component {
 								(i / tilemap_w) * tile_size ,  // finds place in row and multiples by sprite height
 								tile_size, tile_size
 							};
-							auto& c_tile_transform = *e_tiles->push_back_component<Component::Transform>(tile_dest, tile_scale);
+							trans_vec.push_back(e_tiles->push_back_component<Component::Transform>(tile_dest, tile_scale));
+							
 							// get the approriate src tile from the list of tile_srcs subtracted by one
-							auto& c_tile_src = *static_cast<Component::Src*>(tile_srcs[tiles[i]]);
-							auto csr_tile_camera_draw = e_tiles->push_back_component<Component::System::Render::CameraDraw>
-								(c_renderer, c_tile_src, c_tile_transform, c_tset_material, c_cam_transform);
-							c_render_vector.push_back(csr_tile_camera_draw);
+							src_vec.push_back(static_cast<Component::Src*>(tile_srcs[tiles[i]]));
 						}
 
-						auto csi_tmap_render = e_game_info_->add_id_component<Component::System::Item::TileMap>("render_item", tilemap_w, tilemap_h, tile_size * tile_scale, c_render_vector);
+						auto csr_tmap_render = e_game_info_->add_id_component<Component::System::Render::TileMap>("render", c_cam_position, 
+							tilemap_w, tilemap_h, tile_size * tile_scale, src_vec, trans_vec, c_tset_material, c_renderer);
 
-						gamestate->get_component<Component::Engine>("render")->add(csi_tmap_render, render_group);
+						gamestate->get_component<Component::Engine>("render")->add(csr_tmap_render, render_group);
 					}
 				};
 			}

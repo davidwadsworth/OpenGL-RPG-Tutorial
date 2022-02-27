@@ -3,6 +3,8 @@
 #include "component_json.h"
 #include "delimiter_split.h"
 #include "component_material.h"
+#include "component_texunit.h"
+#include "component_rect.h"
 
 namespace Component {
 	namespace Trigger {
@@ -16,9 +18,26 @@ namespace Component {
 
 					nlohmann::json frames = spritesheet_json["frames"];
 
-
 					for (auto& frame : frames)
 					{
+						std::string filename = frame["filename"];
+						auto folder_split = delimiter_split(delimiter_split(filename.c_str(), '.')[0].c_str(), '/');
+						auto e_destination = entity_;
+						if (folder_split.size() > 1)
+						{
+							for (auto i = 0; i < folder_split.size() - 1; ++i)
+							{
+								if (e_destination->has_child(folder_split[i]))
+									e_destination = e_destination->get_child(folder_split[i]);
+								else
+									e_destination = e_destination->add_id_child(folder_split[i]);
+							}
+						}
+						float src_x = frame["frame"]["x"];
+						float src_y = frame["frame"]["y"];
+						float src_w = frame["frame"]["w"];
+						float src_h = frame["frame"]["h"];
+						e_destination->add_id_component<Component::Src>(folder_split.back(), Rect(src_x, src_y, src_w, src_h));
 
 					}
 
@@ -28,7 +47,9 @@ namespace Component {
 					auto& c_ss_texture = *gamestate->get_child("texture")->get_component<Component::Texture>(image_name);
 					auto& c_sprite_shader = *gamestate->get_child("shader")->get_component<Component::Shader>("sprite");
 
-					entity_->add_component<Component::Material>(c_ss_texture, c_sprite_shader, 2);
+					auto& c_texunit = *Game::global->get_component<Component::TexUnit>("texunit");
+
+					entity_->add_id_component<Component::Material>("material", c_ss_texture, c_sprite_shader, c_texunit.get_open_tex_unit());
 				}
 			public:
 

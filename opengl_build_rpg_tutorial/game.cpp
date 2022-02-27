@@ -3,6 +3,7 @@
 #include "component.h"
 #include "component_trigger_input_gamestate_overworld.h"
 #include "component_array.h"
+#include "component_texunit.h"
 
 // game global variables
 GLuint Game::width = 800u;
@@ -21,8 +22,7 @@ void Game::init(Entity* game)
 	auto& ctigs_overworld = *game->add_component<Component::Trigger::Input::GameState::Overworld>("overworld");
 	ctigs_overworld.execute(game);
 
-	auto keyboard = new Entity();
-	keyboard->add_component<Component::KeyboardArray>();
-	Game::global->add_id_child(keyboard, "keyboard");
+	Game::global->add_component<Component::KeyboardArray>("keyboard");
+	Game::global->add_component<Component::TexUnit>("texunit");
 
 }

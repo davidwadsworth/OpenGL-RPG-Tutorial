@@ -161,6 +161,7 @@
     <ClInclude Include="component_rect.h" />
     <ClInclude Include="component_system_render_offset.h" />
     <ClInclude Include="component_system_update_camera.h" />
+    <ClInclude Include="component_texunit.h" />
     <ClInclude Include="component_trigger_input_index.h" />
     <ClInclude Include="component_trigger_input_spritesheet.h" />
     <ClInclude Include="component_trigger_load.h" />

@@ -1,8 +1,7 @@
 #pragma once
 #include "component_system.h"
 #include <vector>
-#include "component_src.h"
-#include "component_transform.h"
+#include "component_rect.h"
 #include "component_renderer.h"
 
 namespace Component {

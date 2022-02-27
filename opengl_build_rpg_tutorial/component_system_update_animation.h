@@ -1,6 +1,6 @@
 #pragma once
 #include "component_system.h"
-#include "component_src.h"
+#include "component_rect.h"
 #include <vector>
 #include <unordered_map>
 #include <iostream>
