@@ -269,9 +269,6 @@
     <ClInclude Include="component_trigger_input_gamestate.h">
       <Filter>EC\Component\Trigger\Input\GameState</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -283,9 +280,6 @@
     </ClInclude>
     <ClInclude Include="component_tree.h">
       <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_swapvectors.h">
-      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_gameobj_empty.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
@@ -343,6 +337,9 @@
     </ClInclude>
     <ClInclude Include="component_texunit.h">
       <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_swapvectors.h">
+      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

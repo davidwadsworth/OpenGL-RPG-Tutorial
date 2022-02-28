@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input_gameobj.h"
+#include "component_trigger_input.h"
 #include "component_system_render_camera_draw.h"
 #include "component_collider_gjk_physics_circle_smooth.h"
 #include "component_collider_gjk_physics_boundary_smooth.h"
@@ -17,10 +17,10 @@ namespace Component {
 		namespace Input {
 			namespace GameObj
 			{
-				class ColliderMap : public Component::Trigger::Input::IGameObj
+				class ColliderMap : public Component::Trigger::IInput
 				{
 				private:
-					void init(Entity* gamestate) override final
+					void create(Entity* gamestate) override final
 					{
 						/*
 							71 = circle
@@ -81,8 +81,7 @@ namespace Component {
 						temp_systems.push_back(csr_boundary_cam_draw);
 						temp_systems.push_back(csr_polygon_cam_draw);
 
-						// add render systems to game obj info 
-						auto csi_render_item = e_game_info_->add_id_component<Component::System::IItem>("render", temp_systems);
+						auto csi_render_item = entity_->add_id_component<Component::System::IItem>("render", temp_systems);
 						gamestate->get_component<Component::Engine>("render")->add(csi_render_item, 3.0f);
 					}
 				};

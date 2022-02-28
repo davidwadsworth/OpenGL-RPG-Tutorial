@@ -19,16 +19,14 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-
-					auto flesh_tex_name = "resources/images/flesh_full.png";
-
-					auto& c_flesh_tex = *entity_->add_id_component<Component::Texture>("flesh_full");
-					c_flesh_tex.load(flesh_tex_name);
-
-					auto textbox_file_name = "resources/images/textbox.png";
-
-					auto& c_textbox_tex = *entity_->add_id_component<Component::Texture>("textbox");
-					c_textbox_tex.load(textbox_file_name);
+					auto& texture_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+					
+					for (std::string tex_file : texture_json)
+					{
+						auto tex_name = delimiter_split(delimiter_split(tex_file.c_str(), '/').back().c_str(), '.')[0];
+						auto& c_texture = *entity_->add_id_component<Component::Texture>(tex_name);
+						c_texture.load(tex_file.c_str());
+					}
 				}
 			};
 		}

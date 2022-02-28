@@ -5,10 +5,12 @@
 #include <glm/vec2.hpp>
 #include "component_material.h"
 #include "component_system_render_draw.h"
-#include "component_trigger_input_gameobj.h"
+#include "component_trigger_input.h"
 #include "component_system_item.h"
 #include "component_engine.h"
 #include "component_system_render_offset.h"
+#include "delimiter_split.h"
+#include "component_json.h"
 
 /*
 Creates our local camera using width and height
@@ -21,10 +23,10 @@ namespace Component {
 		namespace Input {
 			namespace GameObj
 			{
-				class Box : public Component::Trigger::Input::IGameObj
+				class Box : public Component::Trigger::IInput
 				{
 				private:
-					void init(Entity* gamestate) override final
+					void create(Entity* gamestate) override final
 					{
 						auto box_info = delimiter_split(name_.c_str(), '_');
 
@@ -53,7 +55,7 @@ namespace Component {
 
 						auto scaled_corner_size = corner_size * box_scale;
 
-						auto& c_renderer = *gamestate->get_child("engine")->get_component<Component::Renderer>("renderer");
+						auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
 						std::vector<Component::Transform*> transform_vec;
 						// box corners transforms
@@ -102,9 +104,9 @@ namespace Component {
 						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(8));
 						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(9));
 
-						auto cs_item = e_game_info_->add_id_component<Component::System::Render::Offset>("render", c_box_position, src_vec, transform_vec, c_ss_material, c_renderer);
+						auto cs_item = entity_->add_id_component<Component::System::Render::Offset>("render", c_box_position, src_vec, transform_vec, c_ss_material, c_renderer);
 
-						auto& render_engine = *gamestate->get_child("engine")->get_component<Component::Engine>("render");
+						auto& render_engine = *gamestate->get_component<Component::Engine>("render");
 						render_engine.add(cs_item, render_group);
 					}
 

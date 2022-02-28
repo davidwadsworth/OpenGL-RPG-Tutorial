@@ -58,15 +58,14 @@ namespace Component {
 					float tileset_w = tileset_json["imagewidth"];
 					float tileset_h = tileset_json["imageheight"];
 
-					if (!gamestate->get_child("texture manager")->has_component<Component::Texture>(image_name))
-						gamestate->get_child("texture manager")->add_id_component<Component::Texture>(image_name)->load(image_src.c_str());
-					
-					auto& c_tileset_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>(image_name);
-					auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
+					auto& c_tileset_tex = *gamestate->get_child("texture")->get_component<Component::Texture>(image_name);
+					auto& c_sprite_shader = *gamestate->get_child("shader")->get_component<Component::Shader>("sprite");
 
+					auto& c_texunit = *gamestate->get_component<Component::TexUnit>("texunit");
 
 					// set up tile map material
-					auto& c_tset_material = *entity_->push_back_component<Component::Material>(c_tileset_tex, c_sprite_shader, 1);
+					auto& c_tset_material = *entity_->push_back_component<Component::Material>
+						(c_tileset_tex, c_sprite_shader, c_texunit.get_open_tex_unit());
 
 					// set up tile srcs starting at the margin and incrementing with tile size and spacing
 					for (auto y = margin; y < tileset_h; y += tile_size + spacing)

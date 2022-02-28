@@ -183,7 +183,6 @@
     <ClInclude Include="component_template.h" />
     <ClInclude Include="component_tree.h" />
     <ClInclude Include="component_trigger_load_textarea.h" />
-    <ClInclude Include="component_trigger_input_gameobj.h" />
     <ClInclude Include="component_trigger_input_gameobj_box.h" />
     <ClInclude Include="component_trigger_input_gameobj_empty.h" />
     <ClInclude Include="component_trigger_input_gameobj_textarea.h" />

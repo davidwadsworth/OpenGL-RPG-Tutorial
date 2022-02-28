@@ -32,7 +32,11 @@ namespace Component {
 					Component::TriggerVector* c_triggers_ = nullptr;
 					Component::Renderer* c_renderer_ = nullptr;
 					std::vector<Component::Trigger::IInput*> objects_;
-					void _init() override final
+					
+				public:
+					using Component::Trigger::Input::IGameState::IGameState;
+
+					void init() override final
 					{
 						// init game objs
 						for (auto obj : objects_)
@@ -40,9 +44,6 @@ namespace Component {
 
 						c_renderer_->init();
 					}
-
-				public:
-					using Component::Trigger::Input::IGameState::IGameState;
 
 					void destroy() override final
 					{

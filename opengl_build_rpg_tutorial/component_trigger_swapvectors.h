@@ -1,5 +1,6 @@
 #pragma once
 #include "component_trigger.h"
+#include <vector>
 
 namespace Component {
 	namespace Trigger

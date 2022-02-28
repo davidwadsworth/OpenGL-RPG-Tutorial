@@ -47,7 +47,7 @@ namespace Component {
 					auto& c_ss_texture = *gamestate->get_child("texture")->get_component<Component::Texture>(image_name);
 					auto& c_sprite_shader = *gamestate->get_child("shader")->get_component<Component::Shader>("sprite");
 
-					auto& c_texunit = *Game::global->get_component<Component::TexUnit>("texunit");
+					auto& c_texunit = *gamestate->get_component<Component::TexUnit>("texunit");
 
 					entity_->add_id_component<Component::Material>("material", c_ss_texture, c_sprite_shader, c_texunit.get_open_tex_unit());
 				}

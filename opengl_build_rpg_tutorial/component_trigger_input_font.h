@@ -58,13 +58,11 @@ namespace Component {
 					auto texture_manager = gamestate->get_child("texture manager");
 					auto texture_id = delimiter_split(delimiter_split(image_src.c_str(), '/').back().c_str(), '.')[0];
 
-					if (!gamestate->get_child("texture manager")->has_component<Component::Texture>(texture_id))
-						gamestate->get_child("texture manager")->add_id_component<Component::Texture>(texture_id)->load(image_src.c_str());
+					auto& c_font_texture = *gamestate->get_child("texture")->get_component<Component::Texture>(texture_id);
+					auto& c_font_shader = *gamestate->get_child("shader")->get_component<Component::Shader>("font");
+					auto& c_texunit = *gamestate->get_component<Component::TexUnit>("texunit");
 
-					auto& c_font_texture = *gamestate->get_child("texture manager")->get_component<Component::Texture>(texture_id);
-					auto& c_font_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("font");
-
-					auto& c_font_material = *entity_->add_component<Component::Color>( c_font_texture, c_font_shader, 3, glm::vec3(0.0f, 0.0f, 0.0f));
+					auto& c_font_material = *entity_->add_component<Component::Color>( c_font_texture, c_font_shader, c_texunit.get_open_tex_unit(), glm::vec3(0.0f, 0.0f, 0.0f));
 
 					auto e_glyphs = new Entity();
 					entity_->add_id_child(e_glyphs, "glyphs");

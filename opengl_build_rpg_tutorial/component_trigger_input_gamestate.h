@@ -7,17 +7,12 @@ namespace Component {
 		namespace Input {
 			class IGameState : public Component::Trigger::IInput
 			{
-				virtual void _init() = 0;
 			public:
 				using Component::Trigger::IInput::IInput;
 
-				void init() {
-					Game::global->get_component<Component::TexUnit>("texunit")->reset();
-					_init();
-				};
+				virtual void init() = 0;
 				virtual void destroy() = 0;
 				virtual void run() = 0;
-
 			};
 		}
 	}
