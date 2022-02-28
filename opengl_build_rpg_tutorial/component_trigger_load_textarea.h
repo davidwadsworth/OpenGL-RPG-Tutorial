@@ -1,10 +1,10 @@
 #pragma once
 #include "component_trigger.h"
-#include "component_transform.h"
+#include "component_rect.h"
 #include "component_template.h"
 #include <glm/glm.hpp>
-#include "component_src_bitmap_glyph.h"
-#include "component_system_item_empty.h"
+#include "component_rect_bitmap_glyph.h"
+#include "component_system_render_empty.h"
 #include "component_trigger_load.h"
 
 namespace Component {
@@ -113,7 +113,6 @@ namespace Component {
 							c_cur_char_transform->y = current_pos.y + c_bitmap_char.y_off;
 							c_cur_char_transform->w = c_bitmap_char.w;
 							c_cur_char_transform->h = c_bitmap_char.h;
-							c_cur_char_transform->sc = font_sc;
 
 							current_pos.x += c_bitmap_char.advance + c_bitmap_char.check_kerning(prev_char);
 

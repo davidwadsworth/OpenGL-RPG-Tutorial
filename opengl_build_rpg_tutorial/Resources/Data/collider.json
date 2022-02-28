@@ -1,5 +1,6 @@
 {
 	"tileset" : "tileset",
+	"debug" : "true",
 
 	"circle" : [
 		{"tileid" : 71, "radius" : "32.0", "center" : ["32.0", "32.0"]},
@@ -14,6 +15,6 @@
 	],
 
 	"aabb" : [
-		{"offset" : ["0.0", "0.0"], "width" : "64.0", "height" : "64.0"} 
+		{"tileid" : 47 ,"width" : "32.0", "height" : "32.0"} 
 	],
 }

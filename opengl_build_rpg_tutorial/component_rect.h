@@ -19,13 +19,7 @@ namespace Component
 			: Rectangle(Rect{ x, y, length, length })
 		{}
 
-		void set(float x, float y, float w, float h)
-		{
-			this->x = x;
-			this->y = y;
-			this->w = w;
-			this->h = h;
-		}
+		
 	};
 #define Transform Rectangle
 #define Src Rectangle

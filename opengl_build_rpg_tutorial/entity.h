@@ -17,7 +17,7 @@ inline component_id get_new_component_id()
 	return ++last_id;
 }
 
-// depending on how many components there are creates a seperate get_component_type_if for each, thus giving the illusion of unique id
+// depending on how many components there are creates a seperate get_component_type_if for each, thus giving the illusion of unique id.
 template <typename T> inline component_id get_component_id() noexcept
 {
 	// assert that it inherits Comp

@@ -7,15 +7,16 @@ namespace Component {
 	{
 		class SwapVectors : public Component::ITrigger
 		{
-			std::vector& v1_, & v2_;
+			std::vector<ISystem*>& v1_;
 		public:
-			SwapVectors(std::vector& v1, std::vector& v2)
-				: v1_(v1), v2_(v2)
+			SwapVectors(std::vector<ISystem*>& v1)
+				: v1_(v1)
 			{}
 
 			void execute(Entity* gamestate) override
 			{
-				v1_.swap(v2_);
+				auto& c_update = *gamestate->get_component<Component::SystemVector>("update_vec");
+				c_update.swap(v1_);
 			}
 		};
 	}

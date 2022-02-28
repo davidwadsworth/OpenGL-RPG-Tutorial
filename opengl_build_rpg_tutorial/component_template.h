@@ -1,6 +1,12 @@
 #pragma once
 #include "component.h"
 
+/*
+Storage component for generics (int, float, etc..)
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 

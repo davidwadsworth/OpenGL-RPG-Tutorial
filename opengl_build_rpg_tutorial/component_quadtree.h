@@ -89,6 +89,36 @@ namespace Component
 				retrieved_qt_keys.push_back(objects_[i]);
 		}
 
+		void insert(Rect* rect, Entity* master)
+		{
+			if (objects_.is_full()) {
+				split(master);
+				for (auto i = 0u; i < objects_.size; i++)
+				{
+					auto key_i = objects_[i];
+
+					for (auto in = index(*key_i);;)
+					{
+						auto in_tree = trees_[in % MAX_INDEX];
+						in_tree->insert(key_i, master);
+						in >>= 2;
+						if (!in) break;
+					}
+				}
+				objects_.clear();
+			}
+
+			if (trees_[top_left])
+				for (auto in = index(*rect);;) {
+					auto in_tree = trees_[in % MAX_INDEX];
+					in_tree->insert(rect, master);
+					in >>= 2;
+					if (!in) return;
+				}
+
+			objects_.push_back(rect);
+		}
+
 		QuadTree(GLuint level, GLuint max_objects, Rect rect)
 			: level_(level), objects_(max_objects), rect_(rect), trees_{}
 		{}
@@ -135,41 +165,17 @@ namespace Component
 			}
 		}
 
+		static void add(Rect* rect, Entity* master)
+		{
+			auto& c_quad_tree = *master->get_component<Component::QuadTree>(0);
+			c_quad_tree.insert(rect, master);
+		}
+
 		std::vector<Rect*> retrieve(Rect rect)
 		{
 			std::vector<Rect*> retrieved;
 			retrieve(rect, retrieved);
 			return retrieved;
-		}
-
-		void insert(Rect* rect, Entity* master)
-		{
-			if (objects_.is_full()) {
-				split(master);
-				for (auto i = 0u; i < objects_.size; i++)
-				{
-					auto key_i = objects_[i];
-
-					for (auto in = index(*key_i);;)
-					{
-						auto in_tree = trees_[in % MAX_INDEX];
-						in_tree->insert(key_i, master);
-						in >>= 2;
-						if (!in) break;
-					}
-				}
-				objects_.clear();
-			}
-
-			if (trees_[top_left])
-				for (auto in = index(*rect);;) {
-					auto in_tree = trees_[in % MAX_INDEX];
-					in_tree->insert(rect, master);
-					in >>= 2;
-					if (!in) return;
-				}
-
-			objects_.push_back(rect);
 		}
 	};
 }

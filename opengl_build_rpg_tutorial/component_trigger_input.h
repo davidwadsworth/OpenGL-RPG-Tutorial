@@ -15,12 +15,19 @@ namespace Component {
 		protected:
 			Entity* entity_;
 			std::string name_;
+
+
 		private:
 			virtual void create(Entity* gamestate) = 0;
 		public:
 			IInput(std::string name)
 				: entity_(nullptr), name_(name)
 			{}
+
+			Entity* operator->()
+			{
+				return entity_;
+			}
 
 			void execute(Entity* gamestate) override
 			{

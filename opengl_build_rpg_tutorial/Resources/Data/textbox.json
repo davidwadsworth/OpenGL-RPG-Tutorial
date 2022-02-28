@@ -1,7 +1,7 @@
-[{
+{
 	"max_message" : 16,
 	"max_box" : 2, 
-	"textarea" : "textarea_0",
-	"box" : "box_0",
-},]
+	"textarea" : "textarea",
+	"box" : "box",
+}
 

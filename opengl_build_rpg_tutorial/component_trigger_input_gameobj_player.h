@@ -1,7 +1,4 @@
 #pragma once
-#include "component_trigger_input_gameobj.h"
-#include "component_transform.h"
-#include "component_src.h"
 #include "component_renderer.h"
 #include "component_material.h"
 #include "component_system_render_camera_draw.h"
@@ -27,17 +24,14 @@ namespace Component {
 		namespace Input {
             namespace GameObj
             {
-                class Player : public Component::Trigger::Input::IGameObj
+                class Player : public Component::Trigger::IInput
                 {
-                public:
-                    Player(std::string name)
-                        : Component::Trigger::Input::IGameObj(name)
-                    {}
-
                 private:
-                    void init(Entity* gamestate) override final
+                    void create(Entity* gamestate) override final
                     {
-                        auto& player_json = gamestate->get_child("index")->get_child(name_)->get_component<Component::Json>()->json;
+                        auto player_name = delimiter_split(name_.c_str(), '_')[0]
+
+                        auto& player_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
 
                         float pos_x = player_json["position"][0];
                         float pos_y = player_json["position"][1];
@@ -51,7 +45,6 @@ namespace Component {
                         std::string collider_category = player_json["collider"][1];
                         int collider_category_pos = player_json["collider"][2];
 
-                        bool debug = player_json["debug"] == "true";
 
                         std::vector<nlohmann::json> animation_jsons = player_json["animation"];
 
@@ -62,15 +55,17 @@ namespace Component {
 
                         auto& collider_json = gamestate->get_child("index")->get_child(collider_name)->get_component<Component::Json>()->json;
 
+                        bool debug = collider_json["debug"] == "true";
+
                         auto &shape_json = collider_json[collider_category][collider_category_pos];
 
                         float circle_radius = shape_json["circle"]["radius"];
                         float circle_center_x = shape_json["circle"]["position"][0];
                         float circle_center_y = shape_json["circle"]["position"][1];
 
-                        auto e_spritesheet_category = gamestate->get_child(spritesheet_name)->get_child(spritesheet_category_name);
+                        auto spritesheet_category = gamestate->get_child(spritesheet_name)->get_child(spritesheet_category_name)->get_component_list();
 
-                        auto& c_idle_down_src = *e_spritesheet_category->get_component<Component::Src>(0);
+                        auto& c_idle_down_src = *static_cast<Component::Src*>(spritesheet_category[0]);
 
                         // get renderer
                         auto& c_renderer = *gamestate->get_component<Component::Renderer >("renderer");
@@ -79,27 +74,30 @@ namespace Component {
                         auto& c_cont_keyboard = *gamestate->get_child("controller")->get_component<Component::Controller::Keyboard>();
 
                         // get camera
-                        auto& c_cam_transform = *gamestate->get_child("camera")->get_component<Component::Transform>();
+                        auto& c_cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 
                         // get collision world
-                        auto& c_colw_col_vec = *gamestate->get_child("collision_world")->get_component<Component::GJKVector>();
+                        auto& c_colw_col_vec = *gamestate->get_child("collision_world")->get_component<Component::QuadTree>();
 
-                        auto& c_pla_transform = *entity_->add_component<Component::Transform>(pos_x, pos_y, c_idle_down_src.w);
+                        // get render engine
+                        auto& c_render_engine = *gamestate->get_component<Component::Engine>("render_engine");
+
+                        // get update engine
+                        auto& c_update_engine = *gamestate->get_component<Component::Engine>("update_engine");
+
                         auto& c_pla_src = *entity_->add_component<Component::Src>(c_idle_down_src);
                         auto& c_spritesheet_material = *gamestate->get_child(spritesheet_name)->get_component<Component::Material>();
 
-                        auto& c_pla_col_gjk_circle = *entity_->add_component<Component::Collider::GJK::Circle>(c_pla_transform, circle_radius, glm::vec2(circle_center_x, circle_center_y));
+                        auto& c_pla_col_gjk_circle = *entity_->add_component<Component::Collider::GJK::Circle>(Rect(pos_x, pos_y, c_idle_down_src.w), circle_radius, glm::vec2(circle_center_x, circle_center_y));
 
-                        auto csr_pla_dynamic_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_transform, c_spritesheet_material, c_cam_transform);
-                        auto csu_pla_camera = entity_->add_component<Component::System::Update::Camera>(c_pla_transform, c_cam_transform);
-                        auto csu_pla_move = entity_->add_component<Component::System::Update::Move>(c_pla_transform, c_cont_keyboard, player_speed);
+                        auto csr_pla_dynamic_draw = entity_->add_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_col_gjk_circle, c_spritesheet_material, c_cam_position);
+                        auto csu_pla_camera = entity_->add_component<Component::System::Update::Camera>(c_pla_col_gjk_circle, c_cam_position);
+                        auto csu_pla_move = entity_->add_component<Component::System::Update::Move>(c_pla_col_gjk_circle, c_cont_keyboard, player_speed);
 
                         auto csu_pla_animation = entity_->add_component<Component::System::Update::Animation>(animation_speed, c_pla_src);
                         auto csu_pla_animate_move = entity_->add_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
                         auto csu_check_collision_gjk = entity_->add_component<Component::System::Update::CheckCollisionGJK>(c_pla_col_gjk_circle, c_colw_col_vec);
 
-                        std::vector<Component::ISystem*> temp_render_systems;
-                        std::vector<Component::ISystem*> temp_update_systems;
 
                         auto anim_i = 0u;
                         auto animation = new Entity();
@@ -112,17 +110,17 @@ namespace Component {
                             int frames = anim_json["frames"];
                             Anim anim_srcs;
                             for (auto i = 0; i < frames; ++i)
-                                anim_srcs.push_back(e_spritesheet_category->get_component<Component::Src>(player_srcs_i++));
+                                anim_srcs.push_back(static_cast<Component::Src*>(spritesheet_category[i]));
                             csu_pla_animation->add(anim_name, anim_srcs);
                         }
 
-                        temp_update_systems.push_back(csu_pla_move);
-                        temp_update_systems.push_back(csu_check_collision_gjk);
-                        temp_update_systems.push_back(csu_pla_camera);
-                        temp_update_systems.push_back(csu_pla_animate_move);
-                        temp_update_systems.push_back(csu_pla_animation);
+                        c_update_engine.add(csu_pla_move, update_group);
+                        c_update_engine.add(csu_check_collision_gjk, update_group);
+                        c_update_engine.add(csu_pla_camera, update_group);
+                        c_update_engine.add(csu_pla_animate_move, update_group);
+                        c_update_engine.add(csu_pla_animation, update_group);
 
-                        temp_render_systems.push_back(csr_pla_dynamic_draw);
+                        c_render_engine.add(csr_pla_dynamic_draw, render_group);
 
                         if (debug)
                         {
@@ -134,18 +132,12 @@ namespace Component {
                             auto& c_tset_col_circle_src = *gamestate->get_child(tileset_name)->get_component<Component::Src>(tileid);
 
                             auto collider = new Entity();
-                            auto csr_col_cam_draw = collider->add_component<Component::System::Render::CameraDraw>(c_renderer, c_tset_col_circle_src, c_pla_transform, c_tset_material, c_cam_transform);
+                            auto csr_col_cam_draw = collider->add_component<Component::System::Render::CameraDraw>(c_renderer, c_tset_col_circle_src, c_pla_col_gjk_circle, c_tset_material, c_cam_position);
 
                             entity_->add_id_child(collider, "collider");
 
-                            temp_render_systems.push_back(csr_col_cam_draw);
+                            c_render_engine.add(csr_col_cam_draw, render_group);
                         }
-
-                        auto csi_update = e_game_info_->add_id_component<Component::System::IItem>("update", temp_update_systems);
-                        auto csi_render = e_game_info_->add_id_component<Component::System::IItem>("render", temp_render_systems);
-
-                        gamestate->get_component<Component::Engine>("update")->add(csi_update, update_group);
-                        gamestate->get_component<Component::Engine>("render")->add(csi_render, render_group);
                     }
                 };
             }

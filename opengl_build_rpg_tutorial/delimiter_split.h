@@ -31,3 +31,8 @@ std::vector<std::string> delimiter_split(const GLchar* str, GLchar delim)
 
 	return result;
 }
+
+std::vector<std::string> delimiter_split(std::string str, GLchar delim)
+{
+	delimiter_split(str.c_str(), delim);
+}

@@ -2,6 +2,7 @@
 #include "component_rect.h"
 #include "component_system.h"
 #include "component_renderer.h"
+#include "component_position.h"
 
 /*
 Draw sprites on screen with respect to where the camera is located
@@ -18,11 +19,12 @@ namespace Component {
 				Component::Renderer& renderer_;
 				Component::Src& src_;
 				Component::Material& material_;
-				Component::Transform& transform_, & camera_transform;
+				Component::Transform& transform_;
+				Component::Position& cam_position_;
 			public:
 				CameraDraw(Component::Renderer& renderer, Component::Src& src, Component::Transform& transform, 
-					Component::Material& material, Component::Transform& camera_transform)
-					: renderer_(renderer), src_(src), material_(material), transform_(transform), camera_transform(camera_transform)
+					Component::Material& material, Component::Position& cam_position)
+					: renderer_(renderer), src_(src), material_(material), transform_(transform), cam_position_(cam_position)
 				{}
 
 				void execute() override
@@ -30,8 +32,8 @@ namespace Component {
 					// update render dest by camera and local transforms
 					Rect dest;
 
-					dest.x = transform_.x - camera_transform.x;
-					dest.y = transform_.y - camera_transform.y;
+					dest.x = transform_.x - cam_position_.x;
+					dest.y = transform_.y - cam_position_.y;
 					dest.w = transform_.w;
 					dest.h = transform_.h;
 

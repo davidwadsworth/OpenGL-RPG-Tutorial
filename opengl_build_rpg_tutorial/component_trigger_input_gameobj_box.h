@@ -6,7 +6,6 @@
 #include "component_material.h"
 #include "component_system_render_draw.h"
 #include "component_trigger_input.h"
-#include "component_system_item.h"
 #include "component_engine.h"
 #include "component_system_render_offset.h"
 #include "delimiter_split.h"
@@ -30,10 +29,7 @@ namespace Component {
 					{
 						auto box_info = delimiter_split(name_.c_str(), '_');
 
-						if (box_info.size() < 2)
-							Logger::error("box name not of 'name'_'position'", Logger::HIGH);
-
-						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json[box_info[1]];
+						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json;
 
 						std::string spritesheet_name = box_json["spritesheet"][0];
 						std::string textbox_name = box_json["spritesheet"][1];

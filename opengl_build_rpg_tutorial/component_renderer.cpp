@@ -1,16 +1,22 @@
 #include "component_renderer.h"
+#include "component_json.h"
 
 constexpr auto VERTICES = 6u;
 
-Component::Renderer::Renderer(std::vector<GLuint> attributes, GLuint max_sprites)
-	: vbo_(0), vao_(0), current_mat_(nullptr), attributes_(attributes), max_sprites_(max_sprites)
+Component::Renderer::Renderer(std::string name)
+	: vbo_(0), vao_(0), current_mat_(nullptr), max_sprites_(0), att_size_(0), name_(name)
 {}
 
-void Component::Renderer::init()
+void Component::Renderer::init(Entity* gamestate)
 {
+	auto &renderer_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+
+	std::vector<unsigned> attributes = renderer_json["attributes"];
+	max_sprites_ = renderer_json["max_sprites"];
+
 	// calculate total attribute size for attrib pointer arithmatic
 	att_size_ = 0;
-	for (auto att : attributes_)
+	for (auto att : attributes)
 		att_size_ += att;
 
 	// generate buffers
@@ -23,11 +29,11 @@ void Component::Renderer::init()
 
 	// create and bind attributes to vbo 
 	auto stride = 0ull;
-	for (auto i = 0; i < attributes_.size(); ++i)
+	for (auto i = 0; i < attributes.size(); ++i)
 	{
 		glEnableVertexAttribArray(i);
-		glVertexAttribPointer(i, attributes_[i], GL_FLOAT, GL_FALSE, att_size_ * sizeof(float), (GLvoid*)stride);
-		stride += attributes_[i] * sizeof(float);
+		glVertexAttribPointer(i, attributes[i], GL_FLOAT, GL_FALSE, att_size_ * sizeof(float), (GLvoid*)stride);
+		stride += attributes[i] * sizeof(float);
 	}
 }
 

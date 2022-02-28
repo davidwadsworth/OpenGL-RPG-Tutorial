@@ -28,7 +28,7 @@ namespace Component {
 					float h = qt_json["rect"][3];
 					int max_objects = qt_json["max_objects"];
 
-					this->entity_->add_component<Component::QuadTree>(max_objects, Rect(x, y, w, h));
+					this->entity_->push_back_component<Component::QuadTree>(max_objects, Rect(x, y, w, h));
 				}
 			};
 		}

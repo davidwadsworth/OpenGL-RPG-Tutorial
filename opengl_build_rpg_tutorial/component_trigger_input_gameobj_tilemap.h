@@ -1,5 +1,4 @@
 #pragma once
-#include "component_trigger_input_gameobj.h"
 #include "component_texture.h"
 #include "component_shader.h"
 #include "component_material.h"
@@ -23,18 +22,15 @@ namespace Component {
 		namespace Input {
 			namespace GameObj
 			{
-				class TileMap : public Component::Trigger::Input::IGameObj
+				class TileMap : public Component::Trigger::IInput
 				{
-				public:
-					TileMap(std::string name)
-						: Component::Trigger::Input::IGameObj(name)
-					{}
-
 				private:
-					void init(Entity* gamestate) override final
+					void create(Entity* gamestate) override final
 					{
+						auto tilemap_name = delimiter_split(name_, '_')[0];
+
 						// parse into json obj
-						auto& tilemap_json = gamestate->get_child("index")->get_child(name_)->get_component<Component::Json>()->json;
+						auto& tilemap_json = gamestate->get_child("index")->get_child(tilemap_name)->get_component<Component::Json>()->json;
 
 						int tilemap_w = tilemap_json["width"];
 						int tilemap_h = tilemap_json["height"];
@@ -85,7 +81,7 @@ namespace Component {
 							src_vec.push_back(static_cast<Component::Src*>(tile_srcs[tiles[i]]));
 						}
 
-						auto csr_tmap_render = e_game_info_->add_id_component<Component::System::Render::TileMap>("render", c_cam_position, 
+						auto csr_tmap_render = entity_->add_component<Component::System::Render::TileMap>( c_cam_position, 
 							tilemap_w, tilemap_h, tile_size * tile_scale, src_vec, trans_vec, c_tset_material, c_renderer);
 
 						gamestate->get_component<Component::Engine>("render")->add(csr_tmap_render, render_group);

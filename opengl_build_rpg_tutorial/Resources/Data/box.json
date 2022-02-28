@@ -1,8 +1,8 @@
-[{
+{
 	"spritesheet" : ["spritesheet", "textbox"],
 	"render_group" : "4.0",
 	"box_height" : 512,
 	"box_width" : 512,
 	"box_scale" : "1.0",	
 	"corner_size" : "10.0",
-},]
+},

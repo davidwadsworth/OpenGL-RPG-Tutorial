@@ -163,6 +163,7 @@
     <ClInclude Include="component_system_update_camera.h" />
     <ClInclude Include="component_texunit.h" />
     <ClInclude Include="component_trigger_input_index.h" />
+    <ClInclude Include="component_trigger_input_message.h" />
     <ClInclude Include="component_trigger_input_spritesheet.h" />
     <ClInclude Include="component_trigger_load.h" />
     <ClInclude Include="component_trigger_load_box.h" />
@@ -176,7 +177,6 @@
     <ClInclude Include="component_collider_physics_aabb_sticky.h" />
     <ClInclude Include="component_collider_physics_aabb_smooth.h" />
     <ClInclude Include="component_material_color.h" />
-    <ClInclude Include="component_system_item.h" />
     <ClInclude Include="component_system_render_empty.h" />
     <ClInclude Include="component_system_render_draw.h" />
     <ClInclude Include="component_system_render_tilemap.h" />
@@ -184,7 +184,7 @@
     <ClInclude Include="component_tree.h" />
     <ClInclude Include="component_trigger_load_textarea.h" />
     <ClInclude Include="component_trigger_input_gameobj_box.h" />
-    <ClInclude Include="component_trigger_input_gameobj_empty.h" />
+    <ClInclude Include="component_trigger_input_gameobj_emptytextarea.h" />
     <ClInclude Include="component_trigger_input_gameobj_textarea.h" />
     <ClInclude Include="component_trigger_input_gameobj_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />

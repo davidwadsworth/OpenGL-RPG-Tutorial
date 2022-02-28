@@ -3,7 +3,6 @@
 	"scale" : "1.0f",
 	"collider" : ["collider","circle","0"],
 	"spritesheet" : ["spritesheet","player"],
-	"debug" : "true",
 	"animations" : [
 		{"name" : "idle_down", "frames" : 1, },
 		{"name" : "idle_up", "frames" : 1, },
