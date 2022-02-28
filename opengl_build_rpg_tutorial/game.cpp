@@ -23,6 +23,5 @@ void Game::init(Entity* game)
 	ctigs_overworld.execute(game);
 
 	Game::global->add_component<Component::KeyboardArray>("keyboard");
-	Game::global->add_component<Component::TexUnit>("texunit");
 
 }

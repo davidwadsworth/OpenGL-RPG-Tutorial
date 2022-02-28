@@ -31,13 +31,11 @@ namespace Component {
 					std::vector<Component::ISystem*> render_;
 					Component::TriggerVector* c_triggers_ = nullptr;
 					Component::Renderer* c_renderer_ = nullptr;
-
+					std::vector<Component::Trigger::IInput*> objects_;
 					void _init() override final
 					{
-						auto overworld_objs = entity_->get_component_list();
-
 						// init game objs
-						for (auto obj : overworld_objs)
+						for (auto obj : objects_)
 							static_cast<Component::ITrigger*>(obj)->execute(entity_);
 
 						c_renderer_->init();
@@ -78,24 +76,22 @@ namespace Component {
 					void create(Entity* gamestate) override final
 					{
 						// set up renderer and engine systems for run
-						auto game_engine = new Entity();
-						entity_->add_id_child(game_engine, "engine");
+						auto& c_render_engine = *entity_->add_id_component<Component::Engine>("render");
+						auto& c_update_engine = *entity_->add_id_component<Component::Engine>("update");
+						c_triggers_ = entity_->add_id_component<Component::TriggerVector>("trigger");
+						c_renderer_ = entity_->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
+						entity_->add_id_component<Component::TexUnit>("texunit");
 
-						auto& c_render_engine = *game_engine->add_id_component<Component::Engine>("render");
-						auto& c_update_engine = *game_engine->add_id_component<Component::Engine>("update");
-						c_triggers_ = game_engine->add_id_component<Component::TriggerVector>("trigger");
-						c_renderer_ = game_engine->add_id_component<Component::Renderer>("renderer", std::vector<GLuint>{2u, 2u}, 255u);
-
-						entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera");
-						entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller");
-						entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager");
-						entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager");
-						entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans");
-						entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_world");
-						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap");
-						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player");
-						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collider_map");
-						entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TextBox>("textbox");
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_world"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collider_map"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TextBox>("textbox"));
 
 						update_ = c_update_engine.flatten();
 						render_ = c_render_engine.flatten();

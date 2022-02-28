@@ -1,6 +1,7 @@
 #pragma once
 #include "component_trigger_input.h"
 #include "json.hpp"
+#include "component_texunit.h"
 
 /*
 Tileset game object from loaded in json
@@ -62,6 +63,7 @@ namespace Component {
 					
 					auto& c_tileset_tex = *gamestate->get_child("texture manager")->get_component<Component::Texture>(image_name);
 					auto& c_sprite_shader = *gamestate->get_child("shader manager")->get_component<Component::Shader>("sprite");
+
 
 					// set up tile map material
 					auto& c_tset_material = *entity_->push_back_component<Component::Material>(c_tileset_tex, c_sprite_shader, 1);
