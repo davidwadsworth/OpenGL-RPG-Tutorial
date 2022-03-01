@@ -1,0 +1,22 @@
+[{
+	"info" : {
+		"x" : "1024.0f",
+		"y" : "1024.0f",
+		"w" : "64.0",
+		"h" : "64.0",
+		"collider" : {
+			"filename": "polygon",
+			"id" : "circle",
+			"pos" : 1,
+			"tree" : "collision_tree",
+		},
+		"action" : {
+			"filename" : "message",
+			"pos" : 0,
+			"tree" : "action_tree",
+		},
+	},
+	"render_group" : "3.0",
+	"textbox" : ["textbox", "0"],
+	"texture" : ["spritesheet", "signpost"],	
+},]

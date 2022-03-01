@@ -67,6 +67,9 @@
     <Filter Include="EC\Component\Rect\Collider\AABB\Physics">
       <UniqueIdentifier>{b5f88663-a61f-40c9-8756-d5c2471d3c98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helper">
+      <UniqueIdentifier>{b66d9891-671d-43ed-ac3c-5a0c0b8fa211}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -340,6 +343,12 @@
     </ClInclude>
     <ClInclude Include="component_trigger_input_message.h">
       <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="add_collider.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_aabb_actionable.h">
+      <Filter>EC\Component\Rect\Collider\AABB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

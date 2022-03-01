@@ -1,11 +1,4 @@
 [{
-	"position_x" : "1024.0f",
-	"potition_y" : "1024.0f",
-	"collider" : ["collider","aabb","0"],
-	"collidable" : "true",
-	"textbox" : ["textbox", "0"],
-	"texture" : ["spritesheet", "signpost"],
-	"render_group" : "3.0",
 	"workflow" : {
 		"parser" : "message",
 		"data" : [

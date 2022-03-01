@@ -89,7 +89,7 @@ namespace Component {
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_world"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_tree"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("action_tree"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player"));

@@ -43,8 +43,8 @@ namespace Component {
 				{
 					float pos_x = json_["position_x"];
 					float pos_y = json_["position_y"];
-					std::string textbox_name = json_["textbox"][0];
-					int textbox_pos = json_["textbox"][1];
+					std::string textbox_name = json_["textbox"]["name"];
+					int textbox_pos = json_["textbox"]["pos"];
 					nlohmann::json workflow = json_["workflow"];
 					nlohmann::json textbox_json = gamestate->get_child("index")->
 						get_component<Component::Json>(textbox_name)->json[textbox_pos];
@@ -85,7 +85,7 @@ namespace Component {
 
 					auto speech_arrow_str = speech_box ? (speech_arrow_alignment ? "right" : "left") : "none";
 
-					ss_box_json << "{\"box_rect\":[\"" << box_x << "\",\"" << box_y << "\",\"" << box_w << "\",\"" << box_h << "\"],";
+					ss_box_json << "{\"box_rect\":{\"x\":\"" << box_x << "\",\"" << box_y << "\",\"" << box_w << "\",\"" << box_h << "\"},";
 					ss_box_json << "\"box_scale\":\"" << box_sc << "\",";
 					ss_box_json << "\"corner_size\":\"" << corner_size << "\",";
 					ss_box_json << "\"textbox\":[" << textbox_name << ",\"" << textbox_pos << "\",";

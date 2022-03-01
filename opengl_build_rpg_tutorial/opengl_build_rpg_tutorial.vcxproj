@@ -154,8 +154,10 @@
     <ClCompile Include="component_texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="add_collider.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
+    <ClInclude Include="component_collider_aabb_actionable.h" />
     <ClInclude Include="component_json.h" />
     <ClInclude Include="component_quadtree.h" />
     <ClInclude Include="component_rect.h" />

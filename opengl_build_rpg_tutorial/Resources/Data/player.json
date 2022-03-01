@@ -1,7 +1,22 @@
 {
-	"position" : ["800.0", "792.0"],
+	"info" : {
+		"x" : "800.0f",
+		"y" : "792.0f",
+		"w" : "64.0",
+		"h" : "64.0",
+		"collider" : {
+			"filename": "collider",
+			"id" : "circle",
+			"pos" : 0,
+			"tree" : "collision_tree",
+		},
+		"action" : {
+			"filename" : "message",
+			"pos" : 0,
+			"tree" : "action_tree",
+		},
+	},
 	"scale" : "1.0f",
-	"collider" : ["collider","circle","0"],
 	"spritesheet" : ["spritesheet","player"],
 	"animations" : [
 		{"name" : "idle_down", "frames" : 1, },

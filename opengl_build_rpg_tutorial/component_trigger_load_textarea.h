@@ -17,18 +17,18 @@ namespace Component {
 				void execute(Entity* gamestate) override
 				{
 					//load json
-					float ta_x = json_["textarea_rect"][0];
-					float ta_y = json_["textarea_rect"][1];
-					float ta_w = json_["textarea_rect"][2];
-					float ta_h = json_["textarea_rect"][3];
+					float ta_x = json_["textarea_rect"]["x"];
+					float ta_y = json_["textarea_rect"]["y"];
+					float ta_w = json_["textarea_rect"]["w"];
+					float ta_h = json_["textarea_rect"]["h"];
 					std::string font_name = json_["font"];
 					float font_sc = json_["font_scale"];
 					std::string align_h = json_["align_horizontal"];
 					std::string align_v = json_["align_vertical"];
 					float line_spacing = json_["line_spacing"];
 					std::string message = json_["message"];
-					std::string textbox_name = json_["textbox"][0];
-					int textbox_pos = json_["textbox"][1];
+					std::string textbox_name = json_["textbox"]["name"];
+					int textbox_pos = json_["textbox"]["pos"];
 
 					auto e_font = gamestate->get_child(font_name);
 					auto e_textarea = gamestate->get_child(textbox_name)->get_child(textbox_pos);
