@@ -4,7 +4,7 @@
 	"render_group" : "3.0",
 
 	"circle" : [
-		{"tileid" : 71, "radius" : "32.0", "center" : {"x":"32.0", "y":"32.0"},
+		{"tileid" : 71, "radius" : "32.0", "center" : {"x":"32.0", "y":"32.0"}},
 	],
 
 	"boundary" : [

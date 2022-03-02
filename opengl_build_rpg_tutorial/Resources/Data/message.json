@@ -1,10 +1,8 @@
 [{
-	"workflow" : {
-		"parser" : "message",
-		"data" : [
-			"Hi there, welcome to our world!",
-			"You are a big guy, I would estimate about 1.5 me would fit inside you", 
-			"Please feed me so I may grow.",
-		]},
-	"speech_box" : "false",
-},]
+		"messages" : [
+				"Hi there, welcome to our world!",
+				"You are a big guy, I would estimate about 1.5 me would fit inside you", 
+				"Please feed me so I may grow.",
+			],
+		"speech_box" : "false",
+	},]

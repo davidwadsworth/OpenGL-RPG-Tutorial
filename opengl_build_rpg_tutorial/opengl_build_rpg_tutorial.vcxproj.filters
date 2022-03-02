@@ -344,11 +344,23 @@
     <ClInclude Include="component_trigger_input_message.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
-    <ClInclude Include="add_collider.h">
+    <ClInclude Include="add_component_rect.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="component_collider_aabb_actionable.h">
-      <Filter>EC\Component\Rect\Collider\AABB</Filter>
+    <ClInclude Include="action.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_gjk_action.h">
+      <Filter>EC\Component\Rect\Collider\GJK</Filter>
+    </ClInclude>
+    <ClInclude Include="component_rect_action.h">
+      <Filter>EC\Component\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_loadcache.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="component_parseaction.h">
+      <Filter>EC\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

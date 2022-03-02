@@ -154,17 +154,21 @@
     <ClCompile Include="component_texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="add_collider.h" />
+    <ClInclude Include="action.h" />
+    <ClInclude Include="add_component_rect.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
-    <ClInclude Include="component_collider_aabb_actionable.h" />
+    <ClInclude Include="component_collider_gjk_action.h" />
     <ClInclude Include="component_json.h" />
+    <ClInclude Include="component_parseaction.h" />
     <ClInclude Include="component_quadtree.h" />
     <ClInclude Include="component_rect.h" />
+    <ClInclude Include="component_rect_action.h" />
     <ClInclude Include="component_system_render_offset.h" />
     <ClInclude Include="component_system_update_camera.h" />
     <ClInclude Include="component_texunit.h" />
     <ClInclude Include="component_trigger_input_index.h" />
+    <ClInclude Include="component_trigger_input_loadcache.h" />
     <ClInclude Include="component_trigger_input_message.h" />
     <ClInclude Include="component_trigger_input_spritesheet.h" />
     <ClInclude Include="component_trigger_load.h" />

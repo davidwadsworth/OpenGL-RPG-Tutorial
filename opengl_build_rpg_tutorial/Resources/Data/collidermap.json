@@ -5,18 +5,17 @@
 		"w" : "64.0",
 		"h" : "64.0",
 		"collider" : {
-			"filename": "polygon",
-			"id" : "circle",
+			"filename": "collider",
+			"id" : "polygon",
 			"pos" : 1,
 			"tree" : "collision_tree",
 		},
 		"action" : {
-			"filename" : "message",
-			"pos" : 0,
+			"data" : [{ "load": "textbox", "filename" : "message", "pos" : 0,},],
 			"tree" : "action_tree",
 		},
 	},
 	"render_group" : "3.0",
-	"textbox" : ["textbox", "0"],
-	"texture" : ["spritesheet", "signpost"],	
+	"textbox" : {"filename":"textbox", "pos":0},
+	"texture" : {"filename":"spritesheet", "id":"signpost"},	
 },]

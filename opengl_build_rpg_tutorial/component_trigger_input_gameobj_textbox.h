@@ -45,11 +45,16 @@ namespace Component {
 						auto& ctigo_empty = *entity_->add_id_ct_input<Component::Trigger::Input::GameObj::EmptyTextArea>(textarea_name);
 						ctigo_empty.execute(gamestate, entity_);
 						
-						
+						auto e_lc_textbox = gamestate->get_child("loadcache")->add_id_child(name_);
+						e_lc_textbox->push_back_component<Component::Trigger::Load::TextBox>();
+
+						auto e_lc_textarea = e_lc_textbox->add_id_child("textarea");
 						for (auto i = 0; i < max_messages; ++i)
-							ctigo_empty->add_id_component<Component::Trigger::Load::TextArea>("load_textarea_" + std::to_string(i));
+							e_lc_textarea->push_back_component<Component::Trigger::Load::TextArea>();
+
+						auto e_lc_box = e_lc_textbox->add_id_child("box");
 						for (auto i = 0; i < max_boxes; ++i)
-							ctigo_box->add_id_component<Component::Trigger::Load::Box>("load_box_" + std::to_string(i));
+							e_lc_box->push_back_component<Component::Trigger::Load::Box>();
 
 						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
 						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree);

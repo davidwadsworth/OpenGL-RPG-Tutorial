@@ -1,4 +1,2 @@
-{
-	"font" :  ["Resources/Shaders/font.fs", "Resources/Shaders/font.vs"], 
-	"sprite": ["Resources/Shaders/sprite.fs", "Resources/Shaders/sprite.vs"],
-}
+[{"name":"font", "fs":"Resources/Shaders/font.fs", "vs":"Resources/Shaders/font.vs"}, {"name":"sprite","fs":"Resources/Shaders/sprite.fs", "vs":"Resources/Shaders/sprite.vs"},]
+	

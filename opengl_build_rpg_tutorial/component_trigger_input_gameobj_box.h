@@ -31,11 +31,11 @@ namespace Component {
 
 						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json;
 
-						std::string spritesheet_name = box_json["spritesheet"][0];
-						std::string textbox_name = box_json["spritesheet"][1];
+						std::string spritesheet_name = box_json["texture"]["filename"];
+						std::string textbox_name = box_json["texture"]["id"];
 
-						auto& c_box_position = *entity_->push_back_component<Component::Position>(Game::removed);
-
+						auto& c_box_position = *entity_->add_id_component<Component::Position>("position", Game::removed);
+						
 						auto box_x = 0.0f;
 						auto box_y = 0.0f;
 						float box_w = box_json["box_width"];
@@ -55,31 +55,31 @@ namespace Component {
 
 						std::vector<Component::Transform*> transform_vec;
 						// box corners transforms
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("top_right",
 							Rect( box_x, box_y, scaled_corner_size, scaled_corner_size )));
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("top_left",
 							Rect( box_x + box_w - scaled_corner_size, box_y, scaled_corner_size, scaled_corner_size )));
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("bot_right",
 							Rect( box_x, box_y + box_h - scaled_corner_size, scaled_corner_size, scaled_corner_size )));
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("bot_left",
 							Rect( box_x + box_w - scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size, scaled_corner_size )));
 
 						// box side transforms
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("top_side",
 							Rect( box_x + scaled_corner_size, box_y, box_w - scaled_corner_size * 2, scaled_corner_size )));
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("left_side",
 							Rect( box_x, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f )));
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("bot_side",
 							Rect( box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, box_w - scaled_corner_size * 2.0f, scaled_corner_size )));
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("right_side",
 							Rect( box_x + box_w - scaled_corner_size, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f )));
 
 						// center transform
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>(
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("center",
 							Rect( box_x + scaled_corner_size, box_y + scaled_corner_size, box_w - scaled_corner_size * 2.0f, box_h - scaled_corner_size * 2.0f )));
 
 						// speech arrow
-						transform_vec.push_back(entity_->push_back_component<Component::Transform>());
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("speech_arrow"));
 
 						// get textbox shader and texture
 						auto e_spritesheet = gamestate->get_child(spritesheet_name);
@@ -87,20 +87,10 @@ namespace Component {
 
 
 						// get src rects
-						std::vector<Component::Src*> src_vec;
-						auto e_ss_textbox = gamestate->get_child(textbox_name);
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(0));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(1));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(2));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(3));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(4));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(5));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(6));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(7));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(8));
-						src_vec.push_back(e_ss_textbox->get_component<Component::Src>(9));
+						auto box_srcs = gamestate->get_child(textbox_name)->get_component_list<Component::Src>();
 
-						auto cs_item = entity_->add_id_component<Component::System::Render::Offset>("render", c_box_position, src_vec, transform_vec, c_ss_material, c_renderer);
+
+						auto cs_item = entity_->add_id_component<Component::System::Render::Offset>("render", c_box_position, box_srcs, transform_vec, c_ss_material, c_renderer);
 
 						auto& render_engine = *gamestate->get_component<Component::Engine>("render");
 						render_engine.add(cs_item, render_group);

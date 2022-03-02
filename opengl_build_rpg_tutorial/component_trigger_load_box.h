@@ -11,15 +11,15 @@ namespace Component {
 			public:
 				void execute(Entity* gamestate) override
 				{
-					std::string textbox_name = json_["textbox"][0];
-					int textbox_pos = json_["textbox"][1];
+					std::string textbox_name = json_["textbox"]["filename"];
+					int textbox_pos = json_["textbox"]["pos"];
 
 					auto e_box = gamestate->get_child(textbox_name)->get_child(textbox_pos)->get_child("box");
 
-					float box_x = json_["box_rect"][0];
-					float box_y = json_["box_rect"][1];
-					float box_w = json_["box_rect"][2];
-					float box_h = json_["box_rect"][3];
+					float box_x = json_["box_rect"]["x"];
+					float box_y = json_["box_rect"]["y"];
+					float box_w = json_["box_rect"]["w"];
+					float box_h = json_["box_rect"]["h"];
 					float box_sc = json_["box_scale"];
 					int corner_size = json_["corner_size"];
 					bool speech_arrow = json_["speech_arrow"] != "none";
@@ -32,7 +32,7 @@ namespace Component {
 
 					if (speech_arrow)
 					{
-						auto& c_speech_arrow_trans = *e_box->get_component<Component::Transform>(9);
+						auto& c_speech_arrow_trans = *e_box->get_component<Component::Transform>("speech_arrow");
 						if (json_["speech_arrow"] == "left")
 							c_speech_arrow_trans.set(box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size);
 						else 

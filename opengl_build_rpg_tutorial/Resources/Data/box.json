@@ -1,5 +1,5 @@
 {
-	"spritesheet" : ["spritesheet", "textbox"],
+	"texture" : {"filename":"spritesheet", "id":"textbox"},
 	"render_group" : "4.0",
 	"box_height" : 512,
 	"box_width" : 512,

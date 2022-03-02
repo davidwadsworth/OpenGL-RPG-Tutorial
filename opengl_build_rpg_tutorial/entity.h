@@ -247,9 +247,13 @@ public:
 	}
 
 	// gets array of components
-	std::vector<IComponent*> get_component_list()
+	template<typename T>
+	std::vector<T*> get_component_list()
 	{
-		return components_.get_ordered_list();
+		std::vector<T*> tcomp_list;
+		for (auto comp : components_.get_ordered_list())
+			tcomp_list.push_back(dynamic_cast<T*>(comp))
+		return tcomp_list;
 	}	
 
 	// delete all components and children

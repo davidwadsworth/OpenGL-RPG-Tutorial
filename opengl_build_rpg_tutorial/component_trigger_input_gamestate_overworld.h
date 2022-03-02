@@ -19,7 +19,6 @@ Set up class for all game object creation within the overworld state
 
 @author David Wadsworth
 */
-
 namespace Component {
 	namespace Trigger {
 		namespace Input {
@@ -67,8 +66,8 @@ namespace Component {
 
 						c_renderer_->end();
 
-						for (auto t : *c_triggers_)
-							t->execute(entity_);
+						for (auto i = 0; i < c_triggers_->size(); ++i)
+							c_triggers_->at(i)->execute(entity_);
 						c_triggers_->clear();
 					}
 
@@ -81,6 +80,7 @@ namespace Component {
 						
 						c_update_ = entity_->add_id_component<Component::SystemVector>("update_vec");
 						c_triggers_ = entity_->add_id_component<Component::TriggerVector>("trigger");
+
 						c_renderer_ = entity_->add_id_ct_input<Component::Renderer>("renderer");
 						entity_->add_id_component<Component::TexUnit>("texunit");
 
