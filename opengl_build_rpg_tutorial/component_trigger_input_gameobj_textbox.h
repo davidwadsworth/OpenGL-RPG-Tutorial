@@ -28,10 +28,8 @@ namespace Component {
 						auto& textbox_json = gamestate->get_child("index")->get_child(textbox_info)->
 							get_component<Component::Json>()->json;
 
-						auto e_pause = new Entity();
-						entity_->add_id_child(e_pause, "pause");
-						auto& c_pause_update_engine = *e_pause->add_id_component<Component::SystemVector>("update");
-						auto ct_pause_switch_systems = e_pause->add_id_component<Component::Trigger::SwapVectors>("switch_systems", c_pause_update_engine);
+						auto& c_update_vec = *entity_->add_id_component<Component::SystemVector>("update");
+						auto ct_switch_vectors = entity_->add_id_component<Component::Trigger::SwapVectors>("swap_vectors", c_update_vec);
 
 						// add message and box triggers to gameinfo
 						int max_messages = textbox_json["max_message"];
@@ -58,7 +56,7 @@ namespace Component {
 
 						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
 						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree);
-						c_pause_update_engine.push_back(csu_tree_traverse);
+						c_update_vec.push_back(csu_tree_traverse);
 
 					}
 				};

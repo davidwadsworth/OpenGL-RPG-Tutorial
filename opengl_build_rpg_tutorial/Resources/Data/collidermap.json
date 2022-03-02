@@ -11,11 +11,10 @@
 			"tree" : "collision_tree",
 		},
 		"action" : {
-			"data" : [{ "load": "textbox", "filename" : "message", "pos" : 0,},],
+			"data" : [{ "load": "textbox", "data" : {"filename" : "message", "pos" : 0,}},],
 			"tree" : "action_tree",
 		},
 	},
 	"render_group" : "3.0",
-	"textbox" : {"filename":"textbox", "pos":0},
 	"texture" : {"filename":"spritesheet", "id":"signpost"},	
 },]

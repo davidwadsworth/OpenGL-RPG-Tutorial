@@ -5,6 +5,8 @@
 #include "component_engine.h"
 #include "component_system_render_empty.h"
 #include "component_trigger_input.h"
+#include "delimiter_split.h"
+#include "component_json.h"
 
 namespace Component {
 	namespace Trigger {

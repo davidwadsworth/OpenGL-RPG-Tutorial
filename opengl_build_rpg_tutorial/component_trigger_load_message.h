@@ -11,9 +11,41 @@ namespace Component {
 	namespace Trigger {
 		namespace Load
 		{
-			class TextArea : public Component::Trigger::ILoad
+			class Message : public Component::Trigger::ILoad
 			{
+				Rect rect_;
+				std::string font_name_, align_h_, align_v_;
+				float font_sc_, line_spacing_;
+				std::vector<std::string> messages_;
+				int msg_i_;
+				nlohmann::json textbox_json_;
 			public:
+
+				void load(nlohmann::json json) override
+				{
+					rect_.x = json["textarea_rect"]["x"];
+					rect_.y = json["textarea_rect"]["y"];
+					rect_.w = json_["textarea_rect"]["w"];
+					rect_.h = json_["textarea_rect"]["h"];
+					font_name_ = json_["font"];
+					font_sc_ = json_["font_scale"];
+					align_h_ = json_["align_horizontal"];
+					align_v_ = json_["align_vertical"];
+					line_spacing_ = json_["line_spacing"];
+					message_ = json_["message"];
+					textbox_json_ = json_["textbox"];
+
+					auto e_font = gamestate->get_child(font_name);
+					auto e_textarea = gamestate->get_child(textbox_name)->get_child(textbox_pos);// wrong
+
+					// create boxes
+					auto line_h = e_font->get_component<Component::Integer>()->value;
+
+					auto space = line_h / 3.0f;
+
+					line_h = line_h - static_cast<int>(space / line_spacing);
+				}
+
 				void execute(Entity* gamestate) override
 				{
 					//load json
@@ -31,7 +63,7 @@ namespace Component {
 					int textbox_pos = json_["textbox"]["pos"];
 
 					auto e_font = gamestate->get_child(font_name);
-					auto e_textarea = gamestate->get_child(textbox_name)->get_child(textbox_pos);
+					auto e_textarea = gamestate->get_child(textbox_name)->get_child(textbox_pos);// wrong
 
 					// create boxes
 					auto line_h = e_font->get_component<Component::Integer>()->value;
@@ -188,7 +220,7 @@ namespace Component {
 							transform->x += x_offset[i];
 							transform->y += y_offset;
 						}
-					e_textarea->get_component<Component::System::Item::Empty>("render")->set_draw_calls(message.size());
+					e_textarea->get_component<Component::System::Render::Empty>("render")->set_draw_calls(message.size());
 				}
 			};
 		}

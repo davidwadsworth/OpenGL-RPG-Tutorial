@@ -7,14 +7,9 @@ namespace Component {
 	{
 		class ILoad : public Component::ITrigger
 		{
-		protected:
-			nlohmann::json json_;
 		public:
 
-			void load(nlohmann::json json) 
-			{
-				json_ = json;
-			}
+			virtual void load(nlohmann::json json) = 0;
 		};
 	}
 }
