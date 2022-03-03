@@ -188,7 +188,6 @@
     <ClInclude Include="component_system_render_tilemap.h" />
     <ClInclude Include="component_template.h" />
     <ClInclude Include="component_tree.h" />
-    <ClInclude Include="component_trigger_load_textarea.h" />
     <ClInclude Include="component_trigger_input_gameobj_box.h" />
     <ClInclude Include="component_trigger_input_gameobj_emptytextarea.h" />
     <ClInclude Include="component_trigger_input_gameobj_textarea.h" />
@@ -196,6 +195,7 @@
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_gameobj_textbox.h" />
     <ClInclude Include="component_trigger_input_gamestate.h" />
+    <ClInclude Include="component_trigger_load_message.h" />
     <ClInclude Include="component_trigger_load_textbox.h" />
     <ClInclude Include="component_trigger_swapvectors.h" />
     <ClInclude Include="frarr.h" />

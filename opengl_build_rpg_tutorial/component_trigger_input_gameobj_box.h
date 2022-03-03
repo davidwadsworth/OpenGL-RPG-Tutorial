@@ -79,7 +79,7 @@ namespace Component {
 							Rect( box_x + scaled_corner_size, box_y + scaled_corner_size, box_w - scaled_corner_size * 2.0f, box_h - scaled_corner_size * 2.0f )));
 
 						// speech arrow
-						transform_vec.push_back(entity_->add_id_component<Component::Transform>("speech_arrow"));
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("speech_arrow", box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size));
 
 						// get textbox shader and texture
 						auto e_spritesheet = gamestate->get_child(spritesheet_name);

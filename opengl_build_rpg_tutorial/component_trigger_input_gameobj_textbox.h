@@ -5,7 +5,7 @@
 #include "component_trigger_swapvectors.h"
 #include "component_tree.h"
 #include "component_system_update_traverse_tree.h"
-#include "component_trigger_load_textarea.h"
+#include "component_trigger_load_message.h"
 #include "component_trigger_load_box.h"
 #include "component_trigger_load_textbox.h"
 
@@ -44,15 +44,9 @@ namespace Component {
 						ctigo_empty.execute(gamestate, entity_);
 						
 						auto e_lc_textbox = gamestate->get_child("loadcache")->add_id_child(name_);
-						e_lc_textbox->push_back_component<Component::Trigger::Load::TextBox>();
-
-						auto e_lc_textarea = e_lc_textbox->add_id_child("textarea");
-						for (auto i = 0; i < max_messages; ++i)
-							e_lc_textarea->push_back_component<Component::Trigger::Load::TextArea>();
-
-						auto e_lc_box = e_lc_textbox->add_id_child("box");
-						for (auto i = 0; i < max_boxes; ++i)
-							e_lc_box->push_back_component<Component::Trigger::Load::Box>();
+						e_lc_textbox->add_id_component<Component::Trigger::Load::TextBox>("textbox");
+						e_lc_textbox->add_id_component<Component::Trigger::Load::Message>("message");
+						e_lc_textbox->add_id_component<Component::Trigger::Load::Box>("box");
 
 						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
 						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree);

@@ -10,25 +10,27 @@ namespace Component
 {
 	class ParseAction
 	{
-		Entity* e_loadcache_,* e_index_;
+		Entity* e_loadcache_;
 		Component::TriggerVector& c_triggervec_;
 	public:
-		ParseAction(Entity* e_loadcache, Entity* e_index, Component::TriggerVector& c_triggervec)
-			: e_loadcache_(e_loadcache),e_index_(e_index), c_triggervec_(c_triggervec)
+		ParseAction(Entity* e_loadcache, Component::TriggerVector& c_triggervec)
+			: e_loadcache_(e_loadcache), c_triggervec_(c_triggervec)
 		{}
 
 		void parse(nlohmann::json data_json)
 		{
-			for (auto action : data_json)
+			for (auto action : data_json["action"])
 			{
 				std::string load = action["load"];
-				std::string name = action["filename"];
-				int pos = action["pos"];
+				auto action_data_json = action["data"];
+				auto external_json = action["external"];
 
-				auto load_json = e_index_->get_component<Component::Json>(name)->json[pos];
-
+				if (action_data_json.contains("internal"))
+					for (std::string internal: action_data_json["internal"])
+						external_json.push_back(data_json[internal]);
+										 
 				auto ct_load = e_loadcache_->get_child(load)->get_component<Component::Trigger::ILoad>(0);
-				ct_load->load(load_json);
+				ct_load->load(external_json);
 
 				c_triggervec_.push_back(ct_load);
 			}

@@ -1,9 +1,11 @@
 [{
 	"info" : {
-		"x" : "1024.0f",
-		"y" : "1024.0f",
-		"w" : "64.0",
-		"h" : "64.0",
+		"rect": {
+			"x" : "1024.0f",
+			"y" : "1024.0f",
+			"w" : "64.0",
+			"h" : "64.0",
+		},
 		"collider" : {
 			"filename": "collider",
 			"id" : "polygon",
@@ -11,7 +13,15 @@
 			"tree" : "collision_tree",
 		},
 		"action" : {
-			"data" : [{ "load": "textbox", "data" : {"filename" : "message", "pos" : 0,}},],
+			"data" : [{ 
+				"load": "textbox", 
+				"data" : {
+					"internal" : ["rect"], 
+					"external" :  {
+						"message": {"filename" : "message", "pos" : 0,}
+					}
+				}
+			},],
 			"tree" : "action_tree",
 		},
 	},

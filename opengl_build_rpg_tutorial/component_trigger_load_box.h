@@ -8,37 +8,54 @@ namespace Component {
 		{
 			class Box : public Component::Trigger::ILoad
 			{
+				Rect speech_arrow_rect_;
+				bool is_speech_arrow_;
+				glm::vec2 pos_;
+				int box_i_;
+				nlohmann::json box_json_;
 			public:
+
+				void load(nlohmann::json json)
+				{
+					box_i_ = 0;
+				}
+
 				void execute(Entity* gamestate) override
 				{
-					std::string textbox_name = json_["textbox"]["filename"];
-					int textbox_pos = json_["textbox"]["pos"];
+					if (box_i_ > 1)
+						Logger::error("load box called more than twice.", Logger::HIGH);
 
-					auto e_box = gamestate->get_child(textbox_name)->get_child(textbox_pos)->get_child("box");
+					std::string textbox_name = box_json_["textbox"]["filename"];
+					std::string box_name = box_json_["textbox"]["boxname"];
 
-					float box_x = json_["box_rect"]["x"];
-					float box_y = json_["box_rect"]["y"];
-					float box_w = json_["box_rect"]["w"];
-					float box_h = json_["box_rect"]["h"];
-					float box_sc = json_["box_scale"];
-					int corner_size = json_["corner_size"];
-					bool speech_arrow = json_["speech_arrow"] != "none";
-					
-					auto scaled_corner_size = corner_size * box_sc;
+					auto e_box = gamestate->get_child(textbox_name)->get_child(box_name);
 
 					auto& c_position = *e_box->get_component<Component::Position>("position");
-					c_position.x = box_x;
-					c_position.y = box_y;
-
-					if (speech_arrow)
+					if (box_i_)
+					{
+						c_position.x = Game::removed.x;
+						c_position.y = Game::removed.y;
+					}
+					else
+					{
+						c_position.x = pos_.x;
+						c_position.y = pos_.y;
+					}
+					
+					if (!is_speech_arrow_)
 					{
 						auto& c_speech_arrow_trans = *e_box->get_component<Component::Transform>("speech_arrow");
-						if (json_["speech_arrow"] == "left")
-							c_speech_arrow_trans.set(box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size);
-						else 
-							c_speech_arrow_trans.set(box_x + box_w - scaled_corner_size * 3.0f, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size);
+
+						if (box_i_)
+							c_speech_arrow_trans.set(speech_arrow_rect_);
+						else
+						{
+							speech_arrow_rect_.set(c_speech_arrow_trans);
+							c_speech_arrow_trans.set(Game::removed.x, Game::removed.y, 0.0f, 0.0f);
+						}	
 					}
 
+					box_i_++;
 				}
 			};
 		}

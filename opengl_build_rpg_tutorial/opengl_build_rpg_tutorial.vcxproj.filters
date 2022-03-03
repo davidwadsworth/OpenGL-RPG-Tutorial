@@ -287,9 +287,6 @@
     <ClInclude Include="component_trigger_input_gameobj_emptytextarea.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_load_textarea.h">
-      <Filter>EC\Component\Trigger\Load</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_load_textbox.h">
       <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>
@@ -361,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="component_parseaction.h">
       <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_load_message.h">
+      <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
