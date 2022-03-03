@@ -14,39 +14,51 @@ namespace Component {
 			class Message : public Component::Trigger::ILoad
 			{
 				Rect rect_;
-				std::string font_name_, align_h_, align_v_;
+				std::string font_name_, align_h_, align_v_, textbox_name_, textarea_name_;
 				float font_sc_, line_spacing_;
 				std::vector<std::string> messages_;
-				int msg_i_;
-				nlohmann::json textbox_json_;
+				int msg_i_ = 0;
 			public:
 
 				void load(nlohmann::json json) override
 				{
-					rect_.x = json["textarea_rect"]["x"];
-					rect_.y = json["textarea_rect"]["y"];
-					rect_.w = json["textarea_rect"]["w"];
-					rect_.h = json["textarea_rect"]["h"];
-					font_name_ = json["font"];
-					font_sc_ = json["font_scale"];
-					align_h_ = json["align_horizontal"];
-					align_v_ = json["align_vertical"];
-					line_spacing_ = json["line_spacing"];
-					messages_ = json["messages"].get<std::vector<std::string>>();
-					textbox_json_ = json["textbox"];
+					float item_x = json["rect"]["x"];
+					float item_y = json["rect"]["y"];
+					float item_w = json["rect"]["w"];
+
+					float box_corner_size = json["box"]["corner_size"];
+					float box_scale = json["box"]["scale"];
+					int box_width = json["box"]["width"];
+					int box_height = json["box"]["height"];
+					float msg_padding_x = json["textarea"]["msg_padding"]["x"];
+					float msg_padding_y = json["textarea"]["msg_padding"]["y"];
+
+					auto scaled_corner = box_corner_size * box_scale;
+
+					auto offset_x = item_w / 2.0f - scaled_corner * 2.0f;
+
+					rect_.x = item_x + offset_x + scaled_corner / 2.0f + msg_padding_x;
+					rect_.y = item_y + scaled_corner / 2.0f + msg_padding_y;
+					rect_.w = box_width - scaled_corner - 2.0f * msg_padding_x;
+					rect_.h = box_height - scaled_corner - 2.0f * msg_padding_y;
+					font_name_ = json["textarea"]["font"];
+					font_sc_ = json["textarea"]["font_scale"];
+					align_h_ = json["textarea"]["align_horizontal"];
+					align_v_ = json["textarea"]["align_vertical"];
+					line_spacing_ = json["textarea"]["line_spacing"];
+					messages_ = json["message"]["messages"].get<std::vector<std::string>>();
+					textbox_name_ = json["textbox"]["textbox"];
+					textarea_name_ = json["textbox"]["textarea"];
 					msg_i_ = 0;
 				}
 
 				void execute(Entity* gamestate) override
 				{
 					if (msg_i_ > messages_.size())
-						Logger::error("load messages called too many times", Logger::HIGH);
-
-					std::string textbox_name = textbox_json_["filename"];
-					std::string textarea_name = textbox_json_["textarea"];
+						Logger::error("load messages called too many times or load not called.", Logger::HIGH);
 
 					auto e_font = gamestate->get_child(font_name_);
-					auto e_textarea = gamestate->get_child(textbox_name)->get_child(textarea_name);
+					auto e_textarea = gamestate->get_child(textbox_name_)->get_child(textarea_name_);
 
 					// create boxes
 					auto line_h = e_font->get_component<Component::Integer>()->value;

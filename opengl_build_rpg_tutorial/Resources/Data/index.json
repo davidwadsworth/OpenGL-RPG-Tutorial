@@ -14,4 +14,5 @@
 	"box" : ["Resources/Data/box.json"],
 	"textarea" : ["Resources/Data/textarea.json"],
 	"renderer" : ["Resources/Data/renderer.json"],
+	"collidermap" : ["Resources/Data/collidermap.json"],
 }

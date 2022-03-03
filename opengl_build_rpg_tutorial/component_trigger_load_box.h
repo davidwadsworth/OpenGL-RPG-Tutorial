@@ -11,24 +11,36 @@ namespace Component {
 				Rect speech_arrow_rect_;
 				bool is_speech_arrow_;
 				glm::vec2 pos_;
-				int box_i_;
-				nlohmann::json box_json_;
+				int box_i_ = 2;
+				std::string textbox_name_, box_name_;
 			public:
 
 				void load(nlohmann::json json)
 				{
+					float item_x = json["rect"]["x"];
+					float item_y = json["rect"]["y"];
+					float item_w = json["rect"]["w"];
+
+					float box_corner_size = json["box"]["corner_size"];
+					float box_scale = json["box"]["scale"];
+
+					auto scaled_corner = box_corner_size * box_scale;
+
+					auto offset_x = item_w / 2.0f - scaled_corner * 2.0f;
+					pos_.x = item_x + offset_x;
+					pos_.y = item_y;
+					is_speech_arrow_ = json["message"]["speech_box"] == "true";
+					textbox_name_ = json["textbox"]["textbox"];
+					box_name_ = json["textbox"]["box"];
 					box_i_ = 0;
 				}
 
 				void execute(Entity* gamestate) override
 				{
 					if (box_i_ > 1)
-						Logger::error("load box called more than twice.", Logger::HIGH);
+						Logger::error("load box called more than twice or load not called.", Logger::HIGH);
 
-					std::string textbox_name = box_json_["textbox"]["filename"];
-					std::string box_name = box_json_["textbox"]["boxname"];
-
-					auto e_box = gamestate->get_child(textbox_name)->get_child(box_name);
+					auto e_box = gamestate->get_child(textbox_name_)->get_child(box_name_);
 
 					auto& c_position = *e_box->get_component<Component::Position>("position");
 					if (box_i_)

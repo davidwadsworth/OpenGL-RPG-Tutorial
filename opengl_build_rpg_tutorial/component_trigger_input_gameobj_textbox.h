@@ -32,8 +32,6 @@ namespace Component {
 						auto ct_switch_vectors = entity_->add_id_component<Component::Trigger::SwapVectors>("swap_vectors", c_update_vec);
 
 						// add message and box triggers to gameinfo
-						int max_messages = textbox_json["max_message"];
-						int max_boxes = textbox_json["max_box"];
 						std::string textarea_name = textbox_json["textarea"];
 						std::string box_name = textbox_json["box"];
 
@@ -43,10 +41,10 @@ namespace Component {
 						auto& ctigo_empty = *entity_->add_id_ct_input<Component::Trigger::Input::GameObj::EmptyTextArea>(textarea_name);
 						ctigo_empty.execute(gamestate, entity_);
 						
-						auto e_lc_textbox = gamestate->get_child("loadcache")->add_id_child(name_);
-						e_lc_textbox->add_id_component<Component::Trigger::Load::TextBox>("textbox");
-						e_lc_textbox->add_id_component<Component::Trigger::Load::Message>("message");
-						e_lc_textbox->add_id_component<Component::Trigger::Load::Box>("box");
+						auto e_lc = gamestate->get_child("loadcache");
+						e_lc->add_id_component<Component::Trigger::Load::TextBox>(name_);
+						e_lc->add_id_component<Component::Trigger::Load::Message>(textarea_name);
+						e_lc->add_id_component<Component::Trigger::Load::Box>(box_name);
 
 						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
 						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree);
