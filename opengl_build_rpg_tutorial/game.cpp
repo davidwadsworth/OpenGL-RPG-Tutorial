@@ -19,9 +19,8 @@ long long Entity::count = 0ll;
 
 void Game::init(Entity* game)
 {	
-	auto& ctigs_overworld = *game->add_component<Component::Trigger::Input::GameState::Overworld>("overworld");
+	auto& ctigs_overworld = *game->add_id_ct_input<Component::Trigger::Input::GameState::Overworld>("overworld");
 	ctigs_overworld.execute(game);
 
-	Game::global->add_component<Component::KeyboardArray>("keyboard");
-
+	Game::global->add_id_component<Component::KeyboardArray>("keyboard");
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "component_trigger_input.h"
 #include "component_controller_keyboard.h"
+#include "component_json.h"
 
 /*
 Sets up our keyboard controller for our game.
@@ -20,6 +21,8 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
+					auto controller_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+
 					entity_->add_component<Component::Controller::Keyboard>();
 				}
 			};

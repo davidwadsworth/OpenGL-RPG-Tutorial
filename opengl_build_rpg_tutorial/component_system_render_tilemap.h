@@ -1,6 +1,5 @@
 #pragma once
 #pragma once
-#include "component_system_item.h"
 #include "game.h"
 #include "component_vector.h"
 #include "component_renderer.h"
@@ -35,13 +34,13 @@ namespace Component {
 
 				void execute() override final
 				{
-					const unsigned col_start = camera_pos_.x / tile_size_;
-					const unsigned row_start = camera_pos_.y / tile_size_;
+					auto col_start = static_cast<GLuint>(camera_pos_.x) / tile_size_;
+					auto row_start = static_cast<GLuint>(camera_pos_.y) / tile_size_;
 
-					unsigned col_end = col_start + Game::width / tile_size_ + (Game::width % tile_size_ != 0);
+					auto col_end = col_start + Game::width / tile_size_ + (Game::width % tile_size_ != 0);
 					col_end = col_end >= map_width_ ? map_width_ - 1 : col_end;
 
-					unsigned row_end = row_start + Game::height / tile_size_ + (Game::height % tile_size_ != 0);
+					auto row_end = row_start + Game::height / tile_size_ + (Game::height % tile_size_ != 0);
 					row_end = row_end >= map_height_ ? map_height_ - 1 : row_end;
 
 					for (auto i = row_start * map_width_; i <= row_end * map_width_; i += map_width_)

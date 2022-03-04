@@ -1,6 +1,6 @@
 #pragma once
 #include "component_system.h"
-#include "component_transform.h"
+#include "component_rect.h"
 #include "game.h"
 #include "component_position.h"
 

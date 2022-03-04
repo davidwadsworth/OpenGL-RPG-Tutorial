@@ -41,16 +41,24 @@ namespace Component {
 						auto& ctigo_empty = *entity_->add_id_ct_input<Component::Trigger::Input::GameObj::EmptyTextArea>(textarea_name);
 						ctigo_empty.execute(gamestate, entity_);
 						
-						auto e_lc = gamestate->get_child("loadcache");
+						auto e_lc = gamestate->get_child("load");
 						e_lc->add_id_component<Component::Trigger::Load::TextBox>(name_);
 						e_lc->add_id_component<Component::Trigger::Load::Message>(textarea_name);
 						e_lc->add_id_component<Component::Trigger::Load::Box>(box_name);
 
+						// get controller 
+						auto& c_cont_keyboard = *gamestate->get_child("controller")->get_component<Component::Controller::Keyboard>();
+
+						// get trigger vector
+						auto& c_trigger_vec = *gamestate->get_component<Component::TriggerVector>("trigger");
+
 						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
-						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree);
+						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree, c_cont_keyboard, c_trigger_vec);
 						c_update_vec.push_back(csu_tree_traverse);
 
 					}
+				public:
+					using Component::Trigger::IInput::IInput;
 				};
 			}
 		}

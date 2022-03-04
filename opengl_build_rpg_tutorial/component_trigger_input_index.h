@@ -4,14 +4,14 @@
 #include "json.hpp"
 #include "component_json.h"
 
+constexpr auto INDEX_PATH = "Resources/Data/index.json";
+
 namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
 			class Index : public Component::Trigger::IInput
 			{
-				std::string path_;
-
 				void create(Entity* gamestate) override
 				{
 					// load index from file
@@ -20,7 +20,7 @@ namespace Component {
 					try
 					{
 						// open files
-						std::ifstream indx_file(path_);
+						std::ifstream indx_file(INDEX_PATH);
 
 						// read into temp string streams
 						indx_stream << indx_file.rdbuf();
@@ -28,10 +28,8 @@ namespace Component {
 						// close file streams
 						indx_file.close();
 					}
-					catch (std::exception e)
-					{
-						Logger::error("Failed to read index file! path = " + path_, Logger::MEDIUM);
-						return;
+					catch (std::exception e) {
+						Logger::error("Failed to read index file! path = " + std::string(INDEX_PATH), Logger::HIGH);
 					}
 
 					auto indx_json = nlohmann::json::parse(indx_stream);
@@ -39,10 +37,7 @@ namespace Component {
 					auto indx_obj = indx_json.get<nlohmann::json::object_t>();
 
 					for (auto &obj : indx_obj)
-					{
-						auto e_json = new Entity();
-						entity_->add_id_child(e_json, obj.first);
-						
+					{	
 						// load index from file
 						std::stringstream obj_stream;
 
@@ -61,18 +56,16 @@ namespace Component {
 						}
 						catch (std::exception e)
 						{
-							Logger::error("Failed to read obj file! path = " + path_, Logger::MEDIUM);
-							return;
+							Logger::error("Failed to read obj file! path = " + obj_path, Logger::LOW);
+							continue;
 						}
 
-						e_json->add_component<Component::Json>(nlohmann::json::parse(obj_stream));
+						entity_->add_id_component<Component::Json>(obj.first, nlohmann::json::parse(obj_stream));
 					}
 
 				}
 			public:
-				Index(std::string name, std::string path)
-					: Component::Trigger::IInput(name), path_(path)
-				{}
+				using Component::Trigger::IInput::IInput;
 			};
 		}
 	}

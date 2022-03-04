@@ -19,9 +19,18 @@ namespace Component {
 					namespace Smooth
 					{
 						// actionable and smooth collidable
-						class Boundary : public Component::Collider::GJK::Physics::Boundary::Smooth, public Action {};
-						class Circle : public Component::Collider::GJK::Physics::Circle::Smooth, public Action {};
-						class Polygon : public Component::Collider::GJK::Physics::Polygon::Smooth, public Action {};
+						class Boundary : public Component::Collider::GJK::Physics::Boundary::Smooth, public Action {
+						public:
+							using Component::Collider::GJK::Physics::Boundary::Smooth::Smooth;
+						};
+						class Circle : public Component::Collider::GJK::Physics::Circle::Smooth, public Action {
+						public:
+							using Component::Collider::GJK::Physics::Circle::Smooth::Smooth;
+						};
+						class Polygon : public Component::Collider::GJK::Physics::Polygon::Smooth, public Action {
+						public:
+							using Component::Collider::GJK::Physics::Polygon::Smooth::Smooth;
+						};
 					}
 				}
 			}

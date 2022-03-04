@@ -24,7 +24,6 @@ namespace Component {
 			{
 				class Box : public Component::Trigger::IInput
 				{
-				private:
 					void create(Entity* gamestate) override final
 					{
 						auto box_info = delimiter_split(name_.c_str(), '_');
@@ -83,7 +82,7 @@ namespace Component {
 
 						// get textbox shader and texture
 						auto e_spritesheet = gamestate->get_child(spritesheet_name);
-						auto& c_ss_material = *e_spritesheet->get_component<Component::Material>();
+						auto& c_ss_material = *e_spritesheet->get_component<Component::Material>("material");
 
 
 						// get src rects
@@ -95,6 +94,8 @@ namespace Component {
 						auto& render_engine = *gamestate->get_component<Component::Engine>("render");
 						render_engine.add(cs_item, render_group);
 					}
+				public:
+					using Component::Trigger::IInput::IInput;
 
 				};
 			}

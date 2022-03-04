@@ -39,5 +39,5 @@ public:
 	}
 private:
 	std::vector<std::unique_ptr<Node>> nodes_;
-	Node* start_;
+	Node* head_;
 };

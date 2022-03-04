@@ -1,18 +1,14 @@
 #pragma once
-#include "component_renderer.h"
-#include "component_material.h"
-#include "component_system_render_camera_draw.h"
-#include "component_system_update_animate_move.h"
+#include "add_component_rect.h"
+#include "component_system_update_animatemove.h"
 #include "component_system_update_animation.h"
 #include "component_system_update_move.h"
 #include "component_system_update_camera.h"
 #include "component_controller_keyboard.h"
 #include "component_vector.h"
-#include "component_collider_gjk_circle.h"
-#include "component_system_update_check_collision.h"
-#include "component_engine.h"
-#include "component_json.h"
-#include "add_component_rect.h"
+#include "component_system_update_checkcollision.h"
+#include "component_system_update_checkaction.h"
+#include "component_system_render_cameradraw.h"
 
 /*
 Creates our player object to move around in the overworld.
@@ -47,10 +43,11 @@ namespace Component {
                         float player_speed = player_json["player_speed"];
                         float render_group = player_json["render_group"];
                         float update_group = player_json["update_group"];
+                        float action_distance = player_json["action_distance"];
 
-                        auto spritesheet_category = gamestate->get_child(spritesheet_name)->get_child(spritesheet_category_name)->get_component_list();
+                        auto spritesheet_category = gamestate->get_child(spritesheet_name)->get_child(spritesheet_category_name)->get_component_list<Component::Src>();
 
-                        auto& c_idle_down_src = *static_cast<Component::Src*>(spritesheet_category[0]);
+                        auto c_idle_down_src = dynamic_cast<Rect*>(spritesheet_category[0]);
 
                         // get renderer
                         auto& c_renderer = *gamestate->get_component<Component::Renderer >("renderer");
@@ -61,8 +58,11 @@ namespace Component {
                         // get camera
                         auto& c_cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 
-                        // get collision world
-                        auto& c_colw_col_vec = *gamestate->get_child("collision_world")->get_component<Component::QuadTree>();
+                        // get collision qtree
+                        auto& c_colw_col_qtree = *gamestate->get_child("collision_qtree")->get_component<Component::QuadTree>(0);
+
+                        // get action qtree
+                        auto& c_action_qtree = *gamestate->get_child("action_qtree")->get_component<Component::QuadTree>(0);
 
                         // get render engine
                         auto& c_render_engine = *gamestate->get_component<Component::Engine>("render_engine");
@@ -70,8 +70,11 @@ namespace Component {
                         // get update engine
                         auto& c_update_engine = *gamestate->get_component<Component::Engine>("update_engine");
 
-                        auto& c_pla_src = *entity_->push_back_component<Component::Src>(c_idle_down_src);
-                        auto& c_spritesheet_material = *gamestate->get_child(spritesheet_name)->get_component<Component::Material>();
+                        // get parse action
+                        auto& c_parse_action = *gamestate->get_child("load")->get_component<Component::ParseAction>("parse");
+
+                        auto& c_pla_src = *entity_->push_back_component<Component::Src>(*c_idle_down_src);
+                        auto& c_spritesheet_material = *gamestate->get_child(spritesheet_name)->get_component<Component::Material>("material");
 
                         auto& c_pla_col_gjk_circle = *static_cast<Component::Collider::IGJK*>(add_component_rect(entity_, gamestate, info_json));
                         auto csr_pla_dynamic_draw = entity_->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_col_gjk_circle, c_spritesheet_material, c_cam_position);
@@ -80,7 +83,8 @@ namespace Component {
 
                         auto csu_pla_animation = entity_->push_back_component<Component::System::Update::Animation>(animation_speed, c_pla_src);
                         auto csu_pla_animate_move = entity_->push_back_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
-                        auto csu_check_collision_gjk = entity_->push_back_component<Component::System::Update::CheckCollisionGJK>(c_pla_col_gjk_circle, c_colw_col_vec);
+                        auto csu_check_collision = entity_->push_back_component<Component::System::Update::CheckCollision>(c_pla_col_gjk_circle, c_colw_col_qtree);
+                        auto csu_check_action = entity_->push_back_component<Component::System::Update::CheckAction>(c_cont_keyboard, c_pla_col_gjk_circle, c_action_qtree, c_parse_action, action_distance);
 
                         auto anim_i = 0u;
                         auto animation = new Entity();
@@ -98,7 +102,7 @@ namespace Component {
                         }
 
                         c_update_engine.add(csu_pla_move, update_group);
-                        c_update_engine.add(csu_check_collision_gjk, update_group);
+                        c_update_engine.add(csu_check_collision, update_group);
                         c_update_engine.add(csu_pla_camera, update_group);
                         c_update_engine.add(csu_pla_animate_move, update_group);
                         c_update_engine.add(csu_pla_animation, update_group);
@@ -106,6 +110,8 @@ namespace Component {
                         c_render_engine.add(csr_pla_dynamic_draw, render_group);
 
                     }
+                public:
+                    using Component::Trigger::IInput::IInput;
                 };
             }
 		}

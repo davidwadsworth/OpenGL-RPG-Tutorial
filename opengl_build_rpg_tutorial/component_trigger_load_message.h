@@ -89,9 +89,6 @@ namespace Component {
 							current_pos.x += space;
 							curr_char++;
 							continue;
-						case '[':
-							// TODO generate option box
-							break;
 						case '\n':
 							// if message character exceedes boundaries for box then create a new message to hold remainder
 							if (current_pos.y + 2 * line_h > rect_.h + rect_.h)
@@ -105,8 +102,6 @@ namespace Component {
 							tb_lines.push_back(std::vector<Component::Transform*>());
 							curr_line = &tb_lines[++line_count];
 							break;
-						case '\e':
-
 						default:
 							break;
 						}

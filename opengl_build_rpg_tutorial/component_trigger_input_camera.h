@@ -14,12 +14,12 @@ namespace Component {
 		{
 			class Camera : public Component::Trigger::IInput
 			{
-			private:
 				void create(Entity* gamestate) override final
 				{
-					entity_->add_component<Component::Position>(0.0f,0.0f);
+					entity_->add_component<Component::Position>(0.0f, 0.0f);
 				}
-
+			public:
+				using Component::Trigger::IInput::IInput;
 			};
 		}
 	}

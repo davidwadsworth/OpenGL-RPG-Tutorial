@@ -8,7 +8,7 @@
 
 namespace Component
 {
-	class ParseAction
+	class ParseAction : public IComponent
 	{
 		Entity* e_loadcache_;
 		Component::TriggerVector& c_triggervec_;
@@ -29,7 +29,7 @@ namespace Component
 					for (std::string internal: action_data_json["internal"])
 						external_json.push_back(data_json[internal]);
 										 
-				auto ct_load = e_loadcache_->get_child(load)->get_component<Component::Trigger::ILoad>(0);
+				auto ct_load = e_loadcache_->get_component<Component::Trigger::ILoad>(load);
 				ct_load->load(external_json);
 
 				c_triggervec_.push_back(ct_load);

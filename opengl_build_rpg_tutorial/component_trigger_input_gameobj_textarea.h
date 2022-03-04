@@ -33,29 +33,29 @@ namespace Component {
 
 						auto textarea_json = gamestate->get_child("index")->get_component<Component::Json>(textarea_name)->json;
 
-						float x = textarea_json["rect"][0];
-						float y = textarea_json["rect"][1];
-						float w = textarea_json["rect"][2];
-						float h = textarea_json["rect"][3];
+						float x = textarea_json["rect"]["x"];
+						float y = textarea_json["rect"]["y"];
+						float w = textarea_json["rect"]["w"];
+						float h = textarea_json["rect"]["h"];
 						std::string msg = textarea_json["message"];
 						std::string font_name = textarea_json["font"];
 						float font_sc = textarea_json["font_scale"];
 						std::string align_h = textarea_json["align_horizontal"];
 						std::string align_v = textarea_json["align_vertical"];
 						float line_spacing = textarea_json["line_spacing"];
-						float padding_x = textarea_json["msg_padding"][0];
-						float padding_y = textarea_json["msg_padding"][1];
+						float padding_x = textarea_json["msg_padding"]["x"];
+						float padding_y = textarea_json["msg_padding"]["y"];
 						float render_group = textarea_json["render_group"];
 						float update_group = textarea_json["update_group"];
 						// get renderer
 						auto& c_renderer = *gamestate->get_component<Component::Renderer>();
 
-						auto font = gamestate->get_child(font_name);
+						auto e_font = gamestate->get_child(font_name);
 
-						auto& c_font_material = *font->get_component<Component::Color>();
+						auto& c_font_material = *e_font->get_component<Component::Material>("material");
 
 						// create boxes
-						auto line_h = font->get_component<Component::Integer>()->value;
+						auto line_h = e_font->get_component<Component::Integer>("line_h")->value;
 
 						auto space = line_h / 3.0f;
 
@@ -113,7 +113,7 @@ namespace Component {
 							std::vector<Component::Transform*> line_transforms;
 							std::vector<Component::BitMapGlyph*> line_glyphs;
 
-							auto e_glyphs = font->get_child("glyphs");
+							auto e_glyphs = e_font->get_child("glyphs");
 
 							auto temp_word_length = 0;
 
@@ -216,6 +216,8 @@ namespace Component {
 						auto csr_offset_render = entity_->add_id_component<Component::System::Render::Offset>("render", c_position, src_vec, transform_vec, c_font_material, c_renderer);
 						gamestate->get_child("engine")->get_component<Component::Engine>("render")->add(csr_offset_render, render_group);
 					}
+				public:
+					using Component::Trigger::IInput::IInput;
 				};
 			}
 		}

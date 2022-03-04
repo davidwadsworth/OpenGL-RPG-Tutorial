@@ -70,7 +70,7 @@ namespace Component {
 						}
 
 					public:
-						Smooth(Component::Transform& transform, std::vector<glm::vec2> vertices)
+						Smooth(const Rect& transform, std::vector<glm::vec2> vertices)
 							: Component::Collider::GJK::Polygon(transform, vertices), shortest_magnitude_(FLT_MAX), shortest_distance_(FLT_MAX)
 						{
 							// calculate shortest magnitute and distance of all possible sides

@@ -3,6 +3,7 @@
 #include <array>
 #include "entity.h"
 #include <unordered_map>
+#include <glm/vec2.hpp>
 
 /*
 defines key characteristics of the game and its state.

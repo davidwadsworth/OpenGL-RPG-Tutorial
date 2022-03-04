@@ -11,7 +11,7 @@ constexpr auto MAX_LEVEL = 10; // we don't want our quadtree to expand inifinite
 
 namespace Component
 {
-	class QuadTree
+	class QuadTree : public IComponent
 	{
 		Rect rect_;
 		std::array<QuadTree*, MAX_INDEX> trees_;
@@ -85,7 +85,7 @@ namespace Component
 					if (!in) return;
 				}
 
-			for (auto i = 0; i < objects_.size; i++)
+			for (auto i = 0u; i < objects_.size; i++)
 				retrieved_qt_keys.push_back(objects_[i]);
 		}
 
@@ -119,14 +119,14 @@ namespace Component
 			objects_.push_back(rect);
 		}
 
-		QuadTree(GLuint level, GLuint max_objects, Rect rect)
-			: level_(level), objects_(max_objects), rect_(rect), trees_{}
-		{}
 	public:
-		friend class QuadTreeKey;
 
 		QuadTree(GLuint max_objects, Rect rect)
 			: QuadTree(0, max_objects, rect)
+		{}
+
+		QuadTree(GLuint level, GLuint max_objects, Rect rect)
+			: level_(level), objects_(max_objects), rect_(rect), trees_{}
 		{}
 
 		void print(std::ostream& os)
@@ -157,7 +157,7 @@ namespace Component
 
 			}
 
-			for (auto i = 0; i < objects_.size; i++)
+			for (auto i = 0u; i < objects_.size; i++)
 			{
 				auto& transform = *objects_[i];
 				os << std::string(level_, '\t') << "(" << transform.x << ", " << transform.y << ", "

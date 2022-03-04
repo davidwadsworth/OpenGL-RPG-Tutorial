@@ -1,7 +1,7 @@
 #pragma once
 #include "component_controller.h"
 #include "component_system.h"
-#include "component_transform.h"
+#include "component_rect.h"
 
 /*
 Updates transform position on the game world

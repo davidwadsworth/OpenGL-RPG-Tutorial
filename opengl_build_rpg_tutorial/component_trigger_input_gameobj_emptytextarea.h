@@ -25,7 +25,7 @@ namespace Component {
 						int max_characters = textarea_json["max_characters"];
 
 						auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
-						auto& c_font_material = *gamestate->get_child(font_name)->get_component<Component::Color>();
+						auto& c_font_material = *gamestate->get_child(font_name)->get_component<Component::Material>("material");
 
 						std::vector<Component::Transform*> transform_vec;
 						std::vector<Component::Src*> src_vec;
@@ -40,6 +40,7 @@ namespace Component {
 					}
 				
 				public:
+					using Component::Trigger::IInput::IInput;
 				};
 			}
 		}

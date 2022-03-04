@@ -8,10 +8,14 @@
 
 namespace Component
 {
-	class Engine
+	class Engine : public IComponent
 	{
 		struct Group : public std::vector<Component::ISystem*>
 		{
+			Group()
+				: gid(-1.0f)
+			{}
+
 			Group(float gid)
 				: gid(gid)
 			{}
@@ -31,14 +35,14 @@ namespace Component
 		};
 
 		std::vector<Group> groups_;
-		int search(float gid)
+		std::size_t search(float gid)
 		{
-			int l = 0;
-			int r = groups_.size() - 1;
+			auto l = 0ull;
+			auto r = groups_.size() - 1;
 
 			while (r > l)
 			{
-				int m = (r - l) >> 1;
+				auto m = (r - l) >> 1;
 
 				if (groups_[m].gid == gid)
 					return m;
@@ -64,7 +68,7 @@ namespace Component
 
 		void add(Component::ISystem* item, float gid)
 		{	
-			int gsr = search(gid);
+			auto gsr = search(gid);
 
 			if (gsr > 0)
 				groups_[gsr].push_back(item);
@@ -81,7 +85,7 @@ namespace Component
 		{
 			for (auto &gr : engine.groups_)
 			{
-				int gsr = search(gr.gid);
+				auto gsr = search(gr.gid);
 
 				if (gsr)
 					groups_[gsr].insert(groups_[gsr].end(), gr.begin(), gr.end());

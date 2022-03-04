@@ -20,10 +20,6 @@ inline component_id get_new_component_id()
 // depending on how many components there are creates a seperate get_component_type_if for each, thus giving the illusion of unique id.
 template <typename T> inline component_id get_component_id() noexcept
 {
-	// assert that it inherits Comp
-	if (!std::is_base_of<IComponent, T>::value)
-		Logger::error("Class does not inherit Component.", Logger::HIGH);
-
 	static component_id type_id = get_new_component_id();
 	return type_id;
 }
@@ -205,6 +201,7 @@ public:
 	template<typename T, typename... TArgs>
 	T* add_component(TArgs&&... args)
 	{
+		static_assert (std::is_base_of<IComponent, T>::value, "add_component() T not a component");
 		T* c(new T(std::forward<TArgs>(args)...));
 		components_.insert(get_component_id<T>(), c);
 		return c;
@@ -214,6 +211,7 @@ public:
 	template<typename T, typename... TArgs>
 	T* add_id_component(std::string id, TArgs&&... args)
 	{
+		static_assert (std::is_base_of<IComponent, T>::value, "add_id_component(std::string) T not a component");
 		T* c(new T(std::forward<TArgs>(args)...));
 		auto hashed_str = std::hash<std::string>{}(id);
 		components_.insert(hashed_str, c);
@@ -224,6 +222,7 @@ public:
 	template<typename T, typename... TArgs>
 	T* add_id_component(std::size_t id, TArgs&&... args)
 	{
+		static_assert (std::is_base_of<IComponent, T>::value, "add_id_component(std::size_t) T not a component");
 		T* c(new T(std::forward<TArgs>(args)...));
 		components_.insert(id, c);
 		return c;
@@ -232,8 +231,10 @@ public:
 	template<typename T, typename... TArgs>
 	T* add_id_ct_input(std::string id, TArgs&&... args)
 	{
+		static_assert (std::is_base_of<IComponent, T>::value, "add_id_ct_input() T not a component");
 		T* c(new T(id, std::forward<TArgs>(args)...));
-		components_.insert(id, c);
+		auto hashed_str = std::hash<std::string>{}(id);
+		components_.insert(hashed_str, c);
 		return c;
 	}
 
@@ -241,6 +242,7 @@ public:
 	template<typename T, typename... TArgs>
 	T* push_back_component(TArgs&&... args)
 	{
+		static_assert (std::is_base_of<IComponent, T>::value, "push_back_component() not a component");
 		T* c(new T(std::forward<TArgs>(args)...));
 		components_.insert(c);
 		return c;
@@ -252,7 +254,7 @@ public:
 	{
 		std::vector<T*> tcomp_list;
 		for (auto comp : components_.get_ordered_list())
-			tcomp_list.push_back(dynamic_cast<T*>(comp))
+			tcomp_list.push_back(dynamic_cast<T*>(comp));
 		return tcomp_list;
 	}	
 

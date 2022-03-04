@@ -2,11 +2,17 @@
 	"textbox" : "textbox",
 	"data" : [{
 		"messages" : [
-			"Hi there, welcome to our world!",
-			"You are a big guy, I would estimate about 1.5 me would fit inside you", 
+			"You are a big guy, I would estimate about 1.5 me would fit inside you. I'm small and have a lot of hate in my heart. Lets work together.", 
 			"Please feed me so I may grow.",
 			],
+		"speech_box" : "true",
+		},{
+		"messages" : [
+			"Hi there, welcome to the world!",
+			"There are a lot of sexy women around here, please jerk off before you go exploring!"
+			],
 		"speech_box" : "false",
-		},
+		}
+
 	]
 }

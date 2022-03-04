@@ -19,7 +19,7 @@ namespace Component {
 			protected:
 				std::array<glm::vec2, MAX_BOUNDARY> vertices_;
 			public:
-				Boundary(Rect transform, std::array<glm::vec2, MAX_BOUNDARY> vertices)
+				Boundary(const Rect& transform, std::array<glm::vec2, MAX_BOUNDARY> vertices)
 					: Component::Collider::IGJK(transform), vertices_(vertices), offset_()
 				{
 					offset_ = (vertices_[0] + vertices_[1]) / 2.0f;

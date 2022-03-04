@@ -45,7 +45,7 @@ namespace Component {
 					return true;
 				}
 			public:
-				Polygon(Rect transform, std::vector<glm::vec2> vertices)
+				Polygon(const Rect& transform, std::vector<glm::vec2> vertices)
 					: IGJK(transform), vertices_(vertices)
 				{
 					if (vertices.size() < 3)

@@ -10,10 +10,10 @@
 #include "logger.h"
 #include "component_array.h"
 #include <sstream>
-#include "component_grouped_objects.h"
+#include "component_trigger_input_gamestate_overworld.h"
 
 /*
-Source code for episode 16 of Build Your Own RPG series
+Source code for episode 17 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -72,17 +72,9 @@ int main()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
-    auto current_state = game->get_child("overworld");
+    auto& current_state = *game->get_component<Component::Trigger::Input::GameState::Overworld>("overworld");
 
-
-    // set up used game objects
-    auto engine = current_state->get_child("engine");
-    auto& render_systems = *engine->get_component<Component::GroupedSystems>("render");
-    auto& update_systems = *engine->get_component<Component::GroupedSystems>("update");
-    auto& trigger_systems = *engine->get_component<Component::TriggerVector>("trigger");
-
-    auto& c_renderer = *current_state->get_child("renderer")->get_component<Component::Renderer>();
-
+    current_state.init();
     Logger::message("Entities Created: " + std::to_string(Entity::count));
     Logger::message("Components Created: " + std::to_string(IComponent::count));
     
@@ -100,8 +92,8 @@ int main()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        // TODO add gamestate run
-            
+        current_state.run();
+
         if (Game::exit)
             glfwSetWindowShouldClose(window, GL_TRUE);
 
@@ -110,9 +102,10 @@ int main()
     }
 
     // delete game and global entities and their components
+    current_state.destroy();
     delete Game::global;
     delete game;
-    
+
     glfwTerminate();
 
     if (Entity::count)

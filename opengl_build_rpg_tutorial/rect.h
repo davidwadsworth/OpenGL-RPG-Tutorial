@@ -25,12 +25,20 @@ struct Rect : public glm::vec2
 		: glm::vec2(x,y), w(l), h(l)
 	{}
 
+	Rect(glm::vec2 pos, GLfloat l)
+		: glm::vec2(pos), w(l), h(l)
+	{}
+
+	Rect(glm::vec2 pos)
+		: glm::vec2(pos), w(0.0f), h(0.0f)
+	{}
+
 	Rect& operator=(const Rect& rect)
 	{
 		set(rect);
 	}
 
-	Rect& operator=(Rect&& rect)
+	Rect& operator=(Rect&& rect) noexcept
 	{
 		set(rect);
 	}

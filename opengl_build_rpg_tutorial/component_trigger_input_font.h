@@ -19,40 +19,17 @@ namespace Component {
 		{
 			class Font : public Component::Trigger::IInput
 			{
-				std::string path_;
 			public:
-				Font(std::string name, std::string path)
-					: Component::Trigger::IInput(name), path_(path)
-				{}
+				using Component::Trigger::IInput::IInput;
 
 			private:
 				void create(Entity* gamestate) override final
 				{
-					// load tilemap from file
-					std::stringstream fnt_stream;
-
-					try
-					{
-						// open files
-						std::ifstream fnt_file(path_);
-
-						// read into temp string streams
-						fnt_stream << fnt_file.rdbuf();
-
-						// close file streams
-						fnt_file.close();
-					}
-					catch (std::exception e)
-					{
-						Logger::error("Failed to read font file! path = " + path_, Logger::MEDIUM);
-						return;
-					}
-
 					// parse into json obj
-					auto fnt_json = nlohmann::json::parse(fnt_stream);
+					auto fnt_json = gamestate->get_child("index")->get_component<Component::Json>()->json;
 
 					int line_h = fnt_json["common"]["lineHeight"];
-					entity_->add_component<Component::Integer>(line_h);
+					entity_->add_id_component<Component::Integer>("line_h",line_h);
 					std::string image_src = fnt_json["pages"][0];
 
 					auto texture_manager = gamestate->get_child("texture manager");
@@ -62,7 +39,7 @@ namespace Component {
 					auto& c_font_shader = *gamestate->get_child("shader")->get_component<Component::Shader>("font");
 					auto& c_texunit = *gamestate->get_component<Component::TexUnit>("texunit");
 
-					auto& c_font_material = *entity_->add_component<Component::Color>( c_font_texture, c_font_shader, c_texunit.get_open_tex_unit(), glm::vec3(0.0f, 0.0f, 0.0f));
+					auto& c_font_material = *entity_->add_id_component<Component::Color>("material", c_font_texture, c_font_shader, c_texunit.get_open_tex_unit(), glm::vec3(0.0f, 0.0f, 0.0f));
 
 					auto e_glyphs = new Entity();
 					entity_->add_id_child(e_glyphs, "glyphs");

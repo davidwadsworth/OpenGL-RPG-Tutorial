@@ -13,6 +13,8 @@
 #include "component_trigger_input_gamestate.h"
 #include "component_engine.h"
 #include "component_trigger_input_gameobj_textbox.h"
+#include "component_trigger_input_index.h"
+#include "component_trigger_input_loadcache.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -84,13 +86,15 @@ namespace Component {
 						c_renderer_ = entity_->add_id_ct_input<Component::Renderer>("renderer");
 						entity_->add_id_component<Component::TexUnit>("texunit");
 
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Index>("index"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::LoadCache>("load"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_tree"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("action_tree"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_qtree"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("action_qtree"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collider_map"));

@@ -4,5 +4,6 @@
 class Action
 {
 public:
+	Action() = default;
 	nlohmann::json action;
 };

@@ -17,7 +17,7 @@ namespace Component {
 				GLfloat radius_;
 				glm::vec2 center_;
 			public:
-				Circle(Rect transform, GLfloat radius, glm::vec2 center)
+				Circle(const Rect& transform, GLfloat radius, glm::vec2 center)
 					: IGJK(transform), radius_(radius), center_(center)
 				{}
 

@@ -52,7 +52,7 @@ namespace Component {
 					entity_->add_id_component<Component::Material>("material", c_ss_texture, c_sprite_shader, c_texunit.get_open_tex_unit());
 				}
 			public:
-
+				using Component::Trigger::IInput::IInput;
 			};
 		}
 	}

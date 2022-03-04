@@ -105,6 +105,12 @@
     <ClCompile Include="component_rect_bitmap_glyph.cpp">
       <Filter>EC\Component\Rect</Filter>
     </ClCompile>
+    <ClCompile Include="add_component_rect.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="delimiter_split.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -134,7 +140,7 @@
     <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_render_camera_draw.h">
+    <ClInclude Include="component_system_render_cameradraw.h">
       <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
     <ClInclude Include="component_system_update_animation.h">
@@ -149,7 +155,7 @@
     <ClInclude Include="component_controller_keyboard.h">
       <Filter>EC\Component\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_update_animate_move.h">
+    <ClInclude Include="component_system_update_animatemove.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
     <ClInclude Include="component_vector.h">
@@ -177,9 +183,6 @@
       <Filter>EC\Component\Trigger\Input\GameState</Filter>
     </ClInclude>
     <ClInclude Include="json.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="delimiter_split.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_tileset.h">
@@ -227,7 +230,7 @@
     <ClInclude Include="component_collider_gjk_physics_polygon_smooth.h">
       <Filter>EC\Component\Rect\Collider\GJK\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_update_check_collision.h">
+    <ClInclude Include="component_system_update_checkcollision.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_font.h">
@@ -338,17 +341,11 @@
     <ClInclude Include="component_trigger_swapvectors.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_message.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
     <ClInclude Include="add_component_rect.h">
       <Filter>Helper</Filter>
     </ClInclude>
     <ClInclude Include="action.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="component_collider_gjk_action.h">
-      <Filter>EC\Component\Rect\Collider\GJK</Filter>
     </ClInclude>
     <ClInclude Include="component_rect_action.h">
       <Filter>EC\Component\Rect</Filter>
@@ -361,6 +358,27 @@
     </ClInclude>
     <ClInclude Include="component_trigger_load_message.h">
       <Filter>EC\Component\Trigger\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_render_bulkdraw.h">
+      <Filter>EC\Component\System\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_update_checkaction.h">
+      <Filter>EC\Component\System\Update</Filter>
+    </ClInclude>
+    <ClInclude Include="component_collider_gjk_action.h">
+      <Filter>EC\Component\Rect\Collider\GJK</Filter>
+    </ClInclude>
+    <ClInclude Include="aabb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="component_position.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_update_traverse_tree.h">
+      <Filter>EC\Component\System\Update</Filter>
+    </ClInclude>
+    <ClInclude Include="delimiter_split.h">
+      <Filter>Helper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

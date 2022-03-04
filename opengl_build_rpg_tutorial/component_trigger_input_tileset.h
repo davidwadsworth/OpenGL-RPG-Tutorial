@@ -1,6 +1,6 @@
 #pragma once
 #include "component_trigger_input.h"
-#include "json.hpp"
+#include "component_json.h"
 #include "component_texunit.h"
 
 /*
@@ -15,36 +15,9 @@ namespace Component {
 		{
 			class TileSet : public Component::Trigger::IInput
 			{
-				std::string path_;
-			public:
-				TileSet(std::string name, std::string path)
-					: Component::Trigger::IInput(name), path_(path)
-				{}
-
-			private:
 				void create(Entity* gamestate) override final
 				{
-					// load shaders from file
-					std::stringstream ts_stream;
-
-					try
-					{
-						// open files
-						std::ifstream ts_file(path_);
-
-						// read into temp string streams
-						ts_stream << ts_file.rdbuf();
-
-						// close file streams
-						ts_file.close();
-					}
-					catch (std::exception e)
-					{
-						Logger::error("Failed to read tileset file! path = " + path_, Logger::MEDIUM);
-						return;
-					}
-
-					auto tileset_json = nlohmann::json::parse(ts_stream);
+					auto tileset_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
 
 					float margin = tileset_json["margin"];
 					float spacing = tileset_json["spacing"];
@@ -64,18 +37,22 @@ namespace Component {
 					auto& c_texunit = *gamestate->get_component<Component::TexUnit>("texunit");
 
 					// set up tile map material
-					auto& c_tset_material = *entity_->push_back_component<Component::Material>
-						(c_tileset_tex, c_sprite_shader, c_texunit.get_open_tex_unit());
+					auto& c_tset_material = *entity_->add_id_component<Component::Material>
+						("material", c_tileset_tex, c_sprite_shader, c_texunit.get_open_tex_unit());
 
+					auto e_tiles = entity_->add_id_child("tiles");
 					// set up tile srcs starting at the margin and incrementing with tile size and spacing
+					
 					for (auto y = margin; y < tileset_h; y += tile_size + spacing)
 					{
 						for (auto x = margin; x < tileset_w; x += tile_size + spacing)
 						{
-							entity_->push_back_component<Component::Src>(Rect{ x, y, tile_size, tile_size });
+							e_tiles->push_back_component<Component::Src>(Rect{ x, y, tile_size, tile_size });
 						}
 					}
 				}
+			public:
+				using Component::Trigger::IInput::IInput;
 			};
 		}
 	}

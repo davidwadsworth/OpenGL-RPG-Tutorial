@@ -8,12 +8,12 @@
 			"filename": "collider",
 			"id" : "circle",
 			"pos" : 0,
-			"tree" : "collision_tree",
+			"tree" : "collision_qtree",
 		},
 		"action" : {
 			"filename" : "message",
 			"pos" : 0,
-			"tree" : "action_tree",
+			"tree" : "action_qtree",
 		},
 	},
 	"scale" : "1.0f",
@@ -32,4 +32,5 @@
 	"player_speed" : "240.0",
 	"render_group" : "2.0",
 	"update_group" : "1.0", 
+	"action_distance" : "80.0",
 }

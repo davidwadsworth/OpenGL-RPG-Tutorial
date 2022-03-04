@@ -4,6 +4,8 @@
 #include "action.h"
 
 namespace Component {
-	class ARect : public Rectangle, public Action 
-	{};
+	class ARect : public Component::Rectangle, public Action 
+	{
+		using Component::Rectangle::Rectangle;
+	};
 }

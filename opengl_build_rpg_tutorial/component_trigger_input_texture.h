@@ -1,6 +1,8 @@
 #pragma once
 #include "component_trigger_input.h"
 #include "component_texture.h"
+#include "component_json.h"
+#include "delimiter_split.h"
 
 /*
 Loads and stores Textures for overworld
