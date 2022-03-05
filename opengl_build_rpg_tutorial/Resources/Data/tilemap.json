@@ -29,6 +29,6 @@
  "type":"map",
  "version":1.4,
  "width":32,
- "scale": "2.0",
- "render_group" : "1.0",
+ "scale": 2.0,
+ "render_group" : 1.0
 }

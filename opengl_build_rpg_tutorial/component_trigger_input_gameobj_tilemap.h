@@ -30,11 +30,11 @@ namespace Component {
 						auto tilemap_name = delimiter_split(name_, '_')[0];
 
 						// parse into json obj
-						auto& tilemap_json = gamestate->get_child("index")->get_child(tilemap_name)->get_component<Component::Json>()->json;
+						auto& tilemap_json = gamestate->get_child("index")->get_component<Component::Json>(tilemap_name)->json;
 
 						int tilemap_w = tilemap_json["width"];
 						int tilemap_h = tilemap_json["height"];
-						int tile_size = tilemap_json["tilesize"];
+						int tile_size = tilemap_json["tilewidth"];
 						float tile_scale = tilemap_json["scale"];
 						float render_group = tilemap_json["render_group"];
 
@@ -46,10 +46,6 @@ namespace Component {
 						std::string tileset_source = tilemap_json["tilesets"][0]["source"];
 						int first_gid = tilemap_json["tilesets"][0]["firstgid"];
 						auto set_name = delimiter_split(delimiter_split(tileset_source.c_str(), '/').back().c_str(), '.').front();
-
-						// if not set up already add tileset to overworld gamobjects
-						if (!gamestate->has_child(set_name))
-							Logger::error("index.json missing tileset: " + set_name, Logger::SEVERITY::HIGH);
 
 						// get a list of all srcs used
 						auto e_tileset = gamestate->get_child(set_name)->get_child("tiles");
@@ -72,12 +68,12 @@ namespace Component {
 							{
 								static_cast<GLfloat>((i % tilemap_w) * tile_size),  // finds place in column and multiplies by sprite width
 								static_cast<GLfloat>((i / tilemap_w) * tile_size),  // finds place in row and multiples by sprite height
-								static_cast<GLfloat>(tile_size), static_cast<GLfloat>(tile_size)
+								static_cast<GLfloat>(tile_size * tile_scale), static_cast<GLfloat>(tile_size * tile_scale)
 							};
-							trans_vec.push_back(e_tiles->push_back_component<Component::Transform>(tile_dest, tile_scale));
+							trans_vec.push_back(e_tiles->push_back_component<Component::Transform>(tile_dest));
 							
 							// get the approriate src tile from the list of tile_srcs minus the first gid
-							src_vec.push_back(e_tiles->get_component<Component::Src>(tiles[i] - first_gid));
+							src_vec.push_back(e_tileset->get_component<Component::Src>(tiles[i] - first_gid));
 						}
 
 						auto csr_tmap_render = entity_->add_component<Component::System::Render::TileMap>( c_cam_position, 

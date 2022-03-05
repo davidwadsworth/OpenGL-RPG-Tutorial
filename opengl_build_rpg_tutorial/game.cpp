@@ -11,7 +11,7 @@ GLuint Game::height = 600u;
 GLfloat Game::delta_time = 0.0f;
 Entity* Game::global = new Entity();
 bool Game::exit = false;
-glm::vec2 Game::removed(Game::width* 2.0f + 1.0f, Game::height* 2.0f + 1.0f);
+glm::vec2 Game::removed(static_cast<int>(Game::width)* -2.0f - 1.0f, static_cast<int>(Game::height)* -2.0f - 1.0f);
 
 // EC reference counting
 long long IComponent::count = 0ll;

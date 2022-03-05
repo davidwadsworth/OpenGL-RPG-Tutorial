@@ -1,36 +1,33 @@
 {
 	"info" : {
-		"x" : "800.0f",
-		"y" : "792.0f",
-		"w" : "64.0",
-		"h" : "64.0",
+		"rect" : {
+			"x" : 800.0,
+			"y" : 792.0,
+			"w" : 64.0,
+			"h" : 64.0
+		},
 		"collider" : {
 			"filename": "collider",
 			"id" : "circle",
 			"pos" : 0,
-			"tree" : "collision_qtree",
-		},
-		"action" : {
-			"filename" : "message",
-			"pos" : 0,
-			"tree" : "action_qtree",
-		},
+			"tree" : "collision_qtree"
+		}
 	},
-	"scale" : "1.0f",
+	"scale" : 1.0,
 	"texture" : {"filename":"spritesheet","groupid":"player"},
 	"animations" : [
-		{"name" : "idle_down", "frames" : 1, },
-		{"name" : "idle_up", "frames" : 1, },
-		{"name" : "idle_right", "frames" : 1, },
-		{"name" : "idle_left", "frames" : 1, },
-		{"name" : "walk_down", "frames" : 2, },
-		{"name" : "walk_up", "frames" : 2, },
-		{"name" : "walk_right", "frames" : 2, },
-		{"name" : "walk_left", "frames" : 2, },
+		{"name" : "idle_down", "frames" : 1 },
+		{"name" : "idle_up", "frames" : 1 },
+		{"name" : "idle_right", "frames" : 1 },
+		{"name" : "idle_left", "frames" : 1 },
+		{"name" : "walk_down", "frames" : 2 },
+		{"name" : "walk_up", "frames" : 2 },
+		{"name" : "walk_right", "frames" : 2 },
+		{"name" : "walk_left", "frames" : 2 }
 		],
-	"animation_speed" : "4.0",
-	"player_speed" : "240.0",
-	"render_group" : "2.0",
-	"update_group" : "1.0", 
-	"action_distance" : "80.0",
+	"animation_speed" : 4.0,
+	"player_speed" : 240.0,
+	"render_group" : 2.0,
+	"update_group" : 1.0, 
+	"action_distance" : 80.0
 }

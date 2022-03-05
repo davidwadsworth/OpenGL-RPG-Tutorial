@@ -20,12 +20,12 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override
 				{
-					auto qt_json = gamestate->get_child("index")->get_component<Component::Json>("quadtree")->json;
+					auto& qt_json = gamestate->get_child("index")->get_component<Component::Json>("quadtree")->json;
 
-					float x = qt_json["rect"][0];
-					float y = qt_json["rect"][1];
-					float w = qt_json["rect"][2];
-					float h = qt_json["rect"][3];
+					float x = qt_json["rect"]["x"];
+					float y = qt_json["rect"]["y"];
+					float w = qt_json["rect"]["w"];
+					float h = qt_json["rect"]["h"];
 					int max_objects = qt_json["max_objects"];
 
 					this->entity_->push_back_component<Component::QuadTree>(max_objects, Rect(x, y, w, h));

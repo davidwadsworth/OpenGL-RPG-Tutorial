@@ -8,22 +8,11 @@
 
 Component::Rectangle* add_component_rect(Entity* entity, Entity* gamestate, nlohmann::json info_json)
 {
-	// get renderer
-	auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
-	// get camera
-	auto& c_cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
-
-	// get collision world
-	auto& c_colw_col_vec = *gamestate->get_child("collision_world")->get_component<Component::QuadTree>();
-
-	// get render engine
-	auto& c_render_engine = *gamestate->get_component<Component::Engine>("render_engine");
-
-	float x = info_json["x"];
-	float y = info_json["y"];
-	float w = info_json["w"];
-	float h = info_json["h"];
+	float x = info_json["rect"]["x"];
+	float y = info_json["rect"]["y"];
+	float w = info_json["rect"]["w"];
+	float h = info_json["rect"]["h"];
 
 	Component::Rectangle* rect = nullptr;
 	bool has_action = info_json.contains("action");
@@ -34,14 +23,14 @@ Component::Rectangle* add_component_rect(Entity* entity, Entity* gamestate, nloh
 	{
 		std::string collider_filename = info_json["collider"]["filename"];
 		std::string collider_name = info_json["collider"]["id"];
-		int col_pos = info_json["collider"]["pos"];
+		int collider_pos = info_json["collider"]["pos"];
 		auto collider_json = gamestate->get_child("index")->
 			get_component<Component::Json>(collider_filename)->json;
 		bool debug = collider_json["debug"] == "true";
 
 		if (collider_name == "circle")
 		{
-			auto circle_json = collider_json[collider_name][col_pos];
+			auto circle_json = collider_json[collider_name][collider_pos];
 			float radius = circle_json["radius"];
 			float center_x = circle_json["center"]["x"];
 			float center_y = circle_json["center"]["y"];
@@ -60,7 +49,7 @@ Component::Rectangle* add_component_rect(Entity* entity, Entity* gamestate, nloh
 		}
 		else if (collider_name == "boundary")
 		{
-			auto boundary_json = collider_json[collider_name][col_pos];
+			auto boundary_json = collider_json[collider_name][collider_pos];
 			auto points = boundary_json["points"];
 
 			std::array<glm::vec2, MAX_BOUNDARY> arr_points{ glm::vec2(points["p1"]["x"], points["p1"]["y"]),
@@ -79,7 +68,7 @@ Component::Rectangle* add_component_rect(Entity* entity, Entity* gamestate, nloh
 		}
 		else if (collider_name == "polygon")
 		{
-			auto& polygon_json = collider_json[collider_name][col_pos];
+			auto& polygon_json = collider_json[collider_name][collider_pos];
 			auto& points = polygon_json["points"];
 			std::vector<glm::vec2> vec2_points;
 			for (auto& p : points)
@@ -105,13 +94,22 @@ Component::Rectangle* add_component_rect(Entity* entity, Entity* gamestate, nloh
 
 		if (debug)
 		{
-			int tileid = collider_json[collider_name]["tileid"];
+			// get renderer
+			auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
+
+			// get camera
+			auto& c_cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
+
+			// get render engine
+			auto& c_render_engine = *gamestate->get_component<Component::Engine>("render");
+		
+			int tileid = collider_json[collider_name][collider_pos]["tileid"];
 			std::string tileset_name = collider_json["tileset"];
 			float render_group = collider_json["render_group"];
 
 			// set up collider draw
 			auto& c_tset_material = *gamestate->get_child(tileset_name)->get_component<Component::Material>("material");
-			auto& c_tset_col_src = *gamestate->get_child(tileset_name)->get_component<Component::Src>(tileid);
+			auto& c_tset_col_src = *gamestate->get_child(tileset_name)->get_child("tiles")->get_component<Component::Src>(tileid);
 
 			auto csr_col_cam_draw = entity->push_back_component<Component::System::Render::CameraDraw>
 				(c_renderer, c_tset_col_src, *rect, c_tset_material, c_cam_position);

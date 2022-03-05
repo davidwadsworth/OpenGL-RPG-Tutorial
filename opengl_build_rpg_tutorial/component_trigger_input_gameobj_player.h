@@ -32,12 +32,12 @@ namespace Component {
 
                         float scale = player_json["scale"];
 
-                        std::string spritesheet_name = player_json["spritesheet"]["filename"];
-                        std::string spritesheet_category_name = player_json["spritesheet"]["groupid"];
+                        std::string spritesheet_name = player_json["texture"]["filename"];
+                        std::string spritesheet_category_name = player_json["texture"]["groupid"];
 
                         auto info_json = player_json["info"];
 
-                        std::vector<nlohmann::json> animation_jsons = player_json["animation"];
+                        auto animation_json = player_json["animations"];
 
                         float animation_speed = player_json["animation_speed"];
                         float player_speed = player_json["player_speed"];
@@ -65,10 +65,10 @@ namespace Component {
                         auto& c_action_qtree = *gamestate->get_child("action_qtree")->get_component<Component::QuadTree>(0);
 
                         // get render engine
-                        auto& c_render_engine = *gamestate->get_component<Component::Engine>("render_engine");
+                        auto& c_render_engine = *gamestate->get_component<Component::Engine>("render");
 
                         // get update engine
-                        auto& c_update_engine = *gamestate->get_component<Component::Engine>("update_engine");
+                        auto& c_update_engine = *gamestate->get_component<Component::Engine>("update");
 
                         // get parse action
                         auto& c_parse_action = *gamestate->get_child("load")->get_component<Component::ParseAction>("parse");
@@ -91,13 +91,13 @@ namespace Component {
                         entity_->push_back_child(animation);
 
                         auto player_srcs_i = 0;
-                        for (auto& anim_json : animation_jsons)
+                        for (auto& anim_json : animation_json)
                         {
                             std::string anim_name = anim_json["name"];
                             int frames = anim_json["frames"];
                             Anim anim_srcs;
                             for (auto i = 0; i < frames; ++i)
-                                anim_srcs.push_back(static_cast<Component::Src*>(spritesheet_category[i]));
+                                anim_srcs.push_back(spritesheet_category[i]);
                             csu_pla_animation->add(anim_name, anim_srcs);
                         }
 

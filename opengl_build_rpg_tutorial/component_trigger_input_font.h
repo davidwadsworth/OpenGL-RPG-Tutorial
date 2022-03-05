@@ -26,13 +26,12 @@ namespace Component {
 				void create(Entity* gamestate) override final
 				{
 					// parse into json obj
-					auto fnt_json = gamestate->get_child("index")->get_component<Component::Json>()->json;
+					auto fnt_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
 
 					int line_h = fnt_json["common"]["lineHeight"];
 					entity_->add_id_component<Component::Integer>("line_h",line_h);
 					std::string image_src = fnt_json["pages"][0];
 
-					auto texture_manager = gamestate->get_child("texture manager");
 					auto texture_id = delimiter_split(delimiter_split(image_src.c_str(), '/').back().c_str(), '.')[0];
 
 					auto& c_font_texture = *gamestate->get_child("texture")->get_component<Component::Texture>(texture_id);

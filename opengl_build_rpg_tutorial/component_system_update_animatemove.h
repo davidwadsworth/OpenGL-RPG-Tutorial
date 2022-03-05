@@ -34,24 +34,24 @@ namespace Component{
 					{
 						prev_ = curr;
 						if (curr.x > 0)
-							animation_.play("walk right");
+							animation_.play("walk_right");
 						else if (curr.x < 0)
-							animation_.play("walk left");
+							animation_.play("walk_left");
 						if (curr.y > 0)
-							animation_.play("walk down");
+							animation_.play("walk_down");
 						else if (curr.y < 0)
-							animation_.play("walk up");
+							animation_.play("walk_up");
 					}
 					else
 					{
 						if (prev_.x > 0)
-							animation_.play("idle right");
+							animation_.play("idle_right");
 						else if (prev_.x < 0)
-							animation_.play("idle left");
+							animation_.play("idle_left");
 						if (prev_.y > 0)
-							animation_.play("idle down");
+							animation_.play("idle_down");
 						else if (prev_.y < 0)
-							animation_.play("idle up");
+							animation_.play("idle_up");
 					}
 				}
 			};

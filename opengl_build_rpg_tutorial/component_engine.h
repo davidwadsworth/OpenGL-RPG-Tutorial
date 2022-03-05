@@ -35,14 +35,14 @@ namespace Component
 		};
 
 		std::vector<Group> groups_;
-		std::size_t search(float gid)
+		int search(float gid)
 		{
-			auto l = 0ull;
-			auto r = groups_.size() - 1;
+			int l = 0;
+			int r = groups_.size() - 1;
 
 			while (r > l)
 			{
-				auto m = (r - l) >> 1;
+				int m = (r - l) >> 1;
 
 				if (groups_[m].gid == gid)
 					return m;

@@ -3,15 +3,15 @@
 	"data" : [{
 		"messages" : [
 			"You are a big guy, I would estimate about 1.5 me would fit inside you. I'm small and have a lot of hate in my heart. Lets work together.", 
-			"Please feed me so I may grow.",
+			"Please feed me so I may grow."
 			],
-		"speech_box" : "true",
+		"speech_box" : "true"
 		},{
 		"messages" : [
 			"Hi there, welcome to the world!",
-			"There are a lot of sexy women around here, please jerk off before you go exploring!"
+			"There are a lot of sexy women around here, don't be weird and horny. Please jerk off before you go exploring!"
 			],
-		"speech_box" : "false",
+		"speech_box" : "false"
 		}
 
 	]

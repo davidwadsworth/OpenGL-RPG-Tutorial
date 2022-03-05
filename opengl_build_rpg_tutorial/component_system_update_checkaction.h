@@ -36,8 +36,10 @@ namespace Component {
 					
 					if (c_controller_.key_press_action_1())
 					{
-						auto center_point = c_transform_ + glm::vec2(c_transform_.w / 2.0f, c_transform_.h / 2.0f);
-						Rect rect_a(direction_ * distance_ + center_point);
+						auto center_point = glm::vec2(c_transform_.w / 2.0f, c_transform_.h / 2.0f);
+						center_point.x += c_transform_.x;
+						center_point.y += c_transform_.y;
+						Rect rect_a(direction_ * distance_ + center_point, 0.0f);
 
 						auto retrieved_actions = c_action_qtree_.retrieve(rect_a);
 

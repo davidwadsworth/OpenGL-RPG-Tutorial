@@ -37,10 +37,10 @@ namespace Component {
 						
 						auto box_x = 0.0f;
 						auto box_y = 0.0f;
-						float box_w = box_json["box_width"];
-						float box_h = box_json["box_height"];
+						float box_w = box_json["width"];
+						float box_h = box_json["height"];
 
-						float box_scale = box_json["box_scale"];
+						float box_scale = box_json["scale"];
 						
 						box_w *= box_scale;
 						box_h *= box_scale;
@@ -86,7 +86,7 @@ namespace Component {
 
 
 						// get src rects
-						auto box_srcs = gamestate->get_child(textbox_name)->get_component_list<Component::Src>();
+						auto box_srcs = e_spritesheet->get_child(textbox_name)->get_component_list<Component::Src>();
 
 
 						auto cs_item = entity_->add_id_component<Component::System::Render::Offset>("render", c_box_position, box_srcs, transform_vec, c_ss_material, c_renderer);

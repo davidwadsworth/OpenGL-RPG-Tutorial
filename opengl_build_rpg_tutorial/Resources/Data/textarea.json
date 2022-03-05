@@ -1,10 +1,10 @@
 {
-	"font" : "gilsans",
-	"font_scale" : "1.0",
+	"font" : "font",
+	"font_scale" : 1.0,
 	"align_horizontal" : "center",
 	"align_vertical" : "center",
-	"line_spacing" : "1.5",
-	"msg_padding" : {"x":"0.5","y":"1.0"},
-	"render_group" : "4.0",
-	"max_characters" : 512,
+	"line_spacing" : 1.5,
+	"msg_padding" : {"x":0.5,"y":1.0},
+	"render_group" : 4.0,
+	"max_characters" : 512
 }

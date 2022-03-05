@@ -22,7 +22,7 @@ namespace Component {
 			Keyboard()
 				: action_1_pressed_(false), keys_(nullptr)
 			{
-				keys_ = Game::global->get_child("keyboard")->get_component<Component::KeyboardArray>();
+				keys_ = Game::global->get_component<Component::KeyboardArray>("keyboard");
 			}
 
 			bool key_down_left() override

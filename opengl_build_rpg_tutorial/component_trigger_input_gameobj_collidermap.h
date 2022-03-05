@@ -33,8 +33,10 @@ namespace Component {
 						for (auto& data : data_json)
 						{
 							std::string src_id = data["src"]["id"];
-							src_vec.push_back(e_texture->get_component<Component::Src>(src_id));
-							transform_vec.push_back(add_component_rect(entity_, gamestate, data["info"]));
+							auto c_src = e_texture->get_component<Component::Src>(src_id);
+							src_vec.push_back(c_src);
+							auto c_transform = add_component_rect(entity_, gamestate, data["info"]);
+							transform_vec.push_back(c_transform);
 						}
 
 						// get renderer
@@ -44,10 +46,10 @@ namespace Component {
 						auto& c_cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 
 						// get render engine
-						auto& c_render_engine = *gamestate->get_component<Component::Engine>("render_engine");
+						auto& c_render_engine = *gamestate->get_component<Component::Engine>("render");
 
 						auto csr_offset_render = entity_->add_id_component<Component::System::Render::Offset>("render", c_cam_position, src_vec, transform_vec, c_material, c_renderer);
-						gamestate->get_child("engine")->get_component<Component::Engine>("render")->add(csr_offset_render, render_group);
+						c_render_engine.add(csr_offset_render, render_group);
 					}
 				public:
 					using Component::Trigger::IInput::IInput;

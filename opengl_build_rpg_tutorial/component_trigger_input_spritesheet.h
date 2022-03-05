@@ -37,7 +37,7 @@ namespace Component {
 						float src_y = frame["frame"]["y"];
 						float src_w = frame["frame"]["w"];
 						float src_h = frame["frame"]["h"];
-						e_destination->add_id_component<Component::Src>(folder_split.back(), Rect(src_x, src_y, src_w, src_h));
+						auto c_src = e_destination->add_id_component<Component::Src>(folder_split.back(), Rect(src_x, src_y, src_w, src_h));
 
 					}
 

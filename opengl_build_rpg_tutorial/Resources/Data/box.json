@@ -1,8 +1,8 @@
 {
 	"texture" : {"filename":"spritesheet", "id":"textbox"},
-	"render_group" : "4.0",
+	"render_group" : 4.0,
 	"height" : 512,
 	"width" : 512,
-	"scale" : "1.0",	
-	"corner_size" : "10.0",
-},
+	"scale" : 1.0,	
+	"corner_size" : 10.0
+}

@@ -6,31 +6,30 @@
 @author David Wadsworth
 */
 
-struct Rect : public glm::vec2
+struct Rect
 {
 	Rect(const Rect& rect)
-	{
-		set(rect);
-	}
+		: x(rect.x), y(rect.y), w(rect.w), h(rect.h)
+	{}
 
 	Rect()
-		: glm::vec2(0.0f), w(0.0f), h(0.0f)
+		: x(0.0f), y(0.0f), w(0.0f), h(0.0f)
 	{}
 
 	Rect(GLfloat x, GLfloat y, GLfloat w, GLfloat h)
-		: glm::vec2(x,y), w(w), h(h)
+		: x(x), y(y), w(w), h(h)
 	{}
 
 	Rect (GLfloat x, GLfloat y, GLfloat l)
-		: glm::vec2(x,y), w(l), h(l)
+		: x(x), y(y), w(l), h(l)
 	{}
 
 	Rect(glm::vec2 pos, GLfloat l)
-		: glm::vec2(pos), w(l), h(l)
+		: x(pos.x), y(pos.y), w(l), h(l)
 	{}
 
 	Rect(glm::vec2 pos)
-		: glm::vec2(pos), w(0.0f), h(0.0f)
+		: x(pos.x), y(pos.y), w(0.0f), h(0.0f)
 	{}
 
 	Rect& operator=(const Rect& rect)
@@ -68,5 +67,5 @@ struct Rect : public glm::vec2
 		set(rect.x, rect.y, rect.w, rect.h);
 	}
 
-	GLfloat w, h;
+	float x,y,w, h;
 };

@@ -28,8 +28,8 @@ namespace Component {
 					{
 						Rect dest;
 
-						dest.x = transforms_[i]->x + offset_.x;
-						dest.y = transforms_[i]->y + offset_.y;
+						dest.x = transforms_[i]->x - offset_.x;
+						dest.y = transforms_[i]->y - offset_.y;
 						dest.w = transforms_[i]->w;
 						dest.h = transforms_[i]->h;
 

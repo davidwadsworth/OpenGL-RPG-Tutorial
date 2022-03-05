@@ -15,6 +15,7 @@
 #include "component_trigger_input_gameobj_textbox.h"
 #include "component_trigger_input_index.h"
 #include "component_trigger_input_loadcache.h"
+#include "component_trigger_input_spritesheet.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -44,6 +45,12 @@ namespace Component {
 							static_cast<Component::ITrigger*>(obj)->execute(entity_);
 
 						c_renderer_->init(entity_);
+						auto& c_render_engine = *entity_->get_component<Component::Engine>("render");
+						auto& c_update_engine = *entity_->get_component<Component::Engine>("update");
+						
+						auto flat_u_engine = c_update_engine.flatten();
+						c_update_->insert(c_update_->begin(), flat_u_engine.begin(), flat_u_engine.end());
+						render_ = c_render_engine.flatten();
 					}
 
 					void destroy() override final
@@ -77,8 +84,8 @@ namespace Component {
 					void create(Entity* gamestate) override final
 					{
 						// set up renderer and engine systems for run
-						auto& c_render_engine = *entity_->add_id_component<Component::Engine>("render_engine");
-						auto& c_update_engine = *entity_->add_id_component<Component::Engine>("update_engine");
+						entity_->add_id_component<Component::Engine>("render");
+						entity_->add_id_component<Component::Engine>("update");
 						
 						c_update_ = entity_->add_id_component<Component::SystemVector>("update_vec");
 						c_triggers_ = entity_->add_id_component<Component::TriggerVector>("trigger");
@@ -90,19 +97,18 @@ namespace Component {
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::LoadCache>("load"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader_manager"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture_manager"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("gilsans"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("font"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_qtree"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("action_qtree"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::TileSet>("tileset"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::SpriteSheet>("spritesheet"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collider_map"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collidermap"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TextBox>("textbox"));
 
-						auto flat_u_engine = c_update_engine.flatten();
-						c_update_->insert( c_update_->begin(), flat_u_engine.begin(), flat_u_engine.end());
-						render_ = c_render_engine.flatten();
 					}
 				};
 			}
