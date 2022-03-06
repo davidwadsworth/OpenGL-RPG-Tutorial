@@ -25,11 +25,12 @@ namespace Component {
 						};
 						class Circle : public Component::Collider::GJK::Physics::Circle::Smooth, public Action {
 						public:
-							using Component::Collider::GJK::Physics::Circle::Smooth::Smooth;
+							Cir
 						};
 						class Polygon : public Component::Collider::GJK::Physics::Polygon::Smooth, public Action {
 						public:
-							using Component::Collider::GJK::Physics::Polygon::Smooth::Smooth;
+							Polygon(const Rect& transform, std::vector<glm::vec2> vertices)
+
 						};
 					}
 				}

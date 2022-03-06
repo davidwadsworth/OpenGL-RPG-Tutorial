@@ -1,5 +1,5 @@
 #pragma once
-#include "component_collider_gjk.h"
+#include "component_rect_gjk.h"
 #include <glm/glm.hpp>
 #include <vector>
 #include <glad/glad.h>
@@ -10,10 +10,11 @@ GJK implementation for at least three pointed non-concave polygons
 @author David Wadsworth
 */
 namespace Component {
-	namespace Collider {
+	namespace Rect {
 		namespace GJK
 		{
-			class Polygon : public Component::Collider::IGJK
+			template <typename T>
+			class Polygon : public Component::Rect::IGJK<T>
 			{
 			protected:
 				std::vector<glm::vec2> vertices_;
@@ -46,7 +47,7 @@ namespace Component {
 				}
 			public:
 				Polygon(const Rect& transform, std::vector<glm::vec2> vertices)
-					: IGJK(transform), vertices_(vertices)
+					: IGJK<T>(transform), vertices_(vertices)
 				{
 					if (vertices.size() < 3)
 						Logger::error("Invalid polygon, not enough vertices", Logger::MEDIUM);

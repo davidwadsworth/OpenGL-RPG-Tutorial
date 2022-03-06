@@ -143,7 +143,6 @@
   <ItemGroup>
     <ClCompile Include="add_component_rect.cpp" />
     <ClCompile Include="component_rect_bitmap_glyph.cpp" />
-    <ClCompile Include="component_collider_gjk.cpp" />
     <ClCompile Include="component_material_color.cpp" />
     <ClCompile Include="delimiter_split.cpp" />
     <ClCompile Include="game.cpp" />
@@ -157,17 +156,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aabb.h" />
-    <ClInclude Include="action.h" />
     <ClInclude Include="add_component_rect.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_collider_gjk_action.h" />
+    <ClInclude Include="component_rect_gjk_collider_circle.h" />
     <ClInclude Include="component_json.h" />
     <ClInclude Include="component_parseaction.h" />
     <ClInclude Include="component_position.h" />
     <ClInclude Include="component_quadtree.h" />
     <ClInclude Include="component_rect.h" />
     <ClInclude Include="component_rect_action.h" />
+    <ClInclude Include="component_rect_gjk_collider.h" />
+    <ClInclude Include="component_rect_gjk_physics.h" />
     <ClInclude Include="component_system_render_bulkdraw.h" />
     <ClInclude Include="component_system_render_offset.h" />
     <ClInclude Include="component_system_update_camera.h" />
@@ -181,13 +182,9 @@
     <ClInclude Include="component_trigger_load_box.h" />
     <ClInclude Include="component_engine.h" />
     <ClInclude Include="component_rect_bitmap_glyph.h" />
-    <ClInclude Include="component_collider.h" />
-    <ClInclude Include="component_collider_aabb.h" />
-    <ClInclude Include="component_collider_gjk.h" />
-    <ClInclude Include="component_collider_gjk_boundary.h" />
-    <ClInclude Include="component_collider_gjk_circle.h" />
-    <ClInclude Include="component_collider_physics_aabb_sticky.h" />
-    <ClInclude Include="component_collider_physics_aabb_smooth.h" />
+    <ClInclude Include="component_rect_gjk.h" />
+    <ClInclude Include="component_rect_gjk_boundary.h" />
+    <ClInclude Include="component_rect_gjk_circle.h" />
     <ClInclude Include="component_material_color.h" />
     <ClInclude Include="component_system_render_empty.h" />
     <ClInclude Include="component_system_render_draw.h" />
@@ -205,11 +202,8 @@
     <ClInclude Include="component_trigger_load_textbox.h" />
     <ClInclude Include="component_trigger_swapvectors.h" />
     <ClInclude Include="frarr.h" />
-    <ClInclude Include="physics.h" />
-    <ClInclude Include="component_collider_gjk_physics_boundary_smooth.h" />
-    <ClInclude Include="component_collider_gjk_physics_circle_smooth.h" />
-    <ClInclude Include="component_collider_gjk_physics_polygon_smooth.h" />
-    <ClInclude Include="component_collider_gjk_polygon.h" />
+    <ClInclude Include="component_rect_gjk_physics_smooth.h" />
+    <ClInclude Include="component_rect_gjk_polygon.h" />
     <ClInclude Include="component_controller.h" />
     <ClInclude Include="component_controller_keyboard.h" />
     <ClInclude Include="component_system_update_checkcollision.h" />

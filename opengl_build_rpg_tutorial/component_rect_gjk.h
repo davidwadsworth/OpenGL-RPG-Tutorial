@@ -1,8 +1,8 @@
 #pragma once
-#include "component_collider.h"
+#include "component_rect_physics.h"
+#include "component_rect_action.h"
 #include <array>
 
-constexpr auto MAX_SIMPLEX = 3;
 
 /*
 Calculate collisions by finding a triangle which contains the origin point (0, 0) 
@@ -26,17 +26,19 @@ glm::vec2 support(glm::vec2 direction):
 @author David Wadsworth
 */
 namespace Component {
-	namespace Collider
+	namespace Rect
 	{
-		class IGJK : public Component::ICollider
+		template <typename T>
+		class IGJK : public T
 		{
-		protected:
-			std::array<glm::vec2, MAX_SIMPLEX> simplex_;
 		public:
-			using Component::ICollider::ICollider;
+			using T::T;
+			virtual glm::vec2 get_center() = 0;
 			virtual glm::vec2 support(glm::vec2 direction) = 0;
-			virtual bool collide(Component::Collider::IGJK& col);
 		};
+
+#define GJKNorm IGJK<Component::Rectangle>
+#define GJKAction IGJK<Component::Rect::Action>
 	}
 }
 

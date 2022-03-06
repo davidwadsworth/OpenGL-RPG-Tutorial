@@ -1,5 +1,5 @@
 #pragma once
-#include "component_collider_gjk.h"
+#include "component_rect_gjk_physics.h"
 #include <glm/glm.hpp>
 
 constexpr GLuint MAX_BOUNDARY = 2;
@@ -13,7 +13,8 @@ namespace Component {
 	namespace Collider {
 		namespace GJK
 		{
-			class Boundary : public Component::Collider::IGJK
+			template<typename T>
+			class Boundary : public Component::Rect::IGJK<T>
 			{
 				glm::vec2 offset_;
 			protected:
@@ -46,6 +47,8 @@ namespace Component {
 						return p2;
 				}
 			};
+#define BoundaryAction Boundary<Component::Rect::GJKAction>
+#define BoundaryPhysics Boundary<Component::Rect::GJKPhysics>
 		}
 	}
 }
