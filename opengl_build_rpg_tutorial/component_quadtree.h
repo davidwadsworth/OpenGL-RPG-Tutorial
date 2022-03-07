@@ -2,20 +2,21 @@
 #include "component.h"
 #include "frarr.h"
 #include "rect.h"
-#include "component_collider.h"
 #include "component_trigger.h"
 #include "component_system.h"
+#include "component_rect_gjk_physics.h"
 
 constexpr auto MAX_INDEX = 4;
 constexpr auto MAX_LEVEL = 10; // we don't want our quadtree to expand inifinitely due to 11 objects being on the same position somehow
 
 namespace Component
 {
+	template <typename T>
 	class QuadTree : public IComponent
 	{
 		Rect rect_;
 		std::array<QuadTree*, MAX_INDEX> trees_;
-		FRArr<Rect*> objects_;
+		FRArr<T*> objects_;
 		GLuint level_;
 
 		enum quadrants
@@ -74,22 +75,22 @@ namespace Component
 			trees_[bot_left] = master->push_back_component<QuadTree>(level_ + 1, objects_.max_size, Rect( x, y + sub_h, sub_w, sub_h ));
 		}
 
-		void retrieve(Rect rect, std::vector<Rect*>& retrieved_qt_keys)
+		void retrieve(Rect rect, std::vector<T*>& retrieved_objs)
 		{
 			if (trees_[top_left])
 				for (auto in = index(rect);;)
 				{
 					auto in_tree = trees_[in % MAX_INDEX];
-					retrieve(rect, retrieved_qt_keys);
+					retrieve(rect, retrieved_objs);
 					in >>= 2;
 					if (!in) return;
 				}
 
 			for (auto i = 0u; i < objects_.size; i++)
-				retrieved_qt_keys.push_back(objects_[i]);
+				retrieved_objs.push_back(objects_[i]);
 		}
 
-		void insert(Rect* rect, Entity* master)
+		void insert(T* obj, Entity* master)
 		{
 			if (objects_.is_full()) {
 				split(master);
@@ -111,12 +112,12 @@ namespace Component
 			if (trees_[top_left])
 				for (auto in = index(*rect);;) {
 					auto in_tree = trees_[in % MAX_INDEX];
-					in_tree->insert(rect, master);
+					in_tree->insert(obj, master);
 					in >>= 2;
 					if (!in) return;
 				}
 
-			objects_.push_back(rect);
+			objects_.push_back(obj);
 		}
 
 	public:
@@ -165,17 +166,19 @@ namespace Component
 			}
 		}
 
-		static void add(Rect* rect, Entity* master)
+		static void add(T* obj, Entity* master)
 		{
-			auto& c_quad_tree = *master->get_component<Component::QuadTree>(0);
-			c_quad_tree.insert(rect, master);
+			auto& c_quad_tree = *master->get_component<Component::QuadTree<T>>(0);
+			c_quad_tree.insert(obj, master);
 		}
 
-		std::vector<Rect*> retrieve(Rect rect)
+		std::vector<T*> retrieve(Rect rect)
 		{
-			std::vector<Rect*> retrieved;
+			std::vector<T*> retrieved;
 			retrieve(rect, retrieved);
 			return retrieved;
 		}
 	};
+#define PhysicsGJKQTree QuadTree<Component::Rectangle::GJK::IPhysics<Component::Rectangle::IGJK>>
+#define PhysicsActionQTree QuadTree<Component::Rectangle::GJK::IPhysics<Component::Rectangle::GJK::Action>>
 }

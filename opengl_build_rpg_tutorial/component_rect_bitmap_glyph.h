@@ -9,18 +9,20 @@ Src component for bitmap fonts
 @author David Wadsworth
 */
 
-namespace Component
-{
-	class BitMapGlyph : public Component::Rectangle
+namespace Component {
+	namespace Rectangle
 	{
-	public:
+		class BitMapGlyph : public Component::Rectang
+		{
+		public:
 
-		char glyph;
-		int advance;
-		int x_off, y_off;
-		std::vector<std::pair<int, int>> kerning;
+			char glyph;
+			int advance;
+			int x_off, y_off;
+			std::vector<std::pair<int, int>> kerning;
 
-		GLuint check_kerning(char glyph);
-	};
+			GLuint check_kerning(char glyph);
+		};
+	}
 }
 

@@ -1,6 +1,6 @@
 #include "component_rect_bitmap_glyph.h"
 
-GLuint Component::BitMapGlyph::check_kerning(char glyph_2)
+GLuint Component::Rectangle::BitMapGlyph::check_kerning(char glyph_2)
 {
 	GLuint r_kerning = 0u;
 

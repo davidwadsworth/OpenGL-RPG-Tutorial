@@ -1,18 +1,16 @@
 #pragma once
-#include "component_rect_gjk.h"
+#include "component_rect_gjk_action.h"
 
 namespace Component {
-	namespace Rect {
+	namespace Rectangle {
 		namespace GJK
 		{
 			template <typename T>
-			class IPhys : public T
+			class IPhysics : public T
 			{
 			public:
-				virtual void resolve(T& col) = 0;
+				virtual void resolve(Component::Rectangle::IGJK& col) = 0;
 			};
-#define PhysicsAction IPhys<GJKAction>
-#define IPhysics IPhys<IGJK>
 		}
 	}
 }

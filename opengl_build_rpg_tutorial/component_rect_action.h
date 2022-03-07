@@ -4,13 +4,12 @@
 #include "action.h"
 
 namespace Component {
-	namespace Rect 
+	namespace Rectangle 
 	{
-		class Action : public Component::Rectangle
+		class Action : public Component::Rectang, public Act
 		{
 		public:
-			nlohmann::json action;
-			using Component::Rectangle::Rectangle;
+			using Component::Rectang::Rectang;
 		};
 	}
 }

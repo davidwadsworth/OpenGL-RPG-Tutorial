@@ -1,5 +1,4 @@
 #pragma once
-#include "component_rect_physics.h"
 #include "component_rect_action.h"
 #include <array>
 
@@ -26,19 +25,15 @@ glm::vec2 support(glm::vec2 direction):
 @author David Wadsworth
 */
 namespace Component {
-	namespace Rect
+	namespace Rectangle
 	{
-		template <typename T>
-		class IGJK : public T
+		class IGJK : public Component::Rectang
 		{
 		public:
-			using T::T;
+			using Component::Rectang::Rectang;
 			virtual glm::vec2 get_center() = 0;
 			virtual glm::vec2 support(glm::vec2 direction) = 0;
 		};
-
-#define GJKNorm IGJK<Component::Rectangle>
-#define GJKAction IGJK<Component::Rect::Action>
 	}
 }
 

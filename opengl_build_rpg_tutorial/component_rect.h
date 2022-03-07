@@ -4,20 +4,20 @@
 
 namespace Component
 {
-	class Rectangle : public Rect, public IComponent
+	class Rectang : public Rect, public IComponent
 	{
 	public:
-		Rectangle(const Rect& rect)
+		Rectang(const Rect& rect)
 			: Rect(rect)
 		{}
-		Rectangle(float x, float y, float w, float h)
+		Rectang(float x, float y, float w, float h)
 			: Rect(x,y,w,h)
 		{}
 
-		Rectangle()
+		Rectang()
 			: Rect()
 		{}
 	};
-#define Transform Rectangle
-#define Src Rectangle
+#define Transform Rectang
+#define Src Rectang
 }

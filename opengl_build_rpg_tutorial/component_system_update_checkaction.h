@@ -4,7 +4,7 @@
 #include "component_rect.h"
 #include "component_controller.h"
 #include "component_quadtree.h"
-#include "action.h"
+#include "aabb.h"
 
 namespace Component {
 	namespace System {
@@ -14,12 +14,12 @@ namespace Component {
 			{
 				Component::IController& c_controller_;
 				Component::Transform& c_transform_;
-				Component::QuadTree& c_action_qtree_;
+				Component::PhysicsActionQTree& c_action_qtree_;
 				Component::ParseAction& c_parse_action_;
 				glm::vec2 direction_;
 				float distance_;
 			public:
-				CheckAction(Component::IController& c_controller, Component::Transform& c_transform, Component::QuadTree& c_action_qtree, 
+				CheckAction(Component::IController& c_controller, Component::Transform& c_transform, Component::PhysicsActionQTree& c_action_qtree,
 					Component::ParseAction& c_parse_action, float distance)
 					: c_controller_(c_controller), c_transform_(c_transform), c_action_qtree_(c_action_qtree), 
 					c_parse_action_(c_parse_action), direction_(0.0f, 1.0f), distance_(distance)
@@ -46,7 +46,7 @@ namespace Component {
 						for (auto rect_b : retrieved_actions)
 						{
 							if (AABB::collide(rect_a, *rect_b))
-								c_parse_action_.parse(((Action*)rect_b)->action);
+								c_parse_action_.parse(rect_b->action);
 						}
 					}
 				}

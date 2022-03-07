@@ -1,9 +1,7 @@
 #pragma once
 #include "component_system.h"
-#include "component_collider.h"
 #include "component_vector.h"
-#include "component_collider_gjk.h"
-#include "physics.h"
+#include "component_rect_gjk_collider.h"
 #include "component_quadtree.h"
 
 /*
@@ -18,10 +16,10 @@ namespace Component {
 		{
 			class CheckCollision : public Component::ISystem
 			{
-				Component::Collider::IGJK& col_;
-				Component::QuadTree& c_quad_tree_;
+				Component::Rectangle::ColliderGJK& col_;
+				Component::PhysicsGJKQTree& c_quad_tree_;
 			public:
-				CheckCollision(Component::Collider::IGJK& col, Component::QuadTree& c_quad_tree)
+				CheckCollision(Component::Rectangle::ColliderGJK& col, Component::PhysicsGJKQTree& c_quad_tree)
 					: col_(col), c_quad_tree_(c_quad_tree)
 				{}
 
@@ -29,12 +27,11 @@ namespace Component {
 				{
 					auto retrieved_rect = c_quad_tree_.retrieve(col_);
 
-					for (auto rect : retrieved_rect)
+					for (auto c : retrieved_rect)
 					{
-						auto c = (Component::Collider::IGJK*)rect;
-						if (c->collide(col_))
+						if (col_.collide(*c))
 						{
-							((IPhysics*)c)->resolve(col_);
+							c->resolve(col_);
 							break;
 						}
 					}

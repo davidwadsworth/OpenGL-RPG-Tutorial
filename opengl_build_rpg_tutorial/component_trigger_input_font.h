@@ -38,7 +38,7 @@ namespace Component {
 					auto& c_font_shader = *gamestate->get_child("shader")->get_component<Component::Shader>("font");
 					auto& c_texunit = *gamestate->get_component<Component::TexUnit>("texunit");
 
-					auto& c_font_material = *entity_->add_id_component<Component::Color>("material", c_font_texture, c_font_shader, c_texunit.get_open_tex_unit(), glm::vec3(0.0f, 0.0f, 0.0f));
+					auto& c_font_material = *entity_->add_id_component<Component::MaterialColor>("material", c_font_texture, c_font_shader, c_texunit.get_open_tex_unit(), glm::vec3(0.0f, 0.0f, 0.0f));
 
 					auto e_glyphs = new Entity();
 					entity_->add_id_child(e_glyphs, "glyphs");
@@ -47,7 +47,7 @@ namespace Component {
 					{
 						std::size_t id = glyph_json["id"];
 
-						auto& c_bm_glyph = *e_glyphs->add_id_component<Component::BitMapGlyph>(id);
+						auto& c_bm_glyph = *e_glyphs->add_id_component<Component::Rectangle::BitMapGlyph>(id);
 
 						c_bm_glyph.x = glyph_json["x"];
 						c_bm_glyph.y = glyph_json["y"];
@@ -66,7 +66,7 @@ namespace Component {
 						int second = kerning_json["second"];
 						int amount = kerning_json["amount"];
 
-						auto& c_bm_glyph = *e_glyphs->get_component<Component::BitMapGlyph>(first);
+						auto& c_bm_glyph = *e_glyphs->get_component<Component::Rectangle::BitMapGlyph>(first);
 
 						c_bm_glyph.kerning.push_back({ second, amount });
 					}

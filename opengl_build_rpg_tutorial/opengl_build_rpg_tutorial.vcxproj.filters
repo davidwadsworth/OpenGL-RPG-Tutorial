@@ -58,14 +58,8 @@
     <Filter Include="EC\Component\Rect\GJK">
       <UniqueIdentifier>{ceb870b7-eb79-4762-bf65-565aaddecf9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\Rect\GJK\Collider">
-      <UniqueIdentifier>{724d2057-8c68-4381-ac9d-3c117d34d717}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EC\Component\Rect\GJK\Physics">
       <UniqueIdentifier>{b5f88663-a61f-40c9-8756-d5c2471d3c98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Rect\GJK\Action">
-      <UniqueIdentifier>{e37540bf-472e-41b3-81fa-91669ec8d0ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -347,17 +341,17 @@
     <ClInclude Include="component_rect_gjk_physics_smooth.h">
       <Filter>EC\Component\Rect\GJK\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="component_rect_gjk_collider_circle.h">
-      <Filter>EC\Component\Rect\GJK\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="component_rect_gjk_collider.h">
-      <Filter>EC\Component\Rect\GJK\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="component_collider_gjk_action.h">
-      <Filter>EC\Component\Rect\GJK\Action</Filter>
-    </ClInclude>
     <ClInclude Include="component_rect_action.h">
       <Filter>EC\Component\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="component_rect_gjk_collider.h">
+      <Filter>EC\Component\Rect\GJK</Filter>
+    </ClInclude>
+    <ClInclude Include="component_rect_gjk_action.h">
+      <Filter>EC\Component\Rect\GJK</Filter>
+    </ClInclude>
+    <ClInclude Include="action.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

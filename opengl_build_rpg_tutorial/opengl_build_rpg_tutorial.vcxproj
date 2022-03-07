@@ -156,17 +156,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aabb.h" />
+    <ClInclude Include="action.h" />
     <ClInclude Include="add_component_rect.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
-    <ClInclude Include="component_collider_gjk_action.h" />
-    <ClInclude Include="component_rect_gjk_collider_circle.h" />
     <ClInclude Include="component_json.h" />
     <ClInclude Include="component_parseaction.h" />
     <ClInclude Include="component_position.h" />
     <ClInclude Include="component_quadtree.h" />
     <ClInclude Include="component_rect.h" />
     <ClInclude Include="component_rect_action.h" />
+    <ClInclude Include="component_rect_gjk_action.h" />
     <ClInclude Include="component_rect_gjk_collider.h" />
     <ClInclude Include="component_rect_gjk_physics.h" />
     <ClInclude Include="component_system_render_bulkdraw.h" />

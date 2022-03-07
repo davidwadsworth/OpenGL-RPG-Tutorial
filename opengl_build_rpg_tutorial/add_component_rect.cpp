@@ -1,12 +1,11 @@
 #include "add_component_rect.h"
-#include "component_collider_gjk_action.h"
 #include "component_system_render_cameradraw.h"
 #include "component_quadtree.h"
 #include "component_engine.h"
 #include "component_rect_action.h"
 #include "component_json.h"
 
-Component::Rectangle* add_component_rect(Entity* entity, Entity* gamestate, nlohmann::json info_json)
+Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohmann::json info_json)
 {
 
 	float x = info_json["rect"]["x"];
@@ -14,7 +13,7 @@ Component::Rectangle* add_component_rect(Entity* entity, Entity* gamestate, nloh
 	float w = info_json["rect"]["w"];
 	float h = info_json["rect"]["h"];
 
-	Component::Rectangle* rect = nullptr;
+	Component::Rectang* rect = nullptr;
 	bool has_action = info_json.contains("action");
 	bool has_collider = info_json.contains("collider");
 
