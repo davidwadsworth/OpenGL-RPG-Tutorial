@@ -66,8 +66,8 @@ namespace Component {
 						{
 							Rect tile_dest
 							{
-								static_cast<GLfloat>((i % tilemap_w) * tile_size),  // finds place in column and multiplies by sprite width
-								static_cast<GLfloat>((i / tilemap_w) * tile_size),  // finds place in row and multiples by sprite height
+								static_cast<GLfloat>((i % tilemap_w) * tile_size * tile_scale),  // finds place in column and multiplies by sprite width
+								static_cast<GLfloat>((i / tilemap_w) * tile_size * tile_scale),  // finds place in row and multiples by sprite height
 								static_cast<GLfloat>(tile_size * tile_scale), static_cast<GLfloat>(tile_size * tile_scale)
 							};
 							trans_vec.push_back(e_tiles->push_back_component<Component::Transform>(tile_dest));

@@ -45,8 +45,10 @@ namespace Component {
 			bool key_press_action_1() override
 			{
 				if ((*keys_)[action_1])
+				{
 					if (!action_1_pressed_)
 						action_1_pressed_ = true;
+				}
 				else
 					action_1_pressed_ = false;
 

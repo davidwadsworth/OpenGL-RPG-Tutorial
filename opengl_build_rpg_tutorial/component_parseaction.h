@@ -19,7 +19,7 @@ namespace Component
 
 		void parse(nlohmann::json data_json)
 		{
-			for (auto action : data_json["action"])
+			for (auto action : data_json["data"])
 			{
 				std::string load = action["load"];
 				auto action_data_json = action["data"];

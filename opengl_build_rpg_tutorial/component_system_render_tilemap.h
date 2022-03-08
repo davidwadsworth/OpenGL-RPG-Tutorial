@@ -44,6 +44,7 @@ namespace Component {
 					row_end = row_end >= map_height_ ? map_height_ - 1 : row_end;
 
 					for (auto i = row_start * map_width_; i <= row_end * map_width_; i += map_width_)
+					{
 						for (auto j = i + col_start; j <= i + col_end; j++)
 						{
 							// update render dest by camera and local transforms
@@ -56,6 +57,10 @@ namespace Component {
 
 							renderer_.draw(*srcs_[j], dest, material_);
 						}
+					}
+						
+
+
 				}
 			};
 		}

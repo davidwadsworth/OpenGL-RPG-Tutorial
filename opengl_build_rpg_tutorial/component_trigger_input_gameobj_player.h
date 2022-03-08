@@ -102,6 +102,7 @@ namespace Component {
                         c_update_engine.add(csu_pla_camera, update_group);
                         c_update_engine.add(csu_pla_animate_move, update_group);
                         c_update_engine.add(csu_pla_animation, update_group);
+                        c_update_engine.add(csu_check_action, update_group);
 
                         c_render_engine.add(csr_pla_dynamic_draw, render_group);
 
