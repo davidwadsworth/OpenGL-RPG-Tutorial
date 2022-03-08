@@ -100,8 +100,7 @@ namespace Component {
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("font"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("collision_qtree"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::QuadTree>("action_qtree"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::PhysicsActionGJKQTree>("physics_action_qtree"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::TileSet>("tileset"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::SpriteSheet>("spritesheet"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap"));

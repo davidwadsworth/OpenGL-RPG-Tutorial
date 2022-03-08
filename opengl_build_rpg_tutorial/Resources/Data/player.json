@@ -9,8 +9,7 @@
 		"collider" : {
 			"filename": "collider",
 			"id" : "circle",
-			"pos" : 0,
-			"tree" : "collision_qtree"
+			"pos" : 0
 		}
 	},
 	"scale" : 1.0,

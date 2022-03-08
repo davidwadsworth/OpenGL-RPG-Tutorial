@@ -141,11 +141,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="aabb.cpp" />
     <ClCompile Include="add_component_rect.cpp" />
     <ClCompile Include="component_rect_bitmap_glyph.cpp" />
     <ClCompile Include="component_material_color.cpp" />
     <ClCompile Include="delimiter_split.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gjk.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="logger.cpp" />
     <ClCompile Include="main.cpp" />
@@ -167,7 +169,6 @@
     <ClInclude Include="component_rect.h" />
     <ClInclude Include="component_rect_action.h" />
     <ClInclude Include="component_rect_gjk_action.h" />
-    <ClInclude Include="component_rect_gjk_collider.h" />
     <ClInclude Include="component_rect_gjk_physics.h" />
     <ClInclude Include="component_system_render_bulkdraw.h" />
     <ClInclude Include="component_system_render_offset.h" />
@@ -231,6 +232,7 @@
     <ClInclude Include="component_renderer.h" />
     <ClInclude Include="component_shader.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gjk.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="rect.h" />

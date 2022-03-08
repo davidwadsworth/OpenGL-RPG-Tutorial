@@ -2,6 +2,7 @@
 #include "component_trigger_input.h"
 #include "component_json.h"
 #include "component_texunit.h"
+#include "component_rect.h"
 
 /*
 Tileset game object from loaded in json
@@ -47,7 +48,7 @@ namespace Component {
 					{
 						for (auto x = margin; x < tileset_w; x += tile_size + spacing)
 						{
-							e_tiles->push_back_component<Component::Src>(Rect{ x, y, tile_size, tile_size });
+							e_tiles->push_back_component<Component::Src>(Rect( x, y, tile_size, tile_size ));
 						}
 					}
 				}

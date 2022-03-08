@@ -106,19 +106,18 @@ int main()
     delete Game::global;
     delete game;
 
-    glfwTerminate();
-
     if (Entity::count)
-        Logger::warning("Entity Memory Leak: " + Entity::count, Logger::HIGH);
+        Logger::warning("Entity Memory Leak: " + std::to_string(Entity::count), Logger::HIGH);
     if (IComponent::count)
-        Logger::warning("Component Memory Leak: " + IComponent::count, Logger::HIGH);
+        Logger::warning("Component Memory Leak: " + std::to_string(IComponent::count), Logger::HIGH);
 
+    glfwTerminate();
     return 0;
 }
 
 void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mode)
 {
-    static Component::KeyboardArray& keys = *Game::global->get_child("keyboard")->get_component<Component::KeyboardArray>();
+    static Component::KeyboardArray& keys = *Game::global->get_component<Component::KeyboardArray>("keyboard");
     
     if (key >= 0 && key < MAX_KEYS)
     {

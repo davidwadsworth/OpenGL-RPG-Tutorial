@@ -12,8 +12,7 @@
 			"collider" : {
 				"filename": "collider",
 				"id" : "polygon",
-				"pos" : 1,
-				"tree" : "collision_qtree"
+				"pos" : 1
 			},
 			"action" : {
 				"data" : [{ 
@@ -24,9 +23,9 @@
 							"message": {"filename" : "message", "pos" : 1}
 						}
 					}
-				}],
-				"tree" : "action_qtree"
-			}
+				}]
+			},
+			"tree" : "physics_action_qtree"
 		},
 		"src" : {"id": "signpost"}
 	},{
@@ -40,8 +39,7 @@
 			"collider" : {
 				"filename": "collider",
 				"id" : "circle",
-				"pos" : 1,
-				"tree" : "collision_qtree"
+				"pos" : 1
 			},
 			"action" : {
 				"data" : [{ 
@@ -52,9 +50,9 @@
 							"message": {"filename" : "message", "pos" : 0}
 						}
 					}
-				}],
-				"tree" : "action_qtree"
-			}
+				}]
+			},
+			"tree" : "physics_action_qtree"
 		},
 		"src" : {"id": "npc"}	
 	}]

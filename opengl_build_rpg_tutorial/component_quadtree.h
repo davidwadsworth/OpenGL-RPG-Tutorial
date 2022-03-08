@@ -110,7 +110,7 @@ namespace Component
 			}
 
 			if (trees_[top_left])
-				for (auto in = index(*rect);;) {
+				for (auto in = index(*obj);;) {
 					auto in_tree = trees_[in % MAX_INDEX];
 					in_tree->insert(obj, master);
 					in >>= 2;
@@ -180,5 +180,6 @@ namespace Component
 		}
 	};
 #define PhysicsGJKQTree QuadTree<Component::Rectangle::GJK::IPhysics<Component::Rectangle::IGJK>>
-#define PhysicsActionQTree QuadTree<Component::Rectangle::GJK::IPhysics<Component::Rectangle::GJK::Action>>
+#define PhysicsActionGJKQTree QuadTree<Component::Rectangle::GJK::IPhysics<Component::Rectangle::GJK::Action>>
+#define ActionQTree QuadTree<Component::Rectangle::Action>
 }

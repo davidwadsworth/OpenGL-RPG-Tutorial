@@ -2,28 +2,35 @@
 #include "component_rect_action.h"
 #include <array>
 
-
 /*
-Calculate collisions by finding a triangle which contains the origin point (0, 0) 
-between the Minkowski Difference of two colliders
+glm::vec2 support(glm::vec2 direction):
+	calculate the closest edge point of the collider within the normalized direction provided with respect to the center of the collider
 
-Minkowski Difference: 
-	plotting all possible combinations of adding points of A with points of (-B).
-Then finding the farthest edge points that create a convex polygon (Convex hull)
+	normalized: x^2 + y+2 = 1; 
 
-void collide(Component::Collider::IGJK& col): 
-	For this particular implementation of GJK we subvert creating the full minkowski difference by instead
-using best guess points from A - the best guess points from B and if they are close to forming a triangle
-over the origin repeating the guesses until out of possible guess points or enclosing the origin (0, 0) with a triangle
+eg. 
+	vec2(0, 1) = 0^2 + 1^2 = 1. This vec2 is normalized.
 
-glm::vec2[3] simplex_:
-	array of best guess A - B points;
+eg. 
+	support implementation for a rectangle with four points (a, b, c, d)
 
-glm::vec2 support(glm::vec2 direction): 
-	calculate the closest edge point of the collider within the direction provided
+	support( vec2(0,1) ) -> return b-a;
 
-@author David Wadsworth
+	y, x-->
+	|
+	v
+
+	a)             b)
+	----------------
+	|       ^      |
+	|       |      |
+	|       .      |
+	|              |
+	|              |
+	----------------
+	c)             d)
 */
+
 namespace Component {
 	namespace Rectangle
 	{

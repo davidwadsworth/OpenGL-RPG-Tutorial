@@ -99,6 +99,12 @@
     <ClCompile Include="delimiter_split.cpp">
       <Filter>Helper</Filter>
     </ClCompile>
+    <ClCompile Include="aabb.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="gjk.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -323,9 +329,6 @@
     <ClInclude Include="component_system_update_checkaction.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="aabb.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="component_position.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
@@ -344,14 +347,17 @@
     <ClInclude Include="component_rect_action.h">
       <Filter>EC\Component\Rect</Filter>
     </ClInclude>
-    <ClInclude Include="component_rect_gjk_collider.h">
-      <Filter>EC\Component\Rect\GJK</Filter>
-    </ClInclude>
     <ClInclude Include="component_rect_gjk_action.h">
       <Filter>EC\Component\Rect\GJK</Filter>
     </ClInclude>
     <ClInclude Include="action.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gjk.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="aabb.h">
+      <Filter>Helper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,8 +9,11 @@ namespace Component {
 			class IPhysics : public T
 			{
 			public:
+				using T::T;
 				virtual void resolve(Component::Rectangle::IGJK& col) = 0;
 			};
+#define PhysicsAction IPhysics<Component::Rectangle::GJK::Action>
+#define PhysicsNorm IPhysics<Component::Rectangle::IGJK>
 		}
 	}
 }

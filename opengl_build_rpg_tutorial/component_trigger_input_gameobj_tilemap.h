@@ -55,7 +55,7 @@ namespace Component {
 						auto& c_cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 						auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
-						auto e_tiles = new Entity();
+						auto e_tiles = entity_->add_id_child("tiles");
 
 						auto& c_render_vector = *entity_->add_component<Component::SystemVector>();
 

@@ -59,7 +59,7 @@ namespace Component {
 								continue;
 							}
 
-							auto c_bm_glyph = e_glyphs->get_component<Component::BitMapGlyph>(static_cast<std::size_t>(c));
+							auto c_bm_glyph = e_glyphs->get_component<Component::Rectangle::BitMapGlyph>(static_cast<std::size_t>(c));
 
 							auto c_transform = entity_->push_back_component<Component::Transform>();
 

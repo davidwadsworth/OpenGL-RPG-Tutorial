@@ -4,18 +4,18 @@
 #include "component_engine.h"
 #include "component_rect_action.h"
 #include "component_json.h"
+#include "component_rect_gjk_physics_smooth.h"
 
 Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohmann::json info_json)
 {
-
 	float x = info_json["rect"]["x"];
 	float y = info_json["rect"]["y"];
 	float w = info_json["rect"]["w"];
 	float h = info_json["rect"]["h"];
 
-	Component::Rectang* rect = nullptr;
 	bool has_action = info_json.contains("action");
 	bool has_collider = info_json.contains("collider");
+	bool has_tree = info_json.contains("tree");
 
 	Rect in_rect(x, y, w, h);
 	if (has_collider)
@@ -27,6 +27,8 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			get_component<Component::Json>(collider_filename)->json;
 		bool debug = collider_json["debug"] == "true";
 
+		Component::Rectangle::IGJK* rect = nullptr;
+
 		if (collider_name == "circle")
 		{
 			auto circle_json = collider_json[collider_name][collider_pos];
@@ -36,15 +38,18 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			if (has_action)
 			{
 				auto ccgjkaps_circle = entity->push_back_component
-					<Component::Collider::GJK::Action::Physics::Smooth::Circle>
+					<Component::Rectangle::GJK::Physics::Circle::SmoothPhysicsAction>
 					(in_rect, radius, glm::vec2(center_x, center_y));
 				ccgjkaps_circle->action = info_json["action"];
 				rect = ccgjkaps_circle;
 			}
 			else
-				rect = entity->push_back_component
-				<Component::Collider::GJK::Physics::Circle::Smooth>
+			{
+				auto crgjkbps_polygon = entity->push_back_component
+				<Component::Rectangle::GJK::Physics::Circle::SmoothPhysics>
 				(in_rect, radius, glm::vec2(center_x, center_y));
+				rect = crgjkbps_polygon;
+			}
 		}
 		else if (collider_name == "boundary")
 		{
@@ -57,13 +62,16 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			if (has_action)
 			{
 				auto ccgjkaps_boundary = entity->push_back_component
-					<Component::Collider::GJK::Action::Physics::Smooth::Boundary>(in_rect, arr_points);
+					<Component::Rectangle::GJK::Physics::Boundary::SmoothPhysicsAction>(in_rect, arr_points);
 				ccgjkaps_boundary->action = info_json["action"];
 				rect = ccgjkaps_boundary;
 			}
 			else
-				rect = entity->push_back_component
-				<Component::Collider::GJK::Physics::Boundary::Smooth>(in_rect, arr_points);
+			{
+				auto crgjkbps_boundary = entity->push_back_component
+					<Component::Rectangle::GJK::Physics::Boundary::SmoothPhysics>(in_rect, arr_points);
+				rect = crgjkbps_boundary;
+			}
 		}
 		else if (collider_name == "polygon")
 		{
@@ -80,13 +88,16 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			if (has_action)
 			{
 				auto ccgjkaps_polygon = entity->push_back_component
-					<Component::Collider::GJK::Action::Physics::Smooth::Polygon>(in_rect, vec2_points);
+					<Component::Rectangle::GJK::Physics::Polygon::SmoothPhysicsAction>(in_rect, vec2_points);
 				ccgjkaps_polygon->action = info_json["action"];
 				rect = ccgjkaps_polygon;
 			}
 			else
-				rect = entity->push_back_component<Component::Collider::GJK::Physics::Polygon::Smooth>
-				(in_rect, vec2_points);
+			{
+				auto crgjkpsp_polygon = entity->push_back_component<Component::Rectangle::GJK::Physics::Polygon::SmoothPhysics>
+					(in_rect, vec2_points);
+				rect = crgjkpsp_polygon;
+			}
 		}
 		else
 			Logger::error("invalid collider name: " + info_json.dump(), Logger::HIGH);
@@ -115,32 +126,31 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 
 			c_render_engine.add(csr_col_cam_draw, render_group);
 		}
+
+		if (has_tree)
+		{
+			std::string quadtree_name = info_json["tree"];
+			auto e_quadtree = gamestate->get_child(quadtree_name);
+			if (has_action)
+				Component::PhysicsActionGJKQTree::add(dynamic_cast<Component::Rectangle::GJK::PhysicsAction*>(rect), e_quadtree);
+			else
+				Component::PhysicsGJKQTree::add(dynamic_cast<Component::Rectangle::GJK::PhysicsNorm*>(rect), e_quadtree);
+		}
+
+		return rect;
 	}
 	else
 	{
 		if (has_action)
 		{
-			auto cr_action = entity->push_back_component<Component::ARect>(in_rect);
+			std::string quadtree_name = info_json["tree"];
+			auto e_quadtree = gamestate->get_child(quadtree_name);
+			auto cr_action = entity->push_back_component<Component::Rectangle::Action>(in_rect);
 			cr_action->action = info_json["action"];
-			rect = cr_action;
+			Component::ActionQTree::add(cr_action, e_quadtree);
+			return cr_action;
 		}
 		else
-			rect = entity->push_back_component<Component::Rectangle>(in_rect);
+			return entity->push_back_component<Component::Rectang>(in_rect);
 	}
-
-	if (has_collider)
-	{
-		std::string tree_name = info_json["collider"]["tree"];
-		auto e_quadtree = gamestate->get_child(tree_name);
-		Component::QuadTree::add(rect, e_quadtree);
-	}
-
-	if (has_action)
-	{
-		std::string tree_name = info_json["action"]["tree"];
-		auto e_quadtree = gamestate->get_child(tree_name);
-		Component::QuadTree::add(rect, e_quadtree);
-	}
-
-	return rect;
 }

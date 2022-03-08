@@ -13,6 +13,7 @@ namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
+			template <typename T>
 			class QuadTree : public Component::Trigger::IInput
 			{
 			public:
@@ -28,7 +29,7 @@ namespace Component {
 					float h = qt_json["rect"]["h"];
 					int max_objects = qt_json["max_objects"];
 
-					this->entity_->push_back_component<Component::QuadTree>(max_objects, Rect(x, y, w, h));
+					this->entity_->push_back_component<Component::QuadTree<T>>(max_objects, Rect(x, y, w, h));
 				}
 			};
 		}

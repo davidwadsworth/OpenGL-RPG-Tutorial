@@ -4,7 +4,7 @@
 #include "component_rect.h"
 #include "component_controller.h"
 #include "component_quadtree.h"
-#include "aabb.h"
+#include "gjk.h"
 
 namespace Component {
 	namespace System {
@@ -14,12 +14,12 @@ namespace Component {
 			{
 				Component::IController& c_controller_;
 				Component::Transform& c_transform_;
-				Component::PhysicsActionQTree& c_action_qtree_;
+				Component::PhysicsActionGJKQTree& c_action_qtree_;
 				Component::ParseAction& c_parse_action_;
 				glm::vec2 direction_;
 				float distance_;
 			public:
-				CheckAction(Component::IController& c_controller, Component::Transform& c_transform, Component::PhysicsActionQTree& c_action_qtree,
+				CheckAction(Component::IController& c_controller, Component::Transform& c_transform, Component::PhysicsActionGJKQTree& c_action_qtree,
 					Component::ParseAction& c_parse_action, float distance)
 					: c_controller_(c_controller), c_transform_(c_transform), c_action_qtree_(c_action_qtree), 
 					c_parse_action_(c_parse_action), direction_(0.0f, 1.0f), distance_(distance)
@@ -36,16 +36,17 @@ namespace Component {
 					
 					if (c_controller_.key_press_action_1())
 					{
-						auto center_point = glm::vec2(c_transform_.w / 2.0f, c_transform_.h / 2.0f);
-						center_point.x += c_transform_.x;
-						center_point.y += c_transform_.y;
-						Rect rect_a(direction_ * distance_ + center_point, 0.0f);
+						auto distance_pos = glm::vec2(c_transform_.w / 2.0f, c_transform_.h / 2.0f);
+						distance_pos.x += c_transform_.x;
+						distance_pos.y += c_transform_.y;
+						distance_pos += direction_ * distance_;
+						Rect rect_a( distance_pos, 0.0f);
 
 						auto retrieved_actions = c_action_qtree_.retrieve(rect_a);
 
 						for (auto rect_b : retrieved_actions)
 						{
-							if (AABB::collide(rect_a, *rect_b))
+							if (GJK::collide(distance_pos, *rect_b))
 								c_parse_action_.parse(rect_b->action);
 						}
 					}
