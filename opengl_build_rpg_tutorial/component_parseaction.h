@@ -19,16 +19,18 @@ namespace Component
 
 		void parse(nlohmann::json data_json)
 		{
-			for (auto action : data_json["data"])
+
+			for (auto action : data_json["action"]["data"])
 			{
 				std::string load = action["load"];
 				auto action_data_json = action["data"];
-				auto external_json = action["external"];
+				auto external_json = action_data_json["external"];
 
 				if (action_data_json.contains("internal"))
 					for (std::string internal: action_data_json["internal"])
-						external_json.push_back(data_json[internal]);
-										 
+						external_json[internal] = action[internal];
+
+				std::cout << external_json << std::endl;
 				auto ct_load = e_loadcache_->get_component<Component::Trigger::ILoad>(load);
 				ct_load->load(external_json);
 
