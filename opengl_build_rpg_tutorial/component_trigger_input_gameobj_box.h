@@ -30,8 +30,7 @@ namespace Component {
 
 						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json;
 
-						std::string spritesheet_name = box_json["texture"]["filename"];
-						std::string textbox_name = box_json["texture"]["id"];
+						std::string spritesheet_name = box_json["texture"];
 
 						auto& c_box_position = *entity_->add_id_component<Component::Position>("position", Game::removed);
 						
@@ -86,8 +85,9 @@ namespace Component {
 
 
 						// get src rects
-						auto box_srcs = e_spritesheet->get_child(textbox_name)->get_component_list<Component::Src>();
-
+						std::vector<Component::Src*> box_srcs;
+						for (std::string texture_id : box_json["texture_ids"])
+							box_srcs.push_back(e_spritesheet->get_component<Component::Src>(texture_id));
 
 						auto cs_item = entity_->add_id_component<Component::System::Render::Offset>("render", c_box_position, box_srcs, transform_vec, c_ss_material, c_renderer);
 

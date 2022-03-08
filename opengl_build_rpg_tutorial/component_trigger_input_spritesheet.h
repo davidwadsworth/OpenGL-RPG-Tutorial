@@ -21,23 +21,13 @@ namespace Component {
 					for (auto& frame : frames)
 					{
 						std::string filename = frame["filename"];
-						auto folder_split = delimiter_split(delimiter_split(filename.c_str(), '.')[0].c_str(), '/');
-						auto e_destination = entity_;
-						if (folder_split.size() > 1)
-						{
-							for (auto i = 0; i < folder_split.size() - 1; ++i)
-							{
-								if (e_destination->has_child(folder_split[i]))
-									e_destination = e_destination->get_child(folder_split[i]);
-								else
-									e_destination = e_destination->add_id_child(folder_split[i]);
-							}
-						}
+						auto name = delimiter_split(filename.c_str(), '.')[0];
+
 						float src_x = frame["frame"]["x"];
 						float src_y = frame["frame"]["y"];
 						float src_w = frame["frame"]["w"];
 						float src_h = frame["frame"]["h"];
-						auto c_src = e_destination->add_id_component<Component::Src>(folder_split.back(), Rect(src_x, src_y, src_w, src_h));
+						auto c_src = entity_->add_id_component<Component::Src>(name, Rect(src_x, src_y, src_w, src_h));
 
 					}
 

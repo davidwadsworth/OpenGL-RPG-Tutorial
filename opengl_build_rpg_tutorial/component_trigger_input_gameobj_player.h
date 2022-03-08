@@ -32,9 +32,8 @@ namespace Component {
 
                         float scale = player_json["scale"];
 
-                        std::string spritesheet_name = player_json["texture"]["filename"];
-                        std::string spritesheet_category_name = player_json["texture"]["groupid"];
-
+                        std::string spritesheet_name = player_json["texture"];
+                        
                         auto info_json = player_json["info"];
 
                         auto animation_json = player_json["animations"];
@@ -45,9 +44,7 @@ namespace Component {
                         float update_group = player_json["update_group"];
                         float action_distance = player_json["action_distance"];
 
-                        auto spritesheet_category = gamestate->get_child(spritesheet_name)->get_child(spritesheet_category_name)->get_component_list<Component::Src>();
-
-                        auto c_idle_down_src = dynamic_cast<Rect*>(spritesheet_category[0]);
+                        auto e_spritesheet = gamestate->get_child(spritesheet_name);
 
                         // get renderer
                         auto& c_renderer = *gamestate->get_component<Component::Renderer >("renderer");
@@ -70,7 +67,7 @@ namespace Component {
                         // get parse action
                         auto& c_parse_action = *gamestate->get_child("load")->get_component<Component::ParseAction>("parse");
 
-                        auto& c_pla_src = *entity_->push_back_component<Component::Src>(*c_idle_down_src);
+                        auto& c_pla_src = *entity_->push_back_component<Component::Src>();
                         auto& c_spritesheet_material = *gamestate->get_child(spritesheet_name)->get_component<Component::Material>("material");
 
                         auto& c_pla_col_gjk_circle = *static_cast<Component::Rectangle::IGJK*>(add_component_rect(entity_, gamestate, info_json));
@@ -91,12 +88,14 @@ namespace Component {
                         for (auto& anim_json : animation_json)
                         {
                             std::string anim_name = anim_json["name"];
-                            int frames = anim_json["frames"];
                             Anim anim_srcs;
-                            for (auto i = 0; i < frames; ++i)
-                                anim_srcs.push_back(spritesheet_category[i]);
+                            for (std::string frame_name : anim_json["frames"])
+                                anim_srcs.push_back(e_spritesheet->get_component<Component::Src>(frame_name));
+
                             csu_pla_animation->add(anim_name, anim_srcs);
                         }
+
+                        csu_pla_animation->play("idle_down");
 
                         c_update_engine.add(csu_pla_move, update_group);
                         c_update_engine.add(csu_check_collision, update_group);

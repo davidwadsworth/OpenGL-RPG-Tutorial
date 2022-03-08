@@ -1,5 +1,16 @@
 {
-	"texture" : {"filename":"spritesheet", "id":"textbox"},
+	"texture" : "spritesheet",
+	"texture_ids" : 
+		["textbox_0_top_left_corner",
+		"textbox_1_top_right_corner",
+		"textbox_2_bot_left_corner",
+		"textbox_3_bot_right_corner",
+		"textbox_4_top_side",
+		"textbox_5_left_side",
+		"textbox_6_right_side",
+		"textbox_7_bot_side",
+		"textbox_8_center",
+		"textbox_9_speech_arrow"],
 	"render_group" : 4.0,
 	"height" : 512,
 	"width" : 512,
