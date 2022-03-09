@@ -3,13 +3,13 @@
 	"data" : [{
 		"messages" : [
 			"You are a big guy, I would estimate about 1.5 me would fit inside you. I'm small and have a lot of hate in my heart. Lets work together.", 
-			"Please feed me so I may grow."
+			"Please write me a meal plan so that I might grow."
 			],
 		"speech_box" : "true"
 		},{
 		"messages" : [
 			"Hi there, welcome to the world!",
-			"Don't be alarmed while looking around here, fear is but one path towards death."
+			"Don't be scared. Fear is but one path towards death."
 			],
 		"speech_box" : "false"
 		}

@@ -40,7 +40,7 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 				auto ccgjkaps_circle = entity->push_back_component
 					<Component::Rectangle::GJK::Physics::Circle::SmoothPhysicsAction>
 					(in_rect, radius, glm::vec2(center_x, center_y));
-				ccgjkaps_circle->action = info_json;
+				ccgjkaps_circle->action = info_json["action"]["data"];
 				rect = ccgjkaps_circle;
 			}
 			else

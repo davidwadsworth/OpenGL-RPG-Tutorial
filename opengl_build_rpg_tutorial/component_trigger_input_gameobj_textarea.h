@@ -111,7 +111,7 @@ namespace Component {
 							}
 
 							std::vector<Component::Transform*> line_transforms;
-							std::vector<Component::BitMapGlyph*> line_glyphs;
+							std::vector<Component::Rectangle::BitMapGlyph*> line_glyphs;
 
 							auto e_glyphs = e_font->get_child("glyphs");
 
@@ -123,7 +123,7 @@ namespace Component {
 							// add all the non space characters together into vectors of transforms glyphs and draw calls, also known as a "word"
 							for (; curr_char != msg.end() && *curr_char != ' '; curr_char++)
 							{
-								auto c_bitmap_char = e_glyphs->get_component<Component::BitMapGlyph>(static_cast<std::size_t>( * curr_char));
+								auto c_bitmap_char = e_glyphs->get_component<Component::Rectangle::BitMapGlyph>(static_cast<std::size_t>( * curr_char));
 
 								temp_word_length += c_bitmap_char->advance + c_bitmap_char->check_kerning(prev_char);
 								

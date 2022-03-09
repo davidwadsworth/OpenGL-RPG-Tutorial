@@ -20,6 +20,9 @@ namespace Component {
 					float item_x = json["rect"]["x"];
 					float item_y = json["rect"]["y"];
 					float item_w = json["rect"]["w"];
+					float offset_y = json["box"]["offset"];
+					
+					float box_h = json["box"]["height"];
 
 					float box_corner_size = json["box"]["corner_size"];
 					float box_scale = json["box"]["scale"];
@@ -28,7 +31,7 @@ namespace Component {
 
 					auto offset_x = item_w / 2.0f - scaled_corner * 2.0f;
 					pos_.x = item_x + offset_x;
-					pos_.y = item_y;
+					pos_.y = item_y + offset_y - box_h;
 					is_speech_arrow_ = json["message"]["speech_box"] == "true";
 					textbox_name_ = json["textbox"];
 					box_i_ = 0;

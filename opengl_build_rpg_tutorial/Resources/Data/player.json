@@ -36,5 +36,5 @@
 	"player_speed" : 240.0,
 	"render_group" : 2.0,
 	"update_group" : 1.0, 
-	"action_distance" : 80.0
+	"action_distance" : 50.0
 }

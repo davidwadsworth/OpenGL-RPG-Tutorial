@@ -67,10 +67,10 @@ namespace Component {
 							Rect( box_x + scaled_corner_size, box_y, box_w - scaled_corner_size * 2, scaled_corner_size )));
 						transform_vec.push_back(entity_->add_id_component<Component::Transform>("left_side",
 							Rect( box_x, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f )));
+						transform_vec.push_back(entity_->add_id_component<Component::Transform>("right_side",
+							Rect(box_x + box_w - scaled_corner_size, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f)));
 						transform_vec.push_back(entity_->add_id_component<Component::Transform>("bot_side",
 							Rect( box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, box_w - scaled_corner_size * 2.0f, scaled_corner_size )));
-						transform_vec.push_back(entity_->add_id_component<Component::Transform>("right_side",
-							Rect( box_x + box_w - scaled_corner_size, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f )));
 
 						// center transform
 						transform_vec.push_back(entity_->add_id_component<Component::Transform>("center",

@@ -30,6 +30,7 @@ namespace Component {
 					float box_scale = json["box"]["scale"];
 					int box_width = json["box"]["width"];
 					int box_height = json["box"]["height"];
+					float offset_y = json["box"]["offset"];
 					float msg_padding_x = json["textarea"]["msg_padding"]["x"];
 					float msg_padding_y = json["textarea"]["msg_padding"]["y"];
 
@@ -37,10 +38,10 @@ namespace Component {
 
 					auto offset_x = item_w / 2.0f - scaled_corner * 2.0f;
 
-					rect_.x = item_x + offset_x + scaled_corner / 2.0f + msg_padding_x;
-					rect_.y = item_y + scaled_corner / 2.0f + msg_padding_y;
-					rect_.w = box_width - scaled_corner - 2.0f * msg_padding_x;
-					rect_.h = box_height - scaled_corner - 2.0f * msg_padding_y;
+					rect_.x = item_x + offset_x + scaled_corner * 0.7f + msg_padding_x;
+					rect_.y = item_y + offset_y - box_height + scaled_corner * 0.7f + msg_padding_y;
+					rect_.w = box_width - scaled_corner * 1.4f - 2.0f * msg_padding_x;
+					rect_.h = box_height - scaled_corner* 1.4f - 2.0f * msg_padding_y;
 					font_name_ = json["textarea"]["font"];
 					font_sc_ = json["textarea"]["font_scale"];
 					align_h_ = json["textarea"]["align_horizontal"];
@@ -212,7 +213,11 @@ namespace Component {
 							transform->x += x_offset[i];
 							transform->y += y_offset;
 						}
-					e_textarea->get_component<Component::System::Render::Empty>("render")->set_draw_calls(messages_[msg_i_++].size());
+
+					auto spaces_count = std::count(messages_[msg_i_].begin(), messages_[msg_i_].end(), ' ');
+
+					auto non_space_characters = messages_[msg_i_++].size() - spaces_count;
+					e_textarea->get_component<Component::System::Render::Empty>("render")->set_draw_calls(non_space_characters);
 				}
 			};
 		}

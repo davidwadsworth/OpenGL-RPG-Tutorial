@@ -12,8 +12,9 @@
 		"textbox_8_center",
 		"textbox_9_speech_arrow"],
 	"render_group" : 4.0,
-	"height" : 256,
+	"height" : 196,
 	"width" : 320,
+	"offset" : -32,
 	"scale" : 1.0,	
 	"corner_size" : 10.0
 }
