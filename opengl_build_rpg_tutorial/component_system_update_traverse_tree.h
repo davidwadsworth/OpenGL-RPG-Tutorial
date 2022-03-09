@@ -15,9 +15,14 @@ namespace Component {
 				Component::TriggerTree::Node* cursor_;
 				Component::TriggerVector& triggers_;
 			public:
-				TraverseTree(Component::TriggerTree& trigger_tree, Component::IController& controller, Component::TriggerVector& triggers)
-					: controller_(controller), cursor_(trigger_tree.get_head()), triggers_(triggers)
+				TraverseTree(Component::IController& controller, Component::TriggerVector& triggers)
+					: controller_(controller), cursor_(nullptr), triggers_(triggers)
 				{}
+
+				void set_cursor(Component::TriggerTree& trigger_tree)
+				{
+					cursor_ = trigger_tree.get_head();
+				}
 
 				void execute() override
 				{

@@ -317,9 +317,6 @@
     <ClInclude Include="component_trigger_input_loadcache.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
-    <ClInclude Include="component_parseaction.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_load_message.h">
       <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>

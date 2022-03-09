@@ -63,7 +63,7 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			{
 				auto ccgjkaps_boundary = entity->push_back_component
 					<Component::Rectangle::GJK::Physics::Boundary::SmoothPhysicsAction>(in_rect, arr_points);
-				ccgjkaps_boundary->action = info_json;
+				ccgjkaps_boundary->action = info_json["action"]["data"];
 				rect = ccgjkaps_boundary;
 			}
 			else
@@ -89,7 +89,7 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			{
 				auto ccgjkaps_polygon = entity->push_back_component
 					<Component::Rectangle::GJK::Physics::Polygon::SmoothPhysicsAction>(in_rect, vec2_points);
-				ccgjkaps_polygon->action = info_json;
+				ccgjkaps_polygon->action = info_json["action"]["data"];
 				rect = ccgjkaps_polygon;
 			}
 			else
@@ -146,7 +146,7 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			std::string quadtree_name = info_json["tree"];
 			auto e_quadtree = gamestate->get_child(quadtree_name);
 			auto cr_action = entity->push_back_component<Component::Rectangle::Action>(in_rect);
-			cr_action->action = info_json;
+			cr_action->action = info_json["action"]["data"];
 			Component::ActionQTree::add(cr_action, e_quadtree);
 			return cr_action;
 		}

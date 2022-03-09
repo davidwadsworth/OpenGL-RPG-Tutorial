@@ -30,8 +30,7 @@ namespace Component {
 					pos_.x = item_x + offset_x;
 					pos_.y = item_y;
 					is_speech_arrow_ = json["message"]["speech_box"] == "true";
-					textbox_name_ = json["textbox"]["textbox"];
-					box_name_ = json["textbox"]["box"];
+					textbox_name_ = json["textbox"];
 					box_i_ = 0;
 				}
 
@@ -40,7 +39,7 @@ namespace Component {
 					if (box_i_ > 1)
 						Logger::error("load box called more than twice or load not called.", Logger::HIGH);
 
-					auto e_box = gamestate->get_child(textbox_name_)->get_child(box_name_);
+					auto e_box = gamestate->get_child(textbox_name_)->get_child("box");
 
 					auto& c_position = *e_box->get_component<Component::Position>("position");
 					if (box_i_)
@@ -50,8 +49,8 @@ namespace Component {
 					}
 					else
 					{
-						c_position.x = pos_.x;
-						c_position.y = pos_.y;
+						c_position.x = -pos_.x;
+						c_position.y = -pos_.y;
 					}
 					
 					if (!is_speech_arrow_)

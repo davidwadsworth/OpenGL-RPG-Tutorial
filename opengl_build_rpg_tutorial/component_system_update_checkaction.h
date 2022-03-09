@@ -1,10 +1,11 @@
 #pragma once
 #include "component_system.h"
-#include "component_parseaction.h"
 #include "component_rect.h"
 #include "component_controller.h"
 #include "component_quadtree.h"
 #include "gjk.h"
+#include "component_trigger_load.h"
+#include "component_vector.h"
 
 namespace Component {
 	namespace System {
@@ -15,14 +16,15 @@ namespace Component {
 				Component::IController& c_controller_;
 				Component::Transform& c_transform_;
 				Component::PhysicsActionGJKQTree& c_action_qtree_;
-				Component::ParseAction& c_parse_action_;
+				Entity* e_load_;
+				Component::TriggerVector& c_triggervec_;
 				glm::vec2 direction_;
 				float distance_;
 			public:
 				CheckAction(Component::IController& c_controller, Component::Transform& c_transform, Component::PhysicsActionGJKQTree& c_action_qtree,
-					Component::ParseAction& c_parse_action, float distance)
+					Entity* e_load, Component::TriggerVector& c_trigger, float distance)
 					: c_controller_(c_controller), c_transform_(c_transform), c_action_qtree_(c_action_qtree), 
-					c_parse_action_(c_parse_action), direction_(0.0f, 1.0f), distance_(distance)
+					e_load_(e_load), c_triggervec_(c_trigger), direction_(0.0f, 1.0f), distance_(distance)
 				{}
 
 				void execute()
@@ -47,7 +49,23 @@ namespace Component {
 						for (auto rect_b : retrieved_actions)
 						{
 							if (GJK::collide(distance_pos, *rect_b))
-								c_parse_action_.parse(rect_b->action);
+							{
+								for (auto action : rect_b->action)
+								{
+									std::string load = action["load"];
+
+									std::stringstream ss;
+									ss << "{\"x\":" << rect_b->x << ",\"y\":" << rect_b->y << ",\"w\":"
+										<< rect_b->w << ",\"h\":" << rect_b->h << "}";
+
+									action["data"]["rect"] = nlohmann::json::parse(ss);
+
+									auto ct_load = e_load_->get_component<Component::Trigger::ILoad>(load);
+									ct_load->load(action["data"]);
+
+									c_triggervec_.push_back(ct_load);
+								}
+							}
 						}
 					}
 				}

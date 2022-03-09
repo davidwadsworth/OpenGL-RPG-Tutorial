@@ -48,6 +48,8 @@ namespace Component {
 				{
 					if (!action_1_pressed_)
 						action_1_pressed_ = true;
+					else
+						return false;
 				}
 				else
 					action_1_pressed_ = false;

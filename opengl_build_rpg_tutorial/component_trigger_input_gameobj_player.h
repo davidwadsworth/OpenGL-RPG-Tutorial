@@ -64,8 +64,10 @@ namespace Component {
                         // get update engine
                         auto& c_update_engine = *gamestate->get_component<Component::Engine>("update");
 
-                        // get parse action
-                        auto& c_parse_action = *gamestate->get_child("load")->get_component<Component::ParseAction>("parse");
+                        // get load entity
+                        auto e_load = gamestate->get_child("load");
+
+                        auto& c_triggervec = *gamestate->get_component<Component::TriggerVector>("trigger");
 
                         auto& c_pla_src = *entity_->push_back_component<Component::Src>();
                         auto& c_spritesheet_material = *gamestate->get_child(spritesheet_name)->get_component<Component::Material>("material");
@@ -78,7 +80,7 @@ namespace Component {
                         auto csu_pla_animation = entity_->push_back_component<Component::System::Update::Animation>(animation_speed, c_pla_src);
                         auto csu_pla_animate_move = entity_->push_back_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
                         auto csu_check_collision = entity_->push_back_component<Component::System::Update::CheckCollision>(c_pla_col_gjk_circle, c_physicsaction_qtree);
-                        auto csu_check_action = entity_->push_back_component<Component::System::Update::CheckAction>(c_cont_keyboard, c_pla_col_gjk_circle, c_physicsaction_qtree, c_parse_action, action_distance);
+                        auto csu_check_action = entity_->push_back_component<Component::System::Update::CheckAction>(c_cont_keyboard, c_pla_col_gjk_circle, c_physicsaction_qtree, e_load, c_triggervec, action_distance);
 
                         auto anim_i = 0u;
                         auto animation = new Entity();

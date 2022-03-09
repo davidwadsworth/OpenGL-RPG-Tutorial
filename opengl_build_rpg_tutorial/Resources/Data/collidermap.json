@@ -18,10 +18,7 @@
 				"data" : [{ 
 					"load": "textbox", 
 					"data" : {
-						"internal" : ["rect"], 
-						"external" :  {
-							"message": {"filename" : "message", "pos" : 1}
-						}
+						"message": {"filename" : "message", "pos" : 1}
 					}
 				}]
 			},
@@ -45,10 +42,7 @@
 				"data" : [{ 
 					"load": "textbox", 
 					"data" : {
-						"internal" : ["rect"], 
-						"external" :  {
-							"message": {"filename" : "message", "pos" : 0}
-						}
+						"message": {"filename" : "message", "pos" : 0}
 					}
 				}]
 			},

@@ -14,7 +14,7 @@ namespace Component {
 			class Message : public Component::Trigger::ILoad
 			{
 				Rect rect_;
-				std::string font_name_, align_h_, align_v_, textbox_name_, textarea_name_;
+				std::string font_name_, align_h_, align_v_, textbox_name_;
 				float font_sc_, line_spacing_;
 				std::vector<std::string> messages_;
 				int msg_i_ = 0;
@@ -47,21 +47,23 @@ namespace Component {
 					align_v_ = json["textarea"]["align_vertical"];
 					line_spacing_ = json["textarea"]["line_spacing"];
 					messages_ = json["message"]["messages"].get<std::vector<std::string>>();
-					textbox_name_ = json["textbox"]["textbox"];
-					textarea_name_ = json["textbox"]["textarea"];
+					textbox_name_ = json["textbox"];
 					msg_i_ = 0;
 				}
 
 				void execute(Entity* gamestate) override
 				{
-					if (msg_i_ > messages_.size())
-						Logger::error("load messages called too many times or load not called.", Logger::HIGH);
-
+					auto e_textarea = gamestate->get_child(textbox_name_)->get_child("textarea");
+					if (msg_i_ > messages_.size() - 1)
+					{
+						e_textarea->get_component<Component::System::Render::Empty>("render")->set_draw_calls(0);
+						return;
+					}
+						
 					auto e_font = gamestate->get_child(font_name_);
-					auto e_textarea = gamestate->get_child(textbox_name_)->get_child(textarea_name_);
 
 					// create boxes
-					auto line_h = e_font->get_component<Component::Integer>()->value;
+					auto line_h = e_font->get_component<Component::Integer>("line_h")->value;
 
 					auto space = line_h / 3.0f;
 

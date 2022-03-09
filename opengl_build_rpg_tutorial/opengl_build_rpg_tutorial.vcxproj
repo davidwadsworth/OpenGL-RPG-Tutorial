@@ -163,7 +163,6 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_json.h" />
-    <ClInclude Include="component_parseaction.h" />
     <ClInclude Include="component_position.h" />
     <ClInclude Include="component_quadtree.h" />
     <ClInclude Include="component_rect.h" />

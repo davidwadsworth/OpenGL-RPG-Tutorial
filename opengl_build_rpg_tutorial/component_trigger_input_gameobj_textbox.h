@@ -50,7 +50,7 @@ namespace Component {
 						auto& c_trigger_vec = *gamestate->get_component<Component::TriggerVector>("trigger");
 
 						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
-						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_trigger_tree, c_cont_keyboard, c_trigger_vec);
+						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_cont_keyboard, c_trigger_vec);
 						c_update_vec.push_back(csu_tree_traverse);
 
 					}

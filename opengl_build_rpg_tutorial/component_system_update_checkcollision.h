@@ -29,13 +29,8 @@ namespace Component {
 					auto retrieved_rect = c_quad_tree_.retrieve(col_);
 
 					for (auto c : retrieved_rect)
-					{
 						if (GJK::collide(col_, *c))
-						{
 							c->resolve(col_);
-							break;
-						}
-					}
 				}
 			};
 		}
