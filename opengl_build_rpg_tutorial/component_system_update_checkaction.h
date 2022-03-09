@@ -7,6 +7,12 @@
 #include "component_trigger_load.h"
 #include "component_vector.h"
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace System {
 		namespace Update

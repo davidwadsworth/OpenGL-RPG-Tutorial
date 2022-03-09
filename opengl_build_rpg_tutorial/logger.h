@@ -2,6 +2,12 @@
 #include <iostream>
 #include <fstream>
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 class Logger
 {
 	static std::ostream& get_stream();

@@ -3,7 +3,11 @@
 #include <vector>
 #include "component_rect.h"
 #include "component_renderer.h"
+/*
+TODO
 
+@author David Wadsworth
+*/
 namespace Component {
 	namespace System {
 		namespace Render

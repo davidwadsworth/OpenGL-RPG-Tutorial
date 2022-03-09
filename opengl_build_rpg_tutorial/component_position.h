@@ -2,6 +2,12 @@
 #include "component.h"
 #include <glm/vec2.hpp>
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 	class Position : public IComponent, public glm::vec2 {

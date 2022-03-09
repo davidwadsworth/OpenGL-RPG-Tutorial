@@ -5,6 +5,12 @@
 
 constexpr auto MAX_TEX_UNITS = 32u;
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 	class TexUnit : public IComponent

@@ -2,6 +2,12 @@
 #include "component.h"
 #include "rect.h"
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 	class Rectang : public Rect, public IComponent

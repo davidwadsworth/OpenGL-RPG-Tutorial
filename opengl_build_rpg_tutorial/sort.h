@@ -1,5 +1,11 @@
 #pragma once
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 template<typename T>
 class merge_sort
 {

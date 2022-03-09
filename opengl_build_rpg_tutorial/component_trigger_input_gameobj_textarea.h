@@ -89,9 +89,6 @@ namespace Component {
 								current_pos.x += space;
 								curr_char++;
 								continue;
-							case '[':
-								// TODO generate option box
-								break;
 							case '\n':
 								// if message character exceedes boundaries for box then create a new message to hold remainder
 								if (current_pos.y + 2 * line_h > y + h)

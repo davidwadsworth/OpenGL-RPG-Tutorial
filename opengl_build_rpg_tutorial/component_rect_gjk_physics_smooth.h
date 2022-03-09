@@ -5,7 +5,7 @@
 #include "component_rect_gjk_polygon.h"
 
 /*
-Smoothly traverse over a boundary using another GJK collider
+Smoothly traverse over a boundary using another GJK collider TODO
 
 @author David Wadsworth
 */

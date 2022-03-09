@@ -3,6 +3,12 @@
 #include "rect.h"
 #include "action.h"
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Rectangle 
 	{

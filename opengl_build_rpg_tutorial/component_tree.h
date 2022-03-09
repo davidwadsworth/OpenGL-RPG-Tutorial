@@ -3,6 +3,12 @@
 #include "tree.h"
 #include "component_trigger.h"
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 	template <typename T>

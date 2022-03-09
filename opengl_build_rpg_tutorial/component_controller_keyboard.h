@@ -4,6 +4,12 @@
 #include "game.h"
 #include "component_array.h"
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Controller {
 		class Keyboard : public Component::IController

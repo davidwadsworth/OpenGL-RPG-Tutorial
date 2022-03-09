@@ -2,6 +2,11 @@
 #include "action.h"
 #include "component_rect_gjk.h"
 
+/*
+TODO
+
+@author David Wadsworth
+*/
 
 namespace Component {
 	namespace Rectangle {

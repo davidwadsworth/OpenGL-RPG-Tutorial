@@ -3,6 +3,12 @@
 #include <memory>
 #include <iostream>
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 template <typename T>
 class SplayTree
 {

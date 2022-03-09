@@ -2,6 +2,12 @@
 #include "component.h"
 #include "json.hpp"
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 	class Json : public IComponent {

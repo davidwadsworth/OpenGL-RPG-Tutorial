@@ -2,6 +2,12 @@
 #include <vector>
 #include <memory>
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 template <typename T>
 class Tre
 {

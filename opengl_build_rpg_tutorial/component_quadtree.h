@@ -9,6 +9,12 @@
 constexpr auto MAX_INDEX = 4;
 constexpr auto MAX_LEVEL = 10; // we don't want our quadtree to expand inifinitely due to 11 objects being on the same position somehow
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 	template <typename T>

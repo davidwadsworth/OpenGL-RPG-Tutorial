@@ -1,6 +1,12 @@
 #pragma once
 #include "component.h"
 
+/*
+virtual controller events that can be transcribed through multiple different supported controllers.
+
+@author David Wadsworth
+*/
+
 namespace Component
 {
 	struct IController : public IComponent

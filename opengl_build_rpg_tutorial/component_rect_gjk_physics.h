@@ -1,6 +1,12 @@
 #pragma once
 #include "component_rect_gjk_action.h"
 
+/*
+TODO
+
+@author David Wadsworth
+*/
+
 namespace Component {
 	namespace Rectangle {
 		namespace GJK

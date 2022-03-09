@@ -4,7 +4,11 @@
 #include "component_renderer.h"
 #include "component_rect.h"
 #include "component_position.h"
+/*
+TODO
 
+@author David Wadsworth
+*/
 namespace Component {
 	namespace System {
 		namespace Render
