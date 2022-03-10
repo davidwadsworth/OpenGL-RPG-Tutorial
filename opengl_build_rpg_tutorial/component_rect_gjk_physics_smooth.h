@@ -56,10 +56,11 @@ namespace Component {
 				}
 				namespace Polygon
 				{
+					constexpr auto CAPPED_PERCENT = 0.125f;
 					template <typename T>
 					class Smooth : public Component::Rectangle::GJK::Polygon<T>
 					{
-						GLfloat shortest_magnitude_, shortest_distance_;
+						GLfloat shortest_magnitude_, shortest_distance_, capped_distance_;
 
 						void find_closest_distance(float& closest_distance, glm::vec2& closest_vertex, glm::vec2 p1, glm::vec2 p2, glm::vec2 direction, std::size_t index)
 						{
@@ -91,13 +92,17 @@ namespace Component {
 							}
 
 							// check if line is closest 
-							auto distance = glm::dot(p2, direction) + glm::dot(p1, direction);
+							auto p1_distance = glm::dot(p1, direction);
+							auto p2_distance = glm::dot(p2, direction);
+							auto distance = + p1_distance + p2_distance;
 
-							if (distance > closest_distance)
+							if (distance - closest_distance > capped_distance_)
 							{
 								closest_distance = distance;
 								closest_vertex = p;
 							}
+							else if (distance - closest_distance > -capped_distance_)
+								closest_vertex = glm::vec2(-direction.y, direction.x);
 
 							if (index >= this->vertices_.size())
 								return;
@@ -130,6 +135,7 @@ namespace Component {
 								{
 									shortest_magnitude_ = temp_mag;
 									shortest_distance_ = glm::sqrt(shortest_magnitude_);
+									capped_distance_ = shortest_distance_ * CAPPED_PERCENT;
 								}
 							}
 						}
