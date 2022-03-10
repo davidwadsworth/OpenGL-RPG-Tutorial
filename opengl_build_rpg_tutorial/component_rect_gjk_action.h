@@ -3,7 +3,7 @@
 #include "component_rect_gjk.h"
 
 /*
-TODO
+Component gjk rect with action attached
 
 @author David Wadsworth
 */

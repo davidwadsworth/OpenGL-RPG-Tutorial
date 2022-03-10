@@ -8,7 +8,7 @@
 #include "component_vector.h"
 
 /*
-TODO
+Player system used for checking in front of the play for an actionable object (npc, sign, etc..)
 
 @author David Wadsworth
 */

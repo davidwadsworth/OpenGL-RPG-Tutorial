@@ -7,7 +7,7 @@
 #include "sort.h"
 
 /*
-TODO
+Organizing solution for render and update systems.
 
 @author David Wadsworth
 */
@@ -27,7 +27,7 @@ namespace Component
 			{}
 			float gid;
 
-			// overloading compare operators
+			// overloading compare operators for sorting
 			bool operator==(const Group& group) { return this->gid == group.gid; }
 			bool operator==(Group&& group) { return this->gid == group.gid; }
 			bool operator>(const Group& group) { return this->gid > group.gid; }
@@ -41,6 +41,7 @@ namespace Component
 		};
 
 		std::vector<Group> groups_;
+		// array binary search tree rip off
 		int search(float gid)
 		{
 			int l = 0;
@@ -76,6 +77,7 @@ namespace Component
 		{	
 			auto gsr = search(gid);
 
+			// if group is found add it to the back, otherwise add a new group and sort
 			if (gsr > 0)
 				groups_[gsr].push_back(item);
 			else
@@ -103,6 +105,7 @@ namespace Component
 			}
 		}
 
+		// get the final product and rejoice in no longer having organize manually
 		std::vector<Component::ISystem*> flatten()
 		{
 			std::vector<Component::ISystem*> flattened_engine;

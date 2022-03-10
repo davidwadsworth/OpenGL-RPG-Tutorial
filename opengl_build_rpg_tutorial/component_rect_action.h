@@ -4,7 +4,7 @@
 #include "action.h"
 
 /*
-TODO
+Component rect with action data structure attached
 
 @author David Wadsworth
 */

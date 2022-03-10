@@ -7,10 +7,27 @@
 #include "component_rect_gjk_physics.h"
 
 constexpr auto MAX_INDEX = 4;
-constexpr auto MAX_LEVEL = 10; // we don't want our quadtree to expand inifinitely due to 11 objects being on the same position somehow
+constexpr auto MAX_LEVEL = 10; // we don't want our quadtree to expand inifinitely due to max_objects + 1 objects being on the same position somehow
 
 /*
-TODO
+Data structure for inserting and retrieving rects 
+Quadtrees split into 4 different sub quadrants once reaching max item capacity.
+Good for retrieving a small group of rectangular objects at a specific position from a larger set of objects.
+
+int index(Rect): returns what quadrants could be within the vicinity of the key rect. 
+Uses quirky binary manipulated integer as its return value. Only geniuses would understand why this is necessary.
+
+void split(Entity*): creates 4 new quadtrees using the dimensions of the current tree and adds the quadtree components 
+to the master entity
+
+void insert(T*,Entity*): inserts a new rect into the quadtree and splits the quadtree if full.
+
+void print(): prints out contents of quadtree for debugging
+
+void add(T*,Entity*): inserts into master tree 
+
+void retrieve(Rect rect)
+void retrive(Rect rect, vector<T*>): retrieves a vector of T* within the vicinity of rect
 
 @author David Wadsworth
 */

@@ -4,7 +4,7 @@
 #include "component_trigger.h"
 
 /*
-TODO
+Component implementation of the tree data structure
 
 @author David Wadsworth
 */

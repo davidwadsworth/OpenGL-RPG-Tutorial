@@ -4,7 +4,7 @@
 #include "component_trigger.h"
 
 /*
-TODO
+Component implementation for vectors
 
 @author David Wadsworth
 */

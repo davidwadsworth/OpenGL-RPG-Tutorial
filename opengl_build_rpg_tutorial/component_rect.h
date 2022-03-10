@@ -3,7 +3,7 @@
 #include "rect.h"
 
 /*
-TODO
+Component implementation for rect data structure
 
 @author David Wadsworth
 */

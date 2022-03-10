@@ -5,7 +5,7 @@
 #include "component_rect.h"
 #include "component_position.h"
 /*
-TODO
+Draw in bulk a group of transform and sources from one material.
 
 @author David Wadsworth
 */

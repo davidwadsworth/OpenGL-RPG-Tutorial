@@ -3,7 +3,7 @@
 #include <fstream>
 
 /*
-TODO
+Useful logger function for displaying self defined warnings and errors
 
 @author David Wadsworth
 */

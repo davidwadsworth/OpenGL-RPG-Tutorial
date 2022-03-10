@@ -5,7 +5,13 @@
 #include "component_array.h"
 
 /*
-TODO
+Keyboard implementation for controller events
+
+keydown(): returns if the corrisponding key is in the down position
+keyup(): returns if the corrisponding key is in the up position
+
+keypress(): returns if the corrsisponding key switched from the down position to the up position
+keyrelease(): returns if the corrisponding key switched from the up position to the down position
 
 @author David Wadsworth
 */

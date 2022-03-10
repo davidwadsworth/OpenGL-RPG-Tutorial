@@ -5,7 +5,7 @@
 #include "component_rect_gjk_polygon.h"
 
 /*
-Smoothly traverse over a boundary using another GJK collider TODO
+Physics gjk implementation for smoothly gliding over an object
 
 @author David Wadsworth
 */

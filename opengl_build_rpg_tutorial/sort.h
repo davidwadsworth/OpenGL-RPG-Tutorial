@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-TODO
+Simple sort functions stolen from Geeks for Geeks.
 
 @author David Wadsworth
 */

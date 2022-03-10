@@ -34,10 +34,24 @@ namespace Component{
 					{
 						prev_ = curr;
 						if (curr.x > 0)
-							animation_.play("walk_right");
+						{
+							if (curr.y > 0)
+								animation_.play("walk_down_right");
+							else if (curr.y < 0)
+								animation_.play("walk_up_right");
+							else
+								animation_.play("walk_right");
+						}
 						else if (curr.x < 0)
-							animation_.play("walk_left");
-						if (curr.y > 0)
+						{
+							if (curr.y > 0)
+								animation_.play("walk_down_left");
+							else if (curr.y < 0)
+								animation_.play("walk_up_left");
+							else
+								animation_.play("walk_left");
+						}
+						else if (curr.y > 0)
 							animation_.play("walk_down");
 						else if (curr.y < 0)
 							animation_.play("walk_up");
@@ -45,10 +59,24 @@ namespace Component{
 					else
 					{
 						if (prev_.x > 0)
-							animation_.play("idle_right");
+						{
+							if (prev_.y > 0)
+								animation_.play("idle_down_right");
+							else if (prev_.y < 0)
+								animation_.play("idle_up_right");
+							else 
+								animation_.play("idle_right");
+						}
 						else if (prev_.x < 0)
-							animation_.play("idle_left");
-						if (prev_.y > 0)
+						{
+							if (prev_.y > 0)
+								animation_.play("idle_down_left");
+							else if (prev_.y < 0)
+								animation_.play("idle_up_left");
+							else
+								animation_.play("idle_left");
+						}
+						else if (prev_.y > 0)
 							animation_.play("idle_down");
 						else if (prev_.y < 0)
 							animation_.play("idle_up");
