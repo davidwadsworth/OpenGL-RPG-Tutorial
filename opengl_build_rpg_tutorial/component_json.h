@@ -3,7 +3,7 @@
 #include "json.hpp"
 
 /*
-TODO
+Json storage component
 
 @author David Wadsworth
 */

@@ -6,7 +6,7 @@
 #include "component_vector.h"
 
 /*
-TODO
+increments through the tree data structure using action_1 presses.
 
 @author David Wadsworth
 */

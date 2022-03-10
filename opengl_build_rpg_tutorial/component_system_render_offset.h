@@ -4,7 +4,7 @@
 #include "component_rect.h"
 #include "component_position.h"
 /*
-TODO
+Draw and offset a group of transform and srcs for rendering.
 
 @author David Wadsworth
 */

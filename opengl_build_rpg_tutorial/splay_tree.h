@@ -4,7 +4,7 @@
 #include <iostream>
 
 /*
-TODO
+splay tree data structure stolen from Geeks for Geeks.
 
 @author David Wadsworth
 */

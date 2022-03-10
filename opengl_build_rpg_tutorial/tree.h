@@ -3,7 +3,8 @@
 #include <memory>
 
 /*
-TODO
+It says its a tree and eventually it will be a tree, but for now its just a linked list :|
+useful for traversing events in the video game.
 
 @author David Wadsworth
 */

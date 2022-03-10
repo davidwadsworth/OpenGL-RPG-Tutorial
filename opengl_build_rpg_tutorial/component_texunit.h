@@ -6,7 +6,8 @@
 constexpr auto MAX_TEX_UNITS = 32u;
 
 /*
-TODO
+simple function for coming up with unique texunits for each texture.
+This isn't the best way of doing this, but it works.
 
 @author David Wadsworth
 */

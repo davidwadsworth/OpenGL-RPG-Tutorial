@@ -3,7 +3,7 @@
 #include <glm/vec2.hpp>
 
 /*
-TODO
+implementation for 2d positions
 
 @author David Wadsworth
 */

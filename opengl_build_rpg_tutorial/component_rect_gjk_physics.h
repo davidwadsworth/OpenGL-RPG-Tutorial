@@ -2,7 +2,8 @@
 #include "component_rect_gjk_action.h"
 
 /*
-TODO
+Virtual function used for resolving collisions between gjk objects
+split into two classes action and non action gjk objects
 
 @author David Wadsworth
 */

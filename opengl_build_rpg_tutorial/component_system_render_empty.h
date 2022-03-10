@@ -4,7 +4,7 @@
 #include "component_rect.h"
 #include "component_renderer.h"
 /*
-TODO
+Draw x src and transforms from one material, where x = draw_calls_.
 
 @author David Wadsworth
 */

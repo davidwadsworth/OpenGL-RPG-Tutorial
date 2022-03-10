@@ -3,7 +3,7 @@
 #include <glm/vec2.hpp>
 
 /*
-TODO
+Defines a rectangle (x,y,w,h)
 
 @author David Wadsworth
 */
