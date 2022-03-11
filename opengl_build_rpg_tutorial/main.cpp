@@ -13,7 +13,7 @@
 #include "component_trigger_input_gamestate_overworld.h"
 
 /*
-Source code for episode 17 of Build Your Own RPG series
+Source code for episode 21 of Build Your Own RPG series
 
 @author David Wadsworth
 */
@@ -87,7 +87,7 @@ int main()
         auto current_frame = static_cast<GLfloat>(glfwGetTime());
         Game::delta_time = current_frame - last_frame;
         last_frame = current_frame;
-
+        
         // clear screen to black
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
