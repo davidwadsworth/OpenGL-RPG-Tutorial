@@ -356,6 +356,9 @@
     <ClInclude Include="aabb.h">
       <Filter>Helper</Filter>
     </ClInclude>
+    <ClInclude Include="component_trigger_input_gamestate_house.h">
+      <Filter>EC\Component\Trigger\Input\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">

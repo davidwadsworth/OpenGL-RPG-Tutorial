@@ -175,6 +175,7 @@
     <ClInclude Include="component_system_update_checkaction.h" />
     <ClInclude Include="component_system_update_traverse_tree.h" />
     <ClInclude Include="component_texunit.h" />
+    <ClInclude Include="component_trigger_input_gamestate_house.h" />
     <ClInclude Include="component_trigger_input_index.h" />
     <ClInclude Include="component_trigger_input_loadcache.h" />
     <ClInclude Include="component_trigger_input_spritesheet.h" />
