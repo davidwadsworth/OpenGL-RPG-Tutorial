@@ -1,10 +1,10 @@
 #pragma once
 #include <glad/glad.h>
 #include <array>
-#include "entity.h"
 #include <unordered_map>
 #include <glm/vec2.hpp>
 #include "component_trigger_input_gamestate.h"
+#include "entity.h"
 
 /*
 defines key characteristics of the game and its state.
@@ -13,11 +13,16 @@ defines key characteristics of the game and its state.
 */
 
 
+enum class GameStateEn : std::size_t {
+	none,
+	overworld,
+	house
+};
+
 class Game
 {
-	static std::string next_state_;
 	static Component::Trigger::Input::IGameState* prev_state_;
-	static std::string next_state_;
+	static GameStateEn next_state_;
 public:
 	Game() = delete;
 	static GLuint width;
@@ -29,6 +34,6 @@ public:
 	static glm::vec2 removed;
 
 	static void init(Entity* game);
-	static void set_next_state(std::string state);
+	static void set_next_state(GameStateEn state);
 	static void check_new_state(Entity* game);
 };

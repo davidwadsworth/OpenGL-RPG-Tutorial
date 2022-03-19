@@ -10,7 +10,6 @@
 #include "logger.h"
 #include "component_array.h"
 #include <sstream>
-#include "component_trigger_input_gamestate_overworld.h"
 
 /*
 Source code for episode 21 of Build Your Own RPG series
@@ -91,6 +90,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         
         Game::curr_state->run();
+
+        Game::check_new_state(game);
 
         if (Game::exit)
             glfwSetWindowShouldClose(window, GL_TRUE);
