@@ -72,9 +72,6 @@ int main()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
-    auto& current_state = *game->get_component<Component::Trigger::Input::GameState::Overworld>("overworld");
-
-    current_state.init();
     Logger::message("Entities Created: " + std::to_string(Entity::count));
     Logger::message("Components Created: " + std::to_string(IComponent::count));
     
@@ -83,6 +80,7 @@ int main()
     // game loop
     while (!glfwWindowShouldClose(window))
     {
+
         // calculate delta time
         auto current_frame = static_cast<GLfloat>(glfwGetTime());
         Game::delta_time = current_frame - last_frame;
@@ -92,7 +90,7 @@ int main()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        current_state.run();
+        Game::curr_state->run();
 
         if (Game::exit)
             glfwSetWindowShouldClose(window, GL_TRUE);
@@ -102,7 +100,7 @@ int main()
     }
 
     // delete game and global entities and their components
-    current_state.destroy();
+    Game::curr_state->destroy();
     delete Game::global;
     delete game;
 
