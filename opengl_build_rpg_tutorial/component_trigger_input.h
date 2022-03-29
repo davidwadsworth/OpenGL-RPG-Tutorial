@@ -1,6 +1,5 @@
 #pragma once
 #include "component_trigger.h"
-#include "game.h"
 
 /*
 Handles all game object creation related operations, generally from data classes. And adds the game object into the executed map

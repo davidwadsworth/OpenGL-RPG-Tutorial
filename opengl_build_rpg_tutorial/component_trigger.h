@@ -1,6 +1,6 @@
 #pragma once
 #include "component.h"
-#include "game.h"
+#include "entity.h"
 
 /*
 Systems whoes whole purpose is to execute once and be unused until needed again

@@ -6,8 +6,7 @@
 // game global variables
 Component::Trigger::Input::IGameState* Game::prev_state_ = nullptr,
 	* Game::curr_state = nullptr;
-std::string next_state = 0;
-Component::Trigger::Input::IGameState* Game::curr_state = nullptr;
+GameStateEn Game::next_state_ = GameStateEn::none;
 GLuint Game::width = 800u;
 GLuint Game::height = 600u;
 GLfloat Game::delta_time = 0.0f;
@@ -29,15 +28,14 @@ void Game::init(Entity* game)
 
 void Game::set_next_state(GameStateEn state)
 {
-	next_state_ = state;
-
+	Game::next_state_ = state;
 }
 
 void Game::check_new_state(Entity* game)
 {
-	Component::Trigger::Input::IGameState* c_next_state;
+	Component::Trigger::Input::IGameState* c_next_state = nullptr;
 
-	switch (next_state_)
+	switch (Game::next_state_)
 	{
 	case GameStateEn::none:
 		return;
@@ -48,6 +46,7 @@ void Game::check_new_state(Entity* game)
 		c_next_state = game->get_component<Component::Trigger::Input::IGameState>("house");
 		break;
 	default:
+		Logger::error("invalid next state.", Logger::HIGH);
 		break;
 	}
 

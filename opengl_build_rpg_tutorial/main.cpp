@@ -70,6 +70,7 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    Game::set_next_state(GameStateEn::overworld);
 
     Logger::message("Entities Created: " + std::to_string(Entity::count));
     Logger::message("Components Created: " + std::to_string(IComponent::count));
@@ -79,6 +80,7 @@ int main()
     // game loop
     while (!glfwWindowShouldClose(window))
     {
+        Game::check_new_state(game);
 
         // calculate delta time
         auto current_frame = static_cast<GLfloat>(glfwGetTime());
@@ -91,8 +93,6 @@ int main()
         
         Game::curr_state->run();
 
-        Game::check_new_state(game);
-
         if (Game::exit)
             glfwSetWindowShouldClose(window, GL_TRUE);
 
@@ -101,7 +101,6 @@ int main()
     }
 
     // delete game and global entities and their components
-    Game::curr_state->destroy();
     delete Game::global;
     delete game;
 
