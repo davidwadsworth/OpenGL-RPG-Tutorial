@@ -38,7 +38,6 @@ namespace Component {
 						float tile_scale = tilemap_json["scale"];
 						float render_group = tilemap_json["render_group"];
 
-						std::vector<int> tiles = tilemap_json["layers"][0]["data"];
 
 						// set up tileset 
 						// This can have multiple tilesets, and thus multiple materials
@@ -61,22 +60,27 @@ namespace Component {
 
 						std::vector<Component::Transform*> trans_vec;
 						std::vector<Component::Src*> src_vec;
-						// set up tiles
-						for (auto i = 0; i < tiles.size(); ++i)
+						
+						for (auto& layer : tilemap_json["layers"])
 						{
-							Rect tile_dest
+							std::vector<int> tiles = layer["data"];
+							// set up tiles
+							for (auto i = 0; i < tiles.size(); ++i)
 							{
-								static_cast<GLfloat>((i % tilemap_w) * tile_size * tile_scale),  // finds place in column and multiplies by sprite width
-								static_cast<GLfloat>((i / tilemap_w) * tile_size * tile_scale),  // finds place in row and multiples by sprite height
-								static_cast<GLfloat>(tile_size * tile_scale), static_cast<GLfloat>(tile_size * tile_scale)
-							};
-							trans_vec.push_back(e_tiles->push_back_component<Component::Transform>(tile_dest));
-							
-							// get the approriate src tile from the list of tile_srcs minus the first gid
-							src_vec.push_back(e_tileset->get_component<Component::Src>(tiles[i] - first_gid));
+								Rect tile_dest
+								{
+									static_cast<GLfloat>((i % tilemap_w) * tile_size * tile_scale),  // finds place in column and multiplies by sprite width
+									static_cast<GLfloat>((i / tilemap_w) * tile_size * tile_scale),  // finds place in row and multiples by sprite height
+									static_cast<GLfloat>(tile_size * tile_scale), static_cast<GLfloat>(tile_size * tile_scale)
+								};
+								trans_vec.push_back(e_tiles->push_back_component<Component::Transform>(tile_dest));
+
+								// get the approriate src tile from the list of tile_srcs minus the first gid
+								src_vec.push_back(e_tileset->get_component<Component::Src>(tiles[i] - first_gid));
+							}
 						}
 
-						auto csr_tmap_render = entity_->add_component<Component::System::Render::TileMap>( c_cam_position, 
+						auto csr_tmap_render = entity_->add_component<Component::System::Render::TileMap>(c_cam_position,
 							tilemap_w, tilemap_h, tile_size * tile_scale, src_vec, trans_vec, c_tset_material, c_renderer);
 
 						gamestate->get_component<Component::Engine>("render")->add(csr_tmap_render, render_group);
@@ -86,6 +90,6 @@ namespace Component {
 				};
 			}
 		}
-		
+
 	}
 }

@@ -1,0 +1,14 @@
+{ "columns":48,
+ "image":"Dreams\/Tile_Assets\/Fantasy RPG\/TILESETS\/inside.png",
+ "imageheight":560,
+ "imagewidth":768,
+ "margin":0,
+ "name":"inside",
+ "spacing":0,
+ "tilecount":1680,
+ "tiledversion":"1.4.3",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":1.4
+}
