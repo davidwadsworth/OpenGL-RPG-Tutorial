@@ -21,7 +21,7 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					auto controller_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+					auto controller_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
 
 					entity_->add_component<Component::Controller::Keyboard>();
 				}

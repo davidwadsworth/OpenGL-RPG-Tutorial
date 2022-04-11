@@ -1,17 +1,8 @@
 {
-	"font" : "Resources/Data/font_gilsans.json",
-	"textbox" : "Resources/Data/textbox.json",
-	"shader" : "Resources/Data/shader.json",
-	"texture" : "Resources/Data/texture.json",
-	"tileset" : "Resources/Data/tileset.json",
-	"tilemap" : "Resources/Data/tilemap.json",
-	"player" : "Resources/Data/player.json",
-	"controller" : "Resources/Data/controller_keyboard.json",
-	"collider" : "Resources/Data/collider.json",
-	"spritesheet" : "Resources/Data/spritesheet.json",
-	"quadtree" : "Resources/Data/quadtree.json",
-	"box" : "Resources/Data/box.json",
-	"textarea" : "Resources/Data/textarea.json",
-	"renderer" : "Resources/Data/renderer.json",
-	"collidermap" : "Resources/Data/collidermap.json"
+	"message" : "Resources/Data/message_house.json",
+	"texture" : "Resources/Data/texture_house.json",
+	"tileset" : "Resources/Data/tileset_indside.json",
+	"tilemap" : "Resources/Data/tilemap_house.json",
+	"spritesheet" : "Resources/Data/spritesheet_house.json",
+	"collidermap" : "Resources/Data/collidermap_house.json"
 }

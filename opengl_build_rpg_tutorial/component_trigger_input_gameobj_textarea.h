@@ -12,6 +12,7 @@
 #include "delimiter_split.h"
 #include "component_json.h"
 #include "component_system_render_offset.h"
+#include "game.h"
 
 /*
 Display text on screen defined to an area using common text writing rules and 

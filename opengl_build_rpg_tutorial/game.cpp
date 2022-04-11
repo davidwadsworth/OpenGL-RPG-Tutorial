@@ -2,6 +2,7 @@
 #include "component_array.h"
 #include "component_texunit.h"
 #include "component_trigger_input_gamestate_overworld.h"
+#include "component_trigger_input_index.h"
 
 // game global variables
 Component::Trigger::Input::IGameState* Game::prev_state_ = nullptr,
@@ -24,6 +25,8 @@ void Game::init(Entity* game)
 	ctigs_overworld.execute(game);
 
 	Game::global->add_id_component<Component::KeyboardArray>("keyboard");
+	auto& cti_index = *Game::global->add_id_ct_input<Component::Trigger::Input::Index>("index", "index.json");
+	cti_index.execute(Game::global);
 }
 
 void Game::set_next_state(GameStateEn state)

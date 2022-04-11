@@ -1,6 +1,6 @@
 {
 	"render_group" : 3.0,
-	"texture" : {"filename":"spritesheet"},	
+	"texture" : {"filename":"spritesheet_overworld"},	
 	"data" : [{
 		"info" : {
 			"rect": {
@@ -18,7 +18,7 @@
 				"data" : [{ 
 					"load": "textbox", 
 					"data" : {
-						"message": {"filename" : "message", "pos" : 1}
+						"message": {"filename" : "message_overworld", "pos" : 1}
 					}
 				}]
 			},
@@ -42,7 +42,7 @@
 				"data" : [{ 
 					"load": "textbox", 
 					"data" : {
-						"message": {"filename" : "message", "pos" : 0}
+						"message": {"filename" : "message_overworld", "pos" : 0}
 					}
 				}]
 			},

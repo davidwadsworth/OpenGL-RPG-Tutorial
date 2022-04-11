@@ -21,7 +21,7 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override
 				{
-					auto& qt_json = gamestate->get_child("index")->get_component<Component::Json>("quadtree")->json;
+					auto& qt_json = Game::global->get_child("index")->get_component<Component::Json>("quadtree")->json;
 
 					float x = qt_json["rect"]["x"];
 					float y = qt_json["rect"]["y"];

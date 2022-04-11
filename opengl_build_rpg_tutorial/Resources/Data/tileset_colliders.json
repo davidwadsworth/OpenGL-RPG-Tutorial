@@ -1,0 +1,14 @@
+{ "columns":8,
+ "image":"Resources/Images/colliders.png",
+ "imageheight":133,
+ "imagewidth":265,
+ "margin":1,
+ "name":"colliders",
+ "spacing":1,
+ "tilecount":32,
+ "tiledversion":"1.4.3",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":1.4
+}

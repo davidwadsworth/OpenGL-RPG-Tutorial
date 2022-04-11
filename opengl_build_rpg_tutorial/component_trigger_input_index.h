@@ -4,14 +4,14 @@
 #include "json.hpp"
 #include "component_json.h"
 
-constexpr auto INDEX_PATH = "Resources/Data/index.json";
-
 namespace Component {
 	namespace Trigger {
 		namespace Input
 		{
 			class Index : public Component::Trigger::IInput
 			{
+				std::string filename_;
+
 				void create(Entity* gamestate) override
 				{
 					// load index from file
@@ -20,7 +20,7 @@ namespace Component {
 					try
 					{
 						// open files
-						std::ifstream indx_file(INDEX_PATH);
+						std::ifstream indx_file("Resources/Data/" + filename_);
 
 						// read into temp string streams
 						indx_stream << indx_file.rdbuf();
@@ -29,7 +29,7 @@ namespace Component {
 						indx_file.close();
 					}
 					catch (std::exception e) {
-						Logger::error("Failed to read index file! path = " + std::string(INDEX_PATH), Logger::HIGH);
+						Logger::error("Failed to read index file! path = " + std::string("Resources/Data/") + filename_, Logger::HIGH);
 					}
 
 					auto indx_json = nlohmann::json::parse(indx_stream);
@@ -65,7 +65,9 @@ namespace Component {
 
 				}
 			public:
-				using Component::Trigger::IInput::IInput;
+				Index(std::string name, std::string filename)
+					: Component::Trigger::IInput(name), filename_(filename)
+				{}
 			};
 		}
 	}

@@ -23,7 +23,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"resources/data/tileset.json"
+         "source":"resources/data/tileset_outside.json"
         }],
  "tilewidth":32,
  "type":"map",

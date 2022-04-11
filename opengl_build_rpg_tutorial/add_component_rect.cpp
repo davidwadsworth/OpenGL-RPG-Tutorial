@@ -5,6 +5,7 @@
 #include "component_rect_action.h"
 #include "component_json.h"
 #include "component_rect_gjk_physics_smooth.h"
+#include "game.h"
 
 Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohmann::json info_json)
 {
@@ -23,7 +24,7 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 		std::string collider_filename = info_json["collider"]["filename"];
 		std::string collider_name = info_json["collider"]["id"];
 		int collider_pos = info_json["collider"]["pos"];
-		auto collider_json = gamestate->get_child("index")->
+		auto collider_json = Game::global->get_child("index")->
 			get_component<Component::Json>(collider_filename)->json;
 		bool debug = collider_json["debug"] == "true";
 

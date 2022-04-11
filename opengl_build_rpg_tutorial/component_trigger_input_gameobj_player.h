@@ -28,7 +28,7 @@ namespace Component {
                     {
                         auto player_name = delimiter_split(name_.c_str(), '_')[0];
 
-                        auto& player_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+                        auto& player_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
 
                         float scale = player_json["scale"];
 

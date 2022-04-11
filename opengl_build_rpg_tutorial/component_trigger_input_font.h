@@ -26,7 +26,7 @@ namespace Component {
 				void create(Entity* gamestate) override final
 				{
 					// parse into json obj
-					auto fnt_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+					auto fnt_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
 
 					int line_h = fnt_json["common"]["lineHeight"];
 					entity_->add_id_component<Component::Integer>("line_h",line_h);

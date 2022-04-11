@@ -1,6 +1,5 @@
 #pragma once
 #include "component_trigger_input.h"
-#include "component_texunit.h"
 
 namespace Component {
 	namespace Trigger {

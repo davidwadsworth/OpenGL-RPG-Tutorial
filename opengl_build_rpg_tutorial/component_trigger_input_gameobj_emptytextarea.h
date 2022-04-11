@@ -17,7 +17,7 @@ namespace Component {
 				{
 					void create(Entity* gamestate) override
 					{
-						auto textarea_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+						auto textarea_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
 
 						std::string font_name = textarea_json["font"];
 						float render_group = textarea_json["render_group"];

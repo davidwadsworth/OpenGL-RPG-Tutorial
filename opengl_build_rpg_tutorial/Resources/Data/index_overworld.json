@@ -1,0 +1,10 @@
+{
+	"message" : "Resources/Data/message_overworld.json",
+	"texture" : "Resources/Data/texture_overworld.json",
+	"tileset_outside" : "Resources/Data/tileset_outside.json",
+	"tileset_colliders" : "Resources/Data/tileset_colliders.json",
+	"tilemap" : "Resources/Data/tilemap_overworld.json",
+	"spritesheet_overworld" : "Resources/Data/spritesheet_overworld.json",
+	"spritesheet" : "Resources/Data/spritesheet.json",
+	"collidermap" : "Resources/Data/collidermap_overworld.json"
+}

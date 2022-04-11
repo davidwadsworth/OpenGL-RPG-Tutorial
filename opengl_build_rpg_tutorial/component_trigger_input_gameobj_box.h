@@ -28,7 +28,7 @@ namespace Component {
 					{
 						auto box_info = delimiter_split(name_.c_str(), '_');
 
-						nlohmann::json box_json = gamestate->get_child("index")->get_component<Component::Json>(box_info[0])->json;
+						nlohmann::json box_json = Game::global->get_child("index")->get_component<Component::Json>(box_info[0])->json;
 
 						std::string spritesheet_name = box_json["texture"];
 

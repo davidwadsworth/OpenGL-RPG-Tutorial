@@ -1,23 +1,23 @@
 {
-	"tileset" : "tileset",
+	"tileset" : "tileset_colliders",
 	"debug" : "true",
 	"render_group" : 3.0,
 
 	"circle" : [
-		{"tileid" : 70, "radius" : 32.0, "center" : {"x":32.0, "y":32.0}},
-		{"tileid" : 70, "radius" : 32.0, "center" : {"x":32.0, "y":96.0}}
+		{"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":48.0}},
+		{"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":112.0}}
 	],
 
 	"boundary" : [
-		{"tileid" : 47, "points" : { "p1" : {"x" : 0.0, "y" : 64.0}, "p2": {"x": 64.0, "y": 0.0}}}
+		{"tileid" : 2, "points" : { "p1" : {"x" : 0.0, "y" : 64.0}, "p2": {"x": 64.0, "y": 0.0}}}
 	],
 
 	"polygon" : [
-		{"tileid" : 23, "points" : [{"x": 0.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]},
-		{"tileid" : 46, "points" : [{"x":0.0, "y":0.0}, {"x":64.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]}
+		{"tileid" : 1, "points" : [{"x": 0.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]},
+		{"tileid" : 6, "points" : [{"x":0.0, "y":0.0}, {"x":64.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]}
 	],
 
 	"aabb" : [
-		{"tileid" : 46 ,"width" : 64.0, "height" : 64.0} 
+		{"tileid" : 6 ,"width" : 64.0, "height" : 64.0} 
 	]
 }

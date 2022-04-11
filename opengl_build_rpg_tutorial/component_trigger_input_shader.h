@@ -22,7 +22,7 @@ namespace Component {
 			private:
 				void create(Entity* gamestate) override final
 				{
-					auto& shader_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+					auto& shader_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
 
 					auto projection = glm::ortho(0.0f, (GLfloat)Game::width, (GLfloat)Game::height, 0.0f, -1.0f, 1.0f);
 
@@ -32,7 +32,9 @@ namespace Component {
 						std::string shader_name = shader["name"];
 						auto& c_shader = *entity_->add_id_component<Component::Shader>(shader_name);
 						std::string vs_file_name = shader["vs"];
+						vs_file_name = "Resources/Shaders/" + vs_file_name;
 						std::string fs_file_name = shader["fs"];
+						fs_file_name = "Resources/Shaders/" + fs_file_name;
 						c_shader.load(vs_file_name.c_str(), fs_file_name.c_str());
 
 						// set up orthographic projection

@@ -1,5 +1,6 @@
 #include "component_renderer.h"
 #include "component_json.h"
+#include "game.h"
 
 constexpr auto VERTICES = 6u;
 
@@ -9,7 +10,7 @@ Component::Renderer::Renderer(std::string name)
 
 void Component::Renderer::init(Entity* gamestate)
 {
-	auto &renderer_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+	auto &renderer_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
 
 	std::vector<unsigned> attributes = renderer_json["attributes"];
 	max_sprites_ = renderer_json["max_sprites"];

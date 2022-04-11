@@ -17,6 +17,7 @@
 #include "component_trigger_input_index.h"
 #include "component_trigger_input_loadcache.h"
 #include "component_trigger_input_spritesheet.h"
+#include "component_texunit.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -94,7 +95,7 @@ namespace Component {
 						c_renderer_ = entity_->add_id_ct_input<Component::Renderer>("renderer");
 						entity_->add_id_component<Component::TexUnit>("texunit");
 
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Index>("index"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Index>("index", "index_house.json"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::LoadCache>("load"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller"));
@@ -102,7 +103,9 @@ namespace Component {
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("font"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::PhysicsActionGJKQTree>("physics_action_qtree"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::TileSet>("tileset"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::TileSet>("tileset_inside"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::TileSet>("tileset_colliders"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::SpriteSheet>("spritesheet_house"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::SpriteSheet>("spritesheet"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player"));

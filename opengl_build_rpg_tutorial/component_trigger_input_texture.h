@@ -27,6 +27,7 @@ namespace Component {
 					{
 						auto tex_name = delimiter_split(delimiter_split(tex_file.c_str(), '/').back().c_str(), '.')[0];
 						auto& c_texture = *entity_->add_id_component<Component::Texture>(tex_name);
+						tex_file = "Resources/Images/" + tex_file;
 						c_texture.load(tex_file.c_str());
 					}
 				}

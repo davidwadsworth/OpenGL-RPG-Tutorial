@@ -23,7 +23,7 @@ namespace Component {
 				private:
 					void create(Entity* gamestate) override final
 					{
-						auto& textbox_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+						auto& textbox_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
 
 						auto& c_update_vec = *entity_->add_id_component<Component::SystemVector>("update");
 						auto ct_switch_vectors = entity_->add_id_component<Component::Trigger::SwapVectors>("swap_vectors", c_update_vec);

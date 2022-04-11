@@ -1,0 +1,29 @@
+{
+	"render_group" : 3.0,
+	"texture" : {"filename":"spritesheet_house"},	
+	"data" : [{
+		"info" : {
+			"rect": {
+				"x" : 1088.0,
+				"y" : 1024.0,
+				"w" : 64.0,
+				"h" : 128.0
+			},
+			"collider" : {
+				"filename": "collider",
+				"id" : "circle",
+				"pos" : 1
+			},
+			"action" : {
+				"data" : [{ 
+					"load": "textbox", 
+					"data" : {
+						"message": {"filename" : "message_house", "pos" : 0}
+					}
+				}]
+			},
+			"tree" : "physics_action_qtree"
+		},
+		"src" : {"id": "weak_father"}	
+	}]
+}
