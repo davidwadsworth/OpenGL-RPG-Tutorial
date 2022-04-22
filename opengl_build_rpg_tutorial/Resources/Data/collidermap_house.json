@@ -25,5 +25,30 @@
 			"tree" : "physics_action_qtree"
 		},
 		"src" : {"id": "weak_father"}	
+	},{
+		"info" : {
+			"rect": {
+				"x" : 512.0,
+				"y" : 1024.0,
+				"w" : 64.0,
+				"h" : 64.0
+			},
+			"collider" : {
+				"filename": "collider",
+				"id" : "polygon",
+				"pos" : 1
+			},
+			"action" : {
+				"data" : [{ 
+					"load": "switch_state", 
+					"data" : {
+						"state" : "house",
+						"set_pos" : {"x": 640.0, "y": 640.0 }
+					}
+				}]
+			},
+			"tree" : "action_qtree"
+		},
+		"src" : {"id": "hole"}	
 	}]
 }

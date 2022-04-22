@@ -3,21 +3,23 @@
 	"debug" : "true",
 	"render_group" : 3.0,
 
-	"circle" : [
-		{"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":48.0}},
-		{"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":112.0}}
-	],
+	"circle" : {
+		"64x64_scircle" : {"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":48.0}},
+		"64x128_scircle" : {"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":112.0}},
+		"64x64_circle" : {"tileid" : 7, "radius" : 32.0, "center" : {"x":32.0, "y":32.0}}	
+	},
 
-	"boundary" : [
-		{"tileid" : 2, "points" : { "p1" : {"x" : 0.0, "y" : 64.0}, "p2": {"x": 64.0, "y": 0.0}}}
-	],
+	"boundary" : {
+		"64x64_bl->tl" : {"tileid" : 2, "points" : { "p1" : {"x" : 0.0, "y" : 64.0}, "p2": {"x": 64.0, "y": 0.0}}}
+	},
 
-	"polygon" : [
-		{"tileid" : 1, "points" : [{"x": 0.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]},
-		{"tileid" : 6, "points" : [{"x":0.0, "y":0.0}, {"x":64.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]}
-	],
+	"polygon" : {
+		"64x64_rtriangle_tl->br->bl" : {"tileid" : 1, "points" : [{"x": 0.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]},
+		"64x54_square": {"tileid" : 6, "points" : [{"x":0.0, "y":0.0}, {"x":64.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]}	
+	},
 
-	"aabb" : [
-		{"tileid" : 6 ,"width" : 64.0, "height" : 64.0} 
-	]
+	"aabb" : {
+		"64x64":{"tileid" : 6 ,"width" : 64.0, "height" : 64.0} 
+	}
+	
 }

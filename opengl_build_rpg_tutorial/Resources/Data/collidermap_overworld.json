@@ -49,5 +49,30 @@
 			"tree" : "physics_action_qtree"
 		},
 		"src" : {"id": "npc"}	
+	},{
+		"info" : {
+			"rect": {
+				"x" : 1152.0,
+				"y" : 1024.0,
+				"w" : 64.0,
+				"h" : 64.0
+			},
+			"collider" : {
+				"filename": "collider",
+				"id" : "circle",
+				"pos" : 1
+			},
+			"action" : {
+				"data" : [{ 
+					"load": "switch_state", 
+					"data" : {
+						"state" : "house",
+						"set_pos" : {"x": 640.0, "y": 640.0 }
+					}
+				}]
+			},
+			"tree" : "action_qtree"
+		},
+		"src" : {"id": "hole"}	
 	}]
 }

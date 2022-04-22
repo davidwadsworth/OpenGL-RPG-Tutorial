@@ -359,6 +359,12 @@
     <ClInclude Include="component_trigger_input_gamestate_house.h">
       <Filter>EC\Component\Trigger\Input\GameState</Filter>
     </ClInclude>
+    <ClInclude Include="component_trigger_load_switchstate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_update_checkactioncollision.h">
+      <Filter>EC\Component\System\Update</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">

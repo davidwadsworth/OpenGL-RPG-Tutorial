@@ -205,4 +205,5 @@ namespace Component
 #define PhysicsGJKQTree QuadTree<Component::Rectangle::GJK::IPhysics<Component::Rectangle::IGJK>>
 #define PhysicsActionGJKQTree QuadTree<Component::Rectangle::GJK::IPhysics<Component::Rectangle::GJK::Action>>
 #define ActionQTree QuadTree<Component::Rectangle::Action>
+#define ActionGJKQTree QuadTree<Component::Rectangle::GJK::Action>
 }

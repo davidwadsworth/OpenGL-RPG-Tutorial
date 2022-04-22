@@ -169,6 +169,8 @@
     <ClInclude Include="component_rect_action.h" />
     <ClInclude Include="component_rect_gjk_action.h" />
     <ClInclude Include="component_rect_gjk_physics.h" />
+    <ClInclude Include="component_system_update_checkactioncollision.h" />
+    <ClInclude Include="component_trigger_load_switchstate.h" />
     <ClInclude Include="component_system_render_bulkdraw.h" />
     <ClInclude Include="component_system_render_offset.h" />
     <ClInclude Include="component_system_update_camera.h" />
