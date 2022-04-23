@@ -4,9 +4,9 @@
 	"render_group" : 3.0,
 
 	"circle" : {
-		"64x64_scircle" : {"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":48.0}},
-		"64x128_scircle" : {"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":112.0}},
-		"64x64_circle" : {"tileid" : 7, "radius" : 32.0, "center" : {"x":32.0, "y":32.0}}	
+		"s_64x64" : {"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":48.0}},
+		"s_64x128" : {"tileid" : 7, "radius" : 16.0, "center" : {"x":32.0, "y":112.0}},
+		"64x64" : {"tileid" : 7, "radius" : 32.0, "center" : {"x":32.0, "y":32.0}}	
 	},
 
 	"boundary" : {
@@ -15,7 +15,7 @@
 
 	"polygon" : {
 		"64x64_rtriangle_tl->br->bl" : {"tileid" : 1, "points" : [{"x": 0.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]},
-		"64x54_square": {"tileid" : 6, "points" : [{"x":0.0, "y":0.0}, {"x":64.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]}	
+		"64x64_square": {"tileid" : 6, "points" : [{"x":0.0, "y":0.0}, {"x":64.0, "y":0.0}, {"x":64.0, "y":64.0}, {"x":0.0, "y":64.0}]}	
 	},
 
 	"aabb" : {

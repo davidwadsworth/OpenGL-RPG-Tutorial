@@ -67,6 +67,9 @@ namespace Component {
 							// set up tiles
 							for (auto i = 0; i < tiles.size(); ++i)
 							{
+								if (!tiles[i])
+									continue;
+
 								Rect tile_dest
 								{
 									static_cast<GLfloat>((i % tilemap_w) * tile_size * tile_scale),  // finds place in column and multiplies by sprite width

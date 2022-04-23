@@ -1,8 +1,10 @@
 {
 	"message" : "Resources/Data/message_house.json",
 	"texture" : "Resources/Data/texture_house.json",
-	"tileset" : "Resources/Data/tileset_indside.json",
+	"tileset_inside" : "Resources/Data/tileset_inside.json",
+	"tileset_colliders" : "Resources/Data/tileset_colliders.json",
 	"tilemap" : "Resources/Data/tilemap_house.json",
-	"spritesheet" : "Resources/Data/spritesheet_house.json",
+	"spritesheet_house" : "Resources/Data/spritesheet_house.json",
+	"spritesheet" : "Resources/Data/spritesheet.json",
 	"collidermap" : "Resources/Data/collidermap_house.json"
 }

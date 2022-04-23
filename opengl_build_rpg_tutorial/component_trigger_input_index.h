@@ -60,6 +60,9 @@ namespace Component {
 							continue;
 						}
 
+						if (!obj_stream)
+							Logger::error(std::string("invalid json: path = ") + obj_path, Logger::HIGH);
+
 						entity_->add_id_component<Component::Json>(obj.first, nlohmann::json::parse(obj_stream));
 					}
 

@@ -1,7 +1,15 @@
 {"frames": [
 
 {
-	"filename": "weak father.png",
+	"filename": "hole.png",
+	"frame": {"x":1,"y":131,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "weak_father.png",
 	"frame": {"x":1,"y":1,"w":64,"h":128},
 	"rotated": false,
 	"trimmed": false,
@@ -13,8 +21,8 @@
 	"version": "1.0",
 	"image": "spritesheet_house.png",
 	"format": "RGBA8888",
-	"size": {"w":66,"h":130},
+	"size": {"w":66,"h":196},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:87dc20396f1a456fd8f7ee29856aa6f8:618e020b84b57a6205ed3a559bea47dc:cb7d1527235e24a74884f009e814d1a1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a7efcd840aa3e4c93c7fa3767a15de66:4746b883ef5f38000680bcc9568264eb:cb7d1527235e24a74884f009e814d1a1$"
 }
 }

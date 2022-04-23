@@ -47,5 +47,7 @@
  "tilewidth":16,
  "type":"map",
  "version":1.4,
- "width":16
+ "width":16,
+ "scale": 2.0,
+ "render_group" : 1.0
 }

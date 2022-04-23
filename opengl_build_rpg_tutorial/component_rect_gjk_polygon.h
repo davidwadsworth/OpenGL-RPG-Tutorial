@@ -91,7 +91,8 @@ namespace Component {
 				}
 			};
 #define PolygonActionPhysicsGJK Polygon<Component::Rectangle::GJK::PhysicsAction>
-#define PolygonPhysicsGJK Polygon<Component::Rectangle::PhysicsNorm>
+#define PolygonGJK Polygon<Component::Rectangle::IGJK>
+#define PolygonActionGJK Polygon<Component::Rectangle::GJK::Action>
 		}
 	}
 }

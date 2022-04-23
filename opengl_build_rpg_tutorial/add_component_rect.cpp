@@ -22,11 +22,12 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 	if (has_collider)
 	{
 		std::string collider_filename = info_json["collider"]["filename"];
-		std::string collider_name = info_json["collider"]["id"];
-		int collider_pos = info_json["collider"]["pos"];
+		std::string collider_name = info_json["collider"]["collider"];
+		std::string collider_pos = info_json["collider"]["id"];
 		auto collider_json = Game::global->get_child("index")->
 			get_component<Component::Json>(collider_filename)->json;
 		bool debug = collider_json["debug"] == "true";
+		std::string physics = info_json["collider"]["physics"];
 
 		Component::Rectangle::IGJK* rect = nullptr;
 
@@ -36,21 +37,44 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			float radius = circle_json["radius"];
 			float center_x = circle_json["center"]["x"];
 			float center_y = circle_json["center"]["y"];
-			if (has_action)
+
+			if (physics == "smooth")
 			{
-				auto ccgjkaps_circle = entity->push_back_component
-					<Component::Rectangle::GJK::Physics::Circle::SmoothPhysicsAction>
-					(in_rect, radius, glm::vec2(center_x, center_y));
-				ccgjkaps_circle->action = info_json["action"]["data"];
-				rect = ccgjkaps_circle;
+				if (has_action)
+				{
+					auto ccgjkaps_circle = entity->push_back_component
+						<Component::Rectangle::GJK::Physics::Circle::SmoothPhysicsAction>
+						(in_rect, radius, glm::vec2(center_x, center_y));
+					ccgjkaps_circle->action = info_json["action"]["data"];
+					rect = ccgjkaps_circle;
+				}
+				else
+				{
+					auto ccgjkaps_circle = entity->push_back_component
+						<Component::Rectangle::GJK::Physics::Circle::SmoothPhysics>
+						(in_rect, radius, glm::vec2(center_x, center_y));
+					rect = ccgjkaps_circle;
+				}
 			}
 			else
 			{
-				auto crgjkbps_polygon = entity->push_back_component
-				<Component::Rectangle::GJK::Physics::Circle::SmoothPhysics>
-				(in_rect, radius, glm::vec2(center_x, center_y));
-				rect = crgjkbps_polygon;
+				if (has_action)
+				{
+					auto ccgjkaps_circle = entity->push_back_component
+						<Component::Rectangle::GJK::CircleActionGJK>
+						(in_rect, radius, glm::vec2(center_x, center_y));
+					ccgjkaps_circle->action = info_json["action"]["data"];
+					rect = ccgjkaps_circle;
+				}
+				else
+				{
+					auto ccgjkaps_circle = entity->push_back_component
+						<Component::Rectangle::GJK::CircleGJK>
+						(in_rect, radius, glm::vec2(center_x, center_y));
+					rect = ccgjkaps_circle;
+				}
 			}
+			
 		}
 		else if (collider_name == "boundary")
 		{
@@ -60,18 +84,37 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			std::array<glm::vec2, MAX_BOUNDARY> arr_points{ glm::vec2(points["p1"]["x"], points["p1"]["y"]),
 				glm::vec2(points["p2"]["x"], points["p2"]["y"]) };
 
-			if (has_action)
+			if (physics == "smooth")
 			{
-				auto ccgjkaps_boundary = entity->push_back_component
-					<Component::Rectangle::GJK::Physics::Boundary::SmoothPhysicsAction>(in_rect, arr_points);
-				ccgjkaps_boundary->action = info_json["action"]["data"];
-				rect = ccgjkaps_boundary;
+				if (has_action)
+				{
+					auto ccgjkaps_boundary = entity->push_back_component
+						<Component::Rectangle::GJK::Physics::Boundary::SmoothPhysicsAction>(in_rect, arr_points);
+					ccgjkaps_boundary->action = info_json["action"]["data"];
+					rect = ccgjkaps_boundary;
+				}
+				else
+				{
+					auto crgjkbps_boundary = entity->push_back_component
+						<Component::Rectangle::GJK::Physics::Boundary::SmoothPhysics>(in_rect, arr_points);
+					rect = crgjkbps_boundary;
+				}
 			}
-			else
+			else 
 			{
-				auto crgjkbps_boundary = entity->push_back_component
-					<Component::Rectangle::GJK::Physics::Boundary::SmoothPhysics>(in_rect, arr_points);
-				rect = crgjkbps_boundary;
+				if (has_action)
+				{
+					auto ccgjkaps_boundary = entity->push_back_component
+						<Component::Rectangle::GJK::BoundaryActionGJK>(in_rect, arr_points);
+					ccgjkaps_boundary->action = info_json["action"]["data"];
+					rect = ccgjkaps_boundary;
+				}
+				else
+				{
+					auto crgjkbps_boundary = entity->push_back_component
+						<Component::Rectangle::GJK::BoundaryGJK>(in_rect, arr_points);
+					rect = crgjkbps_boundary;
+				}
 			}
 		}
 		else if (collider_name == "polygon")
@@ -85,19 +128,37 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 				float y = p["y"];
 				vec2_points.push_back(glm::vec2(x, y));
 			}
-
-			if (has_action)
+			if (physics == "smooth")
 			{
-				auto ccgjkaps_polygon = entity->push_back_component
-					<Component::Rectangle::GJK::Physics::Polygon::SmoothPhysicsAction>(in_rect, vec2_points);
-				ccgjkaps_polygon->action = info_json["action"]["data"];
-				rect = ccgjkaps_polygon;
+				if (has_action)
+				{
+					auto ccgjkaps_polygon = entity->push_back_component
+						<Component::Rectangle::GJK::Physics::Polygon::SmoothPhysicsAction>(in_rect, vec2_points);
+					ccgjkaps_polygon->action = info_json["action"]["data"];
+					rect = ccgjkaps_polygon;
+				}
+				else
+				{
+					auto crgjkpsp_polygon = entity->push_back_component<Component::Rectangle::GJK::Physics::Polygon::SmoothPhysics>
+						(in_rect, vec2_points);
+					rect = crgjkpsp_polygon;
+				}
 			}
 			else
 			{
-				auto crgjkpsp_polygon = entity->push_back_component<Component::Rectangle::GJK::Physics::Polygon::SmoothPhysics>
-					(in_rect, vec2_points);
-				rect = crgjkpsp_polygon;
+				if (has_action)
+				{
+					auto ccgjkaps_polygon = entity->push_back_component
+						<Component::Rectangle::GJK::PolygonActionGJK>(in_rect, vec2_points);
+					ccgjkaps_polygon->action = info_json["action"]["data"];
+					rect = ccgjkaps_polygon;
+				}
+				else
+				{
+					auto crgjkpsp_polygon = entity->push_back_component<Component::Rectangle::GJK::PolygonGJK>
+						(in_rect, vec2_points);
+					rect = crgjkpsp_polygon;
+				}
 			}
 		}
 		else
@@ -133,7 +194,12 @@ Component::Rectang* add_component_rect(Entity* entity, Entity* gamestate, nlohma
 			std::string quadtree_name = info_json["tree"];
 			auto e_quadtree = gamestate->get_child(quadtree_name);
 			if (has_action)
-				Component::PhysicsActionGJKQTree::add(dynamic_cast<Component::Rectangle::GJK::PhysicsAction*>(rect), e_quadtree);
+			{
+				if (physics == "none")
+					Component::ActionGJKQTree::add(dynamic_cast<Component::Rectangle::GJK::Action*>(rect), e_quadtree);
+				else
+					Component::PhysicsActionGJKQTree::add(dynamic_cast<Component::Rectangle::GJK::PhysicsAction*>(rect), e_quadtree);
+			}
 			else
 				Component::PhysicsGJKQTree::add(dynamic_cast<Component::Rectangle::GJK::PhysicsNorm*>(rect), e_quadtree);
 		}

@@ -7,9 +7,10 @@
 			"h" : 64.0
 		},
 		"collider" : {
+			"physics": "none",
 			"filename": "collider",
-			"id" : "circle",
-			"pos" : 0
+			"collider" : "circle",
+			"id" : "s_64x64"
 		}
 	},
 	"scale" : 1.0,

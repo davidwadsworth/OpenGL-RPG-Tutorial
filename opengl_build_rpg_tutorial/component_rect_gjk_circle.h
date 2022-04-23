@@ -33,7 +33,8 @@ namespace Component {
 				}
 			};
 #define CircleActionPhysicsGJK Circle<Component::Rectangle::GJK::PhysicsAction>
-#define CirclePhysicsGJK Circle<Component::Rectangle::PhysicsNorm>
+#define CircleGJK Circle<Component::Rectangle::IGJK>
+#define CircleActionGJK Circle<Component::Rectangle::GJK::Action>
 		}
 	}
 }

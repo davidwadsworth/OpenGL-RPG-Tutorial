@@ -102,7 +102,7 @@ namespace Component {
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("font"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::PhysicsActionGJKQTree>("physics_action_qtree"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::ActionQTree>("action_qtree"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::ActionGJKQTree>("action_qtree"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::TileSet>("tileset_outside"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::TileSet>("tileset_colliders"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::SpriteSheet>("spritesheet"));

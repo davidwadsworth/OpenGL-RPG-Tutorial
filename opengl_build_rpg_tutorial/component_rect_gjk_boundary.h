@@ -48,7 +48,8 @@ namespace Component {
 				}
 			};
 #define BoundaryActionPhysicsGJK Boundary<Component::Rectangle::GJK::PhysicsAction>
-#define BoundaryPhysicsGJK Boundary<Component::Rectangle::PhysicsNorm>
+#define BoundaryGJK Boundary<Component::Rectangle::IGJK>
+#define BoundaryActionGJK Boundary<Component::Rectangle::GJK::Action>
 		}
 	}
 }

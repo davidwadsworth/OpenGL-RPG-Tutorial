@@ -9,6 +9,7 @@
 #include "component_system_update_checkcollision.h"
 #include "component_system_update_checkaction.h"
 #include "component_system_render_cameradraw.h"
+#include "component_system_update_checkactioncollision.h"
 
 /*
 Creates our player object to move around in the overworld.
@@ -58,6 +59,9 @@ namespace Component {
                         // get action qtree
                         auto& c_physicsaction_qtree = *gamestate->get_child("physics_action_qtree")->get_component<Component::PhysicsActionGJKQTree>(0);
 
+                        // get action qtree
+                        auto& c_action_qtree = *gamestate->get_child("action_qtree")->get_component<Component::ActionGJKQTree>(0);
+
                         // get render engine
                         auto& c_render_engine = *gamestate->get_component<Component::Engine>("render");
 
@@ -80,6 +84,7 @@ namespace Component {
                         auto csu_pla_animation = entity_->push_back_component<Component::System::Update::Animation>(animation_speed, c_pla_src);
                         auto csu_pla_animate_move = entity_->push_back_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
                         auto csu_check_collision = entity_->push_back_component<Component::System::Update::CheckCollision>(c_pla_col_gjk_circle, c_physicsaction_qtree);
+                        auto csu_check_action_collision = entity_->push_back_component<Component::System::Update::CheckActionCollision>(c_pla_col_gjk_circle, c_action_qtree, c_triggervec, e_load);
                         auto csu_check_action = entity_->push_back_component<Component::System::Update::CheckAction>(c_cont_keyboard, c_pla_col_gjk_circle, c_physicsaction_qtree, e_load, c_triggervec, action_distance);
 
                         auto anim_i = 0u;
@@ -101,6 +106,7 @@ namespace Component {
 
                         c_update_engine.add(csu_pla_move, update_group);
                         c_update_engine.add(csu_check_collision, update_group);
+                        c_update_engine.add(csu_check_action_collision, update_group);
                         c_update_engine.add(csu_pla_camera, update_group);
                         c_update_engine.add(csu_pla_animate_move, update_group);
                         c_update_engine.add(csu_pla_animation, update_group);

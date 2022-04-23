@@ -10,9 +10,10 @@
 				"h" : 128.0
 			},
 			"collider" : {
+				"physics": "smooth",
 				"filename": "collider",
-				"id" : "circle",
-				"pos" : 1
+				"collider" : "circle",
+				"id" : "s_64x128"
 			},
 			"action" : {
 				"data" : [{ 
@@ -34,16 +35,17 @@
 				"h" : 64.0
 			},
 			"collider" : {
+				"physics": "none",
 				"filename": "collider",
-				"id" : "polygon",
-				"pos" : 1
+				"collider" : "circle",
+				"id" : "64x64"
 			},
 			"action" : {
 				"data" : [{ 
 					"load": "switch_state", 
 					"data" : {
-						"state" : "house",
-						"set_pos" : {"x": 640.0, "y": 640.0 }
+						"next_state" : "overworld",
+						"return_pos" : {"x": 500.0, "y": 640.0 }
 					}
 				}]
 			},

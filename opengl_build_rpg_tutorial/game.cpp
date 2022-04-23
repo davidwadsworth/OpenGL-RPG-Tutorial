@@ -2,12 +2,13 @@
 #include "component_array.h"
 #include "component_texunit.h"
 #include "component_trigger_input_gamestate_overworld.h"
+#include "component_trigger_input_gamestate_house.h"
 #include "component_trigger_input_index.h"
 
 // game global variables
 Component::Trigger::Input::IGameState* Game::prev_state_ = nullptr,
 	* Game::curr_state = nullptr;
-GameStateEn Game::next_state_ = GameStateEn::none;
+std::string Game::next_state_ = "none";
 GLuint Game::width = 800u;
 GLuint Game::height = 600u;
 GLfloat Game::delta_time = 0.0f;
@@ -24,34 +25,25 @@ void Game::init(Entity* game)
 	auto& ctigs_overworld = *game->add_id_ct_input<Component::Trigger::Input::GameState::Overworld>("overworld");
 	ctigs_overworld.execute(game);
 
+	auto& ctigs_house = *game->add_id_ct_input<Component::Trigger::Input::GameState::House>("house");
+	ctigs_house.execute(game);
+
 	Game::global->add_id_component<Component::KeyboardArray>("keyboard");
 	auto& cti_index = *Game::global->add_id_ct_input<Component::Trigger::Input::Index>("index", "index.json");
 	cti_index.execute(Game::global);
 }
 
-void Game::set_next_state(GameStateEn state)
+void Game::set_next_state(std::string state)
 {
 	Game::next_state_ = state;
 }
 
 void Game::check_new_state(Entity* game)
 {
-	Component::Trigger::Input::IGameState* c_next_state = nullptr;
-
-	switch (Game::next_state_)
-	{
-	case GameStateEn::none:
+	if (next_state_ == "none")
 		return;
-	case GameStateEn::overworld:
-		c_next_state = game->get_component<Component::Trigger::Input::IGameState>("overworld");
-		break;
-	case GameStateEn::house:
-		c_next_state = game->get_component<Component::Trigger::Input::IGameState>("house");
-		break;
-	default:
-		Logger::error("invalid next state.", Logger::HIGH);
-		break;
-	}
+
+	Component::Trigger::Input::IGameState* c_next_state = game->get_component<Component::Trigger::Input::IGameState>(Game::next_state_);
 
 	if (Game::prev_state_)
 	{
@@ -71,5 +63,5 @@ void Game::check_new_state(Entity* game)
 	c_next_state->init();
 	Game::prev_state_ = Game::curr_state;
 	Game::curr_state = c_next_state;
-	next_state_ = GameStateEn::none;
+	next_state_ = "none";
 }

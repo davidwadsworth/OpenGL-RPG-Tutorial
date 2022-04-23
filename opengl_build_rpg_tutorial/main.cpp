@@ -70,7 +70,7 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    Game::set_next_state(GameStateEn::overworld);
+    Game::set_next_state("overworld");
 
     Logger::message("Entities Created: " + std::to_string(Entity::count));
     Logger::message("Components Created: " + std::to_string(IComponent::count));
