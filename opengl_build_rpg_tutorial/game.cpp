@@ -48,6 +48,7 @@ void Game::check_new_state(Entity* game)
 	if (curr_state)
 		Game::curr_state->destroy();
 	
+	
 	Game::curr_state = c_next_state;
 	next_state_ = "none";
 }

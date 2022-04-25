@@ -45,6 +45,12 @@ void Component::Renderer::release()
 		glDeleteBuffers(1, &vbo_);
 	if (vao_)
 		glDeleteBuffers(1, &vao_);
+	buffer_.clear();
+	vbo_ = 0;
+	vao_ = 0;
+	current_mat_ = nullptr;
+	max_sprites_ = 0;
+	att_size_ = 0;
 }
 
 void Component::Renderer::begin()

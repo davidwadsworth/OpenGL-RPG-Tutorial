@@ -77,6 +77,7 @@ namespace Component {
                         auto& c_spritesheet_material = *gamestate->get_child(spritesheet_name)->get_component<Component::Material>("material");
 
                         auto& c_pla_col_gjk_circle = *static_cast<Component::Rectangle::IGJK*>(add_component_rect(entity_, gamestate, info_json));
+                        Logger::message(std::to_string(c_pla_col_gjk_circle.x) + ", " + std::to_string(c_pla_col_gjk_circle.y));
                         auto csr_pla_dynamic_draw = entity_->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_col_gjk_circle, c_spritesheet_material, c_cam_position);
                         auto csu_pla_camera = entity_->push_back_component<Component::System::Update::Camera>(c_pla_col_gjk_circle, c_cam_position);
                         auto csu_pla_move = entity_->push_back_component<Component::System::Update::Move>(c_pla_col_gjk_circle, c_cont_keyboard, player_speed);

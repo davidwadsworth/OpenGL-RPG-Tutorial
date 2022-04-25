@@ -42,10 +42,16 @@ namespace Component {
 					void init() override final
 					{
 						// init game objs
-						for (auto obj : objects_)
-							static_cast<Component::ITrigger*>(obj)->execute(entity_);
-
 						c_renderer_->init(entity_);
+
+						int i = 0;
+						for (auto obj : objects_)
+						{
+							auto input = static_cast<Component::Trigger::IInput*>(obj);
+							input->execute(entity_);
+							Logger::message(input->name_);
+
+						}
 						auto& c_render_engine = *entity_->get_component<Component::Engine>("render");
 						auto& c_update_engine = *entity_->get_component<Component::Engine>("update");
 						

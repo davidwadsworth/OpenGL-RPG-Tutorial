@@ -13,12 +13,12 @@ namespace Component {
 		{
 		protected:
 			Entity* entity_;
-			std::string name_;
 
 
 		private:
 			virtual void create(Entity* gamestate) = 0;
 		public:
+			std::string name_;
 			IInput(std::string name)
 				: entity_(nullptr), name_(name)
 			{}
