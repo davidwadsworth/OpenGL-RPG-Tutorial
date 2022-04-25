@@ -36,7 +36,7 @@ namespace Component {
 					Component::TriggerVector* c_triggers_ = nullptr;
 					Component::Renderer* c_renderer_ = nullptr;
 					std::vector<Component::Trigger::IInput*> objects_;
-
+					Component::Engine* c_render_engine_, * c_update_engine_;
 				public:
 					using Component::Trigger::Input::IGameState::IGameState;
 
@@ -47,12 +47,12 @@ namespace Component {
 						for (auto obj : objects_)
 							static_cast<Component::ITrigger*>(obj)->execute(entity_);
 
-						auto& c_render_engine = *entity_->get_component<Component::Engine>("render");
-						auto& c_update_engine = *entity_->get_component<Component::Engine>("update");
+						c_render_engine_ = entity_->get_component<Component::Engine>("render");
+						c_update_engine_ = entity_->get_component<Component::Engine>("update");
 
-						auto flat_u_engine = c_update_engine.flatten();
+						auto flat_u_engine = c_update_engine_->flatten();
 						c_update_->insert(c_update_->begin(), flat_u_engine.begin(), flat_u_engine.end());
-						render_ = c_render_engine.flatten();
+						render_ = c_render_engine_->flatten();
 					}
 
 					void destroy() override final
@@ -60,7 +60,11 @@ namespace Component {
 						c_renderer_->release();
 						// destroy all active game objs
 						entity_->clear_children();
+						// clear out all queues
 						render_.clear();
+						c_update_->clear();
+						c_render_engine_->clear();
+						c_update_engine_->clear();
 					}
 
 					void run() override final

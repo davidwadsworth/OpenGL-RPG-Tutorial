@@ -61,7 +61,7 @@ namespace Component {
 						std::vector<Component::Transform*> trans_vec;
 						std::vector<Component::Src*> src_vec;
 						
-						for (auto& layer : tilemap_json["layers"])
+						for (auto &layer : tilemap_json["layers"])
 						{
 							std::vector<int> tiles = layer["data"];
 							// set up tiles

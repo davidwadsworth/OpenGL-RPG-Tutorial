@@ -44,7 +44,7 @@ namespace Component {
 					
 					if (c_controller_.key_press_action_1())
 					{
-						auto distance_pos = glm::vec2(c_transform_.w / 2.0f, c_transform_.h / 2.0f);
+						auto distance_pos = glm::vec2(c_transform_.w / 2.0f, c_transform_.h / 4.0f * 3.0f);
 						distance_pos.x += c_transform_.x;
 						distance_pos.y += c_transform_.y;
 						distance_pos += direction_ * distance_;

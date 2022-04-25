@@ -48,6 +48,6 @@
  "type":"map",
  "version":1.4,
  "width":16,
- "scale": 2.0,
+ "scale": 4.0,
  "render_group" : 1.0
 }

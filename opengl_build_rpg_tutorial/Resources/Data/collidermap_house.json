@@ -4,8 +4,8 @@
 	"data" : [{
 		"info" : {
 			"rect": {
-				"x" : 1088.0,
-				"y" : 1024.0,
+				"x" : 512.0,
+				"y" : 512.0,
 				"w" : 64.0,
 				"h" : 128.0
 			},
@@ -45,7 +45,7 @@
 					"load": "switch_state", 
 					"data" : {
 						"next_state" : "overworld",
-						"return_pos" : {"x": 300.0, "y": 300.0 }
+						"return_pos" : {"x": 512.0, "y": 944.0 }
 					}
 				}]
 			},

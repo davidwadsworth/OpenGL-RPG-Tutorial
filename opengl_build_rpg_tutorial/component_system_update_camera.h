@@ -34,6 +34,10 @@ namespace Component {
 					cam_x = follower_.x - static_cast<float>(Game::width / 2.0f) + follower_.w / 2.0f;
 					cam_y = follower_.y - static_cast<float>(Game::height / 2.0f) + follower_.h / 2.0f;
 
+					if (cam_x < 0.0f)
+						cam_x = 0.0f;
+					if (cam_y < 0.0f)
+						cam_y = 0.0f;
 				}
 			};
 		}

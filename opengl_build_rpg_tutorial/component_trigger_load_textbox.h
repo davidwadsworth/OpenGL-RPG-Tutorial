@@ -33,11 +33,11 @@ namespace Component {
 
 					auto message_size = msg_pos_json["messages"].size();
 
-					auto textbox_json = gamestate->get_child("index")->get_component<Component::Json>(textbox_name)->json;
+					auto textbox_json = Game::global->get_child("index")->get_component<Component::Json>(textbox_name)->json;
 					std::string box_name = textbox_json["box"];
-					auto box_json = gamestate->get_child("index")->get_component<Component::Json>(box_name)->json;
+					auto box_json = Game::global->get_child("index")->get_component<Component::Json>(box_name)->json;
 					std::string textarea_name = textbox_json["textarea"];
-					auto textarea_json = gamestate->get_child("index")->get_component<Component::Json>(textarea_name)->json;
+					auto textarea_json = Game::global->get_child("index")->get_component<Component::Json>(textarea_name)->json;
 
 					nlohmann::json combined_json;
 					textbox_json["textbox"] = textbox_name;
