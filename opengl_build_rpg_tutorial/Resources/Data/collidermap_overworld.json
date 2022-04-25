@@ -70,7 +70,7 @@
 					"load": "switch_state", 
 					"data" : {
 						"next_state" : "house",
-						"return_pos" : {"x": 540.0, "y": 640.0 }
+						"return_pos" : {"x": 640.0, "y": 640.0 }
 					}
 				}]
 			},

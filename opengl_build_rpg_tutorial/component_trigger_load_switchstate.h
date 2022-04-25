@@ -23,10 +23,10 @@ namespace Component {
 
 				void execute(Entity* gamestate) override
 				{
-					Game::set_next_state(next_state_);
 					auto& player_json = Game::global->get_child("index")->get_component<Component::Json>("player")->json;
 					player_json["info"]["rect"]["x"] = return_pos_.x;
 					player_json["info"]["rect"]["y"] = return_pos_.y;
+					Game::set_next_state(next_state_);
 				}
 			};
 		}

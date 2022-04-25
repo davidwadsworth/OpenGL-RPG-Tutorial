@@ -15,7 +15,6 @@ defines key characteristics of the game and its state.
 
 class Game
 {
-	static Component::Trigger::Input::IGameState* prev_state_;
 	static std::string next_state_;
 public:
 	Game() = delete;

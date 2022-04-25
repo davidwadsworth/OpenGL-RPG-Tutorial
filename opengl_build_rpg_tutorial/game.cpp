@@ -6,8 +6,7 @@
 #include "component_trigger_input_index.h"
 
 // game global variables
-Component::Trigger::Input::IGameState* Game::prev_state_ = nullptr,
-	* Game::curr_state = nullptr;
+Component::Trigger::Input::IGameState* Game::curr_state = nullptr;
 std::string Game::next_state_ = "none";
 GLuint Game::width = 800u;
 GLuint Game::height = 600u;
@@ -44,24 +43,11 @@ void Game::check_new_state(Entity* game)
 		return;
 
 	Component::Trigger::Input::IGameState* c_next_state = game->get_component<Component::Trigger::Input::IGameState>(Game::next_state_);
-
-	if (Game::prev_state_)
-	{
-		// if we are swapping from the current to the previous we don't need to unload the previous 
-		// we can just swap.
-		if (Game::prev_state_ == c_next_state)
-		{
-			auto e_temp = Game::curr_state;
-			Game::curr_state = Game::prev_state_;
-			prev_state_ = e_temp;
-			return;
-		}
-		else
-			Game::prev_state_->destroy();
-	}
-
 	c_next_state->init();
-	Game::prev_state_ = Game::curr_state;
+
+	if (curr_state)
+		Game::curr_state->destroy();
+	
 	Game::curr_state = c_next_state;
 	next_state_ = "none";
 }
