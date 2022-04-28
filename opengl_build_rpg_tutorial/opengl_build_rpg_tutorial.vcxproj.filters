@@ -365,6 +365,9 @@
     <ClInclude Include="component_trigger_load_textbox.h">
       <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>
+    <ClInclude Include="component_trigger_load_optionbox.h">
+      <Filter>EC\Component\Trigger\Load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">

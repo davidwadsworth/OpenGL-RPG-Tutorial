@@ -1,15 +1,7 @@
 {"frames": [
 
 {
-	"filename": "hole.png",
-	"frame": {"x":1,"y":131,"w":64,"h":64},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
-	"sourceSize": {"w":64,"h":64}
-},
-{
-	"filename": "npc.png",
+	"filename": "diamonhead.png",
 	"frame": {"x":1,"y":1,"w":64,"h":128},
 	"rotated": false,
 	"trimmed": false,
@@ -17,8 +9,24 @@
 	"sourceSize": {"w":64,"h":128}
 },
 {
+	"filename": "hole.png",
+	"frame": {"x":1,"y":261,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "npc.png",
+	"frame": {"x":1,"y":131,"w":64,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":128},
+	"sourceSize": {"w":64,"h":128}
+},
+{
 	"filename": "signpost.png",
-	"frame": {"x":1,"y":197,"w":32,"h":32},
+	"frame": {"x":1,"y":327,"w":32,"h":32},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
@@ -29,8 +37,8 @@
 	"version": "1.0",
 	"image": "spritesheet_overworld.png",
 	"format": "RGBA8888",
-	"size": {"w":66,"h":230},
+	"size": {"w":66,"h":360},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:e50e9feb6077d5970e662398f5f986b3:ef5744e36d3a2dee196e280c6b271c97:ad1f3b5bbb80fdda06d6411f66994010$"
+	"smartupdate": "$TexturePacker:SmartUpdate:f74a88a4b4c67d150781e6c09cc77d83:47fadea59962cdd63ae2f8de5a34181e:ad1f3b5bbb80fdda06d6411f66994010$"
 }
 }

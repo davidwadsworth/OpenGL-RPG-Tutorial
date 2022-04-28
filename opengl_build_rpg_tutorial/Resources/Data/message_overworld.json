@@ -12,6 +12,31 @@
 			"Don't be scared. Fear is but one path towards death."
 			],
 		"speech_box" : "false"
+		},
+		{
+			"messages" : [
+				"My father is lonely would you please give him a visit?{option,0 option,1}",
+				"Your company will be missed. Please take care of yourself.{end}" 
+				"Great! Thank you, let me show you in.{end}"
+			],
+			"option" : {
+				"cursor" : "left",
+				"padding" : 1.0,
+				"alignment": "horizontal",
+				"options" : [{
+					"text": "yes",
+					"jump": 1,
+					"data": [{
+						"load": "switch_states",
+						"data":{
+							"next_state" : "house",
+							"return_pos" : {"x": 512.0, "y": 912.0 }
+						}}] 
+				},{
+					"text": "no"
+				}]	
+			},
+			"speech_box" : "true"
 		}
 	]
 }

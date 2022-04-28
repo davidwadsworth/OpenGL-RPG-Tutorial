@@ -77,5 +77,30 @@
 			"tree" : "action_qtree"
 		},
 		"src" : {"id": "hole"}	
+	},{
+		"info" : {
+			"rect": {
+				"x" : 1150.0,
+				"y" : 1024.0,
+				"w" : 64.0,
+				"h" : 128.0
+			},
+			"collider" : {
+				"physics": "smooth",
+				"filename": "collider",
+				"collider" : "circle",
+				"id" : "s_64x128"
+			},
+			"action" : {
+				"data" : [{ 
+					"load": "textbox", 
+					"data" : {
+						"message": {"filename" : "message_overworld", "pos" : 2}
+					}
+				}]
+			},
+			"tree" : "physics_action_qtree"
+		},
+		"src" : {"id": "diamonhead"}	
 	}]
 }
