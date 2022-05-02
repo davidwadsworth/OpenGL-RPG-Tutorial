@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input_gameobj_emptytextarea.h"
+#include "component_trigger_input_gameobj_empty.h"
 #include "component_trigger_input_gameobj_box.h"
 #include "component_vector.h"
 #include "component_trigger_swapvectors.h"
@@ -8,6 +8,7 @@
 #include "component_trigger_load_message.h"
 #include "component_trigger_load_box.h"
 #include "component_trigger_load_textbox.h"
+#include "component_trigger_load_optionbox.h"
 
 /*
 @author David Wadsworth
@@ -31,17 +32,16 @@ namespace Component {
 						// add message and box triggers to gameinfo
 						std::string textarea_name = textbox_json["textarea"];
 						std::string box_name = textbox_json["box"];
+						std::string optionbox_name = textbox_json["optionbox"];
 
-						auto& ctigo_box = *entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Box>(box_name);
-						ctigo_box.execute(gamestate, entity_);
-
-						auto& ctigo_empty = *entity_->add_id_ct_input<Component::Trigger::Input::GameObj::EmptyTextArea>(textarea_name);
+						auto& ctigo_empty = *entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Empty>("empty");
 						ctigo_empty.execute(gamestate, entity_);
 						
 						auto e_lc = gamestate->get_child("load");
 						e_lc->add_id_component<Component::Trigger::Load::TextBox>(name_);
 						e_lc->add_id_component<Component::Trigger::Load::Message>(textarea_name);
 						e_lc->add_id_component<Component::Trigger::Load::Box>(box_name);
+						e_lc->add_id_component<Component::Trigger::Load::OptionBox>(optionbox_name);
 
 						// get controller 
 						auto& c_cont_keyboard = *gamestate->get_child("controller")->get_component<Component::Controller::Keyboard>();

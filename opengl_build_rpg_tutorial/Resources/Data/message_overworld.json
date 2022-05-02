@@ -1,41 +1,36 @@
 {
 	"textbox" : "textbox",
 	"data" : [{
-		"messages" : [
-			"You are a big guy, I would estimate about 1.5 me would fit inside you. I'm small and have a lot of hate in my heart. Lets work together.", 
-			"Please write me a meal plan so that I might grow."
-			],
-		"speech_box" : "true"
+			"messages" : [
+				"You are a big guy, I would estimate about 1.5 me would fit inside you. I'm small and have a lot of hate in my heart. Lets work together.", 
+				"Please write me a meal plan so that I might grow."
+				],
+			"speech_box" : "true"
 		},{
-		"messages" : [
-			"Hi there, welcome to the world!",
-			"Don't be scared. Fear is but one path towards death."
-			],
-		"speech_box" : "false"
+			"messages" : [
+				"Hi there, welcome to the world!",
+				"Don't be scared. Fear is but one path towards death."
+				],
+			"speech_box" : "false"
 		},
 		{
 			"messages" : [
-				"My father is lonely would you please give him a visit?{option,0 option,1}",
+				"My father is lonely would you please give him a visit?{yes no}",
 				"Your company will be missed. Please take care of yourself.{end}" 
 				"Great! Thank you, let me show you in.{end}"
 			],
-			"option" : {
-				"cursor" : "left",
-				"padding" : 1.0,
-				"alignment": "horizontal",
-				"options" : [{
-					"text": "yes",
-					"jump": 1,
-					"data": [{
-						"load": "switch_states",
-						"data":{
-							"next_state" : "house",
-							"return_pos" : {"x": 512.0, "y": 912.0 }
-						}}] 
-				},{
-					"text": "no"
-				}]	
-			},
+			"options" : [{
+				"text": "yes",
+				"jump": 1,
+				"data": [{
+					"load": "switch_states",
+					"data":{
+						"next_state" : "house",
+						"return_pos" : {"x": 512.0, "y": 912.0 }
+					}}] 
+			},{
+				"text": "no"
+			}],
 			"speech_box" : "true"
 		}
 	]

@@ -20,13 +20,12 @@ namespace Component {
 					Component::Transform* transform;
 					Component::Src* src;
 				};
-			private:
-
 				struct RenderGroup
 				{
 					Component::Material* material;
 					std::vector<Block> blocks;
 				};
+			private:
 				std::vector<RenderGroup> render_groups_;
 				std::vector<Block> free_blocks_;
 				std::vector<Block>::iterator curr_block_;
@@ -49,6 +48,16 @@ namespace Component {
 					return r_blocks;
 				}
 
+				std::vector<Block> get_blocks()
+				{
+					if (curr_block_ == free_blocks_.end())
+						Logger::error("no free blocks available", Logger::HIGH);
+
+					std::vector<Block> r_blocks(curr_block_, free_blocks_.end());
+					curr_block_ = free_blocks_.end();
+					return r_blocks;
+				}
+
 				void add_obj(std::string id, std::vector<Block> blocks) { objects_[id] = blocks; }
 				std::vector<Block> get_obj(std::string id) { return objects_[id]; }
 
@@ -57,7 +66,7 @@ namespace Component {
 					for (auto& rg : render_groups_)	
 						if (rg.material->id == material->id)
 						{
-							rg.blocks.insert(rg.blocks.end(), blocks.begin(), blocks.end());
+							render_groups_.push_back(RenderGroup{ material, blocks });
 							return;
 						}
 

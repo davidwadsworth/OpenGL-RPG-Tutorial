@@ -260,7 +260,7 @@
     <ClInclude Include="component_tree.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_emptytextarea.h">
+    <ClInclude Include="component_trigger_input_gameobj_empty.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_load_box.h">
@@ -367,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="component_trigger_load_optionbox.h">
       <Filter>EC\Component\Trigger\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_clearempty.h">
+      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

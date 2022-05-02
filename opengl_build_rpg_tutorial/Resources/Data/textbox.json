@@ -1,4 +1,5 @@
 {
 	"box" : "box",
-	"textarea" : "textarea"
+	"textarea" : "textarea",
+	"optionbox" : "optionbox"
 }

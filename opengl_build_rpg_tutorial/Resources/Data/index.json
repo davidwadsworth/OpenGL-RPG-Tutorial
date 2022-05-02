@@ -8,5 +8,6 @@
 	"quadtree" : "Resources/Data/quadtree.json",
 	"box" : "Resources/Data/box.json",
 	"textarea" : "Resources/Data/textarea.json",
-	"renderer" : "Resources/Data/renderer.json"
+	"renderer" : "Resources/Data/renderer.json",
+	"empty": "Resources/Data/empty.json"
 }

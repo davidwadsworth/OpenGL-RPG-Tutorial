@@ -55,9 +55,10 @@ namespace Component {
 				void execute(Entity* gamestate) override
 				{
 					auto e_textarea = gamestate->get_child(textbox_name_)->get_child("textarea");
+					auto& csr_empty = *e_textarea->get_component<Component::System::Render::Empty>("render");
 					if (msg_i_ > messages_.size() - 1)
 					{
-						e_textarea->get_component<Component::System::Render::Empty>("render")->set_draw_calls(0);
+						csr_empty.clear();
 						return;
 					}
 						
