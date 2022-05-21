@@ -163,6 +163,8 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_json.h" />
+    <ClInclude Include="component_navigator.h" />
+    <ClInclude Include="component_navigator_textbox.h" />
     <ClInclude Include="component_position.h" />
     <ClInclude Include="component_quadtree.h" />
     <ClInclude Include="component_rect.h" />
@@ -170,6 +172,7 @@
     <ClInclude Include="component_rect_gjk_action.h" />
     <ClInclude Include="component_rect_gjk_physics.h" />
     <ClInclude Include="component_system_update_checkactioncollision.h" />
+    <ClInclude Include="component_system_update_pathway.h" />
     <ClInclude Include="component_trigger_clearempty.h" />
     <ClInclude Include="component_trigger_load_optionbox.h" />
     <ClInclude Include="component_trigger_load_switchstate.h" />
@@ -195,7 +198,6 @@
     <ClInclude Include="component_system_render_draw.h" />
     <ClInclude Include="component_system_render_tilemap.h" />
     <ClInclude Include="component_template.h" />
-    <ClInclude Include="component_tree.h" />
     <ClInclude Include="component_trigger_input_gameobj_box.h" />
     <ClInclude Include="component_trigger_input_gameobj_empty.h" />
     <ClInclude Include="component_trigger_input_gameobj_textarea.h" />

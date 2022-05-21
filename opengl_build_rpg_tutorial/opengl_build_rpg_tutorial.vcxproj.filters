@@ -61,6 +61,9 @@
     <Filter Include="EC\Component\Rect\GJK\Physics">
       <UniqueIdentifier>{b5f88663-a61f-40c9-8756-d5c2471d3c98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EC\Component\Navigator">
+      <UniqueIdentifier>{a1dea827-00db-4956-be6f-2c5ad10d3d39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -257,9 +260,6 @@
     <ClInclude Include="tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_tree.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_input_gameobj_empty.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
@@ -370,6 +370,15 @@
     </ClInclude>
     <ClInclude Include="component_trigger_clearempty.h">
       <Filter>EC\Component\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_update_pathway.h">
+      <Filter>EC\Component\System\Update</Filter>
+    </ClInclude>
+    <ClInclude Include="component_navigator.h">
+      <Filter>EC\Component\Navigator</Filter>
+    </ClInclude>
+    <ClInclude Include="component_navigator_textbox.h">
+      <Filter>EC\Component\Navigator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
