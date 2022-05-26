@@ -61,8 +61,11 @@
     <Filter Include="EC\Component\Rect\GJK\Physics">
       <UniqueIdentifier>{b5f88663-a61f-40c9-8756-d5c2471d3c98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\Navigator">
+    <Filter Include="Navigator">
       <UniqueIdentifier>{a1dea827-00db-4956-be6f-2c5ad10d3d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Navigator\json_to_navigator">
+      <UniqueIdentifier>{92453bed-cd33-48cc-bf2a-d1041029aaf9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -374,11 +377,20 @@
     <ClInclude Include="component_system_update_pathway.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_navigator.h">
-      <Filter>EC\Component\Navigator</Filter>
+    <ClInclude Include="navigator.h">
+      <Filter>Navigator</Filter>
     </ClInclude>
-    <ClInclude Include="component_navigator_textbox.h">
-      <Filter>EC\Component\Navigator</Filter>
+    <ClInclude Include="navigator_textbox.h">
+      <Filter>Navigator</Filter>
+    </ClInclude>
+    <ClInclude Include="json_to_navigator.h">
+      <Filter>Navigator\json_to_navigator</Filter>
+    </ClInclude>
+    <ClInclude Include="navigator_optionboxh.h">
+      <Filter>Navigator</Filter>
+    </ClInclude>
+    <ClInclude Include="navigator_optionboxv.h">
+      <Filter>Navigator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

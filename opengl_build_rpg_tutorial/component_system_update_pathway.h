@@ -1,8 +1,10 @@
 #pragma once
-#include "component_navigator.h"
+#include "json_to_navigator.h"
 #include "component_system.h"
 #include "component_trigger.h"
-#include "tree.h"
+#include <unordered_map>
+#include <stack>
+#include <queue>
 
 namespace Component {
 	namespace System {
@@ -10,37 +12,99 @@ namespace Component {
 		{
 			class Pathway : public Component::ISystem
 			{
-				Component::Navigator& nav_;
-				std::vector<std::unique_ptr<Tree<std::vector<Component::ITrigger*>>>> created_trees_;
-				Tree<std::vector<Component::ITrigger*>>* curr_tree_;
+				struct NavigatorTree
+				{
+					NavigatorTree* parent;
+					std::vector<Component::ITrigger*> triggers;
+					std::vector<NavigatorTree*> children;
+					INavigator* navigator;
+				};
+
+				std::vector<std::unique_ptr<NavigatorTree>> created_navigators_;
+				std::unordered_map<std::string, std::unique_ptr<INavigator>> nav_map_;
+				std::unordered_map<std::string, NavigatorTree*> nav_tree_map_;
+				std::queue<std::vector<NavigatorTree*>> nav_queue_;
 			public:
-				Pathway(Component::Navigator& nav)
-					: curr_tree_(nullptr), nav_(nav)
+				Pathway()
 				{}
 
-
-				Tree<std::vector<Component::ITrigger*>>* add_path(std::vector<ITrigger*> triggers)
+				NavigatorTree* add_path(std::string name, std::vector<ITrigger*> triggers)
 				{
-					auto n_tree = new Tree<std::vector<Component::ITrigger*>>{ {},  triggers };
-					created_trees_.push_back(std::unique_ptr<Tree<std::vector<Component::ITrigger*>>>(std::move(n_tree)));
+					auto nav = create_navigator(name, triggers);
+					auto nav_tree = new NavigatorTree{ nullptr, triggers, std::vector<NavigatorTree*>(), nav };
+					
+					
+					created_navigators_.push_back(std::make_unique<NavigatorTree>(nav_tree));
 
-					curr_tree_ = n_tree;
-					return n_tree;
+					return nav_tree;
 				}
 
-				void clear_trees()
+
+				void add_concurrent(std::string name)
 				{
-					created_trees_.clear();
+					if (nav_queue_.empty())
+						nav_queue_.push(std::vector<NavigatorTree*>());
+					nav_queue_.front().push_back(nav_tree_map_[name]);
 				}
 
-				void set_curr(Tree<std::vector<Component::ITrigger*>>* tree)
+				void register_root(std::string name, NavigatorTree* nav_tree)
 				{
-					curr_tree_ = tree;
+					nav_tree_map_[name] = nav_tree;
+				}
+
+				bool is_registered(std::string name)
+				{
+					return nav_tree_map_.find(name) != nav_tree_map_.end();
+				}
+
+				void add_next(std::string name)
+				{
+					std::vector<NavigatorTree*> nav_vec;
+					nav_vec.push_back(nav_tree_map_[name]);
+					nav_queue_.push(nav_vec);
+				}
+
+				void clear()
+				{
+					created_navigators_.clear();
+					while (!nav_queue_.empty()) nav_queue_.pop();
+					nav_map_.clear();
 				}
 
 				void execute() override
 				{
+					if (nav_queue_.empty())
+						return;
 
+					bool nav_empty = true;
+					for (auto& nav_tree : nav_queue_.front())
+					{
+						if (nav_tree)
+						{
+							nav_empty = false;
+							auto nav_path = nav_tree->navigator->navigate();
+
+							if (nav_path)
+							{
+								if (nav_path > 0)
+								{
+									if (nav_path >= nav_tree->children.size())
+										Logger::error("Navigation out of bounds", Logger::HIGH);
+
+									nav_tree = nav_tree->children[nav_path];
+								}
+								else
+								{
+									if (nav_tree->parent)
+										nav_tree = nav_tree->parent;
+								}
+							}
+
+						}
+					}
+
+					if (nav_empty)
+						nav_queue_.pop();
 				}
 			};
 		}

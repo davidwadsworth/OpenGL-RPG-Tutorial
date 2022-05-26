@@ -163,8 +163,11 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_json.h" />
-    <ClInclude Include="component_navigator.h" />
-    <ClInclude Include="component_navigator_textbox.h" />
+    <ClInclude Include="json_to_navigator.h" />
+    <ClInclude Include="navigator.h" />
+    <ClInclude Include="navigator_optionboxh.h" />
+    <ClInclude Include="navigator_optionboxv.h" />
+    <ClInclude Include="navigator_textbox.h" />
     <ClInclude Include="component_position.h" />
     <ClInclude Include="component_quadtree.h" />
     <ClInclude Include="component_rect.h" />
