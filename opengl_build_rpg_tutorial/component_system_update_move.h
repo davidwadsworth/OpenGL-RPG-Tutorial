@@ -23,8 +23,8 @@ namespace Component {
 				GLfloat speed_;
 			public:
 
-				Move(Component::Transform& transform, Component::IController& controller, GLfloat speed)
-					: transform_(transform), controller_(controller), speed_(speed)
+				Move(Component::Transform& transform, GLfloat speed)
+					: transform_(transform), controller_(*Game::global->get_component<Component::IController>("controller")), speed_(speed)
 				{}
 
 				void execute() override

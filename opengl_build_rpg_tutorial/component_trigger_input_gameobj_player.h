@@ -50,9 +50,6 @@ namespace Component {
                         // get renderer
                         auto& c_renderer = *gamestate->get_component<Component::Renderer >("renderer");
 
-                        // get controller 
-                        auto& c_cont_keyboard = *gamestate->get_child("controller")->get_component<Component::Controller::Keyboard>();
-
                         // get camera
                         auto& c_cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 
@@ -80,13 +77,13 @@ namespace Component {
                         Logger::message(std::to_string(c_pla_col_gjk_circle.x) + ", " + std::to_string(c_pla_col_gjk_circle.y));
                         auto csr_pla_dynamic_draw = entity_->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_col_gjk_circle, c_spritesheet_material, c_cam_position);
                         auto csu_pla_camera = entity_->push_back_component<Component::System::Update::Camera>(c_pla_col_gjk_circle, c_cam_position);
-                        auto csu_pla_move = entity_->push_back_component<Component::System::Update::Move>(c_pla_col_gjk_circle, c_cont_keyboard, player_speed);
+                        auto csu_pla_move = entity_->push_back_component<Component::System::Update::Move>(c_pla_col_gjk_circle, player_speed);
 
                         auto csu_pla_animation = entity_->push_back_component<Component::System::Update::Animation>(animation_speed, c_pla_src);
-                        auto csu_pla_animate_move = entity_->push_back_component<Component::System::Update::AnimateMove>(c_cont_keyboard, *csu_pla_animation);
+                        auto csu_pla_animate_move = entity_->push_back_component<Component::System::Update::AnimateMove>(*csu_pla_animation);
                         auto csu_check_collision = entity_->push_back_component<Component::System::Update::CheckCollision>(c_pla_col_gjk_circle, c_physicsaction_qtree);
                         auto csu_check_action_collision = entity_->push_back_component<Component::System::Update::CheckActionCollision>(c_pla_col_gjk_circle, c_action_qtree, c_triggervec, e_load);
-                        auto csu_check_action = entity_->push_back_component<Component::System::Update::CheckAction>(c_cont_keyboard, c_pla_col_gjk_circle, c_physicsaction_qtree, e_load, c_triggervec, action_distance);
+                        auto csu_check_action = entity_->push_back_component<Component::System::Update::CheckAction>(c_pla_col_gjk_circle, c_physicsaction_qtree, e_load, c_triggervec, action_distance);
 
                         auto anim_i = 0u;
                         auto animation = new Entity();

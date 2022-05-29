@@ -64,9 +64,6 @@
     <Filter Include="Navigator">
       <UniqueIdentifier>{a1dea827-00db-4956-be6f-2c5ad10d3d39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Navigator\json_to_navigator">
-      <UniqueIdentifier>{92453bed-cd33-48cc-bf2a-d1041029aaf9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -168,9 +165,6 @@
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_camera.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_controller.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_input_shader.h">
@@ -329,9 +323,6 @@
     <ClInclude Include="component_position.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_update_traverse_tree.h">
-      <Filter>EC\Component\System\Update</Filter>
-    </ClInclude>
     <ClInclude Include="delimiter_split.h">
       <Filter>Helper</Filter>
     </ClInclude>
@@ -383,14 +374,17 @@
     <ClInclude Include="navigator_textbox.h">
       <Filter>Navigator</Filter>
     </ClInclude>
-    <ClInclude Include="json_to_navigator.h">
-      <Filter>Navigator\json_to_navigator</Filter>
-    </ClInclude>
     <ClInclude Include="navigator_optionboxh.h">
       <Filter>Navigator</Filter>
     </ClInclude>
     <ClInclude Include="navigator_optionboxv.h">
       <Filter>Navigator</Filter>
+    </ClInclude>
+    <ClInclude Include="component_cursor.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="add_navigator.h">
+      <Filter>Helper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

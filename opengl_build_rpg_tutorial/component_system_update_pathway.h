@@ -1,5 +1,5 @@
 #pragma once
-#include "json_to_navigator.h"
+#include "add_navigator.h"
 #include "component_system.h"
 #include "component_trigger.h"
 #include <unordered_map>
@@ -28,12 +28,12 @@ namespace Component {
 				Pathway()
 				{}
 
-				NavigatorTree* add_path(std::string name, std::vector<ITrigger*> triggers)
+				NavigatorTree* add_path(nlohmann::json json, Entity* gamestate, std::vector<ITrigger*> triggers)
 				{
-					auto nav = create_navigator(name, triggers);
+					auto nav = add_navigator(json, gamestate);
 					auto nav_tree = new NavigatorTree{ nullptr, triggers, std::vector<NavigatorTree*>(), nav };
 					
-					
+
 					created_navigators_.push_back(std::make_unique<NavigatorTree>(nav_tree));
 
 					return nav_tree;

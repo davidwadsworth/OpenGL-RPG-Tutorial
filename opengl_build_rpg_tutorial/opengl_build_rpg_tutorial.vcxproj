@@ -163,7 +163,8 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_json.h" />
-    <ClInclude Include="json_to_navigator.h" />
+    <ClInclude Include="component_cursor.h" />
+    <ClInclude Include="add_navigator.h" />
     <ClInclude Include="navigator.h" />
     <ClInclude Include="navigator_optionboxh.h" />
     <ClInclude Include="navigator_optionboxv.h" />
@@ -183,7 +184,6 @@
     <ClInclude Include="component_system_render_offset.h" />
     <ClInclude Include="component_system_update_camera.h" />
     <ClInclude Include="component_system_update_checkaction.h" />
-    <ClInclude Include="component_system_update_traverse_tree.h" />
     <ClInclude Include="component_texunit.h" />
     <ClInclude Include="component_trigger_input_gamestate_house.h" />
     <ClInclude Include="component_trigger_input_index.h" />
@@ -226,7 +226,6 @@
     <ClInclude Include="component_system_update_animation.h" />
     <ClInclude Include="component_system_update_move.h" />
     <ClInclude Include="component_trigger_input_camera.h" />
-    <ClInclude Include="component_trigger_input_controller.h" />
     <ClInclude Include="component_trigger_input_gamestate_overworld.h" />
     <ClInclude Include="component_trigger_input_gameobj_player.h" />
     <ClInclude Include="component_trigger_input_shader.h" />

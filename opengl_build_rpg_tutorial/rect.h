@@ -68,6 +68,10 @@ struct Rect
 	{
 		set(rect.x, rect.y, rect.w, rect.h);
 	}
+	void set()
+	{
+		set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
 
 	float x,y,w, h;
 };

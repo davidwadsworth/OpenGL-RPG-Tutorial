@@ -19,8 +19,8 @@ namespace Component{
 				Component::System::Update::Animation& animation_;
 				glm::ivec2 prev_;
 			public:
-				AnimateMove(Component::IController& controller, Component::System::Update::Animation& animation)
-					: controller_(controller), animation_(animation), prev_{ 0, 1 }
+				AnimateMove(Component::System::Update::Animation& animation)
+					: controller_(*Game::global->get_component<Component::IController>("controller")), animation_(animation), prev_{0, 1}
 				{}
 
 				void execute() override

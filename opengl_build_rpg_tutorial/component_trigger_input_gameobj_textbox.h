@@ -3,8 +3,6 @@
 #include "component_trigger_input_gameobj_box.h"
 #include "component_vector.h"
 #include "component_trigger_swapvectors.h"
-#include "component_tree.h"
-#include "component_system_update_traverse_tree.h"
 #include "component_trigger_load_message.h"
 #include "component_trigger_load_box.h"
 #include "component_trigger_load_textbox.h"
@@ -49,9 +47,9 @@ namespace Component {
 						// get trigger vector
 						auto& c_trigger_vec = *gamestate->get_component<Component::TriggerVector>("trigger");
 
-						auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
-						auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_cont_keyboard, c_trigger_vec);
-						c_update_vec.push_back(csu_tree_traverse);
+						//auto& c_trigger_tree = *entity_->add_id_component<Component::TriggerTree>("trigger_tree");
+						//auto csu_tree_traverse = entity_->add_id_component<Component::System::Update::TraverseTree>("traverse_tree", c_cont_keyboard, c_trigger_vec);
+						//c_update_vec.push_back(csu_tree_traverse);
 
 					}
 				public:

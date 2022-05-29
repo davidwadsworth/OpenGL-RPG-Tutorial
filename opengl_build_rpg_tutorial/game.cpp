@@ -28,6 +28,7 @@ void Game::init(Entity* game)
 	ctigs_house.execute(game);
 
 	Game::global->add_id_component<Component::KeyboardArray>("keyboard");
+	Game::global->add_id_component<Component::Controller::Keyboard>("controller");
 	auto& cti_index = *Game::global->add_id_ct_input<Component::Trigger::Input::Index>("index", "index.json");
 	cti_index.execute(Game::global);
 }
