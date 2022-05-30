@@ -236,9 +236,6 @@
     <ClInclude Include="component_trigger_input_gameobj_tilemap.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_textbox.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_input_gameobj_text.h">
       <Filter>EC\Component\Trigger\Input\GameObject</Filter>
     </ClInclude>
@@ -385,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="add_navigator.h">
       <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_textbox.h">
+      <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

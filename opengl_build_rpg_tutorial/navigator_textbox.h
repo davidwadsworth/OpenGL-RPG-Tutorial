@@ -18,7 +18,7 @@ namespace Navigator
 		NPATH navigate() override
 		{
 			if (controller_.key_press_action_1())
-				return NPATH::REPEAT;
+				return NPATH::CHILD_1;
 
 			return NPATH::STAY;
 		}

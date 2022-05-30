@@ -206,7 +206,7 @@
     <ClInclude Include="component_trigger_input_gameobj_textarea.h" />
     <ClInclude Include="component_trigger_input_gameobj_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />
-    <ClInclude Include="component_trigger_input_gameobj_textbox.h" />
+    <ClInclude Include="component_trigger_input_textbox.h" />
     <ClInclude Include="component_trigger_input_gamestate.h" />
     <ClInclude Include="component_trigger_load_message.h" />
     <ClInclude Include="component_trigger_load_textbox.h" />

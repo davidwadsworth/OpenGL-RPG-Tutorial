@@ -1,5 +1,6 @@
 {
 	"box" : "box",
 	"textarea" : "textarea",
-	"optionbox" : "optionbox"
+	"optionbox" : "optionbox",
+	"max_messages" : 32
 }
