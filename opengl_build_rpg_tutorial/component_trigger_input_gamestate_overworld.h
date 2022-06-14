@@ -1,7 +1,7 @@
 #pragma once
 #include "component_trigger_input.h"
 #include "component_trigger_input_camera.h"
-#include "component_trigger_input_controller.h"
+//#include "component_trigger_input_controller.h"
 #include "component_trigger_input_shader.h"
 #include "component_trigger_input_texture.h"
 #include "component_trigger_input_gameobj_tilemap.h"
@@ -12,7 +12,7 @@
 #include "component_trigger_input_gameobj_text.h"
 #include "component_trigger_input_gamestate.h"
 #include "component_engine.h"
-#include "component_trigger_input_gameobj_textbox.h"
+#include "component_trigger_input_textbox.h"
 #include "component_trigger_input_index.h"
 #include "component_trigger_input_loadcache.h"
 #include "component_trigger_input_spritesheet.h"
@@ -107,7 +107,6 @@ namespace Component {
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Index>("index", "index_overworld.json"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::LoadCache>("load"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Camera>("camera"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Controller>("controller"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Shader>("shader"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Texture>("texture"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::Font>("font"));
@@ -120,7 +119,7 @@ namespace Component {
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TileMap>("tilemap"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::Player>("player"));
 						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::ColliderMap>("collidermap"));
-						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::GameObj::TextBox>("textbox"));
+						objects_.push_back(entity_->add_id_ct_input<Component::Trigger::Input::TextBox>("textbox"));
 
 					}
 				};

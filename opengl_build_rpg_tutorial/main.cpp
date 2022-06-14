@@ -12,7 +12,7 @@
 #include <sstream>
 
 /*
-Source code for episode 21 of Build Your Own RPG series
+Source code for episode 22 of Build Your Own RPG series
 
 @author David Wadsworth
 */
