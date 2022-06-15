@@ -197,12 +197,11 @@
     <ClInclude Include="component_rect_gjk_boundary.h" />
     <ClInclude Include="component_rect_gjk_circle.h" />
     <ClInclude Include="component_material_color.h" />
-    <ClInclude Include="component_system_render_empty.h" />
+    <ClInclude Include="component_system_render_blockdraw.h" />
     <ClInclude Include="component_system_render_draw.h" />
     <ClInclude Include="component_system_render_tilemap.h" />
     <ClInclude Include="component_template.h" />
     <ClInclude Include="component_trigger_input_gameobj_box.h" />
-    <ClInclude Include="component_trigger_input_gameobj_empty.h" />
     <ClInclude Include="component_trigger_input_gameobj_textarea.h" />
     <ClInclude Include="component_trigger_input_gameobj_text.h" />
     <ClInclude Include="component_trigger_input_font.h" />

@@ -1,6 +1,7 @@
 #pragma once
 #include "component_trigger_load.h"
 #include "component_rect.h"
+#include "component_system_render_blockdraw.h"
 
 namespace Component {
 	namespace Trigger {
@@ -8,10 +9,10 @@ namespace Component {
 		{
 			class Box : public Component::Trigger::ILoad
 			{
-				Rect speech_arrow_rect_;
 				bool is_speech_arrow_;
 				glm::vec2 pos_;
-				std::string textbox_name_, box_name_;
+				float box_h_, box_w_, corner_size_, scale_;
+				std::string textbox_name_, box_name_, spritesheet_name_;
 			public:
 
 				void load(nlohmann::json json)
@@ -20,36 +21,31 @@ namespace Component {
 					float item_y = json["rect"]["y"];
 					float item_w = json["rect"]["w"];
 					float offset_y = json["box"]["offset"];
-					
-					float box_h = json["box"]["height"];
 
-					float box_corner_size = json["box"]["corner_size"];
-					float box_scale = json["box"]["scale"];
+					auto scale = json["box"]["scale"];
 
-					auto scaled_corner = box_corner_size * box_scale;
+					box_h_ = json["box"]["height"];
+					box_w_ = json["box"]["width"];
 
-					auto offset_x = item_w / 2.0f - scaled_corner * 2.0f;
+					box_h_ *= scale;
+					box_w_ *= scale;
+
+					corner_size_ = json["box"]["corner_size"];
+					corner_size_ *= scale;
+
+					spritesheet_name_ = json["box"]["texture"];
+
+					auto offset_x = item_w / 2.0f - corner_size_ * 2.0f;
 					pos_.x = item_x + offset_x;
-					pos_.y = item_y + offset_y - box_h;
+					pos_.y = item_y + offset_y - box_h_;
 					is_speech_arrow_ = json["message"]["speech_box"] == "true";
 					textbox_name_ = json["textbox"];
 				}
 
 				void execute(Entity* gamestate) override
 				{
-
-					nlohmann::json box_json = Game::global->get_child("index")->get_component<Component::Json>(box_info[0])->json;
-
-					std::string spritesheet_name = box_json["texture"];
-
-					auto& c_box_position = *entity_->add_id_component<Component::Position>("position", Game::removed);
-
-					auto box_x = 0.0f;
-					auto box_y = 0.0f;
-					float box_w = box_json["width"];
-					float box_h = box_json["height"];
-
-					float box_scale = box_json["scale"];
+					auto e_textarea = gamestate->get_child(textbox_name_);
+					auto& csr_empty = *e_textarea->get_component<Component::System::Render::BlockDraw>("block_draw");
 
 					box_w *= box_scale;
 					box_h *= box_scale;
@@ -60,6 +56,8 @@ namespace Component {
 					auto scaled_corner_size = corner_size * box_scale;
 
 					auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
+
+
 
 					std::vector<Component::Transform*> transform_vec;
 					// box corners transforms
@@ -90,7 +88,7 @@ namespace Component {
 					transform_vec.push_back(entity_->add_id_component<Component::Transform>("speech_arrow", box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size));
 
 					// get textbox shader and texture
-					auto e_spritesheet = gamestate->get_child(spritesheet_name);
+					auto e_spritesheet = gamestate->get_child(spritesheet_name_);
 					auto& c_ss_material = *e_spritesheet->get_component<Component::Material>("material");
 
 
@@ -99,44 +97,24 @@ namespace Component {
 					for (std::string texture_id : box_json["texture_ids"])
 						box_srcs.push_back(e_spritesheet->get_component<Component::Src>(texture_id));
 
-					auto cs_item = entity_->add_id_component<Component::System::Render::Offset>("render", c_box_position, box_srcs, transform_vec, c_ss_material, c_renderer);
 
 					auto& render_engine = *gamestate->get_component<Component::Engine>("render");
 					render_engine.add(cs_item, render_group);
 
-
-
-					if (box_i_ > 1)
-						Logger::error("load box called more than twice or load not called.", Logger::HIGH);
-
 					auto e_box = gamestate->get_child(textbox_name_)->get_child("box");
 
 					auto& c_position = *e_box->get_component<Component::Position>("position");
-					if (box_i_)
-					{
-						c_position.x = Game::removed.x;
-						c_position.y = Game::removed.y;
-					}
-					else
-					{
-						c_position.x = -pos_.x;
-						c_position.y = -pos_.y;
-					}
+					
+					c_position.x = -pos_.x;
+					c_position.y = -pos_.y;
 					
 					if (!is_speech_arrow_)
 					{
 						auto& c_speech_arrow_trans = *e_box->get_component<Component::Transform>("speech_arrow");
-
-						if (box_i_)
-							c_speech_arrow_trans.set(speech_arrow_rect_);
-						else
-						{
-							speech_arrow_rect_.set(c_speech_arrow_trans);
-							c_speech_arrow_trans.set(Game::removed.x, Game::removed.y, 0.0f, 0.0f);
-						}	
+	
+						speech_arrow_rect_.set(c_speech_arrow_trans);
+						c_speech_arrow_trans.set(Game::removed.x, Game::removed.y, 0.0f, 0.0f);
 					}
-
-					box_i_++;
 				}
 			};
 		}

@@ -254,9 +254,6 @@
     <ClInclude Include="tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_empty.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_load_box.h">
       <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>
@@ -275,7 +272,7 @@
     <ClInclude Include="component_system_render_offset.h">
       <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_render_empty.h">
+    <ClInclude Include="component_system_render_blockdraw.h">
       <Filter>EC\Component\System\Render</Filter>
     </ClInclude>
     <ClInclude Include="component_system_render_tilemap.h">

@@ -56,11 +56,10 @@ namespace Component {
 				{
 					auto e_textarea = gamestate->get_child(textbox_name_)->get_child("textarea");
 					auto& csr_empty = *e_textarea->get_component<Component::System::Render::Empty>("render");
+
 					if (msg_i_ > messages_.size() - 1)
-					{
-						csr_empty.clear();
-						return;
-					}
+						Logger::error("Message called too many times", Logger::HIGH);
+					
 						
 					auto e_font = gamestate->get_child(font_name_);
 
@@ -84,6 +83,14 @@ namespace Component {
 					// current character in message
 					auto curr_char = messages_[msg_i_].begin();
 					auto ch_i = 0;
+
+					auto spaces_count = std::count(messages_[msg_i_].begin(), messages_[msg_i_].end(), ' ');
+
+					auto non_space_characters = messages_[msg_i_++].size() - spaces_count;
+					auto blocks = e_textarea->get_component<Component::System::Render::Empty>("render")->get_blocks(non_space_characters);
+					auto blocks_i = 0;
+
+
 
 					while (curr_char != messages_[msg_i_].end())
 					{
@@ -126,14 +133,14 @@ namespace Component {
 
 							temp_word_length += c_bitmap_char.advance + c_bitmap_char.check_kerning(prev_char);
 
-							auto& c_cur_char_src = *e_textarea->get_component<Component::Src>(ch_i * 2);
+							auto& c_cur_char_src = *blocks[blocks_i].src;
 
 							c_cur_char_src.x = c_bitmap_char.x;
 							c_cur_char_src.y = c_bitmap_char.y;
 							c_cur_char_src.w = c_bitmap_char.w;
 							c_cur_char_src.h = c_bitmap_char.h;
 
-							auto c_cur_char_transform = e_textarea->get_component<Component::Transform>(ch_i++ * 2 + 1);
+							auto c_cur_char_transform = blocks[blocks_i++].transform;
 
 							c_cur_char_transform->x = current_pos.x + c_bitmap_char.x_off + c_bitmap_char.check_kerning(prev_char);
 							c_cur_char_transform->y = current_pos.y + c_bitmap_char.y_off;
@@ -214,11 +221,6 @@ namespace Component {
 							transform->x += x_offset[i];
 							transform->y += y_offset;
 						}
-
-					auto spaces_count = std::count(messages_[msg_i_].begin(), messages_[msg_i_].end(), ' ');
-
-					auto non_space_characters = messages_[msg_i_++].size() - spaces_count;
-					e_textarea->get_component<Component::System::Render::Empty>("render")->set_draw_calls(non_space_characters);
 				}
 			};
 		}

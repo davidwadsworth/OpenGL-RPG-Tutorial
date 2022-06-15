@@ -2,5 +2,6 @@
 	"box" : "box",
 	"textarea" : "textarea",
 	"optionbox" : "optionbox",
-	"max_messages" : 32
+	"max_blocks" : 512,
+	"render_group" : 4.0
 }

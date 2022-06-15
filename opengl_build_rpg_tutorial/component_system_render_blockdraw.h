@@ -3,6 +3,7 @@
 #include <vector>
 #include "component_rect.h"
 #include "component_renderer.h"
+#include <unordered_map>
 /*
 Draw x src and transforms from one material, where x = draw_calls_.
 
@@ -12,7 +13,7 @@ namespace Component {
 	namespace System {
 		namespace Render
 		{
-			class Empty : public Component::ISystem
+			class BlockDraw : public Component::ISystem
 			{
 			public:
 				struct Block
@@ -35,7 +36,7 @@ namespace Component {
 				Component::Renderer& renderer_;
 			public:
 
-				Empty(std::vector<Block> free_blocks, Component::Renderer& renderer)
+				BlockDraw(std::vector<Block> free_blocks, Component::Renderer& renderer)
 					: free_blocks_(free_blocks), renderer_(renderer)
 				{
 					curr_block_ = free_blocks_.begin();
