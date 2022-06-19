@@ -47,46 +47,37 @@ namespace Component {
 					auto e_textarea = gamestate->get_child(textbox_name_);
 					auto& csr_empty = *e_textarea->get_component<Component::System::Render::BlockDraw>("block_draw");
 
-					box_w *= box_scale;
-					box_h *= box_scale;
-
-					float corner_size = box_json["corner_size"];
-					float render_group = box_json["render_group"];
-
-					auto scaled_corner_size = corner_size * box_scale;
-
 					auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
 
 
-					std::vector<Component::Transform*> transform_vec;
+					auto blocks = csr_empty.get_blocks(10);
+
 					// box corners transforms
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("top_right",
-						Rect(box_x, box_y, scaled_corner_size, scaled_corner_size)));
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("top_left",
-						Rect(box_x + box_w - scaled_corner_size, box_y, scaled_corner_size, scaled_corner_size)));
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("bot_right",
-						Rect(box_x, box_y + box_h - scaled_corner_size, scaled_corner_size, scaled_corner_size)));
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("bot_left",
-						Rect(box_x + box_w - scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size, scaled_corner_size)));
+					blocks[0].transform->set( Rect(box_x, box_y, scaled_corner_size, scaled_corner_size));
+					blocks[1].transform->set(Rect(box_x + box_w - scaled_corner_size, box_y, scaled_corner_size, scaled_corner_size));
+					blocks[2].transform->set(Rect(box_x, box_y + box_h - scaled_corner_size, scaled_corner_size, scaled_corner_size));
+					blocks[3].transform->set(Rect(box_x + box_w - scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size, scaled_corner_size));
 
 					// box side transforms
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("top_side",
-						Rect(box_x + scaled_corner_size, box_y, box_w - scaled_corner_size * 2, scaled_corner_size)));
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("left_side",
-						Rect(box_x, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f)));
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("right_side",
-						Rect(box_x + box_w - scaled_corner_size, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f)));
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("bot_side",
-						Rect(box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, box_w - scaled_corner_size * 2.0f, scaled_corner_size)));
+					blocks[4].transform->set(Rect(box_x + scaled_corner_size, box_y, box_w - scaled_corner_size * 2, scaled_corner_size));
+					blocks[5].transform->set(Rect(box_x, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f));
+					blocks[6].transform->set(Rect(box_x + box_w - scaled_corner_size, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f));
+					blocks[7].transform->set(Rect(box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, box_w - scaled_corner_size * 2.0f, scaled_corner_size));
 
 					// center transform
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("center",
-						Rect(box_x + scaled_corner_size, box_y + scaled_corner_size, box_w - scaled_corner_size * 2.0f, box_h - scaled_corner_size * 2.0f)));
+					blocks[8].transform->set(Rect(box_x + scaled_corner_size, box_y + scaled_corner_size, box_w - scaled_corner_size * 2.0f, box_h - scaled_corner_size * 2.0f));
 
 					// speech arrow
-					transform_vec.push_back(entity_->add_id_component<Component::Transform>("speech_arrow", box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size));
+					blocks[9].transform->set(Rect(box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size));
+					
+					if (!is_speech_arrow_)
+					{
+						auto& c_speech_arrow_trans = *e_box->get_component<Component::Transform>("speech_arrow");
 
+						speech_arrow_rect_.set(c_speech_arrow_trans);
+						c_speech_arrow_trans.set(Game::removed.x, Game::removed.y, 0.0f, 0.0f);
+					}
 					// get textbox shader and texture
 					auto e_spritesheet = gamestate->get_child(spritesheet_name_);
 					auto& c_ss_material = *e_spritesheet->get_component<Component::Material>("material");
@@ -94,8 +85,9 @@ namespace Component {
 
 					// get src rects
 					std::vector<Component::Src*> box_srcs;
+					auto i = 0;
 					for (std::string texture_id : box_json["texture_ids"])
-						box_srcs.push_back(e_spritesheet->get_component<Component::Src>(texture_id));
+						blocks[i++].src->set(*e_spritesheet->get_component<Component::Src>(texture_id));
 
 
 					auto& render_engine = *gamestate->get_component<Component::Engine>("render");
@@ -108,13 +100,7 @@ namespace Component {
 					c_position.x = -pos_.x;
 					c_position.y = -pos_.y;
 					
-					if (!is_speech_arrow_)
-					{
-						auto& c_speech_arrow_trans = *e_box->get_component<Component::Transform>("speech_arrow");
-	
-						speech_arrow_rect_.set(c_speech_arrow_trans);
-						c_speech_arrow_trans.set(Game::removed.x, Game::removed.y, 0.0f, 0.0f);
-					}
+					
 				}
 			};
 		}
