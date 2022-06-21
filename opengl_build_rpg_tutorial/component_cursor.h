@@ -32,6 +32,8 @@ namespace Component
 			cursor_transforms_[static_cast<int>(cursor_pos_)]->set(cursor_dimension_);
 		}
 
+		int get_cursor_size() { return static_cast<int>(cursor_transforms_.size()); }
+
 		void decrement()
 		{
 			if (!cursor_transforms_.size())

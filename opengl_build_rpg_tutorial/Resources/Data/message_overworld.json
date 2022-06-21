@@ -14,23 +14,21 @@
 			"speech_box" : "false"
 		},
 		{
-			"messages" : [
-				"My father is lonely would you please give him a visit?{yes no}",
-				"Your company will be missed. Please take care of yourself.{end}" 
-				"Great! Thank you, let me show you in.{end}"
-			],
-			"options" : [{
-				"text": "yes",
-				"jump": 1,
-				"data": [{
-					"load": "switch_states",
-					"data":{
-						"next_state" : "house",
-						"return_pos" : {"x": 512.0, "y": 912.0 }
-					}}] 
-			},{
-				"text": "no"
-			}],
+			"messages" : ["My father is lonely would you please give him a visit?"],
+			"optionbox" : {
+					"yes" : {
+						"messages": ["Great! Thank you, let me show you in."],
+						"data" : [{
+							"load": "switch_states",
+							"data":{
+								"next_state" : "house",
+								"return_pos" : {"x": 512.0, "y": 912.0 }
+							}}] 
+					},
+					"no" : {
+						"messages" : ["Darn, your company will be missed. Please take care of yourself."]
+					}
+				},
 			"speech_box" : "true"
 		}
 	]

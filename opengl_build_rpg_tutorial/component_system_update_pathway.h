@@ -14,7 +14,6 @@ namespace Component {
 			{
 				struct NavigatorTree
 				{
-					NavigatorTree* parent;
 					std::vector<Component::ITrigger*> triggers;
 					std::vector<NavigatorTree*> children;
 					INavigator* navigator;
@@ -28,12 +27,11 @@ namespace Component {
 				Pathway()
 				{}
 
-				NavigatorTree* add_path(nlohmann::json json, Entity* gamestate, std::vector<ITrigger*> triggers)
+				NavigatorTree* add_path(std::string name, nlohmann::json json, Entity* gamestate, std::vector<ITrigger*> triggers)
 				{
-					auto nav = add_navigator(json, gamestate);
-					auto nav_tree = new NavigatorTree{ nullptr, triggers, std::vector<NavigatorTree*>(), nav };
+					auto nav = add_navigator(json, name, gamestate);
+					auto nav_tree = new NavigatorTree{ triggers, std::vector<NavigatorTree*>(), nav };
 					
-
 					created_navigators_.push_back(std::make_unique<NavigatorTree>(nav_tree));
 
 					return nav_tree;

@@ -1,11 +1,12 @@
 #pragma once
 #include "component_trigger.h"
-#include "component_tree.h"
 #include <sstream>
+#include <vector>
 #include "json.hpp"
 #include "component_trigger_load_message.h"
 #include "component_trigger_load_box.h"
-#include "component_trigger_clearempty.h"
+#include "component_trigger_clearblockdraw.h"
+#include "component_system_update_pathway.h"
 
 /*
 @author David Wadsworth
@@ -18,6 +19,23 @@ namespace Component {
 			class TextBox : public Component::Trigger::ILoad
 			{
 				nlohmann::json json_;
+
+				void load_content(nlohmann::json textbox_json, nlohmann::json pathway_json, Entity* gamestate, bool box, Component::System::Update::Pathway& pathway, NPATH* prev)
+				{
+					std::string name = "textbox";
+					std::vector<Component:::ITrigger*> triggers;
+
+
+					if (pathway_json.contains("pathway"))
+						name = pathway_json["pathway"];
+
+					if (box)
+
+
+					pathway.add_path(name, textbox_json, gamestate, triggers);
+				}
+
+
 			public:
 				void load(nlohmann::json json) override
 				{
@@ -32,12 +50,12 @@ namespace Component {
 					std::string textbox_name = message_json["textbox"];
 					auto msg_pos_json = message_json["data"][message_pos];
 
-					auto message_size = msg_pos_json["messages"].size();
-
 					auto textbox_json = Game::global->get_child("index")->get_component<Component::Json>(textbox_name)->json;
 
 					nlohmann::json combined_json;
 					textbox_json["textbox"] = textbox_name;
+
+					bool has_box = textbox_json.contains("box");
 
 					auto& cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 
@@ -54,34 +72,10 @@ namespace Component {
 					auto e_textbox = gamestate->get_child(textbox_name);
 
 					auto ct_swap_vectors = e_textbox->get_component<Component::Trigger::SwapVectors>("swap_vectors");
-					auto& c_trigger_tree = *e_textbox->get_component<Component::TriggerTree>("trigger_tree");
-					auto& csu_traverse_tree = *e_textbox->get_component<Component::System::Update::TraverseTree>("traverse_tree");
-					auto ct_clearempty = e_textbox->get_component<Component::Trigger::ClearEmpty>("clear_empty");
+					auto ct_clearempty = e_textbox->get_component<Component::Trigger::ClearBlockDraw>("clear_block_draw");
+					auto& csu_pathway = *gamestate->get_component<Component::System::Update::Pathway>("pathway");
 
-
-					std::vector<Component::ITrigger*> middle_triggers{ct_clearempty};
-
-					// move textbox into screen and pause game
-					ct_swap_vectors->execute(gamestate);
-					for (auto obj : textbox_obj)
-					{
-						std::string obj_index_path = obj.second;
-						combined_json[obj.first] = Game::global->get_child("index")->get_component<Component::Json>(obj_index_path)->json;
-
-						auto obj_load = gamestate->get_child("load")->get_component<Component::Trigger::ILoad>(obj_index_path);
-						obj_load->execute(gamestate);
-						middle_triggers.push_back(obj_load);
-					}
-
-					std::vector<Component::ITrigger*> end_triggers{ ct_swap_vectors, ct_clearempty };
-					// add end triggers
-					c_trigger_tree.add(end_triggers);
-
-					// add message box triggers besides the first one.
-					for (auto i = 0; i < message_size; ++i)
-						c_trigger_tree.add(middle_triggers);
-					
-					csu_traverse_tree.set_cursor(c_trigger_tree);
+					load_content(combined_json, msg_pos_json, gamestate, )
 
 				}
 			};

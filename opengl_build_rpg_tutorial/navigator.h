@@ -3,8 +3,6 @@
 
 enum class NPATH
 {
-	REPEAT = -2,
-	GO_BACK = -1,
 	STAY = 0,
 	CHILD_1 = 1,
 	CHILD_2 = 2,

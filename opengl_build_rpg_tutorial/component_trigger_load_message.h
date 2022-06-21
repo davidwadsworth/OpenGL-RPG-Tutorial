@@ -4,7 +4,7 @@
 #include "component_template.h"
 #include <glm/glm.hpp>
 #include "component_rect_bitmap_glyph.h"
-#include "component_system_render_empty.h"
+#include "component_system_render_blockdraw.h"
 #include "component_trigger_load.h"
 
 namespace Component {
@@ -55,7 +55,6 @@ namespace Component {
 				void execute(Entity* gamestate) override
 				{
 					auto e_textarea = gamestate->get_child(textbox_name_)->get_child("textarea");
-					auto& csr_empty = *e_textarea->get_component<Component::System::Render::Empty>("render");
 
 					if (msg_i_ > messages_.size() - 1)
 						Logger::error("Message called too many times", Logger::HIGH);
@@ -87,10 +86,8 @@ namespace Component {
 					auto spaces_count = std::count(messages_[msg_i_].begin(), messages_[msg_i_].end(), ' ');
 
 					auto non_space_characters = messages_[msg_i_++].size() - spaces_count;
-					auto blocks = e_textarea->get_component<Component::System::Render::Empty>("render")->get_blocks(non_space_characters);
+					auto blocks = e_textarea->get_component<Component::System::Render::BlockDraw>("render")->get_blocks(non_space_characters);
 					auto blocks_i = 0;
-
-
 
 					while (curr_char != messages_[msg_i_].end())
 					{

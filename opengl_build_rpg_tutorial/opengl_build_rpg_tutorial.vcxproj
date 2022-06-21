@@ -177,7 +177,7 @@
     <ClInclude Include="component_rect_gjk_physics.h" />
     <ClInclude Include="component_system_update_checkactioncollision.h" />
     <ClInclude Include="component_system_update_pathway.h" />
-    <ClInclude Include="component_trigger_clearempty.h" />
+    <ClInclude Include="component_trigger_clearblockdraw.h" />
     <ClInclude Include="component_trigger_load_optionbox.h" />
     <ClInclude Include="component_trigger_load_switchstate.h" />
     <ClInclude Include="component_system_render_bulkdraw.h" />

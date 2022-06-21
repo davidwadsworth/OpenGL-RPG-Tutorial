@@ -7,6 +7,7 @@
 #include "component_trigger_load_box.h"
 #include "component_trigger_load_textbox.h"
 #include "component_trigger_load_optionbox.h"
+#include "component_trigger_clearblockdraw.h"
 
 /*
 @author David Wadsworth
@@ -24,7 +25,7 @@ namespace Component {
 
 					auto& c_update_vec = *entity_->add_id_component<Component::SystemVector>("update");
 					auto ct_switch_vectors = entity_->add_id_component<Component::Trigger::SwapVectors>("swap_vectors", c_update_vec);
-
+					
 					// add message and box triggers to gameinfo
 					std::string textarea_name = textbox_json["textarea"];
 					std::string box_name = textbox_json["box"];
@@ -48,7 +49,9 @@ namespace Component {
 
 					auto csi_block_draw = entity_->add_id_component<Component::System::Render::BlockDraw>("render", block_vec, c_renderer);
 					gamestate->get_component<Component::Engine>("render")->add(csi_block_draw, render_group);
-						
+					
+					auto ct_clear_block_draw = entity_->add_id_component<Component::Trigger::ClearBlockDraw>("clear_block_draw", *csi_block_draw );
+
 					auto e_lc = gamestate->get_child("load");
 					auto e_textbox = e_lc->add_id_child(name_);
 					e_textbox->add_id_component<Component::Trigger::Load::TextBox>(name_);
