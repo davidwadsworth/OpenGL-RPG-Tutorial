@@ -11,8 +11,9 @@ namespace Component {
 			{
 				bool is_speech_arrow_;
 				glm::vec2 pos_;
-				float box_h_, box_w_, corner_size_, scale_;
+				float box_x_, box_y_, box_h_, box_w_, corner_size_, scale_;
 				std::string textbox_name_, box_name_, spritesheet_name_;
+				std::vector<std::string> texture_ids_;
 			public:
 
 				void load(nlohmann::json json)
@@ -35,9 +36,11 @@ namespace Component {
 
 					spritesheet_name_ = json["box"]["texture"];
 
+					texture_ids_ = json["box"]["textures"].get<std::vector<std::string>>();
+
 					auto offset_x = item_w / 2.0f - corner_size_ * 2.0f;
-					pos_.x = item_x + offset_x;
-					pos_.y = item_y + offset_y - box_h_;
+					box_x_ = item_x + offset_x;
+					box_y_ = item_y + offset_y - box_h_;
 					is_speech_arrow_ = json["message"]["speech_box"] == "true";
 					textbox_name_ = json["textbox"];
 				}
@@ -49,35 +52,30 @@ namespace Component {
 
 					auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
 
-
-
 					auto blocks = csr_empty.get_blocks(10);
 
 					// box corners transforms
-					blocks[0].transform->set( Rect(box_x, box_y, scaled_corner_size, scaled_corner_size));
-					blocks[1].transform->set(Rect(box_x + box_w - scaled_corner_size, box_y, scaled_corner_size, scaled_corner_size));
-					blocks[2].transform->set(Rect(box_x, box_y + box_h - scaled_corner_size, scaled_corner_size, scaled_corner_size));
-					blocks[3].transform->set(Rect(box_x + box_w - scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size, scaled_corner_size));
+					blocks[0].transform->set( Rect(box_x_, box_y_, corner_size_, corner_size_));
+					blocks[1].transform->set(Rect(box_x_ + box_w_ - corner_size_, box_y_, corner_size_, corner_size_));
+					blocks[2].transform->set(Rect(box_x_, box_y_ + box_h_ - corner_size_, corner_size_, corner_size_));
+					blocks[3].transform->set(Rect(box_x_ + box_w_ - corner_size_, box_y_ + box_h_ - corner_size_, corner_size_, corner_size_));
 
 					// box side transforms
-					blocks[4].transform->set(Rect(box_x + scaled_corner_size, box_y, box_w - scaled_corner_size * 2, scaled_corner_size));
-					blocks[5].transform->set(Rect(box_x, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f));
-					blocks[6].transform->set(Rect(box_x + box_w - scaled_corner_size, box_y + scaled_corner_size, scaled_corner_size, box_h - scaled_corner_size * 2.0f));
-					blocks[7].transform->set(Rect(box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, box_w - scaled_corner_size * 2.0f, scaled_corner_size));
+					blocks[4].transform->set(Rect(box_x_ + corner_size_, box_y_, box_w_ - corner_size_ * 2, corner_size_));
+					blocks[5].transform->set(Rect(box_x_, box_y_ + corner_size_, corner_size_, box_h_ - corner_size_ * 2.0f));
+					blocks[6].transform->set(Rect(box_x_ + box_w_ - corner_size_, box_y_ + corner_size_, corner_size_, box_h_ - corner_size_ * 2.0f));
+					blocks[7].transform->set(Rect(box_x_ + corner_size_, box_y_ + box_h_ - corner_size_, box_w_ - corner_size_ * 2.0f, corner_size_));
 
 					// center transform
-					blocks[8].transform->set(Rect(box_x + scaled_corner_size, box_y + scaled_corner_size, box_w - scaled_corner_size * 2.0f, box_h - scaled_corner_size * 2.0f));
+					blocks[8].transform->set(Rect(box_x_ + corner_size_, box_y_ + corner_size_, box_w_ - corner_size_ * 2.0f, box_h_ - corner_size_ * 2.0f));
 
 					// speech arrow
-					blocks[9].transform->set(Rect(box_x + scaled_corner_size, box_y + box_h - scaled_corner_size, scaled_corner_size * 2.0f, scaled_corner_size));
 					
-					if (!is_speech_arrow_)
-					{
-						auto& c_speech_arrow_trans = *e_box->get_component<Component::Transform>("speech_arrow");
-
-						speech_arrow_rect_.set(c_speech_arrow_trans);
-						c_speech_arrow_trans.set(Game::removed.x, Game::removed.y, 0.0f, 0.0f);
-					}
+					if (is_speech_arrow_)
+						blocks[9].transform->set(Rect(box_x_ + corner_size_, box_y_ + box_h_ - corner_size_, corner_size_ * 2.0f, corner_size_));
+					else
+						blocks[9].transform->set(Game::removed.x, Game::removed.y, 0.0f, 0.0f);
+					
 					// get textbox shader and texture
 					auto e_spritesheet = gamestate->get_child(spritesheet_name_);
 					auto& c_ss_material = *e_spritesheet->get_component<Component::Material>("material");
@@ -86,20 +84,8 @@ namespace Component {
 					// get src rects
 					std::vector<Component::Src*> box_srcs;
 					auto i = 0;
-					for (std::string texture_id : box_json["texture_ids"])
-						blocks[i++].src->set(*e_spritesheet->get_component<Component::Src>(texture_id));
-
-
-					auto& render_engine = *gamestate->get_component<Component::Engine>("render");
-					render_engine.add(cs_item, render_group);
-
-					auto e_box = gamestate->get_child(textbox_name_)->get_child("box");
-
-					auto& c_position = *e_box->get_component<Component::Position>("position");
-					
-					c_position.x = -pos_.x;
-					c_position.y = -pos_.y;
-					
+					for (std::string texture_id : texture_ids_)
+						blocks[i++].src->set(*e_spritesheet->get_component<Component::Src>(texture_id));					
 					
 				}
 			};
