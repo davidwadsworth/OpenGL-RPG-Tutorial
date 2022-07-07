@@ -20,6 +20,13 @@ namespace Component {
 			{
 				nlohmann::json json_;
 
+				void load_message(bool box, std::string message, Component::System::Update::Pathway::NavigatorTree* nav_tree)
+				{
+					if (box)
+						
+				}
+
+
 				void load_content(nlohmann::json textbox_json, nlohmann::json pathway_json, Entity* gamestate, bool box, Component::System::Update::Pathway& pathway, NPATH* prev)
 				{
 					std::string name = "textbox";

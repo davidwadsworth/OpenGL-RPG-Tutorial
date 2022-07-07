@@ -12,13 +12,14 @@ namespace Component {
 		{
 			class Pathway : public Component::ISystem
 			{
+			public:
 				struct NavigatorTree
 				{
 					std::vector<Component::ITrigger*> triggers;
 					std::vector<NavigatorTree*> children;
 					INavigator* navigator;
 				};
-
+			private:
 				std::vector<std::unique_ptr<NavigatorTree>> created_navigators_;
 				std::unordered_map<std::string, std::unique_ptr<INavigator>> nav_map_;
 				std::unordered_map<std::string, NavigatorTree*> nav_tree_map_;
