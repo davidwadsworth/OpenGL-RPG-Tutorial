@@ -28,9 +28,13 @@ void Game::init(Entity* game)
 	ctigs_house.execute(game);
 
 	Game::global->add_id_component<Component::KeyboardArray>("keyboard");
-	Game::global->add_id_component<Component::Controller::Keyboard>("controller");
+	auto& cc_keyboard = *Game::global->add_id_component<Component::Controller::Keyboard>("controller");
 	auto& cti_index = *Game::global->add_id_ct_input<Component::Trigger::Input::Index>("index", "index.json");
 	cti_index.execute(Game::global);
+
+	auto keyboard_controller_json = cti_index->get_component<Component::Json>("controller_keyboard")->json;
+
+	cc_keyboard.set_keys(keyboard_controller_json);
 }
 
 void Game::set_next_state(std::string state)

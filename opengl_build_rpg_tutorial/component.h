@@ -17,4 +17,5 @@ struct IComponent
 	IComponent(IComponent&&) = delete;
 	IComponent& operator=(const IComponent&) = delete;
 	IComponent& operator=(IComponent&&) = delete;
+
 };

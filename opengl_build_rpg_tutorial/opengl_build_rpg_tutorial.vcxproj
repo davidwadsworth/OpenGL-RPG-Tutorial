@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="aabb.cpp" />
     <ClCompile Include="add_component_rect.cpp" />
+    <ClCompile Include="add_navigator.cpp" />
     <ClCompile Include="component_rect_bitmap_glyph.cpp" />
     <ClCompile Include="component_material_color.cpp" />
     <ClCompile Include="delimiter_split.cpp" />
@@ -165,6 +166,12 @@
     <ClInclude Include="component_json.h" />
     <ClInclude Include="component_cursor.h" />
     <ClInclude Include="add_navigator.h" />
+    <ClInclude Include="load.h" />
+    <ClInclude Include="load_box.h" />
+    <ClInclude Include="load_message.h" />
+    <ClInclude Include="load_optionbox.h" />
+    <ClInclude Include="load_switchstate.h" />
+    <ClInclude Include="load_textbox.h" />
     <ClInclude Include="navigator.h" />
     <ClInclude Include="navigator_optionboxh.h" />
     <ClInclude Include="navigator_optionboxv.h" />
@@ -178,8 +185,6 @@
     <ClInclude Include="component_system_update_checkactioncollision.h" />
     <ClInclude Include="component_system_update_pathway.h" />
     <ClInclude Include="component_trigger_clearblockdraw.h" />
-    <ClInclude Include="component_trigger_load_optionbox.h" />
-    <ClInclude Include="component_trigger_load_switchstate.h" />
     <ClInclude Include="component_system_render_bulkdraw.h" />
     <ClInclude Include="component_system_render_offset.h" />
     <ClInclude Include="component_system_update_camera.h" />
@@ -189,8 +194,6 @@
     <ClInclude Include="component_trigger_input_index.h" />
     <ClInclude Include="component_trigger_input_loadcache.h" />
     <ClInclude Include="component_trigger_input_spritesheet.h" />
-    <ClInclude Include="component_trigger_load.h" />
-    <ClInclude Include="component_trigger_load_box.h" />
     <ClInclude Include="component_engine.h" />
     <ClInclude Include="component_rect_bitmap_glyph.h" />
     <ClInclude Include="component_rect_gjk.h" />
@@ -207,8 +210,6 @@
     <ClInclude Include="component_trigger_input_font.h" />
     <ClInclude Include="component_trigger_input_textbox.h" />
     <ClInclude Include="component_trigger_input_gamestate.h" />
-    <ClInclude Include="component_trigger_load_message.h" />
-    <ClInclude Include="component_trigger_load_textbox.h" />
     <ClInclude Include="component_trigger_swapvectors.h" />
     <ClInclude Include="frarr.h" />
     <ClInclude Include="component_rect_gjk_physics_smooth.h" />

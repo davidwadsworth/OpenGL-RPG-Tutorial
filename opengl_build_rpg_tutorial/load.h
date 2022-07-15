@@ -1,15 +1,8 @@
 #pragma once
-#include "component_trigger.h"
 #include "json.hpp"
 
-namespace Component {
-	namespace Trigger
-	{
-		class ILoad : public Component::ITrigger
-		{
-		public:
-
-			virtual void load(nlohmann::json json) = 0;
-		};
-	}
-}
+class ILoad
+{
+public:
+	virtual void load(nlohmann::json json, Entity* e_gamestate) = 0;
+};

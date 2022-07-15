@@ -3,7 +3,6 @@
 #include "component_controller.h"
 #include "game.h"
 
-
 namespace Navigator
 {
 	class Textbox : public INavigator
@@ -15,12 +14,15 @@ namespace Navigator
 			: controller_(*Game::global->get_component<Component::IController>("controller"))
 		{}
 
-		NPATH navigate() override
+		int navigate() override
 		{
 			if (controller_.key_press_action_1())
-				return NPATH::CHILD_1;
+				return 1;
 
-			return NPATH::STAY;
+			if (controller_.key_press_action_2())
+				return 2;
+
+			return 0;
 		}
 	};
 }

@@ -17,10 +17,10 @@ namespace Navigator
 			cursor_(*gamestate->get_child(json["textbox"].get<std::string>())->get_component<Component::Cursor>("cursor"))
 		{}
 
-		NPATH navigate() override
+		int navigate() override
 		{
 			if (controller_.key_press_action_1())
-				return NPATH(cursor_.get_cursor_pos() + 1);
+				return cursor_.get_cursor_pos() + 1;
 
 			if (controller_.key_down_down())
 				cursor_.decrement();
@@ -28,7 +28,7 @@ namespace Navigator
 			if (controller_.key_down_up())
 				cursor_.increment();
 
-			return NPATH::STAY;
+			return 0;
 		}
 	};
 }

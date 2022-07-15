@@ -46,9 +46,6 @@
     <Filter Include="EC\Component\System\Update">
       <UniqueIdentifier>{f38c53a0-73a2-4851-acc7-31e05b4a2fe9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\Trigger\Load">
-      <UniqueIdentifier>{9684672b-b923-4386-9fb8-29bb434880a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EC\Component\Rect">
       <UniqueIdentifier>{193490e3-fec0-460e-a442-49d683f0f7ce}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,9 @@
     </Filter>
     <Filter Include="Navigator">
       <UniqueIdentifier>{a1dea827-00db-4956-be6f-2c5ad10d3d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Load">
+      <UniqueIdentifier>{c48ce152-5e49-4dab-9806-09716ddea374}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +106,9 @@
       <Filter>Helper</Filter>
     </ClCompile>
     <ClCompile Include="gjk.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="add_navigator.cpp">
       <Filter>Helper</Filter>
     </ClCompile>
   </ItemGroup>
@@ -254,9 +257,6 @@
     <ClInclude Include="tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_load_box.h">
-      <Filter>EC\Component\Trigger\Load</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_input_index.h">
       <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
@@ -265,9 +265,6 @@
     </ClInclude>
     <ClInclude Include="component_trigger_input_spritesheet.h">
       <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_load.h">
-      <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>
     <ClInclude Include="component_system_render_offset.h">
       <Filter>EC\Component\System\Render</Filter>
@@ -304,9 +301,6 @@
     </ClInclude>
     <ClInclude Include="component_trigger_input_loadcache.h">
       <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_load_message.h">
-      <Filter>EC\Component\Trigger\Load</Filter>
     </ClInclude>
     <ClInclude Include="component_system_render_bulkdraw.h">
       <Filter>EC\Component\System\Render</Filter>
@@ -347,15 +341,6 @@
     <ClInclude Include="component_system_update_checkactioncollision.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_load_switchstate.h">
-      <Filter>EC\Component\Trigger\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_load_textbox.h">
-      <Filter>EC\Component\Trigger\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_load_optionbox.h">
-      <Filter>EC\Component\Trigger\Load</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_clearblockdraw.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
@@ -382,6 +367,24 @@
     </ClInclude>
     <ClInclude Include="component_trigger_input_textbox.h">
       <Filter>EC\Component\Trigger\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="load.h">
+      <Filter>Load</Filter>
+    </ClInclude>
+    <ClInclude Include="load_box.h">
+      <Filter>Load</Filter>
+    </ClInclude>
+    <ClInclude Include="load_message.h">
+      <Filter>Load</Filter>
+    </ClInclude>
+    <ClInclude Include="load_optionbox.h">
+      <Filter>Load</Filter>
+    </ClInclude>
+    <ClInclude Include="load_switchstate.h">
+      <Filter>Load</Filter>
+    </ClInclude>
+    <ClInclude Include="load_textbox.h">
+      <Filter>Load</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,19 +23,38 @@ namespace Component {
 			bool action_1_pressed_, action_2_pressed_;
 			enum KeyID
 			{
-				left = GLFW_KEY_LEFT,
-				right = GLFW_KEY_RIGHT,
-				down = GLFW_KEY_DOWN,
-				up = GLFW_KEY_UP,
-				action_1 = GLFW_KEY_Z,
-				action_2 = GLFW_KEY_X
+				left,
+				right,
+				down,
+				up,
+				action_1,
+				action_2,
+				action_3,
+				start
 			};
+
+			std::array<int, 8> key_ids_;
 			Component::KeyboardArray* keys_;
 		public:
+			
 			Keyboard()
-				: action_1_pressed_(false), action_2_pressed_(false), keys_(nullptr)
+				: action_1_pressed_(false), action_2_pressed_(false), keys_(nullptr), key_ids_{}
 			{
 				keys_ = Game::global->get_component<Component::KeyboardArray>("keyboard");
+			}
+
+			void set_keys(nlohmann::json json)
+			{
+				auto inputs_json = json["inputs"];
+
+				key_ids_[left] = inputs_json["left"];
+				key_ids_[right] = inputs_json["right"];
+				key_ids_[down] = inputs_json["down"];
+				key_ids_[up] = inputs_json["up"];
+				key_ids_[action_1] = inputs_json["action_1"];
+				key_ids_[action_2] = inputs_json["action_2"];
+				key_ids_[action_3] = inputs_json["action_3"];
+				key_ids_[start] = inputs_json["start"];
 			}
 
 			bool key_down_left() override
