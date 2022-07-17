@@ -2,6 +2,7 @@
 #include "load.h"
 #include "component_rect.h"
 #include "component_system_render_blockdraw.h"
+#include "game.h"
 
 namespace Load
 {
@@ -16,65 +17,65 @@ namespace Load
 			float item_w = json["rect"]["w"];
 			float offset_y = json["box"]["offset"];
 
-			auto scale = json["box"]["scale"];
+			float scale = json["box"]["scale"];
 
-			box_h_ = json["box"]["height"];
-			box_w_ = json["box"]["width"];
+			float box_h = json["box"]["height"];
+			float box_w = json["box"]["width"];
 
-			box_h_ *= scale;
-			box_w_ *= scale;
+			box_h *= scale;
+			box_w *= scale;
 
-			corner_size_ = json["box"]["corner_size"];
-			corner_size_ *= scale;
+			float corner_size = json["box"]["corner_size"];
+			corner_size *= scale;
 
-			spritesheet_name_ = json["box"]["texture"];
+			std::string spritesheet_name = json["box"]["texture"];
 
-			texture_ids_ = json["box"]["textures"].get<std::vector<std::string>>();
+			auto texture_ids = json["box"]["textures"].get<std::vector<std::string>>();
 
-			auto offset_x = item_w / 2.0f - corner_size_ * 2.0f;
-			box_x_ = item_x + offset_x;
-			box_y_ = item_y + offset_y - box_h_;
-			is_speech_arrow_ = json["message"]["speech_box"] == "true";
-			textbox_name_ = json["textbox"];
+			auto offset_x = item_w / 2.0f - corner_size * 2.0f;
+			auto box_x = item_x + offset_x;
+			auto box_y = item_y + offset_y - box_h;
+			auto is_speech_arrow = json["message"]["speech_box"] == "true";
+			std::string textbox_name = json["textbox"];
 
-			auto e_textarea = gamestate->get_child(textbox_name_);
+			auto e_textarea = e_gamestate->get_child(textbox_name);
 			auto& csr_empty = *e_textarea->get_component<Component::System::Render::BlockDraw>("block_draw");
 
-			auto& c_renderer = *gamestate->get_component<Component::Renderer>("renderer");
+			auto& c_renderer = *e_gamestate->get_component<Component::Renderer>("renderer");
 
 			auto blocks = csr_empty.get_blocks(10);
 
 			// box corners transforms
-			blocks[0].transform->set(Rect(box_x_, box_y_, corner_size_, corner_size_));
-			blocks[1].transform->set(Rect(box_x_ + box_w_ - corner_size_, box_y_, corner_size_, corner_size_));
-			blocks[2].transform->set(Rect(box_x_, box_y_ + box_h_ - corner_size_, corner_size_, corner_size_));
-			blocks[3].transform->set(Rect(box_x_ + box_w_ - corner_size_, box_y_ + box_h_ - corner_size_, corner_size_, corner_size_));
+			blocks[0].transform->set(Rect(box_x, box_y, corner_size, corner_size));
+			blocks[1].transform->set(Rect(box_x + box_w - corner_size, box_y, corner_size, corner_size));
+			blocks[2].transform->set(Rect(box_x, box_y + box_h - corner_size, corner_size, corner_size));
+			blocks[3].transform->set(Rect(box_x + box_w - corner_size, box_y + box_h - corner_size, corner_size, corner_size));
 
 			// box side transforms
-			blocks[4].transform->set(Rect(box_x_ + corner_size_, box_y_, box_w_ - corner_size_ * 2, corner_size_));
-			blocks[5].transform->set(Rect(box_x_, box_y_ + corner_size_, corner_size_, box_h_ - corner_size_ * 2.0f));
-			blocks[6].transform->set(Rect(box_x_ + box_w_ - corner_size_, box_y_ + corner_size_, corner_size_, box_h_ - corner_size_ * 2.0f));
-			blocks[7].transform->set(Rect(box_x_ + corner_size_, box_y_ + box_h_ - corner_size_, box_w_ - corner_size_ * 2.0f, corner_size_));
+			blocks[4].transform->set(Rect(box_x + corner_size, box_y, box_w - corner_size * 2, corner_size));
+			blocks[5].transform->set(Rect(box_x, box_y + corner_size, corner_size, box_h - corner_size * 2.0f));
+			blocks[6].transform->set(Rect(box_x + box_w - corner_size, box_y + corner_size, corner_size, box_h - corner_size * 2.0f));
+			blocks[7].transform->set(Rect(box_x + corner_size, box_y + box_h - corner_size, box_w - corner_size * 2.0f, corner_size));
 
 			// center transform
-			blocks[8].transform->set(Rect(box_x_ + corner_size_, box_y_ + corner_size_, box_w_ - corner_size_ * 2.0f, box_h_ - corner_size_ * 2.0f));
+			blocks[8].transform->set(Rect(box_x + corner_size, box_y + corner_size, box_w - corner_size * 2.0f, box_h - corner_size * 2.0f));
 
 			// speech arrow
 
-			if (is_speech_arrow_)
-				blocks[9].transform->set(Rect(box_x_ + corner_size_, box_y_ + box_h_ - corner_size_, corner_size_ * 2.0f, corner_size_));
+			if (is_speech_arrow)
+				blocks[9].transform->set(Rect(box_x + corner_size, box_y + box_h - corner_size, corner_size * 2.0f, corner_size));
 			else
 				blocks[9].transform->set(Game::removed.x, Game::removed.y, 0.0f, 0.0f);
 
 			// get textbox shader and texture
-			auto e_spritesheet = gamestate->get_child(spritesheet_name_);
+			auto e_spritesheet = e_gamestate->get_child(spritesheet_name);
 			auto& c_ss_material = *e_spritesheet->get_component<Component::Material>("material");
 
 
 			// get src rects
 			std::vector<Component::Src*> box_srcs;
 			auto i = 0;
-			for (std::string texture_id : texture_ids_)
+			for (std::string texture_id : texture_ids)
 				blocks[i++].src->set(*e_spritesheet->get_component<Component::Src>(texture_id));
 
 		}
