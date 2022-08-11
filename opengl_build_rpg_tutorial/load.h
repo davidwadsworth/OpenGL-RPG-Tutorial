@@ -1,8 +1,9 @@
 #pragma once
 #include "json.hpp"
+#include "command.h"
 
-class ILoad
+class ILoad : public ICommand
 {
 public:
-	virtual void load(nlohmann::json json, Entity* e_gamestate) = 0;
+	virtual void load(nlohmann::json json) = 0;
 };

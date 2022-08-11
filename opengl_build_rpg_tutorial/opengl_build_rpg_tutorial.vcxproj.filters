@@ -383,8 +383,14 @@
     <ClInclude Include="load_switchstate.h">
       <Filter>Load</Filter>
     </ClInclude>
-    <ClInclude Include="load_textbox.h">
-      <Filter>Load</Filter>
+    <ClInclude Include="command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="add_load.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_textbox.h">
+      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

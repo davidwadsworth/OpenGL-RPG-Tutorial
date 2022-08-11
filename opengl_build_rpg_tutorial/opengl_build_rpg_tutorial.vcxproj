@@ -161,6 +161,8 @@
     <ClInclude Include="aabb.h" />
     <ClInclude Include="action.h" />
     <ClInclude Include="add_component_rect.h" />
+    <ClInclude Include="add_load.h" />
+    <ClInclude Include="command.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_json.h" />
@@ -171,7 +173,7 @@
     <ClInclude Include="load_message.h" />
     <ClInclude Include="load_optionbox.h" />
     <ClInclude Include="load_switchstate.h" />
-    <ClInclude Include="load_textbox.h" />
+    <ClInclude Include="component_trigger_textbox.h" />
     <ClInclude Include="navigator.h" />
     <ClInclude Include="navigator_optionboxh.h" />
     <ClInclude Include="navigator_optionboxv.h" />

@@ -50,8 +50,6 @@ namespace Component {
 						{
 							auto input = static_cast<Component::Trigger::IInput*>(obj);
 							input->execute(entity_);
-							Logger::message(input->name_);
-
 						}
 						c_render_engine_ = entity_->get_component<Component::Engine>("render");
 						c_update_engine_ = entity_->get_component<Component::Engine>("update");

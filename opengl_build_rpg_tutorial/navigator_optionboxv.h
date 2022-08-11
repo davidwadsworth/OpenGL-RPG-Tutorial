@@ -22,6 +22,9 @@ namespace Navigator
 			if (controller_.key_press_action_1())
 				return cursor_.get_cursor_pos() + 1;
 
+			if (controller_.key_press_action_2())
+				return cursor_.get_cursor_size() + 2;
+
 			if (controller_.key_down_down())
 				cursor_.decrement();
 

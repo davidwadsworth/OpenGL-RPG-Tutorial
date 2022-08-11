@@ -15,4 +15,5 @@ namespace Component
 	struct Vector : public IComponent, public std::vector<T> {};
 #define SystemVector Vector<Component::ISystem*>
 #define TriggerVector Vector<Component::ITrigger*>
+#define CommandVector Vector<ICommand*>
 }

@@ -5,11 +5,11 @@
 #include <glm/glm.hpp>
 #include "component_rect_bitmap_glyph.h"
 #include "component_system_render_blockdraw.h"
-#include "component_trigger_load.h"
+#include "load.h"
 
 namespace Load
 {
-	class Message : public Component::Trigger::ILoad
+	class Message : public ILoad
 	{
 		Rect rect_;
 		std::string font_name_, align_h_, align_v_, textbox_name_;

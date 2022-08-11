@@ -1,6 +1,7 @@
 #pragma once
 #include "component.h"
 #include "entity.h"
+#include "command.h"
 
 /*
 Systems whoes whole purpose is to execute once and be unused until needed again
@@ -10,8 +11,6 @@ Systems whoes whole purpose is to execute once and be unused until needed again
 
 namespace Component
 {
-	struct ITrigger : public IComponent
-	{
-		virtual void execute(Entity* gamestate) = 0;
-	};
+	struct ITrigger : public IComponent, public ICommand
+	{};
 }
