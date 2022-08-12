@@ -5,8 +5,8 @@
 #include <unordered_map>
 #include <stack>
 #include <queue>
-#include "load.h"
 #include "component_vector.h"
+#include "add_loads.h"
 
 namespace Component {
 	namespace System {
@@ -32,7 +32,9 @@ namespace Component {
 			public:
 				Pathway(Component::CommandVector& command_vec)
 					: command_vec_(command_vec)
-				{}
+				{
+					add_loads(command_map_, created_commands_);
+				}
 
 				NavigatorTree* add_path(std::string name, nlohmann::json json, Entity* gamestate, std::vector<nlohmann::json> command_jsons)
 				{
@@ -50,16 +52,11 @@ namespace Component {
 					return nav_tree;
 				}
 
-				ILoad* add_load(std::string name)
-				{
-
-				}
-
 				void add_command(std::string name, ICommand* command)
 				{
-
+					if (command_map_.find(name) != command_map_.end())
+						command_map_[name] = command;
 				}
-
 
 				void add_concurrent(std::string name)
 				{

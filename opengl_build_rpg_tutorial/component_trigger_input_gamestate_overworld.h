@@ -1,7 +1,6 @@
 #pragma once
 #include "component_trigger_input.h"
 #include "component_trigger_input_camera.h"
-//#include "component_trigger_input_controller.h"
 #include "component_trigger_input_shader.h"
 #include "component_trigger_input_texture.h"
 #include "component_trigger_input_gameobj_tilemap.h"
@@ -32,7 +31,7 @@ namespace Component {
 				{
 					Component::SystemVector* c_update_;
 					std::vector<Component::ISystem*> render_;
-					Component::TriggerVector* c_triggers_ = nullptr;
+					Component::CommandVector* c_commands_ = nullptr;
 					Component::Renderer* c_renderer_ = nullptr;
 					std::vector<Component::Trigger::IInput*> objects_;
 					Component::Engine* c_render_engine_, * c_update_engine_;
@@ -84,9 +83,9 @@ namespace Component {
 
 						c_renderer_->end();
 
-						for (auto i = 0; i < c_triggers_->size(); ++i)
-							c_triggers_->at(i)->execute(entity_);
-						c_triggers_->clear();
+						for (auto i = 0; i < c_commands_->size(); ++i)
+							c_commands_->at(i)->execute(entity_);
+						c_commands_->clear();
 					}
 
 				private:
@@ -97,7 +96,7 @@ namespace Component {
 						entity_->add_id_component<Component::Engine>("update");
 						
 						c_update_ = entity_->add_id_component<Component::SystemVector>("update_vec");
-						c_triggers_ = entity_->add_id_component<Component::TriggerVector>("trigger");
+						c_commands_ = entity_->add_id_component<Component::CommandVector>("trigger");
 
 						c_renderer_ = entity_->add_id_ct_input<Component::Renderer>("renderer");
 						entity_->add_id_component<Component::TexUnit>("texunit");

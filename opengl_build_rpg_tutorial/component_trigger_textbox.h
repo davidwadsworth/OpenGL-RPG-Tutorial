@@ -65,7 +65,7 @@ namespace Component {
 				auto& cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 
 				combined_json["rect"] = json_["rect"];
-				combined_json["rect"]["x"] = combined_json["rect"]["x"].get<float>() - cam_position.x;
+				combined_json["rect"]["x"] = combined_json["rect"]["x"].get<float>() - cam_position.x;  
 				combined_json["rect"]["y"] = combined_json["rect"]["y"].get<float>() - cam_position.y;
 
 				combined_json["textbox"] = textbox_name;
