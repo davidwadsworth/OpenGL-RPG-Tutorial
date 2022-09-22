@@ -14,8 +14,7 @@ namespace Load
 		Rect rect_;
 		std::string font_name_, align_h_, align_v_, textbox_name_;
 		float font_sc_, line_spacing_;
-		std::vector<std::string> messages_;
-		int msg_i_ = 0;
+		std::string message_;
 	public:
 
 		void load(nlohmann::json json) override
@@ -45,21 +44,17 @@ namespace Load
 			align_h_ = json["textarea"]["align_horizontal"];
 			align_v_ = json["textarea"]["align_vertical"];
 			line_spacing_ = json["textarea"]["line_spacing"];
-			messages_ = json["message"]["messages"].get<std::vector<std::string>>();
+			message_ = json["message"];
 			textbox_name_ = json["textbox"];
-			msg_i_ = 0;
 		}
 
 		void execute(Entity* gamestate) override
 		{
 			auto e_textarea = gamestate->get_child(textbox_name_)->get_child("textarea");
-
-			if (msg_i_ > messages_.size() - 1)
-				Logger::error("Message called too many times", Logger::HIGH);
 					
-						
 			auto e_font = gamestate->get_child(font_name_);
 
+			auto c_font_material = e_font->get_component<Component::Material>("material");
 			// create boxes
 			auto line_h = e_font->get_component<Component::Integer>("line_h")->value;
 
@@ -78,16 +73,21 @@ namespace Load
 			auto current_pos = glm::vec2(rect_.x, rect_.y);
 
 			// current character in message
-			auto curr_char = messages_[msg_i_].begin();
+			auto curr_char = message_.begin();
 			auto ch_i = 0;
 
-			auto spaces_count = std::count(messages_[msg_i_].begin(), messages_[msg_i_].end(), ' ');
+			auto spaces_count = std::count(message_.begin(), message_.end(), ' ');
 
-			auto non_space_characters = messages_[msg_i_++].size() - spaces_count;
-			auto blocks = e_textarea->get_component<Component::System::Render::BlockDraw>("render")->get_blocks(non_space_characters);
+			auto non_space_characters = message_.size() - spaces_count;
+			
+			auto& csr_block_draw = *e_textarea->get_component<Component::System::Render::BlockDraw>("render");
+			
+			auto blocks = csr_block_draw.get_blocks(non_space_characters);
 			auto blocks_i = 0;
 
-			while (curr_char != messages_[msg_i_].end())
+			csr_block_draw.add_render_group(blocks, c_font_material);
+
+			while (curr_char != message_.end())
 			{
 				switch (*curr_char)
 				{
@@ -122,7 +122,7 @@ namespace Load
 				float prev_pos_x = current_pos.x;
 
 				// add all the non space characters together into vectors of transforms glyphs and draw calls, also known as a "word"
-				for (; curr_char != messages_[msg_i_].end() && *curr_char != ' '; curr_char++)
+				for (; curr_char != message_.end() && *curr_char != ' '; curr_char++)
 				{
 					auto& c_bitmap_char = *e_glyphs->get_component<Component::Rectangle::BitMapGlyph>(static_cast<std::size_t>(*curr_char));
 
@@ -216,6 +216,8 @@ namespace Load
 					transform->x += x_offset[i];
 					transform->y += y_offset;
 				}
+
+
 		}
 	};
 }

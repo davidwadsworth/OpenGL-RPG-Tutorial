@@ -13,6 +13,25 @@
 #include "game.h"
 
 /*
+message json
+
+rect : [1, 1, 1, 1],
+textarea : {...},
+box : {...}
+message : ""
+
+has box should be in the textbox json file not if it has a box or not.
+
+box json
+
+rect : [...],
+speech_box : "",
+textbox : "",
+box : {}
+
+TODO finish optionbox before finishing this.
+
+
 @author David Wadsworth
 */
 
@@ -22,25 +41,101 @@ namespace Component {
 		class TextBox : public Component::ITrigger
 		{
 			nlohmann::json json_;
+		
 
-			void load_message(bool box, std::string message, Component::System::Update::Pathway::NavigatorTree* nav_tree)
+			Component::System::Update::Pathway::NavigatorTree* parse_json(nlohmann::json data_json,
+				nlohmann::json textbox_json, Component::System::Update::Pathway& pathway, Component::System::Update::Pathway::NavigatorTree* last_tree)
 			{
+				if (data_json["name"] == "messages")
+				{
+					std::vector<Component::System::Update::Pathway::NavigatorTree*> nav_tree_vec;
+
+					if (textbox_json.find("box") != textbox_json.end())
+					{
+						nlohmann::json box_command;
+						box_command["name"] = textbox_json["box"];
+						box_command["load"] = textbox_json; // this needs to be re thought because just the box data isn't enough
+						last_tree->command_json.push_back(box_command);
+					}
+
+					nlohmann::json message_command;
+					message_command["name"] = data_json["name"];
+					message_command["load"] = data_json["data"][0];
+
+					last_tree->command_json.push_back(message_command);
+
+					nav_tree_vec.push_back(last_tree);
+
+					for (auto i = 1; i < data_json["data"].size(); ++i)
+					{
+						auto navigator_tree = pathway.add_nav_tree(textbox_json["nav"]);
+
+						if (textbox_json.find("box") != textbox_json.end())
+						{
+							nlohmann::json box_command;
+							box_command["name"] = textbox_json["box"];
+							box_command["load"] = textbox_json["box_data"];
+							navigator_tree->command_json.push_back(box_command);
+						}
+
+						nlohmann::json message_command;
+						message_command["name"] = data_json["name"];
+						message_command["load"] = data_json["data"][i];
+
+						navigator_tree->command_json.push_back(message_command);
+						nav_tree_vec.push_back(navigator_tree);
+					}
+
+					for (auto i = 0; i < nav_tree_vec.size() - 1; ++i)
+						nav_tree_vec[i]->children.push_back(nav_tree_vec[i + 1]);
+
+					return nav_tree_vec.back();
+				}
+				else if (data_json["name"] == "option_box")
+				{
+					if (data_json.find("nav") != data_json.end())
+						pathway.change_nav(data_json["nav"], last_tree);
+
+					nlohmann::json option_box_command;
+					option_box_command["name"] = "option_box";
+					option_box_command["data"] = data_json["options"];
+
+					last_tree->command_json.push_back(option_box_command);
+
+					for (auto option : data_json["data"])
+					{
+						auto option_nav_tree = pathway.add_nav_tree(textbox_json["nav"]);
+						parse_json(option, textbox_json, pathway, option_nav_tree);
+						last_tree->children.push_back(option_nav_tree);
+					}
+
+					return last_tree;
+				}
+				else if (data_json["name"] == "series")
+				{
+					for (auto data : data_json["data"])
+					{
+						auto option_nav_tree = pathway.add_nav_tree(textbox_json["nav"]);
+						parse_json(data, textbox_json, pathway, option_nav_tree);
+						last_tree->children.push_back(option_nav_tree);
+					}
+				}
+				else if (data_json["name"] == "concurrent")
+				{
+					for (auto data : data_json["data"])
+						parse_json(data, textbox_json, pathway, last_tree);
+				}
+				else
+				{
+					nlohmann::json command;
+					command["name"] = data_json["name"];
+					command["load"] = data_json["data"];
+
+					last_tree->command_json.push_back(command);
+					return last_tree;
+				}
 			}
-
-
-			void load_content(nlohmann::json textbox_json, nlohmann::json pathway_json, Entity* gamestate, bool box, Component::System::Update::Pathway& pathway, NPATH* prev)
-			{
-				std::string name = "textbox";
-				std::vector<ICommand*> commands;
-
-
-				if (pathway_json.contains("pathway"))
-					name = pathway_json["pathway"];
-
-
-			}
-
-
+		
 		public:
 
 			TextBox(nlohmann::json json)
@@ -60,8 +155,6 @@ namespace Component {
 				nlohmann::json combined_json;
 				textbox_json["textbox"] = textbox_name;
 
-				bool has_box = textbox_json.contains("box");
-
 				auto& cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 
 				combined_json["rect"] = json_["rect"];
@@ -73,15 +166,34 @@ namespace Component {
 
 				auto textbox_obj = json_.get<nlohmann::json::object_t>();
 
+				auto& pathway = *gamestate->get_component<Component::System::Update::Pathway>("pathway");
 
-				auto e_textbox = gamestate->get_child(textbox_name);
+				if (pathway.is_registered(message_json["name"]))
+				{
+					pathway.add_next(message_json["name"]);
+					return;
+				}
 
-				auto ct_swap_vectors = e_textbox->get_component<Component::Trigger::SwapVectors>("swap_vectors");
-				auto ct_clearempty = e_textbox->get_component<Component::Trigger::ClearBlockDraw>("clear_block_draw");
-				auto& csu_pathway = *gamestate->get_component<Component::System::Update::Pathway>("pathway");
+				// this needs to create the initial nav tree and then pass through a json string with the name textbox json and the json
+				auto initial_nav_tree = pathway.add_nav_tree(combined_json["nav"]);
 
-				load_content(combined_json, msg_pos_json, gamestate, )
+				pathway.register_nav_tree(message_json["name"], initial_nav_tree);
 
+				nlohmann::json swap_vectors_command;
+				swap_vectors_command["name"] = "load_trigger";
+				swap_vectors_command["data"] = nlohmann::json::parse(R"({"name" : "swap_vectors"})");
+
+				initial_nav_tree->command_json.push_back(swap_vectors_command);
+
+				auto last_nav_tree = parse_json(message_json["data"], textbox_json, pathway, initial_nav_tree);
+
+				nlohmann::json load_trigger_command;
+				load_trigger_command["name"] = "load_trigger";
+				load_trigger_command["data"] = nlohmann::json::parse(R"({"name" : "clear_block_draw"})");
+
+				last_nav_tree->command_json.push_back(load_trigger_command);
+
+				pathway.add_next(message_json["name"]);
 			}
 		};
 	}

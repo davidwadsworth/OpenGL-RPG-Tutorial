@@ -3,5 +3,7 @@
 	"textarea" : "textarea",
 	"optionbox" : "optionbox",
 	"max_blocks" : 512,
-	"render_group" : 4.0
+	"render_group" : 4.0,
+	"nav" : "textbox",
+	"render_box" : "true" 
 }

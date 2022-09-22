@@ -31,8 +31,6 @@ namespace Component {
 				std::vector<Block> free_blocks_;
 				std::vector<Block>::iterator curr_block_;
 
-				std::unordered_map<std::string, std::vector<Block>> objects_;
-
 				Component::Renderer& renderer_;
 			public:
 
@@ -58,9 +56,6 @@ namespace Component {
 					curr_block_ = free_blocks_.end();
 					return r_blocks;
 				}
-
-				void add_obj(std::string id, std::vector<Block> blocks) { objects_[id] = blocks; }
-				std::vector<Block> get_obj(std::string id) { return objects_[id]; }
 
 				void add_render_group(std::vector<Block> blocks, Component::Material* material)
 				{

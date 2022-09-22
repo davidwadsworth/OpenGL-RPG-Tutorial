@@ -22,7 +22,7 @@ namespace Component {
 					INavigator* navigator;
 				};
 			private:
-				std::vector<std::unique_ptr<NavigatorTree>> created_navigators_;
+				std::vector<std::unique_ptr<NavigatorTree>> created_navigator_trees_;
 				std::vector<std::unique_ptr<ICommand>> created_commands_;
 				std::unordered_map<std::string, std::unique_ptr<INavigator>> nav_map_;
 				std::unordered_map<std::string, ICommand*> command_map_;
@@ -36,21 +36,35 @@ namespace Component {
 					add_loads(command_map_, created_commands_);
 				}
 
-				NavigatorTree* add_path(std::string name, nlohmann::json json, Entity* gamestate, std::vector<nlohmann::json> command_jsons)
+				void add_nav(std::string name, nlohmann::json json, Entity* gamestate )
 				{
-					INavigator* nav = nullptr;
-					if (nav_map_.find(name) != nav_map_.end())
-						nav = nav_map_[name].get();
-					else
+					if (nav_map_.find(name) == nav_map_.end())
 					{
-						nav = add_navigator(json, name, gamestate);
+						auto nav = add_navigator(json, name, gamestate);
 						nav_map_[name] = std::make_unique<INavigator>(nav);
 					}
+				}
+
+				NavigatorTree* add_nav_tree(std::string nav_name, std::vector<nlohmann::json> command_jsons = std::vector<nlohmann::json>())
+				{
+					INavigator* nav = nav_map_[nav_name].get();
 					
-					auto nav_tree = new NavigatorTree{ command_jsons, std::vector<NavigatorTree*>(), nav };
-					
+					auto nav_tree = new NavigatorTree{ command_jsons, std::vector<NavigatorTree*>()};
+					created_navigator_trees_.push_back(std::make_unique<NavigatorTree>(nav_tree));
+
 					return nav_tree;
 				}
+
+				void register_nav_tree(std::string name, NavigatorTree* tree)
+				{
+					nav_tree_map_[name] = tree;
+				}
+
+				void change_nav(std::string nav, NavigatorTree* tree)
+				{
+					tree->navigator = nav_map_[nav].get();
+				}
+
 
 				void add_command(std::string name, ICommand* command)
 				{
@@ -84,7 +98,7 @@ namespace Component {
 
 				void clear()
 				{
-					created_navigators_.clear();
+					created_navigator_trees_.clear();
 					while (!nav_queue_.empty()) nav_queue_.pop();
 					nav_map_.clear();
 				}

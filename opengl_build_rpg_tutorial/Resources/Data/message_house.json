@@ -1,10 +1,14 @@
 {
 	"textbox" : "textbox",
 	"data" : [{
-		"messages" : [
-			"It's a mess in here.", 
+		"name" : "lonely_father",
+		"data" : {
+				"name" : "messages",
+				"data" : [
+			"Please mind the mess.", 
 			"The government doesn't do enough for our school teachers, so why bother cleaning up after yourself."
-			],
+			]
+		},
 		"speech_box" : "true"
 		}]
 }

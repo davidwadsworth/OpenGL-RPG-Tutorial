@@ -386,11 +386,14 @@
     <ClInclude Include="command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="add_load.h">
+    <ClInclude Include="add_loads.h">
       <Filter>Helper</Filter>
     </ClInclude>
     <ClInclude Include="component_trigger_textbox.h">
       <Filter>EC\Component\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="load_trigger.h">
+      <Filter>Load</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

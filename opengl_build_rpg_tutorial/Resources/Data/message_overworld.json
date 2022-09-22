@@ -1,34 +1,60 @@
 {
 	"textbox" : "textbox",
 	"data" : [{
-			"messages" : [
-				"You are a big guy, I would estimate about 1.5 me would fit inside you. I'm small and have a lot of hate in my heart. Lets work together.", 
-				"Please write me a meal plan so that I might grow."
-				],
+			"name" : "smiley",
+			"data" : {
+				"name" : "messages",
+				"data" : [
+					"You are a big guy, I would estimate about 1.5 me would fit inside you. I'm small and have a lot of hate in my heart. Lets work together.", 
+					"Please write me a meal plan so that I might grow."
+				]
+			},
 			"speech_box" : "true"
 		},{
-			"messages" : [
-				"Hi there, welcome to the world!",
-				"Don't be scared. Fear is but one path towards death."
-				],
+			"name" : "beginning_sign_post",
+			"data" : {
+				"name" : "messages",
+				"data" : [
+					"Hi there, welcome to the world!",
+					"Don't be scared. Fear is but one path towards death."
+				]
+			},
+			
 			"speech_box" : "false"
 		},
 		{
-			"messages" : ["My father is lonely would you please give him a visit?"],
-			"optionbox" : {
-					"yes" : {
-						"messages": ["Great! Thank you, let me show you in."],
-						"data" : [{
-							"load": "switch_states",
-							"data":{
-								"next_state" : "house",
-								"return_pos" : {"x": 512.0, "y": 912.0 }
-							}}] 
-					},
-					"no" : {
-						"messages" : ["Darn, your company will be missed. Please take care of yourself."]
+			"name" : "worried_son",
+			"data" : {
+				"name" : "concurrent",
+				"data" : [{
+					"messages": "My father is lonely would you please give him a visit?"
+					}, 
+					{
+						"optionbox" : 
+						{
+							"options" : ["yes", "no"],
+							"data" : [{
+								"name" : "series",
+								"data" : [{
+										"name" : "messages",
+										"data" : ["Great! Thank you, let me show you in.", ""]
+									}, 
+									{
+										"name" : "switch_states",
+										"data":{
+											"next_state" : "house",
+											"return_pos" : {"x": 512.0, "y": 912.0 }
+										}		
+								}]
+							},
+							{
+								"name" : "messages",
+								"data" : ["Darn, your company will be missed. Please take care of yourself."]
+							}
+						]
 					}
-				},
+				}]
+			},
 			"speech_box" : "true"
 		}
 	]

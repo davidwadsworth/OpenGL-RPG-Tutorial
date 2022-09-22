@@ -5,5 +5,7 @@
 		"alignment": "left"
 	},
 	"padding" : 1.0,
-	"alignment": "horizontal",
+	"nav": "optionboxh",
+	"alignmenth" : 0.5,
+	"alignmentv" : 1.0
 }
