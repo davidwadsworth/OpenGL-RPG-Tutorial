@@ -6,6 +6,8 @@
 	},
 	"padding" : 1.0,
 	"nav": "optionboxh",
-	"alignmenth" : 0.5,
-	"alignmentv" : 1.0
+	"pos_x" : 0.5,
+	"pos_y" : 1.0,
+	"align_horizontal" : "center",
+	"align_vertical" : "center"
 }

@@ -10,11 +10,11 @@ namespace Component
 	class Cursor : public IComponent
 	{
 		std::vector<Component::Transform*> cursor_transforms_;
-		Rect cursor_dimension_;
+		float cursor_width_, cursor_height_;
 		float cursor_pos_;
 	public:
-		Cursor(Rect cursor_dimension)
-			: cursor_dimension_(cursor_dimension), cursor_pos_(0.0f)
+		Cursor(float cursor_width, float cursor_height)
+			: cursor_width_(cursor_width), cursor_height_(cursor_height), cursor_pos_(0.0f)
 		{}
 
 		void increment()
@@ -22,14 +22,16 @@ namespace Component
 			if (!cursor_transforms_.size())
 				Logger::error("cursor transforms not set up", Logger::HIGH);
 
-			cursor_transforms_[cursor_pos_]->set();
+			auto current_cursor = cursor_transforms_[static_cast<int>(cursor_pos_)];
+
+			current_cursor->set(current_cursor->x, current_cursor->y, 0.0f, 0.0f);
 
 			cursor_pos_ += Game::delta_time;
 
 			if (cursor_pos_ > cursor_transforms_.size() - 1)
 				cursor_pos_ = 0;
 			
-			cursor_transforms_[static_cast<int>(cursor_pos_)]->set(cursor_dimension_);
+			cursor_transforms_[static_cast<int>(cursor_pos_)]->set(current_cursor->x, current_cursor->y, cursor_width_, cursor_height_);
 		}
 
 		int get_cursor_size() { return static_cast<int>(cursor_transforms_.size()); }
@@ -39,14 +41,16 @@ namespace Component
 			if (!cursor_transforms_.size())
 				Logger::error("cursor transforms not set up", Logger::HIGH);
 
-			cursor_transforms_[cursor_pos_]->set();
+			auto current_cursor = cursor_transforms_[static_cast<int>(cursor_pos_)];
+
+			current_cursor->set(current_cursor->x, current_cursor->y, 0.0f, 0.0f);
 
 			cursor_pos_ -= Game::delta_time;
 
 			if (cursor_pos_ < 0)
 				cursor_pos_ = cursor_transforms_.size() - 1;
 
-			cursor_transforms_[static_cast<int>(cursor_pos_)]->set(cursor_dimension_);
+			cursor_transforms_[static_cast<int>(cursor_pos_)]->set(current_cursor->x, current_cursor->y, cursor_width_, cursor_height_);
 		}
 
 		int get_cursor_pos() { return cursor_pos_; }
