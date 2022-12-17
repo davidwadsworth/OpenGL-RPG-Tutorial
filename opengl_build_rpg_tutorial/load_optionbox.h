@@ -2,15 +2,15 @@
 #include "load.h"
 #include "component_system_render_blockdraw.h"
 #include "component_cursor.h"
+#include "component_template.h"
+#include "component_rect_bitmap_glyph.h"
 
 namespace Load
 {
 	class OptionBox : public ILoad
 	{
-
-		Rect rect_;
 		std::string font_name_, align_h_, align_v_, textbox_name_, nav_;
-		float font_sc_, render_group_, pos_x_, pos_y_;
+		float font_sc_, render_group_, option_pos_x_, option_pos_y_, outline_;
 		nlohmann::json cursor_json_;
 		std::vector<std::string> options_;
 		float padding_;
@@ -22,14 +22,19 @@ namespace Load
 			align_v_ = json["textbox"]["optionbox"]["align_vertical"];
 			int box_w = json["textbox"]["box"]["width"];
 			int box_h = json["textbox"]["box"]["height"];
-			float padding_x = json["textarea"]["textarea"]["msg_padding"]["x"];
-			float padding_y = json["textarea"]["textarea"]["msg_padding"]["y"];
+			float padding_x = json["textbox"]["textarea"]["msg_padding"]["x"];
+			float padding_y = json["textbox"]["textarea"]["msg_padding"]["y"];
 
-			pos_x_ = json["textbox"]["optionbox"]["pos_x"];
-			pos_y_ = json["textbox"]["optionbox"]["pos_y"];
+			float pos_x = json["load"]["transform"]["x"];
+			float pos_y = json["load"]["transform"]["y"];
 
-			pos_x_ = pos_x_ * box_w - padding_x;
-			pos_y_ = pos_y_ * box_h - padding_y;
+			outline_ = json["textbox"]["optionbox"]["outline"];
+
+			option_pos_x_ = json["textbox"]["optionbox"]["pos_x"];
+			option_pos_y_ = json["textbox"]["optionbox"]["pos_y"];
+
+			option_pos_x_ = option_pos_x_ * box_w + pos_x;
+			option_pos_y_ = option_pos_y_ * box_h + pos_y;
 
 			nav_ = json["textbox"]["optionbox"]["nav"];
 			cursor_json_ = json["textbox"]["optionbox"]["cursor"];
@@ -43,10 +48,10 @@ namespace Load
 		{
 			auto& csr_block_draw = *gamestate->get_child(textbox_name_)->get_component<Component::System::Render::BlockDraw>("render");
 			
-			auto char_count = 0;
-
-			for (auto option : options_)
-				char_count += option.size();
+			auto char_count = std::accumulate(options_.begin(), options_.end(), 0, [](std::size_t total, const std::string& option)
+				{
+					return total + option.size();
+				});
 
 			auto option_blocks = csr_block_draw.get_blocks(char_count);
 			auto cursor_blocks = csr_block_draw.get_blocks(options_.size());
@@ -81,16 +86,22 @@ namespace Load
 
 			auto e_glyphs = e_font->get_child("glyphs");
 			auto blocks_i = 0;
-			glm::vec2 current_pos(0);
+			auto line_i = 0;
+			auto cursor_i = 0;
+			glm::vec2 current_pos(option_pos_x_, option_pos_y_);
 			auto prev_char = 0;
 			auto line_h = e_font->get_component<Component::Integer>("line_h")->value;
 
 			auto space = line_h / 3.0f;
-
-			std::vector<Component::Transform*> vec_options_transforms;
-
+			
+			std::vector<std::vector<Component::Transform*>> vec_options_transforms;
+			vec_options_transforms.push_back(std::vector<Component::Transform*>());
+			std::vector<glm::vec3> option_lengths;
+			
 			for (auto option : options_)
 			{
+				auto x = current_pos.x;
+				auto y = current_pos.y;
 				for (auto curr_char : option)
 				{
 					if (curr_char == ' ')
@@ -119,35 +130,125 @@ namespace Load
 
 					prev_char = curr_char;
 
-					vec_options_transforms.push_back(c_cur_char_transform);
+					vec_options_transforms[line_i].push_back(c_cur_char_transform);
+				}
+
+				option_lengths.push_back(glm::vec3{ x, y, vec_options_transforms[line_i].back()->x + vec_options_transforms[line_i].back()->w - vec_options_transforms[line_i].front()->x });
+				vec_options_transforms[line_i].push_back(vec_cursor_transforms[cursor_i++]);
+
+				if (nav_ == "optionboxh")
+				{
+					current_pos.y += line_h + outline_ + padding_;
+					vec_options_transforms.push_back(std::vector<Component::Transform*>());
+					line_i++;
+				}
+				else
+					current_pos.x += line_h;
+			}
+			
+
+
+			auto text_length = 0.0f;
+			auto text_height = 0.0f;
+			auto max_length = line_h - padding_ * 2.0f;
+			auto cursor_scale = std::min(max_length / c_cursor_src->w, max_length / c_cursor_src->h);
+			auto cursor_w = c_cursor_src->w * cursor_scale;
+			auto cursor_h = c_cursor_src->h * cursor_scale;
+
+			auto i = 0;
+			for (auto cursor : cursor_blocks)
+			{
+				auto option_dimension = option_lengths[i];
+				if (cursor_json_["alignment"] == "right")
+				{
+					cursor.transform->x = cursor_w < max_length ? option_dimension.x + option_dimension.z + padding_ + (max_length - cursor_w) / 2.0f
+						: option_dimension.x + option_dimension.z + padding_;
+					cursor.transform->y = cursor_h < max_length ? option_dimension.y : option_dimension.y + (max_length - cursor_h) / 2.0f;
+					cursor.transform->w = cursor_w;
+					cursor.transform->h = cursor_h;
+				}
+				else if (cursor_json_["alignment"] == "left")
+				{
+					cursor.transform->x = cursor_w < max_length ? option_dimension.x - padding_ - (max_length - cursor_w) / 2.0f
+						: option_dimension.x - padding_;
+					cursor.transform->y = cursor_h < max_length ? option_dimension.y : option_dimension.y + (max_length - cursor_h) / 2.0f;
+					cursor.transform->w = cursor_w;
+					cursor.transform->h = cursor_h;
+				}
+				else if (cursor_json_["alignment"] == "bottom")
+				{
+					cursor.transform->x = option_dimension.x - padding_;
+					cursor.transform->y = cursor_h + line_h + padding_;
+					cursor.transform->w = option_dimension.z;
+					cursor.transform->h = outline_; 
+				}
+				else if (cursor_json_["alignment"] == "top")
+				{
+					cursor.transform->x = option_dimension.x;
+					cursor.transform->y = option_dimension.y - padding_;
+					cursor.transform->w = option_dimension.z;
+					cursor.transform->h = outline_;
+				}
+				else if (cursor_json_["alignment"] == "encapsulate")
+				{
+					cursor.transform->x = option_dimension.x - padding_;
+					cursor.transform->y = option_dimension.y - padding_;
+					cursor.transform->w = option_dimension.z + padding_ * 2.0f;
+					cursor.transform->h = line_h + padding_ * 2.0f;
+				}
+				else
+				{
+					Logger::error("invalid cursor alignment", Logger::SEVERITY::HIGH);
 				}
 			}
 			
-			// can I shorten this? TODO
-			if (cursor_json_["alignment"] == "right")
+			// TODO
+			// alignment for optionbox around pos x and y if text is out of bounds of the box after alignment then it 
+			// is corrected by the box padding and line_h so that stay in bounds
+			// need to line the text to a point and if any of the text lie out of bounds correct by box padding
+
+			auto x_offset = std::vector<float>(vec_options_transforms.size(), 0.0f); // align left
+			auto y_offset = 0.0f; // align top
+
+			for (auto i = 0; i < vec_options_transforms.size(); ++i)
 			{
-				// TODO
-			} 
-			else if (cursor_json_["alignment"] == "left")
-			{
-				// TODO
+				auto line_segment = option_pos_x_ - (((*(vec_options_transforms[i].end() - 1))->x + (*(vec_options_transforms[i].end() - 1))->w) - (*vec_options_transforms[i].begin())->x);
+
+				if (align_h_ == "middle")
+					x_offset[i] = line_segment / 2.0f;
+				else if (align_h_ == "right")
+					x_offset[i] = line_segment;
 			}
-			else if (cursor_json_["alignment"] == "bottom")
-			{
-				// TODO
-			}
-			else if (cursor_json_["alignment"] == "top")
-			{
-				// TODO
-			}
-			else if (cursor_json_["alignment"] == "encapsulate")
-			{
-				// TODO
-			}
-			else
-			{
-				Logger::error("invalid cursor alignment", Logger::SEVERITY::HIGH);
-			}
+
+			auto y_lowest = FLT_MAX;
+			auto y_highest = -FLT_MAX;
+
+			for (auto transform : *vec_options_transforms.begin())
+				if (transform->y < y_lowest)
+					y_lowest = transform->y;
+
+			for (auto transform : *(vec_options_transforms.end() - 1))
+				if (transform->y + transform->h > y_highest)
+					y_highest = transform->y + transform->h;
+
+			if (y_lowest == FLT_MAX)
+				y_lowest = option_pos_y_;
+			if (y_highest == -FLT_MAX)
+				y_highest = option_pos_y_;
+
+			if (align_v_ == "middle")
+				y_offset = (option_pos_y_ - (y_highest - y_lowest)) / 2.0f;
+			else if (align_v_ == "bottom")
+				y_offset = (option_pos_y_ - (y_highest - y_lowest));
+
+			std::vector < Component::Transform* > transform_vec;
+			for (auto i = 0; i < vec_options_transforms.size(); ++i)
+				for (auto transform : vec_options_transforms[i])
+				{
+					transform->x += x_offset[i];
+					transform->y += y_offset;
+					transform_vec.push_back(transform);
+				}
 		}
 	};
 }

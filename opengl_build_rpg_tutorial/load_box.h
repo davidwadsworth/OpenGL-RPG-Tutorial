@@ -2,6 +2,7 @@
 #include "load.h"
 #include "component_rect.h"
 #include "component_system_render_blockdraw.h"
+#include "game.h"
 
 namespace Load
 {
@@ -16,31 +17,31 @@ namespace Load
 
 		void load(nlohmann::json json)
 		{
-			float item_x = json["rect"]["x"];
-			float item_y = json["rect"]["y"];
-			float item_w = json["rect"]["w"];
-			float offset_y = json["box"]["offset"];
+			float item_x = json["load"]["rect"]["x"];
+			float item_y = json["load"]["rect"]["y"];
+			float item_w = json["load"]["rect"]["w"];
+			float offset_y = json["load"]["box"]["offset"];
 
-			auto scale = json["box"]["scale"];
+			auto scale = json["textbox"]["box"]["scale"];
 
-			box_h_ = json["box"]["height"];
-			box_w_ = json["box"]["width"];
+			box_h_ = json["textbox"]["box"]["height"];
+			box_w_ = json["textbox"]["box"]["width"];
 
 			box_h_ *= scale;
 			box_w_ *= scale;
 
-			corner_size_ = json["box"]["corner_size"];
+			corner_size_ = json["textbox"]["box"]["corner_size"];
 			corner_size_ *= scale;
 
-			spritesheet_name_ = json["box"]["texture"];
+			spritesheet_name_ = json["textbox"]["box"]["texture"];
 
-			texture_ids_ = json["box"]["textures"].get<std::vector<std::string>>();
+			texture_ids_ = json["textbox"]["box"]["texture_ids"].get<std::vector<std::string>>();
 
 			auto offset_x = item_w / 2.0f - corner_size_ * 2.0f;
 			box_x_ = item_x + offset_x;
 			box_y_ = item_y + offset_y - box_h_;
-			is_speech_arrow_ = json["message"]["speech_box"] == "true";
-			textbox_name_ = json["textbox"];
+			is_speech_arrow_ = json["load"]["speech_box"] == "true";
+			textbox_name_ = json["textbox"]["name"];
 		}
 
 		void execute(Entity* gamestate) override

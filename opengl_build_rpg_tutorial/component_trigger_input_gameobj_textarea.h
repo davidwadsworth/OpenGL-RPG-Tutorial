@@ -15,7 +15,21 @@
 #include "game.h"
 
 /*
-Display text on screen defined to an area using common text writing rules and 
+Display text on screen defined to an area using common text writing rules
+json string to create a textarea.
+
+{
+	"rect" : {"x" : ..., "y" : ..., "w" : ..., "h" : ...}, // the sizing and position of the textarea
+	"message" : "...",
+	"font" : "...", // name of the font used by the gamestate
+	"font_scale" : ...,
+	"align_horizontal" : 0.0 -> 1.0 // text alignment horizonal
+	"align_vertical" : 0.0 -> 1.0 // text alignment vertical
+	"line_spacing" : ... // the spacing value * line_h which is defined by the font
+	"msg_padding" : {"x" : ..., "y" : ...}, // padding for the text on the top bottom and sides 
+	"render_group" : ... // where in renderer is it drawn to
+	"update_group" : ... // where in the update group is it updated
+}
  
 @author David Wadsworth
 */
@@ -38,6 +52,8 @@ namespace Component {
 						float y = textarea_json["rect"]["y"];
 						float w = textarea_json["rect"]["w"];
 						float h = textarea_json["rect"]["h"];
+
+
 						std::string msg = textarea_json["message"];
 						std::string font_name = textarea_json["font"];
 						float font_sc = textarea_json["font_scale"];

@@ -14,10 +14,10 @@ namespace Load
 
 		void load(nlohmann::json json)
 		{
-			float x = json["return_pos"]["x"];
-			float y = json["return_pos"]["y"];
+			float x = json["load"]["data"]["return_pos"]["x"];
+			float y = json["load"]["data"]["return_pos"]["y"];
 			return_pos_ = glm::vec2(x, y);
-			next_state_ = json["next_state"];
+			next_state_ = json["load"]["data"]["next_state"];
 		}
 
 		void execute(Entity* gamestate) override

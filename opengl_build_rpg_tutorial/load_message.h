@@ -19,17 +19,17 @@ namespace Load
 
 		void load(nlohmann::json json) override
 		{
-			float item_x = json["rect"]["x"];
-			float item_y = json["rect"]["y"];
-			float item_w = json["rect"]["w"];
+			float item_x = json["load"]["transform"]["x"];
+			float item_y = json["load"]["transform"]["y"];
+			float item_w = json["load"]["transform"]["w"];
 
-			float box_corner_size = json["box"]["corner_size"];
-			float box_scale = json["box"]["scale"];
-			int box_width = json["box"]["width"];
-			int box_height = json["box"]["height"];
-			float offset_y = json["box"]["offset"];
-			float msg_padding_x = json["textarea"]["msg_padding"]["x"];
-			float msg_padding_y = json["textarea"]["msg_padding"]["y"];
+			float box_corner_size = json["textbox"]["box"]["corner_size"];
+			float box_scale = json["textbox"]["box"]["scale"];
+			int box_width = json["textbox"]["box"]["width"];
+			int box_height = json["textbox"]["box"]["height"];
+			float offset_y = json["textbox"]["box"]["offset"];
+			float msg_padding_x = json["textbox"]["textarea"]["msg_padding"]["x"];
+			float msg_padding_y = json["textbox"]["textarea"]["msg_padding"]["y"];
 
 			auto scaled_corner = box_corner_size * box_scale;
 
@@ -39,13 +39,13 @@ namespace Load
 			rect_.y = item_y + offset_y - box_height + scaled_corner * 0.7f + msg_padding_y;
 			rect_.w = box_width - scaled_corner * 1.4f - 2.0f * msg_padding_x;
 			rect_.h = box_height - scaled_corner* 1.4f - 2.0f * msg_padding_y;
-			font_name_ = json["textarea"]["font"];
-			font_sc_ = json["textarea"]["font_scale"];
-			align_h_ = json["textarea"]["align_horizontal"];
-			align_v_ = json["textarea"]["align_vertical"];
-			line_spacing_ = json["textarea"]["line_spacing"];
-			message_ = json["message"];
-			textbox_name_ = json["textbox"];
+			font_name_ = json["textbox"]["textarea"]["font"];
+			font_sc_ = json["textbox"]["textarea"]["font_scale"];
+			align_h_ = json["textbox"]["textarea"]["align_horizontal"];
+			align_v_ = json["textbox"]["textarea"]["align_vertical"];
+			line_spacing_ = json["textbox"]["textarea"]["line_spacing"];
+			message_ = json["load"]["data"];
+			textbox_name_ = json["textbox"]["name"];
 		}
 
 		void execute(Entity* gamestate) override

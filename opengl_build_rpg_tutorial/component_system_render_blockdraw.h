@@ -57,7 +57,7 @@ namespace Component {
 					return r_blocks;
 				}
 
-				void add_render_group(std::vector<Block> blocks, Component::Material* material)
+				void add_render_group(std::vector<Block>& blocks, Component::Material* material)
 				{
 					for (auto& rg : render_groups_)	
 						if (rg.material->id == material->id)

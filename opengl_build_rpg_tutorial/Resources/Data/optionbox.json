@@ -4,7 +4,8 @@
 		"id" : "cursor",
 		"alignment": "left"
 	},
-	"padding" : 1.0,
+	"outline" : 2.0,
+	"padding" : 0.5,
 	"nav": "optionboxh",
 	"pos_x" : 0.5,
 	"pos_y" : 1.0,
