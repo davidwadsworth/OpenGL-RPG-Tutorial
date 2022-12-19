@@ -22,6 +22,18 @@ namespace Component {
 					INavigator* navigator;
 				};
 			private:
+				void recursive_find_and_add_end(NavigatorTree* tree, std::vector<nlohmann::json> end_commands)
+				{
+					if (!tree->children.size())
+					{
+						tree->command_json.insert(tree->command_json.end(), end_commands.begin(), end_commands.begin());
+						return;
+					}
+
+					for (auto child : tree->children)
+						recursive_find_and_add_end(child, end_commands);
+				}
+
 				std::vector<std::unique_ptr<NavigatorTree>> created_navigator_trees_;
 				std::vector<std::unique_ptr<ICommand>> created_commands_;
 				std::unordered_map<std::string, std::unique_ptr<INavigator>> nav_map_;
@@ -65,6 +77,11 @@ namespace Component {
 					tree->navigator = nav_map_[nav].get();
 				}
 
+				void add_end_commands(std::string tree_name, std::vector<nlohmann::json> end_commands)
+				{
+					auto nav_tree = nav_tree_map_[tree_name];
+					recursive_find_and_add_end(nav_tree, end_commands);
+				}
 
 				void add_command(std::string name, ICommand* command)
 				{

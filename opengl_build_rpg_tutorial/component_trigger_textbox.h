@@ -13,27 +13,31 @@
 #include "game.h"
 
 /*
-message json
-
-rect : [1, 1, 1, 1],
-textarea : {...},
-box : {...}
-message : ""
-
-has box should be in the textbox json file not if it has a box or not.
-
-box json
-
-rect : [...],
-speech_box : "",
-textbox : "",
-box : {}
-
-TODO finish optionbox before finishing this.
-
+json
+{
+	"load" : {
+		"transform" : [...],
+		"data" : {
+			"name" : "..."
+			"data" : {}? []? ""? // this changes based on load is used
+			"speech_box" : "True? False?"
+			}
+		},
+	"textbox" : {
+		"box" : {...},
+		"textarea" : {...},
+		"optionbox" : {...},
+		"max_blocks" : 512,
+		"render_group" : 4.0,
+		"nav" : "textbox",
+		"render_box" : "true"
+	}
+}
 
 @author David Wadsworth
 */
+
+constexpr auto SCREEN_PADDING = 5.0f;
 
 namespace Component {
 	namespace Trigger
@@ -41,48 +45,36 @@ namespace Component {
 		class TextBox : public Component::ITrigger
 		{
 			nlohmann::json json_;
+			Component::Transform* transform_;
 		
-
-			Component::System::Update::Pathway::NavigatorTree* parse_json(nlohmann::json data_json,
-				nlohmann::json textbox_json, Component::System::Update::Pathway& pathway, Component::System::Update::Pathway::NavigatorTree* last_tree)
+			Component::System::Update::Pathway::NavigatorTree* parse_json(nlohmann::json json, Component::System::Update::Pathway& pathway, 
+				Component::System::Update::Pathway::NavigatorTree* last_tree)
 			{
-				if (data_json["name"] == "messages")
+				auto json_copy = json;
+
+				if (json["load"]["name"] == "messages")
 				{
 					std::vector<Component::System::Update::Pathway::NavigatorTree*> nav_tree_vec;
 
-					if (textbox_json.find("box") != textbox_json.end())
-					{
-						nlohmann::json box_command;
-						box_command["name"] = textbox_json["box"];
-						box_command["load"] = textbox_json; // this needs to be re thought because just the box data isn't enough
-						last_tree->command_json.push_back(box_command);
-					}
+					if (json["textbox"].find("box") != json["textbox"].end())
+						last_tree->command_json.push_back(json_copy);
 
-					nlohmann::json message_command;
-					message_command["name"] = data_json["name"];
-					message_command["load"] = data_json["data"][0];
+					json_copy["load"]["data"] = json["load"]["data"][0];
 
-					last_tree->command_json.push_back(message_command);
+					last_tree->command_json.push_back(json_copy);
 
 					nav_tree_vec.push_back(last_tree);
 
-					for (auto i = 1; i < data_json["data"].size(); ++i)
+					for (auto i = 1; i < json["load"]["data"].size(); ++i)
 					{
-						auto navigator_tree = pathway.add_nav_tree(textbox_json["nav"]);
+						auto navigator_tree = pathway.add_nav_tree(json["textbox"]["nav"]);
 
-						if (textbox_json.find("box") != textbox_json.end())
-						{
-							nlohmann::json box_command;
-							box_command["name"] = textbox_json["box"];
-							box_command["load"] = textbox_json["box_data"];
-							navigator_tree->command_json.push_back(box_command);
-						}
+						if (json["textbox"].find("box") != json["textbox"].end())
+							navigator_tree->command_json.push_back(json);
 
-						nlohmann::json message_command;
-						message_command["name"] = data_json["name"];
-						message_command["load"] = data_json["data"][i];
+						json_copy["load"]["data"] = json["load"]["data"][i];
 
-						navigator_tree->command_json.push_back(message_command);
+						navigator_tree->command_json.push_back(json_copy);
 						nav_tree_vec.push_back(navigator_tree);
 					}
 
@@ -91,49 +83,54 @@ namespace Component {
 
 					return nav_tree_vec.back();
 				}
-				else if (data_json["name"] == "option_box")
+				else if (json["load"]["name"] == "option_box")
 				{
-					if (data_json.find("nav") != data_json.end())
-						pathway.change_nav(data_json["nav"], last_tree);
+					if (json["load"]["data"].find("nav") != json["load"]["data"].end())
+						pathway.change_nav(json["load"]["data"]["nav"], last_tree);
 
-					nlohmann::json option_box_command;
-					option_box_command["name"] = "option_box";
-					option_box_command["data"] = data_json["options"];
 
-					last_tree->command_json.push_back(option_box_command);
+					last_tree->command_json.push_back(json_copy);
 
-					for (auto option : data_json["data"])
+					for (auto option : json["load"]["data"])
 					{
-						auto option_nav_tree = pathway.add_nav_tree(textbox_json["nav"]);
-						parse_json(option, textbox_json, pathway, option_nav_tree);
-						last_tree->children.push_back(option_nav_tree);
-					}
+						auto option_nav_tree = pathway.add_nav_tree(json["textbox"]["nav"]);
 
-					return last_tree;
-				}
-				else if (data_json["name"] == "series")
-				{
-					for (auto data : data_json["data"])
-					{
-						auto option_nav_tree = pathway.add_nav_tree(textbox_json["nav"]);
-						parse_json(data, textbox_json, pathway, option_nav_tree);
+						json_copy["load"]["data"] = option["data"];
+						json_copy["load"]["name"] = option["name"];
+
+						parse_json(json_copy, pathway, option_nav_tree);
 						last_tree->children.push_back(option_nav_tree);
 					}
 				}
-				else if (data_json["name"] == "concurrent")
+				else if (json["load"]["name"] == "series")
 				{
-					for (auto data : data_json["data"])
-						parse_json(data, textbox_json, pathway, last_tree);
+					Component::System::Update::Pathway::NavigatorTree* option_nav_tree;
+					for (auto data : json["load"]["data"])
+					{
+						option_nav_tree = pathway.add_nav_tree(json["textbox"]["nav"]);
+						json_copy["load"]["name"] = data["name"];
+						json_copy["load"]["data"] = data["data"];
+						
+						parse_json(json_copy, pathway, option_nav_tree);
+						last_tree->children.push_back(option_nav_tree);
+					}
+					return option_nav_tree;
+				}
+				else if (json["load"]["name"] == "concurrent")
+				{
+					for (auto data : json["load"]["data"])
+					{
+						json_copy["load"]["name"] = data["name"];
+						json_copy["load"]["data"] = data["data"];
+  
+						parse_json(json_copy, pathway, last_tree);
+					}
 				}
 				else
 				{
-					nlohmann::json command;
-					command["name"] = data_json["name"];
-					command["load"] = data_json["data"];
-
-					last_tree->command_json.push_back(command);
-					return last_tree;
+					last_tree->command_json.push_back(json_copy);
 				}
+				return last_tree;
 			}
 		
 		public:
@@ -153,13 +150,24 @@ namespace Component {
 				auto textbox_json = Game::global->get_child("index")->get_component<Component::Json>(textbox_name)->json;
 
 				nlohmann::json combined_json;
-				textbox_json["textbox"] = textbox_name;
+				combined_json["textbox"] = textbox_json;
+				combined_json["textbox"]["name"] = textbox_name;
 
 				auto& cam_position = *gamestate->get_child("camera")->get_component<Component::Position>();
 
-				combined_json["rect"] = json_["rect"];
-				combined_json["rect"]["x"] = combined_json["rect"]["x"].get<float>() - cam_position.x;  
-				combined_json["rect"]["y"] = combined_json["rect"]["y"].get<float>() - cam_position.y;
+				combined_json["load"]["rect"] = json_["rect"];
+				// need to change this to be in bounds of the camera
+				auto rect_x = combined_json["load"]["rect"]["x"] = combined_json["rect"]["x"].get<float>() - cam_position.x;
+				auto rect_y = combined_json["load"]["rect"]["y"] = combined_json["rect"]["y"].get<float>() - cam_position.y;
+				auto rect_w = combined_json["rect"]["w"].get<float>();
+				auto rect_h = combined_json["rect"]["h"].get<float>();
+				auto x_diff = rect_x + rect_w - (cam_position.x + Game::width / 2.0f - SCREEN_PADDING);
+				if (x_diff > 0)
+					combined_json["rect"]["x"] = rect_x - x_diff;
+
+				auto y_diff = rect_y + rect_h - (cam_position.y + Game::height / 2.0f - SCREEN_PADDING);
+				if (y_diff > 0)
+					combined_json["rect"]["y"] = rect_y - y_diff;
 
 				combined_json["textbox"] = textbox_name;
 				combined_json["message"] = msg_pos_json;
@@ -185,13 +193,13 @@ namespace Component {
 
 				initial_nav_tree->command_json.push_back(swap_vectors_command);
 
-				auto last_nav_tree = parse_json(message_json["data"], textbox_json, pathway, initial_nav_tree);
+				parse_json(combined_json, pathway, initial_nav_tree);
 
 				nlohmann::json load_trigger_command;
 				load_trigger_command["name"] = "load_trigger";
 				load_trigger_command["data"] = nlohmann::json::parse(R"({"name" : "clear_block_draw"})");
 
-				last_nav_tree->command_json.push_back(load_trigger_command);
+				pathway.add_end_commands(message_json["name"], std::vector<nlohmann::json>{swap_vectors_command, load_trigger_command});
 
 				pathway.add_next(message_json["name"]);
 			}

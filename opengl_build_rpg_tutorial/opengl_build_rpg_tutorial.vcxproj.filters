@@ -64,6 +64,9 @@
     <Filter Include="Load">
       <UniqueIdentifier>{c48ce152-5e49-4dab-9806-09716ddea374}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Load\textbox">
+      <UniqueIdentifier>{366462d2-7ab3-456f-a120-6170303460a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -371,15 +374,6 @@
     <ClInclude Include="load.h">
       <Filter>Load</Filter>
     </ClInclude>
-    <ClInclude Include="load_box.h">
-      <Filter>Load</Filter>
-    </ClInclude>
-    <ClInclude Include="load_message.h">
-      <Filter>Load</Filter>
-    </ClInclude>
-    <ClInclude Include="load_optionbox.h">
-      <Filter>Load</Filter>
-    </ClInclude>
     <ClInclude Include="load_switchstate.h">
       <Filter>Load</Filter>
     </ClInclude>
@@ -392,8 +386,17 @@
     <ClInclude Include="component_trigger_textbox.h">
       <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
+    <ClInclude Include="load_optionbox.h">
+      <Filter>Load\textbox</Filter>
+    </ClInclude>
+    <ClInclude Include="load_message.h">
+      <Filter>Load\textbox</Filter>
+    </ClInclude>
+    <ClInclude Include="load_box.h">
+      <Filter>Load\textbox</Filter>
+    </ClInclude>
     <ClInclude Include="load_trigger.h">
-      <Filter>Load</Filter>
+      <Filter>Load\textbox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
