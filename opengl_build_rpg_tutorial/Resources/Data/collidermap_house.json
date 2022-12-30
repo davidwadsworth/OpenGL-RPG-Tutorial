@@ -17,9 +17,10 @@
 			},
 			"action" : {
 				"data" : [{ 
-					"load": "textbox", 
+					"name": "textbox", 
 					"data" : {
-						"message": {"filename" : "message_house", "pos" : 0}
+						"filename" : "message_house",
+						"pos" : 0
 					}
 				}]
 			},
@@ -42,8 +43,9 @@
 			},
 			"action" : {
 				"data" : [{ 
-					"load": "switch_state", 
+					"name": "switch_state", 
 					"data" : {
+						"path" : ["pause"],
 						"next_state" : "overworld",
 						"return_pos" : {"x": 512.0, "y": 944.0 }
 					}

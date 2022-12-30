@@ -12,38 +12,40 @@ Loads and stores Shader information for use in
 
 namespace Component {
 	namespace Trigger {
-		namespace Input
+		class Shader : public ILoad
 		{
-			class Shader : public Component::Trigger::IInput
+			nlohmann::json shader_json_;
+			std::string name_;
+		public:
+
+			void load(nlohmann::json json) override final
 			{
-			public:
-				using Component::Trigger::IInput::IInput;
+				shader_json_ = json["load"];
+				name_ = json["name"];
+			}
 
-			private:
-				void create(Entity* gamestate) override final
+			void execute(Entity* gamestate) override final
+			{
+				auto e_shader = gamestate->add_id_child(name_);
+
+				auto projection = glm::ortho(0.0f, (GLfloat)Game::width, (GLfloat)Game::height, 0.0f, -1.0f, 1.0f);
+
+				// load in used shaders
+				for (auto& shader : shader_json_)
 				{
-					auto& shader_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
+					std::string shader_name = shader["name"];
+					auto& c_shader = *e_shader->add_id_component<Component::Shader>(shader_name);
+					std::string vs_file_name = shader["vs"];
+					vs_file_name = "Resources/Shaders/" + vs_file_name;
+					std::string fs_file_name = shader["fs"];
+					fs_file_name = "Resources/Shaders/" + fs_file_name;
+					c_shader.load(vs_file_name.c_str(), fs_file_name.c_str());
 
-					auto projection = glm::ortho(0.0f, (GLfloat)Game::width, (GLfloat)Game::height, 0.0f, -1.0f, 1.0f);
-
-					// load in used shaders
-					for (auto& shader : shader_json)
-					{
-						std::string shader_name = shader["name"];
-						auto& c_shader = *entity_->add_id_component<Component::Shader>(shader_name);
-						std::string vs_file_name = shader["vs"];
-						vs_file_name = "Resources/Shaders/" + vs_file_name;
-						std::string fs_file_name = shader["fs"];
-						fs_file_name = "Resources/Shaders/" + fs_file_name;
-						c_shader.load(vs_file_name.c_str(), fs_file_name.c_str());
-
-						// set up orthographic projection
-						c_shader.use();
-						c_shader.set_mat4("projection", projection);
-					}
+					// set up orthographic projection
+					c_shader.use();
+					c_shader.set_mat4("projection", projection);
 				}
-			};
-		}
-		
+			}
+		};
 	}
 }

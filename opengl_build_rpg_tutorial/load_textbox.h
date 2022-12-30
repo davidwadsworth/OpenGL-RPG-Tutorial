@@ -42,7 +42,7 @@ constexpr auto SCREEN_PADDING = 5.0f;
 namespace Component {
 	namespace Trigger
 	{
-		class TextBox : public Component::ITrigger
+		class TextBox
 		{
 			nlohmann::json json_;
 			Component::Transform* transform_;
@@ -138,6 +138,9 @@ namespace Component {
 			TextBox(nlohmann::json json)
 				: json_(json)
 			{}
+
+
+
 
 			void execute(Entity* gamestate) override
 			{

@@ -1,5 +1,4 @@
 #pragma once
-#include "component_trigger.h"
 
 
 class INavigator

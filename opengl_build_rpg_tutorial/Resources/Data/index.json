@@ -1,13 +1,4 @@
-{
-	"font" : "Resources/Data/font_gilsans.json",
-	"textbox" : "Resources/Data/textbox.json",
-	"shader" : "Resources/Data/shader.json",
-	"player" : "Resources/Data/player.json",
-	"controller" : "Resources/Data/controller_keyboard.json",
-	"collider" : "Resources/Data/collider.json",
-	"quadtree" : "Resources/Data/quadtree.json",
-	"box" : "Resources/Data/box.json",
-	"textarea" : "Resources/Data/textarea.json",
-	"renderer" : "Resources/Data/renderer.json",
-	"empty": "Resources/Data/empty.json"
-}
+[
+	"index_overworld.json",
+	"index_house.json"
+]

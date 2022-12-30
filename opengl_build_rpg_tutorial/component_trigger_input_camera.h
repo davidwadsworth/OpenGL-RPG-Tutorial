@@ -1,5 +1,5 @@
 #pragma once
-#include "component_trigger_input.h"
+#include "load.h"
 #include "component_position.h"
 
 /*
@@ -7,20 +7,22 @@ Creates our local camera using width and height
 
 @author David Wadsworth
 */
-
-namespace Component {
-	namespace Trigger {
-		namespace Input 
+namespace Command {
+	namespace Load {
+		class Camera : public ILoad
 		{
-			class Camera : public Component::Trigger::IInput
+			std::string name;
+		public:
+
+			void load(nlohmann::json json) override final
 			{
-				void create(Entity* gamestate) override final
-				{
-					entity_->add_component<Component::Position>(0.0f, 0.0f);
-				}
-			public:
-				using Component::Trigger::IInput::IInput;
-			};
-		}
+				name = json["name"];
+			}
+
+			void execute(Entity* gamestate) override final
+			{
+				gamestate->add_id_child(name)->add_component<Component::Position>(0.0f, 0.0f);
+			}
+		};
 	}
 }

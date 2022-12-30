@@ -21,24 +21,12 @@
     <Filter Include="EC\Component\Controller">
       <UniqueIdentifier>{7785d3a9-fb05-49f3-84b0-6ee5774cd4ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EC\Component\Trigger">
-      <UniqueIdentifier>{a080096e-ac5f-4b4f-a70d-723d5eb62022}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Trigger\Input">
-      <UniqueIdentifier>{2f1fc7ba-149b-4e8e-b2a0-62fcb82612ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EC\Component\Material">
       <UniqueIdentifier>{a9f8956d-e85e-4ace-b9b8-c7b16ecb628e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Trigger\Input\GameState">
-      <UniqueIdentifier>{9fb5bef0-c526-4b9e-9db6-515c6f2c5c21}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="EC\Component\Trigger\Input\GameObject">
-      <UniqueIdentifier>{52f76306-7a6f-4dba-96f8-aab124b9a5f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="EC\Component\System\Render">
       <UniqueIdentifier>{b28cdf7b-d0aa-4a5c-b4be-79e317e913c2}</UniqueIdentifier>
@@ -61,11 +49,23 @@
     <Filter Include="Navigator">
       <UniqueIdentifier>{a1dea827-00db-4956-be6f-2c5ad10d3d39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Load">
+    <Filter Include="Commands">
       <UniqueIdentifier>{c48ce152-5e49-4dab-9806-09716ddea374}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Load\textbox">
+    <Filter Include="Commands\Load">
+      <UniqueIdentifier>{8c9fd0b2-59d3-4c17-9f29-af2dd23bcf56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Load\GameObject">
+      <UniqueIdentifier>{52f76306-7a6f-4dba-96f8-aab124b9a5f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Load\GameState">
+      <UniqueIdentifier>{9fb5bef0-c526-4b9e-9db6-515c6f2c5c21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Load\TextBox">
       <UniqueIdentifier>{366462d2-7ab3-456f-a120-6170303460a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Load\DataObjects">
+      <UniqueIdentifier>{7ec258bd-3624-4d15-83fe-bdf1a6120673}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -164,32 +164,11 @@
     <ClInclude Include="component_vector.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_camera.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_shader.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_texture.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
     <ClInclude Include="component_trigger_input_gamestate_overworld.h">
-      <Filter>EC\Component\Trigger\Input\GameState</Filter>
+      <Filter>Commands\Load\GameState</Filter>
     </ClInclude>
     <ClInclude Include="json.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_tileset.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_quadtree.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="logger.h">
       <Filter>Header Files</Filter>
@@ -212,9 +191,6 @@
     <ClInclude Include="component_system_update_checkcollision.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_font.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
     <ClInclude Include="component_material.h">
       <Filter>EC\Component\Material</Filter>
     </ClInclude>
@@ -230,26 +206,23 @@
     <ClInclude Include="component_template.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_collidermap.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
+    <ClInclude Include="component_trigger_input_collidermap.h">
+      <Filter>Commands\Load\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_textarea.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
+    <ClInclude Include="component_trigger_input_textarea.h">
+      <Filter>Commands\Load\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_player.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
+    <ClInclude Include="component_trigger_input_player.h">
+      <Filter>Commands\Load\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_tilemap.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
+    <ClInclude Include="component_trigger_input_tilemap.h">
+      <Filter>Commands\Load\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_text.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
+    <ClInclude Include="component_trigger_input_text.h">
+      <Filter>Commands\Load\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gameobj_box.h">
-      <Filter>EC\Component\Trigger\Input\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_gamestate.h">
-      <Filter>EC\Component\Trigger\Input\GameState</Filter>
+    <ClInclude Include="component_trigger_input_box.h">
+      <Filter>Commands\Load\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="sort.h">
       <Filter>Header Files</Filter>
@@ -260,14 +233,8 @@
     <ClInclude Include="tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_index.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
     <ClInclude Include="component_json.h">
       <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_spritesheet.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_system_render_offset.h">
       <Filter>EC\Component\System\Render</Filter>
@@ -296,14 +263,8 @@
     <ClInclude Include="component_texunit.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_swapvectors.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
     <ClInclude Include="add_component_rect.h">
       <Filter>Helper</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_loadcache.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
     </ClInclude>
     <ClInclude Include="component_system_render_bulkdraw.h">
       <Filter>EC\Component\System\Render</Filter>
@@ -338,14 +299,8 @@
     <ClInclude Include="aabb.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gamestate_house.h">
-      <Filter>EC\Component\Trigger\Input\GameState</Filter>
-    </ClInclude>
     <ClInclude Include="component_system_update_checkactioncollision.h">
       <Filter>EC\Component\System\Update</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_clearblockdraw.h">
-      <Filter>EC\Component\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="component_system_update_pathway.h">
       <Filter>EC\Component\System\Update</Filter>
@@ -368,35 +323,68 @@
     <ClInclude Include="add_navigator.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_textbox.h">
-      <Filter>EC\Component\Trigger\Input</Filter>
-    </ClInclude>
     <ClInclude Include="load.h">
-      <Filter>Load</Filter>
+      <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="load_switchstate.h">
-      <Filter>Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command.h">
-      <Filter>Header Files</Filter>
+      <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="add_loads.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_textbox.h">
-      <Filter>EC\Component\Trigger</Filter>
-    </ClInclude>
     <ClInclude Include="load_optionbox.h">
-      <Filter>Load\textbox</Filter>
+      <Filter>Commands\Load\TextBox</Filter>
     </ClInclude>
     <ClInclude Include="load_message.h">
-      <Filter>Load\textbox</Filter>
+      <Filter>Commands\Load\TextBox</Filter>
     </ClInclude>
     <ClInclude Include="load_box.h">
-      <Filter>Load\textbox</Filter>
+      <Filter>Commands\Load\TextBox</Filter>
     </ClInclude>
-    <ClInclude Include="load_trigger.h">
-      <Filter>Load\textbox</Filter>
+    <ClInclude Include="load_textbox.h">
+      <Filter>Commands\Load\TextBox</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_clearblockdraw.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_swapvectors.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_camera.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_font.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_index.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_quadtree.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_shader.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_spritesheet.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_textbox.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_texture.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="component_trigger_input_tileset.h">
+      <Filter>Commands\Load\DataObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="ring_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="component_command.h">
+      <Filter>EC\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

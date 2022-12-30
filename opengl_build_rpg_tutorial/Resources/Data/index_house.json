@@ -1,10 +1,60 @@
 {
-	"message_house" : "Resources/Data/message_house.json",
-	"texture" : "Resources/Data/texture_house.json",
-	"tileset_inside" : "Resources/Data/tileset_inside.json",
-	"tileset_colliders" : "Resources/Data/tileset_colliders.json",
-	"tilemap" : "Resources/Data/tilemap_house.json",
-	"spritesheet_house" : "Resources/Data/spritesheet_house.json",
-	"spritesheet" : "Resources/Data/spritesheet.json",
-	"collidermap" : "Resources/Data/collidermap_house.json"
+	"name" : "house",
+	"gamestate" : "2D_v1",
+	"load" : [
+		{
+			"name" : "camera"
+		},
+		{
+			"name" : "shader",
+			"data" : "shader.json"
+		},
+		{
+			"name" : "texture",
+			"data" : "texture_house.json"
+		},
+		{
+			"name" : "font",
+			"data" : "font_gilsans.json"
+		},
+		{
+			"name" : "physics_action_qtree",
+			"data" : "quadtree.json",
+			"load" : "physcics_action_GJK_qtree"
+		},
+		{
+			"name" : "action_qtree",
+			"data" : "quadtree.json",
+			"load" : "action_GJK_qtree"
+		},
+		{
+			"name" : "tileset_inside",
+			"data" : "tileset_inside.json",
+			"load" : "tileset"
+		},
+		{
+			"name" : "spritesheet",
+			"data" : "spritesheet.json"
+		},
+		{
+			"name" : "spritesheet_house",
+			"data" : "spritesheet_house.json",
+			"load" : "spritesheet"
+		},
+		{
+			"name" : "tilemap",
+			"data" : "tilemap_house.json",
+		},
+		{
+			"name" : "player",
+			"data" : "player.json"
+		},
+		{
+			"name" : "collider_map",
+			"data" : "collidermap_house"
+		},
+		{
+			"name" : "textbox",
+			"data" : "textbox.json"
+		}]
 }

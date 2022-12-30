@@ -17,9 +17,10 @@
 			},
 			"action" : {
 				"data" : [{ 
-					"load": "textbox", 
+					"name" : "textbox", 
 					"data" : {
-						"message": {"filename" : "message_overworld", "pos" : 1}
+						"filename" : "message_overworld", 
+						"pos" : 1
 					}
 				}]
 			},
@@ -42,9 +43,10 @@
 			},
 			"action" : {
 				"data" : [{ 
-					"load": "textbox", 
+					"name": "textbox", 
 					"data" : {
-						"message": {"filename" : "message_overworld", "pos" : 0}
+						"filename" : "message_overworld",
+						 "pos" : 0
 					}
 				}]
 			},
@@ -67,7 +69,7 @@
 			},
 			"action" : {
 				"data" : [{ 
-					"load": "switch_state", 
+					"name": "switch_state", 
 					"data" : {
 						"next_state" : "house",
 						"return_pos" : {"x": 512.0, "y": 912.0 }
@@ -93,9 +95,10 @@
 			},
 			"action" : {
 				"data" : [{ 
-					"load": "textbox", 
+					"name": "textbox", 
 					"data" : {
-						"message": {"filename" : "message_overworld", "pos" : 2}
+						"filename" : "message_overworld",
+						"pos" : 2
 					}
 				}]
 			},

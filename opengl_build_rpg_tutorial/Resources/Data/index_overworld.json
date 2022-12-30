@@ -1,10 +1,60 @@
 {
-	"message_overworld" : "Resources/Data/message_overworld.json",
-	"texture" : "Resources/Data/texture_overworld.json",
-	"tileset_outside" : "Resources/Data/tileset_outside.json",
-	"tileset_colliders" : "Resources/Data/tileset_colliders.json",
-	"tilemap" : "Resources/Data/tilemap_overworld.json",
-	"spritesheet_overworld" : "Resources/Data/spritesheet_overworld.json",
-	"spritesheet" : "Resources/Data/spritesheet.json",
-	"collidermap" : "Resources/Data/collidermap_overworld.json"
+	"name" : "overworld",
+	"gamestate" : "2D_v1",
+	"load" : [
+		{
+			"name" : "camera"
+		},
+		{
+			"name" : "shader",
+			"data" : "shader.json"
+		},
+		{
+			"name" : "texture",
+			"data" : "texture_overworld.json"
+		},
+		{
+			"name" : "font",
+			"data" : "font_gilsans.json"
+		},
+		{
+			"name" : "physics_action_qtree",
+			"data" : "quadtree.json",
+			"load" : "physcics_action_GJK_qtree"
+		},
+		{
+			"name" : "action_qtree",
+			"data" : "quadtree.json",
+			"load" : "action_GJK_qtree"
+		},
+		{
+			"name" : "tileset_outside",
+			"data" : "tileset_outside.json",
+			"load" : "tileset"
+		},
+		{
+			"name" : "spritesheet",
+			"data" : "spritesheet.json"
+		},
+		{
+			"name" : "spritesheet_overworld",
+			"data" : "spritesheet_overworld.json",
+			"load" : "spritesheet"
+		},
+		{
+			"name" : "tilemap",
+			"data" : "tilemap_overworld.json",
+		},
+		{
+			"name" : "player",
+			"data" : "player.json"
+		},
+		{
+			"name" : "collider_map",
+			"data" : "collidermap_overworld"
+		},
+		{
+			"name" : "textbox",
+			"data" : "textbox.json"
+		}]
 }

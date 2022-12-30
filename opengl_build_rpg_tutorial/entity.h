@@ -228,16 +228,6 @@ public:
 		return c;
 	}
 
-	template<typename T, typename... TArgs>
-	T* add_id_ct_input(std::string id, TArgs&&... args)
-	{
-		static_assert (std::is_base_of<IComponent, T>::value, "add_id_ct_input() T not a component");
-		T* c(new T(id, std::forward<TArgs>(args)...));
-		auto hashed_str = std::hash<std::string>{}(id);
-		components_.insert(hashed_str, c);
-		return c;
-	}
-
 	// adds component to splay tree and treats it like an array, can have two of the same component in an entity
 	template<typename T, typename... TArgs>
 	T* push_back_component(TArgs&&... args)
