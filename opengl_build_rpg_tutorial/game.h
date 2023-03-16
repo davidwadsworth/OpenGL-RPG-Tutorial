@@ -3,7 +3,6 @@
 #include <array>
 #include <unordered_map>
 #include <glm/vec2.hpp>
-#include "component_trigger_input_gamestate.h"
 #include "entity.h"
 
 /*
@@ -21,12 +20,12 @@ public:
 	static GLuint width;
 	static GLuint height;
 	static GLfloat delta_time;
-	static Component::Trigger::Input::IGameState* curr_state;
 	static Entity* global;
 	static bool exit;
 	static glm::vec2 removed;
 
-	static void init(Entity* game);
-	static void set_next_state(std::string state);
-	static void check_new_state(Entity* game);
+	void init(Entity* game);
+	void render();
+	void pathway();
+	void update();
 };

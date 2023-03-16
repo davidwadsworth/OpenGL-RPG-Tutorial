@@ -5,14 +5,15 @@
 #include <stack>
 #include <queue>
 #include "component_vector.h"
-#include "component_command.h"
 #include "add_loads.h"
 #include "ring_buffer.h"
+#include "component_command.h"
+#include "command_load.h"
 
 namespace Component {
 	namespace Command
 	{
-		class Pathway : public Component::Command
+		class Pathway : public Component::CCommand
 		{
 		public:
 			struct NavigatorTree
@@ -38,18 +39,18 @@ namespace Component {
 				std::size_t size;
 			};
 		private:
+			bool removed_;
+			NavigatorTree* curr_;
 			RingBuffer<NavigatorTree> navigator_trees_;
 			std::unordered_map<std::string, std::unique_ptr<INavigator>> nav_map_;
-			std::unordered_map<std::string, ICommand*> command_map_;
+			std::unordered_map<std::string, std::unique_ptr<ICommand>> command_map_;
 			std::queue<NavigatorTreeItem> nav_queue_;
 		public:
-			Pathway()
-			{
-				add_navigator(nav_map_);
-				add_loads(command_map_);
-			}
+			Pathway(std::size_t max_nav_tree)
+				: navigator_trees_(max_nav_tree), curr_(nullptr), removed_(false)
+			{}
 
-			void add_nav(std::string name, nlohmann::json json, Entity* gamestate )
+			void add_nav(std::string name, nlohmann::json json, Entity* gamestate)
 			{
 				if (nav_map_.find(name) == nav_map_.end())
 				{
@@ -61,18 +62,6 @@ namespace Component {
 			NavigatorTree* get_nav_tree()
 			{
 				return navigator_trees_.get();
-			}
-
-
-			void change_nav(std::string nav, NavigatorTree* tree)
-			{
-				tree->navigator = nav_map_[nav].get();
-			}
-
-			void add_command(std::string name, ICommand* command)
-			{
-				if (command_map_.find(name) != command_map_.end())
-					command_map_[name] = command;
 			}
 
 			void add_next(NavigatorTree* tree, std::size_t size)
@@ -92,42 +81,57 @@ namespace Component {
 				while (!nav_queue_.empty()) nav_queue_.pop();
 			}
 
-			void execute(Entity * e_gamestate) override
+			void execute(Entity* e_gamestate) override
 			{
 				if (nav_queue_.empty())
-				{
 					return;
-				}
-					
-				if (nav_tree)
-				{
-					nav_empty = false;
-					auto nav_path = nav_tree->navigator->navigate();
 
+				if (curr_)
+				{
+					auto nav_path = curr_->navigator->navigate();
 					if (nav_path)
 					{
-						if (nav_path > 0 && nav_path >= nav_tree->children.size())
+						for (auto command_json : curr_->command_json)
 						{
-							nav_tree = nav_tree->children[nav_path];
-							for (auto command_json : nav_tree->command_json)
+							auto command = command_map_[command_json["name"].get<std::string>()].get();
+							command->execute(e_gamestate);
+						}
+						if (nav_path > 0)
+						{
+							if (curr_->children.size() == 0)
 							{
-								auto command = command_map_[command_json["name"].get<std::string>()];
-
-								if (command_json.contains("load"))
-								{
-									auto load = dynamic_cast<ILoad*>(command);
-									load->load(command_json["load"]);
-									load->execute(gamestate);
-								}
-
+								curr_ = nullptr;
+								removed_ = true;
 							}
-
+							else if (nav_path <= curr_->children.size())
+							{
+								curr_ = curr_->children[nav_path - 1];
+								curr_->navigator->init(e_gamestate);
+								for (auto command_json : curr_->command_json)
+								{
+									auto command = command_map_[command_json["name"].get<std::string>()].get();
+									auto load = dynamic_cast<Command::ILoad*>(command);
+									if (load)
+										load->load(command_json["load"]);
+								}
+							}
 						}
 					}
 				}
 				else
-					nav_queue_.pop();
+				{
+					if (removed_)
+					{
+						curr_ = nullptr;
+						navigator_trees_.remove(nav_queue_.front().size);
+						nav_queue_.pop();
+						removed_ = false;
+						return;
+					}
+					curr_ = nav_queue_.front().tree;
+				}
 			}
 		};
+
 	}
 }

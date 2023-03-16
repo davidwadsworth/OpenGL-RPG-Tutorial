@@ -9,27 +9,31 @@ namespace Navigator
 {
 	class OptionBoxV : public INavigator
 	{
-		Component::IController& controller_;
-		Component::Cursor& cursor_;
+		Component::IController* controller_;
+		Component::Cursor* cursor_;
 	public:
-		OptionBoxV(Entity* gamestate, nlohmann::json json)
-			: controller_(*Game::global->get_component<Component::IController>("controller")),
-			cursor_(*gamestate->get_child(json["textbox"].get<std::string>())->get_component<Component::Cursor>("cursor"))
-		{}
-
+		
+		void init(Entity* e_gamestate)
+		{
+			controller_ = Game::global->get_component<Component::IController>(json_["controller"].get<std::string>());
+			Entity* e = gamestate;
+			for (auto i = 0; i < json_["cursor"].size() - 1; ++i)
+				e = e->get_child(json_["cursor"][i].get<std::string>());
+			cursor_ = e->get_component<Component::Cursor>((json_["cursor"].end() - 1)->get<std::string>());
+		}
 		int navigate() override
 		{
-			if (controller_.key_press_action_1())
-				return cursor_.get_cursor_pos() + 1;
+			if (controller_->key_press_action_1())
+				return cursor_->get_cursor_pos() + 1;
 
-			if (controller_.key_press_action_2())
-				return cursor_.get_cursor_size() + 2;
+			if (controller_->key_press_action_2())
+				return cursor_->get_cursor_size() + 2;
 
-			if (controller_.key_down_down())
-				cursor_.decrement();
+			if (controller_->key_down_down())
+				cursor_->decrement();
 
-			if (controller_.key_down_up())
-				cursor_.increment();
+			if (controller_->key_down_up())
+				cursor_->increment();
 
 			return 0;
 		}

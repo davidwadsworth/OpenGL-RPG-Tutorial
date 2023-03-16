@@ -1,10 +1,6 @@
 #include "game.h"
 #include "component_array.h"
 #include "component_texunit.h"
-#include "component_trigger_input_gamestate_overworld.h"
-#include "component_trigger_input_gamestate_house.h"
-#include "component_trigger_input_index.h"
-
 // game global variables
 Component::Trigger::Input::IGameState* Game::curr_state = nullptr;
 std::string Game::next_state_ = "none";
@@ -19,14 +15,11 @@ glm::vec2 Game::removed(static_cast<int>(Game::width)* -2.0f - 1.0f, static_cast
 long long IComponent::count = 0ll;
 long long Entity::count = 0ll;
 
+
+
+
 void Game::init(Entity* game)
 {	
-	auto& ctigs_overworld = *game->add_id_ct_input<Component::Trigger::Input::GameState::Overworld>("overworld");
-	ctigs_overworld.execute(game);
-
-	auto& ctigs_house = *game->add_id_ct_input<Component::Trigger::Input::GameState::House>("house");
-	ctigs_house.execute(game);
-
 	Game::global->add_id_component<Component::KeyboardArray>("keyboard");
 	auto& cc_keyboard = *Game::global->add_id_component<Component::Controller::Keyboard>("controller");
 	auto& cti_index = *Game::global->add_id_ct_input<Component::Trigger::Input::Index>("index", "index.json");
@@ -35,6 +28,18 @@ void Game::init(Entity* game)
 	auto keyboard_controller_json = cti_index->get_component<Component::Json>("controller_keyboard")->json;
 
 	cc_keyboard.set_keys(keyboard_controller_json);
+}
+
+void Game::render()
+{
+}
+
+void Game::update()
+{
+}
+
+void Game::pathway()
+{
 }
 
 void Game::set_next_state(std::string state)

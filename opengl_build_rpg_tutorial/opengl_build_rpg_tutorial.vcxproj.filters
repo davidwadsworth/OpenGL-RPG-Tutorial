@@ -67,6 +67,12 @@
     <Filter Include="Commands\Load\DataObjects">
       <UniqueIdentifier>{7ec258bd-3624-4d15-83fe-bdf1a6120673}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EC\Component\Command">
+      <UniqueIdentifier>{999dd65b-ff24-4dbc-83c1-a505c5f83e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Navigator\NewFilter1">
+      <UniqueIdentifier>{34f18321-5c0e-4c76-b8f8-a1f99f6f77ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,9 +170,6 @@
     <ClInclude Include="component_vector.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_input_gamestate_overworld.h">
-      <Filter>Commands\Load\GameState</Filter>
-    </ClInclude>
     <ClInclude Include="json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -205,24 +208,6 @@
     </ClInclude>
     <ClInclude Include="component_template.h">
       <Filter>EC\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_collidermap.h">
-      <Filter>Commands\Load\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_textarea.h">
-      <Filter>Commands\Load\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_player.h">
-      <Filter>Commands\Load\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_tilemap.h">
-      <Filter>Commands\Load\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_text.h">
-      <Filter>Commands\Load\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_box.h">
-      <Filter>Commands\Load\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="sort.h">
       <Filter>Header Files</Filter>
@@ -302,9 +287,6 @@
     <ClInclude Include="component_system_update_checkactioncollision.h">
       <Filter>EC\Component\System\Update</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_update_pathway.h">
-      <Filter>EC\Component\System\Update</Filter>
-    </ClInclude>
     <ClInclude Include="navigator.h">
       <Filter>Navigator</Filter>
     </ClInclude>
@@ -323,12 +305,6 @@
     <ClInclude Include="add_navigator.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="load.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="load_switchstate.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="add_loads.h">
       <Filter>Helper</Filter>
     </ClInclude>
@@ -344,47 +320,80 @@
     <ClInclude Include="load_textbox.h">
       <Filter>Commands\Load\TextBox</Filter>
     </ClInclude>
-    <ClInclude Include="component_trigger_clearblockdraw.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_swapvectors.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="command.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_camera.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_font.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_index.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_quadtree.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_shader.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_spritesheet.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_textbox.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_texture.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="component_trigger_input_tileset.h">
-      <Filter>Commands\Load\DataObjects</Filter>
-    </ClInclude>
     <ClInclude Include="ring_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component_command.h">
+    <ClInclude Include="command.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_box.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_camera.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_clearblockdraw.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_collidermap.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_font.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_gamestate.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_index.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_player.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_quadtree.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_shader.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_spritesheet.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_switchstate.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_text.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_textarea.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_textbox.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_texture.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_tilemap.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="command_load_tileset.h">
+      <Filter>Commands\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="component_gamestatepool.h">
       <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_returnposition.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_command.h">
+      <Filter>EC\Component\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="component_command_pathway.h">
+      <Filter>EC\Component\Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -405,6 +414,9 @@
     </None>
     <None Include="Resources\Data\test_message.json">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="navigator_linear.h">
+      <Filter>Navigator</Filter>
     </None>
   </ItemGroup>
 </Project>
