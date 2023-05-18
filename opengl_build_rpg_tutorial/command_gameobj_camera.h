@@ -1,5 +1,5 @@
 #pragma once
-#include "load.h"
+#include "command.h"
 #include "component_position.h"
 
 /*
@@ -8,8 +8,9 @@ Creates our local camera using width and height
 @author David Wadsworth
 */
 namespace Command {
-	namespace Load {
-		class Camera : public ILoad
+	namespace GameObj
+	{
+		class Camera : public ICommand
 		{
 			std::string name;
 		public:

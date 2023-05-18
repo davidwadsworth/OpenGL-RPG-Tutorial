@@ -1,9 +1,10 @@
 #pragma once
 #include "component_renderer.h"
-#include "command_load.h"
+#include "command.h"
 #include "component_engine.h"
 #include "component_texunit.h"
-#include "component_command_pathway.h"
+#include "component_pathway.h"
+#include "game.h"
 
 /*
 Set up class for all game object creation within the overworld state
@@ -11,9 +12,9 @@ Set up class for all game object creation within the overworld state
 @author David Wadsworth
 */
 namespace Command {
-	namespace Load
+	namespace GameObj
 	{
-		class Gamestate : public Command::ILoad
+		class Gamestate : public ICommand
 		{
 			std::string name_;
 			nlohmann::json index_json_;
@@ -32,10 +33,10 @@ namespace Command {
 				// set up renderer and engine systems for run
 				e_gamestate->add_id_component<Component::Engine>("render");
 				e_gamestate->add_id_component<Component::Engine>("update");
-				auto pathway = e_gamestate->add_id_component<Component::CCommand::Pathway>("pathway");
+				auto pathway = e_gamestate->add_id_component<Component::Pathway>("pathway");
 
 				// load in game objects
-				Game::global->get_component<Component::CCommand::Pathway>("pathway")->add_next(index_json_);
+				pathway->add_next(index_json_); // TODO check if this is right
 			}
 		};
 	}

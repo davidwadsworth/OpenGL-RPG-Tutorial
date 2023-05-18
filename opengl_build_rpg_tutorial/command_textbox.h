@@ -1,16 +1,17 @@
 #pragma once
-#include "component_trigger.h"
 #include <sstream>
 #include <vector>
 #include "json.hpp"
-#include "load_message.h"
-#include "load_box.h"
-#include "component_trigger_clearblockdraw.h"
-#include "component_system_update_pathway.h"
+#include "command_message.h"
+#include "command_box.h"
+#include "command_clearblockdraw.h"
+#include "component_pathway.h"
 #include "component_position.h"
-#include "component_trigger_swapvectors.h"
+#include "command_switchstate.h"
 #include "component_json.h"
+#include "command.h"
 #include "game.h"
+#include "component_pathway.h"
 
 /*
 json
@@ -39,22 +40,20 @@ json
 
 constexpr auto SCREEN_PADDING = 5.0f;
 
-namespace Component {
-	namespace Trigger
-	{
-		class TextBox
+namespace Command {
+		class TextBox : public ICommand
 		{
 			nlohmann::json json_;
 			Component::Transform* transform_;
 		
-			Component::System::Update::Pathway::NavigatorTree* parse_json(nlohmann::json json, Component::System::Update::Pathway& pathway, 
-				Component::System::Update::Pathway::NavigatorTree* last_tree)
+			Component::Pathway::NavigatorTree* parse_json(nlohmann::json json, Component::Pathway& pathway, 
+				Component::Pathway::NavigatorTree* last_tree)
 			{
 				auto json_copy = json;
 
 				if (json["load"]["name"] == "messages")
 				{
-					std::vector<Component::System::Update::Pathway::NavigatorTree*> nav_tree_vec;
+					std::vector<Component::Pathway::NavigatorTree*> nav_tree_vec;
 
 					if (json["textbox"].find("box") != json["textbox"].end())
 						last_tree->command_json.push_back(json_copy);
@@ -177,7 +176,7 @@ namespace Component {
 
 				auto textbox_obj = json_.get<nlohmann::json::object_t>();
 
-				auto& pathway = *gamestate->get_component<Component::System::Update::Pathway>("pathway");
+				auto& pathway = *gamestate->get_component<Component::Pathway>("pathway");
 
 				if (pathway.is_registered(message_json["name"]))
 				{

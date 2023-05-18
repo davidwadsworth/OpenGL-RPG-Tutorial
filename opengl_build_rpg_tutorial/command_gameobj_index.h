@@ -1,12 +1,12 @@
 #pragma once
-#include "load.h"
+#include "command.h"
 #include <sstream>
 #include "json.hpp"
 #include "component_json.h"
 
 namespace Command {
-	namespace Load {
-		class Index : public ILoad
+	namespace GameObj {
+		class Index : public ICommand
 		{
 			std::string filename_, name_;
 		public:

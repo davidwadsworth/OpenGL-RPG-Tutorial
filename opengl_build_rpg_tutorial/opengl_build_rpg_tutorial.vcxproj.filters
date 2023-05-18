@@ -52,26 +52,8 @@
     <Filter Include="Commands">
       <UniqueIdentifier>{c48ce152-5e49-4dab-9806-09716ddea374}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Commands\Load">
-      <UniqueIdentifier>{8c9fd0b2-59d3-4c17-9f29-af2dd23bcf56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Commands\Load\GameObject">
-      <UniqueIdentifier>{52f76306-7a6f-4dba-96f8-aab124b9a5f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Commands\Load\GameState">
-      <UniqueIdentifier>{9fb5bef0-c526-4b9e-9db6-515c6f2c5c21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Commands\Load\TextBox">
-      <UniqueIdentifier>{366462d2-7ab3-456f-a120-6170303460a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Commands\Load\DataObjects">
-      <UniqueIdentifier>{7ec258bd-3624-4d15-83fe-bdf1a6120673}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EC\Component\Command">
-      <UniqueIdentifier>{999dd65b-ff24-4dbc-83c1-a505c5f83e27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Navigator\NewFilter1">
-      <UniqueIdentifier>{34f18321-5c0e-4c76-b8f8-a1f99f6f77ad}</UniqueIdentifier>
+    <Filter Include="Commands\GameObj">
+      <UniqueIdentifier>{d07ad133-769b-4ebf-9cfc-32b60221a063}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -308,80 +290,8 @@
     <ClInclude Include="add_loads.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="load_optionbox.h">
-      <Filter>Commands\Load\TextBox</Filter>
-    </ClInclude>
-    <ClInclude Include="load_message.h">
-      <Filter>Commands\Load\TextBox</Filter>
-    </ClInclude>
-    <ClInclude Include="load_box.h">
-      <Filter>Commands\Load\TextBox</Filter>
-    </ClInclude>
-    <ClInclude Include="load_textbox.h">
-      <Filter>Commands\Load\TextBox</Filter>
-    </ClInclude>
     <ClInclude Include="ring_buffer.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="command.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_box.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_camera.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_clearblockdraw.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_collidermap.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_font.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_gamestate.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_index.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_player.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_quadtree.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_shader.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_spritesheet.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_switchstate.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_text.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_textarea.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_textbox.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_texture.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_tilemap.h">
-      <Filter>Commands\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="command_load_tileset.h">
-      <Filter>Commands\Load</Filter>
     </ClInclude>
     <ClInclude Include="component_gamestatepool.h">
       <Filter>EC\Component</Filter>
@@ -389,11 +299,77 @@
     <ClInclude Include="component_returnposition.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="component_command.h">
-      <Filter>EC\Component\Command</Filter>
+    <ClInclude Include="command_clearblockdraw.h">
+      <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="component_command_pathway.h">
-      <Filter>EC\Component\Command</Filter>
+    <ClInclude Include="command_switchstate.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_box.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_camera.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_collidermap.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_font.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_gamestate.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_spritesheet.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_shader.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_quadtree.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_index.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_player.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_text.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_textbox.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_textarea.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_texture.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_tilemap.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_gameobj_tileset.h">
+      <Filter>Commands\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="command_box.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="command_message.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="command_optionbox.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="command_textbox.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="component_pathway.h">
+      <Filter>EC\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

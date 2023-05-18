@@ -1,11 +1,12 @@
 #pragma once
-#include "load.h"
+#include "command.h"
 #include <sstream>
 #include "json.hpp"
 #include "delimiter_split.h"
 #include "component_material_color.h"
 #include "component_template.h"
 #include "component_rect_bitmap_glyph.h"
+#include "component_texunit.h"
 
 /*
 Load in font bitmap fonts with json.
@@ -14,8 +15,8 @@ Load in font bitmap fonts with json.
 */
 
 namespace Command {
-	namespace Load {
-		class Font : public ILoad
+	namespace GameObj {
+		class Font : public ICommand
 		{
 			std::string name_;
 			nlohmann::json fnt_json_;
