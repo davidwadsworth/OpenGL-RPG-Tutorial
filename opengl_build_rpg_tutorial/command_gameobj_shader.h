@@ -1,8 +1,9 @@
 #pragma once
-#include "component_trigger_input.h"
+#include "command.h"
 #include "component_shader.h"
 #include <glm/ext/matrix_clip_space.hpp>
 #include "component_json.h"
+#include "game.h"
 
 /*
 Loads and stores Shader information for use in 
@@ -10,9 +11,9 @@ Loads and stores Shader information for use in
 @author David Wadsworth
 */
 
-namespace Component {
-	namespace Trigger {
-		class Shader : public ILoad
+namespace Command {
+	namespace GameObj {
+		class Shader : public ICommand
 		{
 			nlohmann::json shader_json_;
 			std::string name_;

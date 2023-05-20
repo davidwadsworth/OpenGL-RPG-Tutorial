@@ -1,5 +1,5 @@
 #pragma once
-#include "load.h"
+#include "command.h"
 #include "component_quadtree.h"
 #include "component_json.h"
 
@@ -10,9 +10,9 @@ List of all active colliding objects in game world.
 */
 
 namespace Commmand {
-	namespace Load {
+	namespace GameObj {
 		template <typename T>
-		class QuadTree : public ILoad
+		class QuadTree : public ICommand
 		{
 			Rect rect_;
 			int max_objects_;
@@ -33,9 +33,8 @@ namespace Commmand {
 
 			void execute(Entity* gamestate) override
 			{
-				auto e_quadtree = gamestate->add_id_child
-
-				this->entity_->push_back_component<Component::QuadTree<T>>(max_objects_, rect_);
+				auto entity = gamestate->add_id_child(name_);
+				entity->push_back_component<Component::QuadTree<T>>(max_objects_, rect_);
 			}
 		};
 	}

@@ -11,6 +11,8 @@
 #include "component_system_update_checkaction.h"
 #include "component_system_render_cameradraw.h"
 #include "component_system_update_checkactioncollision.h"
+#include "component_engine.h"
+#include "component_pathway.h"
 
 /*
 Creates our player object to move around in the overworld.
@@ -23,43 +25,41 @@ namespace Command {
     {
         class Player : public ICommand
         {
+            std::string player_name_;
+            std::string spritesheet_name_;
 
+            nlohmann::json info_json_;
+            nlohmann::json animation_json_;
+
+            float scale_;
+            float animation_speed_;
+            float player_speed_;
+            float render_group_;
+            float update_group_;
+            float action_distance_;
 
         public:
             void load(nlohmann::json json) override final
             {
-                auto info_json = player_json["info"];
+                player_name_ = json["name"];
+                spritesheet_name_ = json["texture"];
 
-                auto animation_json = player_json["animations"];
-
-                float animation_speed = player_json["animation_speed"];
-                float player_speed = player_json["player_speed"];
-                float render_group = player_json["render_group"];
-                float update_group = player_json["update_group"];
-                float action_distance = player_json["action_distance"];
+                info_json_ = json["info"];
+                animation_json_ = json["animations"];
+                
+                scale_ = json["scale"];
+                animation_speed_ = json["animation_speed"];
+                player_speed_ = json["player_speed"];
+                render_group_ = json["render_group"];
+                update_group_ = json["update_group"];
+                action_distance_ = json["action_distance"];
             }
 
             void execute(Entity* gamestate) override final
             {
-                auto player_name = delimiter_split(name_.c_str(), '_')[0];
+                auto entity = gamestate->add_id_child(player_name_);
 
-                auto& player_json = Game::global->get_child("index")->get_component<Component::Json>(name_)->json;
-
-                float scale = player_json["scale"];
-
-                std::string spritesheet_name = player_json["texture"];
-                        
-                auto info_json = player_json["info"];
-
-                auto animation_json = player_json["animations"];
-
-                float animation_speed = player_json["animation_speed"];
-                float player_speed = player_json["player_speed"];
-                float render_group = player_json["render_group"];
-                float update_group = player_json["update_group"];
-                float action_distance = player_json["action_distance"];
-
-                auto e_spritesheet = gamestate->get_child(spritesheet_name);
+                auto e_spritesheet = gamestate->get_child(spritesheet_name_);
 
                 // get renderer
                 auto& c_renderer = *gamestate->get_component<Component::Renderer >("renderer");
@@ -82,29 +82,29 @@ namespace Command {
                 // get load entity
                 auto e_load = gamestate->get_child("load");
 
-                auto& c_triggervec = *gamestate->get_component<Component::TriggerVector>("trigger");
+                auto& c_pathway = *gamestate->get_component<Component::Pathway>("pathway");
 
-                auto& c_pla_src = *entity_->push_back_component<Component::Src>();
-                auto& c_spritesheet_material = *gamestate->get_child(spritesheet_name)->get_component<Component::Material>("material");
+                auto& c_pla_src = *entity->push_back_component<Component::Src>();
+                auto& c_spritesheet_material = *gamestate->get_child(spritesheet_name_)->get_component<Component::Material>("material");
 
-                auto& c_pla_col_gjk_circle = *static_cast<Component::Rectangle::IGJK*>(add_component_rect(entity_, gamestate, info_json));
+                auto& c_pla_col_gjk_circle = *static_cast<Component::Rectangle::IGJK*>(add_component_rect(entity, gamestate, info_json_));
                 Logger::message(std::to_string(c_pla_col_gjk_circle.x) + ", " + std::to_string(c_pla_col_gjk_circle.y));
-                auto csr_pla_dynamic_draw = entity_->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_col_gjk_circle, c_spritesheet_material, c_cam_position);
-                auto csu_pla_camera = entity_->push_back_component<Component::System::Update::Camera>(c_pla_col_gjk_circle, c_cam_position);
-                auto csu_pla_move = entity_->push_back_component<Component::System::Update::Move>(c_pla_col_gjk_circle, player_speed);
+                auto csr_pla_dynamic_draw = entity->push_back_component<Component::System::Render::CameraDraw>(c_renderer, c_pla_src, c_pla_col_gjk_circle, c_spritesheet_material, c_cam_position);
+                auto csu_pla_camera = entity->push_back_component<Component::System::Update::Camera>(c_pla_col_gjk_circle, c_cam_position);
+                auto csu_pla_move = entity->push_back_component<Component::System::Update::Move>(c_pla_col_gjk_circle, player_speed_);
 
-                auto csu_pla_animation = entity_->push_back_component<Component::System::Update::Animation>(animation_speed, c_pla_src);
-                auto csu_pla_animate_move = entity_->push_back_component<Component::System::Update::AnimateMove>(*csu_pla_animation);
-                auto csu_check_collision = entity_->push_back_component<Component::System::Update::CheckCollision>(c_pla_col_gjk_circle, c_physicsaction_qtree);
-                auto csu_check_action_collision = entity_->push_back_component<Component::System::Update::CheckActionCollision>(c_pla_col_gjk_circle, c_action_qtree, c_triggervec, e_load);
-                auto csu_check_action = entity_->push_back_component<Component::System::Update::CheckAction>(c_pla_col_gjk_circle, c_physicsaction_qtree, e_load, c_triggervec, action_distance);
+                auto csu_pla_animation = entity->push_back_component<Component::System::Update::Animation>(animation_speed_, c_pla_src);
+                auto csu_pla_animate_move = entity->push_back_component<Component::System::Update::AnimateMove>(*csu_pla_animation);
+                auto csu_check_collision = entity->push_back_component<Component::System::Update::CheckCollision>(c_pla_col_gjk_circle, c_physicsaction_qtree);
+                auto csu_check_action_collision = entity->push_back_component<Component::System::Update::CheckActionCollision>(c_pla_col_gjk_circle, c_action_qtree, c_pathway, e_load);
+                auto csu_check_action = entity->push_back_component<Component::System::Update::CheckAction>(c_pla_col_gjk_circle, c_physicsaction_qtree, e_load, c_pathway, action_distance_);
 
                 auto anim_i = 0u;
                 auto animation = new Entity();
-                entity_->push_back_child(animation);
+                entity->push_back_child(animation);
 
                 auto player_srcs_i = 0;
-                for (auto& anim_json : animation_json)
+                for (auto& anim_json : animation_json_)
                 {
                     std::string anim_name = anim_json["name"];
                     Anim anim_srcs;
@@ -116,15 +116,15 @@ namespace Command {
 
                 csu_pla_animation->play("idle_down");
 
-                c_update_engine.add(csu_pla_move, update_group);
-                c_update_engine.add(csu_check_collision, update_group);
-                c_update_engine.add(csu_check_action_collision, update_group);
-                c_update_engine.add(csu_pla_camera, update_group);
-                c_update_engine.add(csu_pla_animate_move, update_group);
-                c_update_engine.add(csu_pla_animation, update_group);
-                c_update_engine.add(csu_check_action, update_group);
+                c_update_engine.add(csu_pla_move, update_group_);
+                c_update_engine.add(csu_check_collision, update_group_);
+                c_update_engine.add(csu_check_action_collision, update_group_);
+                c_update_engine.add(csu_pla_camera, update_group_);
+                c_update_engine.add(csu_pla_animate_move, update_group_);
+                c_update_engine.add(csu_pla_animation, update_group_);
+                c_update_engine.add(csu_check_action, update_group_);
 
-                c_render_engine.add(csr_pla_dynamic_draw, render_group);
+                c_render_engine.add(csr_pla_dynamic_draw, render_group_);
 
             }
         };

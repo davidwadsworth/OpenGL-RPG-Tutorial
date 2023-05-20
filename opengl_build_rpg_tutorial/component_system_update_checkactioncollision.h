@@ -21,14 +21,15 @@ namespace Component {
 			{
 				Component::Rectangle::IGJK& rect_a_;
 				Component::ActionGJKQTree& c_quad_tree_;
-				Component::TriggerVector& c_triggervec_;
+				Component::Pathway& c_pathway_;
 				Entity* e_load_;
 			public:
 				CheckActionCollision(Component::Rectangle::IGJK& rect_a, Component::ActionGJKQTree& c_quad_tree,
-					Component::TriggerVector& c_triggervec, Entity* e_load)
-					: rect_a_(rect_a), c_quad_tree_(c_quad_tree), c_triggervec_(c_triggervec), e_load_(e_load)
+					Component::Pathway& c_pathway, Entity* e_load)
+					: rect_a_(rect_a), c_quad_tree_(c_quad_tree), c_pathway_(c_pathway), e_load_(e_load)
 				{}
 
+				// TODO
 				void execute() override
 				{
 					auto retrieved_rect = c_quad_tree_.retrieve(rect_a_);

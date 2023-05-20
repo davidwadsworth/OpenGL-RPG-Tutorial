@@ -1,49 +1,50 @@
 #pragma once
-#include "component_trigger_input.h"
 #include "component_json.h"
 #include "delimiter_split.h"
 #include "component_material.h"
 #include "component_texunit.h"
 #include "component_rect.h"
+#include "command.h"
 
-namespace Component {
-	namespace Trigger {
-		namespace Input
+namespace Command {
+	namespace GameObj {
+		class SpriteSheet : public ICommand
 		{
-			class SpriteSheet : public Component::Trigger::IInput
+			std::string name_;
+			std::string image_name_;
+			nlohmann::json frames_;
+		public:
+			void load(nlohmann::json json) override
 			{
-				void create(Entity* gamestate)
+				name_ = json["name"];
+				std::string image_path = json["meta"]["image"];
+				image_name_ = delimiter_split(image_path.c_str(), '.')[0];
+				frames_ = json["frames"];
+			}
+
+			void execute(Entity* gamestate) override
+			{
+				auto e_spritesheet = gamestate->add_id_child(name_);
+
+				for (auto& frame : frames_)
 				{
-					auto& spritesheet_json = gamestate->get_child("index")->get_component<Component::Json>(name_)->json;
+					std::string filename = frame["filename"];
+					auto name = delimiter_split(filename.c_str(), '.')[0];
 
-					nlohmann::json frames = spritesheet_json["frames"];
-
-					for (auto& frame : frames)
-					{
-						std::string filename = frame["filename"];
-						auto name = delimiter_split(filename.c_str(), '.')[0];
-
-						float src_x = frame["frame"]["x"];
-						float src_y = frame["frame"]["y"];
-						float src_w = frame["frame"]["w"];
-						float src_h = frame["frame"]["h"];
-						auto c_src = entity_->add_id_component<Component::Src>(name, Rect(src_x, src_y, src_w, src_h));
-
-					}
-
-					std::string image_path = spritesheet_json["meta"]["image"];
-					auto image_name = delimiter_split(image_path.c_str(), '.')[0];
-
-					auto& c_ss_texture = *gamestate->get_child("texture")->get_component<Component::Texture>(image_name);
-					auto& c_sprite_shader = *gamestate->get_child("shader")->get_component<Component::Shader>("sprite");
-
-					auto& c_texunit = *gamestate->get_component<Component::TexUnit>("texunit");
-
-					entity_->add_id_component<Component::Material>("material", c_ss_texture, c_sprite_shader, c_texunit.get_open_tex_unit());
+					float src_x = frame["frame"]["x"];
+					float src_y = frame["frame"]["y"];
+					float src_w = frame["frame"]["w"];
+					float src_h = frame["frame"]["h"];
+					auto c_src = e_spritesheet->add_id_component<Component::Src>(name, Rect(src_x, src_y, src_w, src_h));
 				}
-			public:
-				using Component::Trigger::IInput::IInput;
-			};
-		}
+
+				auto& c_ss_texture = *gamestate->get_child("texture")->get_component<Component::Texture>(image_name_);
+				auto& c_sprite_shader = *gamestate->get_child("shader")->get_component<Component::Shader>("sprite");
+
+				auto& c_texunit = *gamestate->get_component<Component::TexUnit>("texunit");
+
+				e_spritesheet->add_id_component<Component::Material>("material", c_ss_texture, c_sprite_shader, c_texunit.get_open_tex_unit());
+			}
+		};
 	}
 }

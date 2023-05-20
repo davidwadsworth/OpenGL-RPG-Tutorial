@@ -4,7 +4,7 @@
 #include "component_controller.h"
 #include "component_quadtree.h"
 #include "gjk.h"
-#include "component_trigger_load.h"
+#include "component_pathway.h"
 #include "component_vector.h"
 
 /*
@@ -23,14 +23,14 @@ namespace Component {
 				Component::Transform& c_transform_;
 				Component::PhysicsActionGJKQTree& c_action_qtree_;
 				Entity* e_load_;
-				Component::TriggerVector& c_triggervec_;
+				Component::Pathway& c_pathway_;
 				glm::vec2 direction_;
 				float distance_;
 			public:
 				CheckAction(Component::IController& c_controller, Component::Transform& c_transform, Component::PhysicsActionGJKQTree& c_action_qtree,
-					Entity* e_load, Component::TriggerVector& c_trigger, float distance)
+					Entity* e_load, Component::Pathway& c_pathway, float distance)
 					: c_controller_(c_controller), c_transform_(c_transform), c_action_qtree_(c_action_qtree), 
-					e_load_(e_load), c_triggervec_(c_trigger), direction_(0.0f, 1.0f), distance_(distance)
+					e_load_(e_load), c_pathway_(c_pathway), direction_(0.0f, 1.0f), distance_(distance)
 				{}
 
 				void execute()
@@ -58,6 +58,11 @@ namespace Component {
 							{
 								for (auto action : rect_b->action)
 								{
+									/// <summary>
+									///		THIS SHIT IS BROKEN NEED TO LOOK UP AND FIX 
+									/// TODODODODODOOODOOODOODOED
+									/// 
+									/// </summary>
 									std::string load = action["load"];
 
 									std::stringstream ss;
