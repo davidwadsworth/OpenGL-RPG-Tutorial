@@ -1,7 +1,10 @@
 #pragma once
-#include "load.h"
+#include "command.h"
 #include "component_system_render_blockdraw.h"
+#include "component_engine.h"
 #include "component_vector.h"
+#include "game.h"
+#include "component_json.h"
 
 /*
 
@@ -9,9 +12,9 @@
 */
 
 namespace Command {
-	namespace Load {
+	namespace GameObj {
 
-		class TextBox : public ILoad
+		class TextBox : public ICommand
 		{
 			std::string textarea_name_;
 			std::string box_name_;

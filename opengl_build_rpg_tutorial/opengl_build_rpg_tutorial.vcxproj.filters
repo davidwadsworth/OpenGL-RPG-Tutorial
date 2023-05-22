@@ -299,17 +299,11 @@
     <ClInclude Include="component_returnposition.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="command_clearblockdraw.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="command_switchstate.h">
       <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="command.h">
       <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="command_gameobj_box.h">
-      <Filter>Commands\GameObj</Filter>
     </ClInclude>
     <ClInclude Include="command_gameobj_camera.h">
       <Filter>Commands\GameObj</Filter>

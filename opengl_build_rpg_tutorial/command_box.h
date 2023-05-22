@@ -1,12 +1,11 @@
 #pragma once
-#include "load.h"
+#include "command.h"
 #include "component_rect.h"
 #include "component_system_render_blockdraw.h"
 #include "game.h"
 
-namespace Load
-{
-	class Box : public ILoad
+namespace Command {
+	class Box : public ICommand
 	{
 		bool is_speech_arrow_;
 		glm::vec2 pos_;

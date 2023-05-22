@@ -81,10 +81,12 @@ namespace Command {
 
 			void execute(Entity* gamestate) override final
 			{
+				auto e_textarea = gamestate->add_id_child(name_);
+
 				// get renderer
 				auto& c_renderer = *gamestate->get_component<Component::Renderer>();
 
-				auto e_font = gamestate->get_child(font_name);
+				auto e_font = gamestate->get_child(font_name_);
 
 				auto& c_font_material = *e_font->get_component<Component::Material>("material");
 
@@ -93,9 +95,9 @@ namespace Command {
 
 				auto space = line_h / 3.0f;
 
-				line_h = line_h - static_cast<int>(space / line_spacing);
+				line_h = line_h - static_cast<int>(space / line_spacing_);
 
-				auto& c_position = *entity_->add_component<Component::Position>(Game::removed);
+				auto& c_position = *e_textarea->add_component<Component::Position>(Game::removed);
 
 				// keeping track of transforms for alignment
 				std::vector<std::vector<Component::Transform*>> tb_lines;
@@ -105,14 +107,14 @@ namespace Command {
 				std::vector<Component::Transform*>* curr_line = &tb_lines[line_count];
 
 				// the position where we are drawing characters on the screen
-				auto current_pos = glm::vec2(x, y);
+				auto current_pos = glm::vec2(x_, y_);
 
 				// current character in message
-				auto curr_char = msg.begin();
+				auto curr_char = msg_.begin();
 
 				// skeleton for message box
 				auto e_msg_box = new Entity();
-				entity_->push_back_child(e_msg_box);
+				e_textarea->push_back_child(e_msg_box);
 
 				std::vector<Component::Src*> src_vec;
 				do
@@ -125,11 +127,11 @@ namespace Command {
 						continue;
 					case '\n':
 						// if message character exceedes boundaries for box then create a new message to hold remainder
-						if (current_pos.y + 2 * line_h > y + h)
+						if (current_pos.y + 2 * line_h > y_ + h_)
 							goto end;
 
 						current_pos.y += line_h;
-						current_pos.x = x;
+						current_pos.x = x_;
 
 						curr_char++;
 
@@ -152,7 +154,7 @@ namespace Command {
 					float prev_pos_x = current_pos.x;
 
 					// add all the non space characters together into vectors of transforms glyphs and draw calls, also known as a "word"
-					for (; curr_char != msg.end() && *curr_char != ' '; curr_char++)
+					for (; curr_char != msg_.end() && *curr_char != ' '; curr_char++)
 					{
 						auto c_bitmap_char = e_glyphs->get_component<Component::Rectangle::BitMapGlyph>(static_cast<std::size_t>( * curr_char));
 
@@ -167,30 +169,30 @@ namespace Command {
 								
 						prev_char = *curr_char;
 
-						auto c_cur_char_transform = entity_->push_back_component<Component::Transform>(
-							Rect( curr_x, curr_y, ch_w, ch_h ) * font_sc );
+						auto c_cur_char_transform = e_textarea->push_back_component<Component::Transform>(
+							Rect( curr_x, curr_y, ch_w, ch_h ) * font_sc_ );
 
 						line_transforms.push_back(c_cur_char_transform);
 						line_glyphs.push_back(c_bitmap_char);
 					}
 
 					// if the added word breaks the x boundaries of the box create a new line
-					if (temp_word_length + prev_pos_x > x + w)
+					if (temp_word_length + prev_pos_x > x_ + w_)
 					{								
 						// if the added line breaks the y boundary of the box create a new text box
-						if (current_pos.y + 2 * line_h > y + h)
+						if (current_pos.y + 2 * line_h > y_ + h_)
 							goto end;
 
 						auto begin_tranform_x = line_transforms[0]->x;
 
 						for (auto transform : line_transforms)
 						{
-							transform->x -= begin_tranform_x - x;
+							transform->x -= begin_tranform_x - x_;
 							transform->y += line_h;
 						}
 
 						current_pos.y += line_h;
-						current_pos.x = x + temp_word_length;
+						current_pos.x = x_ + temp_word_length;
 
 						tb_lines.push_back(std::vector<Component::Transform*>());
 						curr_line = &tb_lines[++line_count];
@@ -198,7 +200,7 @@ namespace Command {
 
 					curr_line->insert(curr_line->end(), line_transforms.begin(), line_transforms.end());
 
-				} while (curr_char != msg.end());
+				} while (curr_char != msg_.end());
 
 			end:
 				auto x_offset = std::vector<float>(tb_lines.size(), 0.0f); // align left
@@ -206,11 +208,11 @@ namespace Command {
 
 				for (auto i = 0; i < tb_lines.size(); ++i)
 				{
-					auto line_segment = w - (((*(tb_lines[i].end()-1))->x + (*(tb_lines[i].end()-1))->w) - (*tb_lines[i].begin())->x);
+					auto line_segment = w_ - (((*(tb_lines[i].end()-1))->x + (*(tb_lines[i].end()-1))->w) - (*tb_lines[i].begin())->x);
 
-					if (align_h == "middle")
+					if (align_h_ == "middle")
 						x_offset[i] = line_segment / 2.0f;
-					else if (align_h == "right")
+					else if (align_h_ == "right")
 						x_offset[i] = line_segment;
 				}
 
@@ -226,14 +228,14 @@ namespace Command {
 						y_highest = transform->y + transform->h;
 						
 				if (y_lowest == FLT_MAX)
-					y_lowest = y;
+					y_lowest = y_;
 				if (y_highest == -FLT_MAX)
-					y_highest = y + h;
+					y_highest = y_ + h_;
 
-				if (align_v == "middle")
-					y_offset = (h - (y_highest - y_lowest)) / 2.0f;
-				else if (align_v == "bottom")
-					y_offset = (h - (y_highest - y_lowest));
+				if (align_v_ == "middle")
+					y_offset = (h_ - (y_highest - y_lowest)) / 2.0f;
+				else if (align_v_ == "bottom")
+					y_offset = (h_ - (y_highest - y_lowest));
 
 				std::vector < Component::Transform* > transform_vec;
 				for (auto i = 0; i < tb_lines.size(); ++i)
@@ -244,8 +246,8 @@ namespace Command {
 						transform_vec.push_back(transform);
 					}
 
-				auto csr_offset_render = entity_->add_id_component<Component::System::Render::Offset>("render", c_position, src_vec, transform_vec, c_font_material, c_renderer);
-				gamestate->get_child("engine")->get_component<Component::Engine>("render")->add(csr_offset_render, render_group);
+				auto csr_offset_render = e_textarea->add_id_component<Component::System::Render::Offset>("render", c_position, src_vec, transform_vec, c_font_material, c_renderer);
+				gamestate->get_child("engine")->get_component<Component::Engine>("render")->add(csr_offset_render, render_group_);
 			}
 		};
 	}
