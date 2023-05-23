@@ -365,6 +365,9 @@
     <ClInclude Include="component_pathway.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
+    <ClInclude Include="command_clearblockdraw.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\sprite.fs">

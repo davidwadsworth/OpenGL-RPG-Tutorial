@@ -1,13 +1,14 @@
 #pragma once
-#include "load.h"
+#include "command.h"
 #include "component_system_render_blockdraw.h"
 #include "component_cursor.h"
 #include "component_template.h"
 #include "component_rect_bitmap_glyph.h"
+#include <numeric>
 
-namespace Load
+namespace Commmand
 {
-	class OptionBox : public ILoad
+	class OptionBox : public ICommand
 	{
 		std::string font_name_, align_h_, align_v_, textbox_name_, nav_;
 		float font_sc_, render_group_, option_pos_x_, option_pos_y_, outline_;

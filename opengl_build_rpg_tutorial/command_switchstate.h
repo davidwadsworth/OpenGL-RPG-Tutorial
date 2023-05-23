@@ -1,12 +1,12 @@
 #pragma once
-#include "load.h"
+#include "command.h"
 #include "component_rect.h"
 #include "component_json.h"
 #include "game.h"
 
-namespace Load
+namespace ICommand
 {
-	class SwitchState : public ILoad
+	class SwitchState : public ICommand
 	{
 		glm::vec2 return_pos_;
 		std::string next_state_;

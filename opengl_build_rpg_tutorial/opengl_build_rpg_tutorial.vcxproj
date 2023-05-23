@@ -163,6 +163,7 @@
     <ClInclude Include="add_component_rect.h" />
     <ClInclude Include="add_loads.h" />
     <ClInclude Include="command.h" />
+    <ClInclude Include="command_clearblockdraw.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
     <ClInclude Include="component_pathway.h" />

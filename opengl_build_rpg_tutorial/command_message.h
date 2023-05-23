@@ -1,15 +1,14 @@
 #pragma once
-#include "component_trigger.h"
 #include "component_rect.h"
 #include "component_template.h"
 #include <glm/glm.hpp>
 #include "component_rect_bitmap_glyph.h"
 #include "component_system_render_blockdraw.h"
-#include "load.h"
+#include "command.h"
 
-namespace Load
+namespace Command
 {
-	class Message : public ILoad
+	class Message : public ICommand
 	{
 		Rect rect_;
 		std::string font_name_, align_h_, align_v_, textbox_name_;
