@@ -4,9 +4,11 @@
 #include <unordered_map>
 #include <glm/vec2.hpp>
 #include "entity.h"
+#include "component_system.h"
+#include "component_pathway.h"
 
 /*
-defines key characteristics of the game and its state.
+defines key characteristics of the game and the state it is in.
 
 @author David Wadsworth
 */
@@ -14,18 +16,22 @@ defines key characteristics of the game and its state.
 
 class Game
 {
-	static std::string next_state_;
+	std::vector<Component::ISystem*> render_;
+	std::vector<Component::ISystem*> update_;
+	std::vector<Component::Pathway*> pathway_;
+
+	Component::Pathway* global_pathway_;
+	Entity* e_game_;
 public:
-	Game() = delete;
 	static GLuint width;
 	static GLuint height;
 	static GLfloat delta_time;
 	static Entity* global;
 	static bool exit;
-	static glm::vec2 removed;
-
-	void init(Entity* game);
+	
+	void init(std::string begin_state, std::string index_path);
 	void render();
+
 	void pathway();
 	void update();
 };

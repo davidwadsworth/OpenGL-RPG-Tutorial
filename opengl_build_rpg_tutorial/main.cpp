@@ -4,7 +4,6 @@
 #include <string>
 #include "game.h"
 #include "component_system.h"
-#include "component_trigger_input.h"
 #include "component_vector.h"
 #include "component_renderer.h"
 #include "logger.h"
@@ -24,10 +23,9 @@ void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mo
 
 int main()
 {
-    auto game = new Entity();
+    auto game = new Game();
 
-    // init game
-    Game::init(game);
+    game->init("overworld", "data/index.json");
 
     if (!glfwInit())
         Logger::error("failed to initialize glfw!", Logger::HIGH);
@@ -70,8 +68,6 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    Game::set_next_state("overworld");
-
     Logger::message("Entities Created: " + std::to_string(Entity::count));
     Logger::message("Components Created: " + std::to_string(IComponent::count));
     
@@ -80,8 +76,8 @@ int main()
     // game loop
     while (!glfwWindowShouldClose(window))
     {
-        Game::check_new_state(game);
 
+        game->update();
         // calculate delta time
         auto current_frame = static_cast<GLfloat>(glfwGetTime());
         Game::delta_time = current_frame - last_frame;
@@ -90,9 +86,9 @@ int main()
         // clear screen to black
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        game->render();
         
-        Game::curr_state->run();
-
+        game->pathway();
         if (Game::exit)
             glfwSetWindowShouldClose(window, GL_TRUE);
 
@@ -100,8 +96,7 @@ int main()
         glfwPollEvents();
     }
 
-    // delete game and global entities and their components
-    delete Game::global;
+    // delete game
     delete game;
 
     if (Entity::count)

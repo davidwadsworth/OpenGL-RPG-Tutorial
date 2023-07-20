@@ -166,7 +166,7 @@
     <ClInclude Include="command_clearblockdraw.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
-    <ClInclude Include="component_pathway.h" />
+    <ClInclude Include="component_system_pathway.h" />
     <ClInclude Include="component_gamestatepool.h" />
     <ClInclude Include="component_json.h" />
     <ClInclude Include="component_cursor.h" />

@@ -362,11 +362,11 @@
     <ClInclude Include="command_textbox.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="component_pathway.h">
-      <Filter>EC\Component</Filter>
-    </ClInclude>
     <ClInclude Include="command_clearblockdraw.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="component_system_pathway.h">
+      <Filter>EC\Component\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
