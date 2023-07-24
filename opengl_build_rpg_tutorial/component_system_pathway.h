@@ -38,6 +38,7 @@ namespace Component {
 				std::size_t size;
 			};
 		private:
+			Entity* e_gamestate_;
 			bool removed_;
 			NavigatorTree* curr_;
 			RingBuffer<NavigatorTree> navigator_trees_;
@@ -45,8 +46,8 @@ namespace Component {
 			std::unordered_map<std::string, std::unique_ptr<ICommand>> command_map_;
 			std::queue<NavigatorTreeItem> nav_queue_;
 		public:
-			Pathway(std::size_t max_nav_tree)
-				: navigator_trees_(max_nav_tree), curr_(nullptr), removed_(false)
+			Pathway(std::size_t max_nav_tree, Entity* e_gamestate)
+				: navigator_trees_(max_nav_tree), e_gamestate_(e_gamestate), curr_(nullptr), removed_(false)
 			{}
 
 			void add_nav(std::string name, nlohmann::json json, Entity* gamestate)
@@ -80,7 +81,7 @@ namespace Component {
 				while (!nav_queue_.empty()) nav_queue_.pop();
 			}
 
-			void navigate(Entity* e_gamestate)
+			void navigate()
 			{
 				if (nav_queue_.empty())
 					return;
@@ -93,7 +94,7 @@ namespace Component {
 						for (auto command_json : curr_->command_json)
 						{
 							auto command = command_map_[command_json["name"].get<std::string>()].get();
-							command->execute(e_gamestate);
+							command->execute(e_gamestate_);
 						}
 						if (nav_path > 0)
 						{
@@ -105,7 +106,7 @@ namespace Component {
 							else if (nav_path <= curr_->children.size())
 							{
 								curr_ = curr_->children[nav_path - 1];
-								curr_->navigator->init(e_gamestate);
+								curr_->navigator->init(e_gamestate_);
 								for (auto command_json : curr_->command_json)
 								{
 									auto command = command_map_[command_json["name"].get<std::string>()].get();
