@@ -163,10 +163,11 @@
     <ClInclude Include="add_component_rect.h" />
     <ClInclude Include="add_loads.h" />
     <ClInclude Include="command.h" />
+    <ClInclude Include="command_change_state.h" />
     <ClInclude Include="command_clearblockdraw.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="component_array.h" />
-    <ClInclude Include="component_system_pathway.h" />
+    <ClInclude Include="component_pathway.h" />
     <ClInclude Include="component_gamestatepool.h" />
     <ClInclude Include="component_json.h" />
     <ClInclude Include="component_cursor.h" />
@@ -175,8 +176,8 @@
     <ClInclude Include="command_box.h" />
     <ClInclude Include="command_message.h" />
     <ClInclude Include="command_optionbox.h" />
-    <ClInclude Include="command_switchstate.h" />
     <ClInclude Include="command_textbox.h" />
+    <ClInclude Include="component_state.h" />
     <ClInclude Include="navigator.h" />
     <ClInclude Include="navigator_optionboxh.h" />
     <ClInclude Include="navigator_optionboxv.h" />

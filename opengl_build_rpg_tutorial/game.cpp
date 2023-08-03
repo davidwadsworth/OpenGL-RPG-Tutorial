@@ -13,14 +13,11 @@ long long IComponent::count = 0ll;
 long long Entity::count = 0ll;
 
 
-// this looks like shit and I dont understand why nothing is inited
-void Game::init(std::string begin_state, std::string index_path);
-{	
+void Game::init(std::string begin_state, std::string index_path)
+{
 	e_game_ = new Entity();
 	Game::global->add_id_component<Component::KeyboardArray>("keyboard");
 	auto& cc_keyboard = *Game::global->add_id_component<Component::Controller::Keyboard>("controller");
-	auto& cti_index = *Game::global->add_id_ct_input<Component::Trigger::Input::Index>("index", index_path);
-	cti_index.execute(Game::global);
 
 	auto keyboard_controller_json = cti_index->get_component<Component::Json>("controller_keyboard")->json;
 

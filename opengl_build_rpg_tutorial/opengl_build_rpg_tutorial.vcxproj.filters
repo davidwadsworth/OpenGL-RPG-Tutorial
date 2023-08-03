@@ -299,9 +299,6 @@
     <ClInclude Include="component_returnposition.h">
       <Filter>EC\Component</Filter>
     </ClInclude>
-    <ClInclude Include="command_switchstate.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="command.h">
       <Filter>Commands</Filter>
     </ClInclude>
@@ -365,8 +362,14 @@
     <ClInclude Include="command_clearblockdraw.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="component_system_pathway.h">
-      <Filter>EC\Component\System</Filter>
+    <ClInclude Include="component_pathway.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="component_state.h">
+      <Filter>EC\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="command_change_state.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
